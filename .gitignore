@@ -1,0 +1,60 @@
+.DS_Store
+
+# Sparkle
+
+dsa_priv.pem
+
+
+# Xcode Config
+
+*.mode1
+*.mode1v3
+*.mode2v3
+*.perspective
+*.perspectivev3
+*.pbxuser
+*.xcuserdatad
+*.xcworkspacedata
+.LSOverride
+
+
+# Generated files
+
+VersionX-revision.h
+
+
+# Builds
+
+build/
+Build/
+*.[oa]
+
+
+# Other SCMs
+
+.hg
+.svn
+CVS
+
+
+# Backups
+
+*~.nib
+*.swp
+*~
+*(Autosaved).rtfd/
+
+Backup[ ]of[ ]*.pages/
+Backup[ ]of[ ]*.key/
+Backup[ ]of[ ]*.numbers/
+
+*.timemachine.supported
+
+Archives/*droplet.app
+Archives/*.ipa
+Design/*.png
+
+
+
+
+Codex/Milk.xcodeproj/Icon

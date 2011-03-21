@@ -1,0 +1,170 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXFileReference section */
+		FF0A8BA91337AFB700DDA47C /* libIRFoundationsTouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIRFoundationsTouch.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FF0A8BA71337AFB700DDA47C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FF0A8B991337AFA800DDA47C = {
+			isa = PBXGroup;
+			children = (
+				FF0A8BAA1337AFB700DDA47C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FF0A8BAA1337AFB700DDA47C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF0A8BA91337AFB700DDA47C /* libIRFoundationsTouch.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		FF0A8BA51337AFB700DDA47C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		FF0A8BA81337AFB700DDA47C /* IRFoundationsTouch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF0A8BAD1337AFB800DDA47C /* Build configuration list for PBXNativeTarget "IRFoundationsTouch" */;
+			buildPhases = (
+				FF0A8BA51337AFB700DDA47C /* Headers */,
+				FF0A8BA61337AFB700DDA47C /* Sources */,
+				FF0A8BA71337AFB700DDA47C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IRFoundationsTouch;
+			productName = IRFoundationsTouch;
+			productReference = FF0A8BA91337AFB700DDA47C /* libIRFoundationsTouch.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FF0A8B9B1337AFA800DDA47C /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = FF0A8B9E1337AFA800DDA47C /* Build configuration list for PBXProject "IRFoundations" */;
+			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = FF0A8B991337AFA800DDA47C;
+			productRefGroup = FF0A8BAA1337AFB700DDA47C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FF0A8BA81337AFB700DDA47C /* IRFoundationsTouch */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FF0A8BA61337AFB700DDA47C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		FF0A8B9C1337AFA800DDA47C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		FF0A8B9D1337AFA800DDA47C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+		FF0A8BAB1337AFB700DDA47C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PREBINDING = NO;
+				PRODUCT_NAME = IRFoundationsTouch;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		FF0A8BAC1337AFB700DDA47C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PREBINDING = NO;
+				PRODUCT_NAME = IRFoundationsTouch;
+				SDKROOT = iphoneos;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FF0A8B9E1337AFA800DDA47C /* Build configuration list for PBXProject "IRFoundations" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF0A8B9C1337AFA800DDA47C /* Debug */,
+				FF0A8B9D1337AFA800DDA47C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF0A8BAD1337AFB800DDA47C /* Build configuration list for PBXNativeTarget "IRFoundationsTouch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF0A8BAB1337AFB700DDA47C /* Debug */,
+				FF0A8BAC1337AFB700DDA47C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FF0A8B9B1337AFA800DDA47C /* Project object */;
+}
