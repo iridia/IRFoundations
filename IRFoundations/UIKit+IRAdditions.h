@@ -25,3 +25,4 @@
 #import "IRSegmentedControlSegment.h"
 
 #import "IRActionSheetController.h"
+#import "IRTintedBarButtonItem.h"

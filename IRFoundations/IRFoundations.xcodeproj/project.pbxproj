@@ -39,7 +39,7 @@
 		FF0A8D3C1337B36A00DDA47C /* UIKit+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */; };
 		FF0A8D3D1337B36A00DDA47C /* IRWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D001337B36A00DDA47C /* IRWebView.h */; };
 		FF0A8D3E1337B36A00DDA47C /* IRWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D011337B36A00DDA47C /* IRWebView.m */; };
-		FF0A8D3F1337B36A00DDA47C /* IRWebView+DOMInjecting.js in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D021337B36A00DDA47C /* IRWebView+DOMInjecting.js */; };
+		FF0A8D3F1337B36A00DDA47C /* IRWebView+DOMInjecting.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = FF0A8D021337B36A00DDA47C /* IRWebView+DOMInjecting.js */; };
 		FF0A8D401337B36A00DDA47C /* IRAccordionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */; };
 		FF0A8D411337B36A00DDA47C /* IRAccordionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */; };
 		FF0A8D421337B36A00DDA47C /* UITableView+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D051337B36A00DDA47C /* UITableView+IRAdditions.h */; };
@@ -79,6 +79,8 @@
 		FF0A8D641337B36A00DDA47C /* IRManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */; };
 		FF0A8D651337B36A00DDA47C /* NSFetchRequest+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D2A1337B36A00DDA47C /* NSFetchRequest+IRAdditions.h */; };
 		FF0A8D661337B36A00DDA47C /* NSFetchRequest+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */; };
+		FF0A8E7E1337B8CF00DDA47C /* IRTintedBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8E7C1337B8CF00DDA47C /* IRTintedBarButtonItem.h */; };
+		FF0A8E7F1337B8CF00DDA47C /* IRTintedBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -92,6 +94,19 @@
 			);
 		};
 /* End PBXBuildRule section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FF0A8E891337B8F800DDA47C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				FF0A8D3F1337B36A00DDA47C /* IRWebView+DOMInjecting.js in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		FF0A8BA91337AFB700DDA47C /* libIRFoundationsTouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIRFoundationsTouch.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,6 +183,10 @@
 		FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRManagedObjectContext.m; sourceTree = "<group>"; };
 		FF0A8D2A1337B36A00DDA47C /* NSFetchRequest+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchRequest+IRAdditions.h"; sourceTree = "<group>"; };
 		FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchRequest+IRAdditions.m"; sourceTree = "<group>"; };
+		FF0A8E7C1337B8CF00DDA47C /* IRTintedBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRTintedBarButtonItem.h; sourceTree = "<group>"; };
+		FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRTintedBarButtonItem.m; sourceTree = "<group>"; };
+		FF0A8E971337B98900DDA47C /* IRFoundationsFramework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRFoundationsFramework-Info.plist"; sourceTree = "<group>"; };
+		FF0A8EB71337BAD300DDA47C /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = usr/lib/libxml2.2.7.3.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +210,8 @@
 				FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */,
 				FF0A8D221337B36A00DDA47C /* CoreData+IRAdditions */,
 				FF0A8BAA1337AFB700DDA47C /* Related */,
+				FF0A8E971337B98900DDA47C /* IRFoundationsFramework-Info.plist */,
+				FF0A8EB71337BAD300DDA47C /* libxml2.2.7.3.dylib */,
 			);
 			sourceTree = "<group>";
 		};
@@ -283,6 +304,8 @@
 				FF0A8D191337B36A00DDA47C /* IRSubtitledTableViewCell.h */,
 				FF0A8D1A1337B36A00DDA47C /* IRSubtitledTableViewCell.m */,
 				FF0A8D1B1337B36A00DDA47C /* IRSubtitledTableViewCell.xib */,
+				FF0A8E7C1337B8CF00DDA47C /* IRTintedBarButtonItem.h */,
+				FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */,
 				FF0A8D1C1337B36A00DDA47C /* IRActionSheetController.h */,
 				FF0A8D1D1337B36A00DDA47C /* IRActionSheetController.m */,
 				FF0A8D1E1337B36A00DDA47C /* IRActionSheet.h */,
@@ -353,6 +376,7 @@
 				FF0A8D611337B36A00DDA47C /* IRFetchedResultsController.h in Headers */,
 				FF0A8D631337B36A00DDA47C /* IRManagedObjectContext.h in Headers */,
 				FF0A8D651337B36A00DDA47C /* NSFetchRequest+IRAdditions.h in Headers */,
+				FF0A8E7E1337B8CF00DDA47C /* IRTintedBarButtonItem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +389,7 @@
 			buildPhases = (
 				FF0A8BA51337AFB700DDA47C /* Headers */,
 				FF0A8BA61337AFB700DDA47C /* Sources */,
+				FF0A8E891337B8F800DDA47C /* CopyFiles */,
 				FF0A8BA71337AFB700DDA47C /* Frameworks */,
 			);
 			buildRules = (
@@ -422,7 +447,6 @@
 				FF0A8D391337B36A00DDA47C /* IRConcaveView.m in Sources */,
 				FF0A8D3B1337B36A00DDA47C /* CGGeometry+IRAdditions.m in Sources */,
 				FF0A8D3E1337B36A00DDA47C /* IRWebView.m in Sources */,
-				FF0A8D3F1337B36A00DDA47C /* IRWebView+DOMInjecting.js in Sources */,
 				FF0A8D411337B36A00DDA47C /* IRAccordionViewController.m in Sources */,
 				FF0A8D431337B36A00DDA47C /* UITableView+IRAdditions.m in Sources */,
 				FF0A8D451337B36A00DDA47C /* IRLabel.m in Sources */,
@@ -442,6 +466,7 @@
 				FF0A8D621337B36A00DDA47C /* IRFetchedResultsController.m in Sources */,
 				FF0A8D641337B36A00DDA47C /* IRManagedObjectContext.m in Sources */,
 				FF0A8D661337B36A00DDA47C /* NSFetchRequest+IRAdditions.m in Sources */,
+				FF0A8E7F1337B8CF00DDA47C /* IRTintedBarButtonItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
