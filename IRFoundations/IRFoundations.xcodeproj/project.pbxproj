@@ -6,8 +6,168 @@
 	objectVersion = 42;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		FF0A8C8C1337B28200DDA47C /* IRFoundations.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C8B1337B28200DDA47C /* IRFoundations.h */; };
+		FF0A8C9F1337B29F00DDA47C /* Foundation+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C931337B29F00DDA47C /* Foundation+IRAdditions.h */; };
+		FF0A8CA01337B29F00DDA47C /* Foundation+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */; };
+		FF0A8CA11337B29F00DDA47C /* IRNoOp.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C951337B29F00DDA47C /* IRNoOp.h */; };
+		FF0A8CA21337B29F00DDA47C /* IRNoOp.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C961337B29F00DDA47C /* IRNoOp.m */; };
+		FF0A8CA31337B29F00DDA47C /* IRBindings.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C971337B29F00DDA47C /* IRBindings.h */; };
+		FF0A8CA41337B29F00DDA47C /* IRBindings.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C981337B29F00DDA47C /* IRBindings.m */; };
+		FF0A8CA51337B29F00DDA47C /* IRObservings.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C991337B29F00DDA47C /* IRObservings.h */; };
+		FF0A8CA61337B29F00DDA47C /* IRObservings.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C9A1337B29F00DDA47C /* IRObservings.m */; };
+		FF0A8CA71337B29F00DDA47C /* IRXPathQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C9B1337B29F00DDA47C /* IRXPathQuery.h */; };
+		FF0A8CA81337B29F00DDA47C /* IRXPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C9C1337B29F00DDA47C /* IRXPathQuery.m */; };
+		FF0A8CA91337B29F00DDA47C /* IRHTMLStringFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C9D1337B29F00DDA47C /* IRHTMLStringFormatter.h */; };
+		FF0A8CAA1337B29F00DDA47C /* IRHTMLStringFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C9E1337B29F00DDA47C /* IRHTMLStringFormatter.m */; };
+		FF0A8D2C1337B36A00DDA47C /* QuartzCore+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CED1337B36A00DDA47C /* QuartzCore+IRAdditions.h */; };
+		FF0A8D2D1337B36A00DDA47C /* QuartzCore+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CEE1337B36A00DDA47C /* QuartzCore+IRAdditions.m */; };
+		FF0A8D2E1337B36A00DDA47C /* IRStaticShapeView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CEF1337B36A00DDA47C /* IRStaticShapeView.h */; };
+		FF0A8D2F1337B36A00DDA47C /* IRStaticShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CF01337B36A00DDA47C /* IRStaticShapeView.m */; };
+		FF0A8D301337B36A00DDA47C /* IRShadow.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CF11337B36A00DDA47C /* IRShadow.h */; };
+		FF0A8D311337B36A00DDA47C /* IRShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CF21337B36A00DDA47C /* IRShadow.m */; };
+		FF0A8D321337B36A00DDA47C /* IRView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CF31337B36A00DDA47C /* IRView.h */; };
+		FF0A8D331337B36A00DDA47C /* IRView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CF41337B36A00DDA47C /* IRView.m */; };
+		FF0A8D341337B36A00DDA47C /* IRShapeView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CF51337B36A00DDA47C /* IRShapeView.h */; };
+		FF0A8D351337B36A00DDA47C /* IRShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CF61337B36A00DDA47C /* IRShapeView.m */; };
+		FF0A8D361337B36A00DDA47C /* IRGradientView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CF71337B36A00DDA47C /* IRGradientView.h */; };
+		FF0A8D371337B36A00DDA47C /* IRGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CF81337B36A00DDA47C /* IRGradientView.m */; };
+		FF0A8D381337B36A00DDA47C /* IRConcaveView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CF91337B36A00DDA47C /* IRConcaveView.h */; };
+		FF0A8D391337B36A00DDA47C /* IRConcaveView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CFA1337B36A00DDA47C /* IRConcaveView.m */; };
+		FF0A8D3A1337B36A00DDA47C /* CGGeometry+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CFC1337B36A00DDA47C /* CGGeometry+IRAdditions.h */; };
+		FF0A8D3B1337B36A00DDA47C /* CGGeometry+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CFD1337B36A00DDA47C /* CGGeometry+IRAdditions.m */; };
+		FF0A8D3C1337B36A00DDA47C /* UIKit+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */; };
+		FF0A8D3D1337B36A00DDA47C /* IRWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D001337B36A00DDA47C /* IRWebView.h */; };
+		FF0A8D3E1337B36A00DDA47C /* IRWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D011337B36A00DDA47C /* IRWebView.m */; };
+		FF0A8D3F1337B36A00DDA47C /* IRWebView+DOMInjecting.js in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D021337B36A00DDA47C /* IRWebView+DOMInjecting.js */; };
+		FF0A8D401337B36A00DDA47C /* IRAccordionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */; };
+		FF0A8D411337B36A00DDA47C /* IRAccordionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */; };
+		FF0A8D421337B36A00DDA47C /* UITableView+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D051337B36A00DDA47C /* UITableView+IRAdditions.h */; };
+		FF0A8D431337B36A00DDA47C /* UITableView+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D061337B36A00DDA47C /* UITableView+IRAdditions.m */; };
+		FF0A8D441337B36A00DDA47C /* IRLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D071337B36A00DDA47C /* IRLabel.h */; };
+		FF0A8D451337B36A00DDA47C /* IRLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D081337B36A00DDA47C /* IRLabel.m */; };
+		FF0A8D461337B36A00DDA47C /* IRSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D091337B36A00DDA47C /* IRSegmentedControl.h */; };
+		FF0A8D471337B36A00DDA47C /* IRSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D0A1337B36A00DDA47C /* IRSegmentedControl.m */; };
+		FF0A8D481337B36A00DDA47C /* IRSegmentedControlSegment.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D0B1337B36A00DDA47C /* IRSegmentedControlSegment.h */; };
+		FF0A8D491337B36A00DDA47C /* IRSegmentedControlSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D0C1337B36A00DDA47C /* IRSegmentedControlSegment.m */; };
+		FF0A8D4A1337B36A00DDA47C /* IRSemiTransparentBarButton.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D0D1337B36A00DDA47C /* IRSemiTransparentBarButton.h */; };
+		FF0A8D4B1337B36A00DDA47C /* IRSemiTransparentBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D0E1337B36A00DDA47C /* IRSemiTransparentBarButton.m */; };
+		FF0A8D4C1337B36A00DDA47C /* IRActivityIndicatorView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D0F1337B36A00DDA47C /* IRActivityIndicatorView.h */; };
+		FF0A8D4D1337B36A00DDA47C /* IRActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D101337B36A00DDA47C /* IRActivityIndicatorView.m */; };
+		FF0A8D4E1337B36A00DDA47C /* IRTransparentToolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D111337B36A00DDA47C /* IRTransparentToolbar.h */; };
+		FF0A8D4F1337B36A00DDA47C /* IRTransparentToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D121337B36A00DDA47C /* IRTransparentToolbar.m */; };
+		FF0A8D501337B36A00DDA47C /* IRTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D131337B36A00DDA47C /* IRTableView.h */; };
+		FF0A8D511337B36A00DDA47C /* IRTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D141337B36A00DDA47C /* IRTableView.m */; };
+		FF0A8D521337B36A00DDA47C /* IRTableViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D151337B36A00DDA47C /* IRTableViewController.h */; };
+		FF0A8D531337B36A00DDA47C /* IRTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D161337B36A00DDA47C /* IRTableViewController.m */; };
+		FF0A8D541337B36A00DDA47C /* IRTableViewHeaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D171337B36A00DDA47C /* IRTableViewHeaderView.h */; };
+		FF0A8D551337B36A00DDA47C /* IRTableViewHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D181337B36A00DDA47C /* IRTableViewHeaderView.m */; };
+		FF0A8D561337B36A00DDA47C /* IRSubtitledTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D191337B36A00DDA47C /* IRSubtitledTableViewCell.h */; };
+		FF0A8D571337B36A00DDA47C /* IRSubtitledTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D1A1337B36A00DDA47C /* IRSubtitledTableViewCell.m */; };
+		FF0A8D581337B36A00DDA47C /* IRActionSheetController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D1C1337B36A00DDA47C /* IRActionSheetController.h */; };
+		FF0A8D591337B36A00DDA47C /* IRActionSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D1D1337B36A00DDA47C /* IRActionSheetController.m */; };
+		FF0A8D5A1337B36A00DDA47C /* IRActionSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D1E1337B36A00DDA47C /* IRActionSheet.h */; };
+		FF0A8D5B1337B36A00DDA47C /* IRActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D1F1337B36A00DDA47C /* IRActionSheet.m */; };
+		FF0A8D5C1337B36A00DDA47C /* IRAction.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D201337B36A00DDA47C /* IRAction.h */; };
+		FF0A8D5D1337B36A00DDA47C /* IRAction.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D211337B36A00DDA47C /* IRAction.m */; };
+		FF0A8D5E1337B36A00DDA47C /* CoreData+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D231337B36A00DDA47C /* CoreData+IRAdditions.h */; };
+		FF0A8D5F1337B36A00DDA47C /* IRManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D241337B36A00DDA47C /* IRManagedObject.h */; };
+		FF0A8D601337B36A00DDA47C /* IRManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D251337B36A00DDA47C /* IRManagedObject.m */; };
+		FF0A8D611337B36A00DDA47C /* IRFetchedResultsController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D261337B36A00DDA47C /* IRFetchedResultsController.h */; };
+		FF0A8D621337B36A00DDA47C /* IRFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D271337B36A00DDA47C /* IRFetchedResultsController.m */; };
+		FF0A8D631337B36A00DDA47C /* IRManagedObjectContext.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D281337B36A00DDA47C /* IRManagedObjectContext.h */; };
+		FF0A8D641337B36A00DDA47C /* IRManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */; };
+		FF0A8D651337B36A00DDA47C /* NSFetchRequest+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D2A1337B36A00DDA47C /* NSFetchRequest+IRAdditions.h */; };
+		FF0A8D661337B36A00DDA47C /* NSFetchRequest+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		FF0A8DE11337B5F800DDA47C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = "com.apple.build-tasks.copy-plist-file";
+			filePatterns = .js;
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+			);
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
 		FF0A8BA91337AFB700DDA47C /* libIRFoundationsTouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIRFoundationsTouch.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF0A8C8B1337B28200DDA47C /* IRFoundations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRFoundations.h; sourceTree = "<group>"; };
+		FF0A8C931337B29F00DDA47C /* Foundation+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Foundation+IRAdditions.h"; sourceTree = "<group>"; };
+		FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+IRAdditions.m"; sourceTree = "<group>"; };
+		FF0A8C951337B29F00DDA47C /* IRNoOp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRNoOp.h; sourceTree = "<group>"; };
+		FF0A8C961337B29F00DDA47C /* IRNoOp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRNoOp.m; sourceTree = "<group>"; };
+		FF0A8C971337B29F00DDA47C /* IRBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBindings.h; sourceTree = "<group>"; };
+		FF0A8C981337B29F00DDA47C /* IRBindings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBindings.m; sourceTree = "<group>"; };
+		FF0A8C991337B29F00DDA47C /* IRObservings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRObservings.h; sourceTree = "<group>"; };
+		FF0A8C9A1337B29F00DDA47C /* IRObservings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRObservings.m; sourceTree = "<group>"; };
+		FF0A8C9B1337B29F00DDA47C /* IRXPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRXPathQuery.h; sourceTree = "<group>"; };
+		FF0A8C9C1337B29F00DDA47C /* IRXPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRXPathQuery.m; sourceTree = "<group>"; };
+		FF0A8C9D1337B29F00DDA47C /* IRHTMLStringFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRHTMLStringFormatter.h; sourceTree = "<group>"; };
+		FF0A8C9E1337B29F00DDA47C /* IRHTMLStringFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRHTMLStringFormatter.m; sourceTree = "<group>"; };
+		FF0A8CED1337B36A00DDA47C /* QuartzCore+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QuartzCore+IRAdditions.h"; sourceTree = "<group>"; };
+		FF0A8CEE1337B36A00DDA47C /* QuartzCore+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QuartzCore+IRAdditions.m"; sourceTree = "<group>"; };
+		FF0A8CEF1337B36A00DDA47C /* IRStaticShapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRStaticShapeView.h; sourceTree = "<group>"; };
+		FF0A8CF01337B36A00DDA47C /* IRStaticShapeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRStaticShapeView.m; sourceTree = "<group>"; };
+		FF0A8CF11337B36A00DDA47C /* IRShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRShadow.h; sourceTree = "<group>"; };
+		FF0A8CF21337B36A00DDA47C /* IRShadow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRShadow.m; sourceTree = "<group>"; };
+		FF0A8CF31337B36A00DDA47C /* IRView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRView.h; sourceTree = "<group>"; };
+		FF0A8CF41337B36A00DDA47C /* IRView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRView.m; sourceTree = "<group>"; };
+		FF0A8CF51337B36A00DDA47C /* IRShapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRShapeView.h; sourceTree = "<group>"; };
+		FF0A8CF61337B36A00DDA47C /* IRShapeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRShapeView.m; sourceTree = "<group>"; };
+		FF0A8CF71337B36A00DDA47C /* IRGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRGradientView.h; sourceTree = "<group>"; };
+		FF0A8CF81337B36A00DDA47C /* IRGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRGradientView.m; sourceTree = "<group>"; };
+		FF0A8CF91337B36A00DDA47C /* IRConcaveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRConcaveView.h; sourceTree = "<group>"; };
+		FF0A8CFA1337B36A00DDA47C /* IRConcaveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRConcaveView.m; sourceTree = "<group>"; };
+		FF0A8CFC1337B36A00DDA47C /* CGGeometry+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CGGeometry+IRAdditions.h"; sourceTree = "<group>"; };
+		FF0A8CFD1337B36A00DDA47C /* CGGeometry+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CGGeometry+IRAdditions.m"; sourceTree = "<group>"; };
+		FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIKit+IRAdditions.h"; sourceTree = "<group>"; };
+		FF0A8D001337B36A00DDA47C /* IRWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRWebView.h; sourceTree = "<group>"; };
+		FF0A8D011337B36A00DDA47C /* IRWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRWebView.m; sourceTree = "<group>"; };
+		FF0A8D021337B36A00DDA47C /* IRWebView+DOMInjecting.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "IRWebView+DOMInjecting.js"; sourceTree = "<group>"; };
+		FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAccordionViewController.h; sourceTree = "<group>"; };
+		FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAccordionViewController.m; sourceTree = "<group>"; };
+		FF0A8D051337B36A00DDA47C /* UITableView+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+IRAdditions.h"; sourceTree = "<group>"; };
+		FF0A8D061337B36A00DDA47C /* UITableView+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+IRAdditions.m"; sourceTree = "<group>"; };
+		FF0A8D071337B36A00DDA47C /* IRLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRLabel.h; sourceTree = "<group>"; };
+		FF0A8D081337B36A00DDA47C /* IRLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRLabel.m; sourceTree = "<group>"; };
+		FF0A8D091337B36A00DDA47C /* IRSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRSegmentedControl.h; sourceTree = "<group>"; };
+		FF0A8D0A1337B36A00DDA47C /* IRSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRSegmentedControl.m; sourceTree = "<group>"; };
+		FF0A8D0B1337B36A00DDA47C /* IRSegmentedControlSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRSegmentedControlSegment.h; sourceTree = "<group>"; };
+		FF0A8D0C1337B36A00DDA47C /* IRSegmentedControlSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRSegmentedControlSegment.m; sourceTree = "<group>"; };
+		FF0A8D0D1337B36A00DDA47C /* IRSemiTransparentBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRSemiTransparentBarButton.h; sourceTree = "<group>"; };
+		FF0A8D0E1337B36A00DDA47C /* IRSemiTransparentBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRSemiTransparentBarButton.m; sourceTree = "<group>"; };
+		FF0A8D0F1337B36A00DDA47C /* IRActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRActivityIndicatorView.h; sourceTree = "<group>"; };
+		FF0A8D101337B36A00DDA47C /* IRActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRActivityIndicatorView.m; sourceTree = "<group>"; };
+		FF0A8D111337B36A00DDA47C /* IRTransparentToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRTransparentToolbar.h; sourceTree = "<group>"; };
+		FF0A8D121337B36A00DDA47C /* IRTransparentToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRTransparentToolbar.m; sourceTree = "<group>"; };
+		FF0A8D131337B36A00DDA47C /* IRTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRTableView.h; sourceTree = "<group>"; };
+		FF0A8D141337B36A00DDA47C /* IRTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRTableView.m; sourceTree = "<group>"; };
+		FF0A8D151337B36A00DDA47C /* IRTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRTableViewController.h; sourceTree = "<group>"; };
+		FF0A8D161337B36A00DDA47C /* IRTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRTableViewController.m; sourceTree = "<group>"; };
+		FF0A8D171337B36A00DDA47C /* IRTableViewHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRTableViewHeaderView.h; sourceTree = "<group>"; };
+		FF0A8D181337B36A00DDA47C /* IRTableViewHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRTableViewHeaderView.m; sourceTree = "<group>"; };
+		FF0A8D191337B36A00DDA47C /* IRSubtitledTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRSubtitledTableViewCell.h; sourceTree = "<group>"; };
+		FF0A8D1A1337B36A00DDA47C /* IRSubtitledTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRSubtitledTableViewCell.m; sourceTree = "<group>"; };
+		FF0A8D1B1337B36A00DDA47C /* IRSubtitledTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IRSubtitledTableViewCell.xib; sourceTree = "<group>"; };
+		FF0A8D1C1337B36A00DDA47C /* IRActionSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRActionSheetController.h; sourceTree = "<group>"; };
+		FF0A8D1D1337B36A00DDA47C /* IRActionSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRActionSheetController.m; sourceTree = "<group>"; };
+		FF0A8D1E1337B36A00DDA47C /* IRActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRActionSheet.h; sourceTree = "<group>"; };
+		FF0A8D1F1337B36A00DDA47C /* IRActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRActionSheet.m; sourceTree = "<group>"; };
+		FF0A8D201337B36A00DDA47C /* IRAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAction.h; sourceTree = "<group>"; };
+		FF0A8D211337B36A00DDA47C /* IRAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAction.m; sourceTree = "<group>"; };
+		FF0A8D231337B36A00DDA47C /* CoreData+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+IRAdditions.h"; sourceTree = "<group>"; };
+		FF0A8D241337B36A00DDA47C /* IRManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRManagedObject.h; sourceTree = "<group>"; };
+		FF0A8D251337B36A00DDA47C /* IRManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRManagedObject.m; sourceTree = "<group>"; };
+		FF0A8D261337B36A00DDA47C /* IRFetchedResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRFetchedResultsController.h; sourceTree = "<group>"; };
+		FF0A8D271337B36A00DDA47C /* IRFetchedResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRFetchedResultsController.m; sourceTree = "<group>"; };
+		FF0A8D281337B36A00DDA47C /* IRManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRManagedObjectContext.h; sourceTree = "<group>"; };
+		FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRManagedObjectContext.m; sourceTree = "<group>"; };
+		FF0A8D2A1337B36A00DDA47C /* NSFetchRequest+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchRequest+IRAdditions.h"; sourceTree = "<group>"; };
+		FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchRequest+IRAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -24,16 +184,129 @@
 		FF0A8B991337AFA800DDA47C = {
 			isa = PBXGroup;
 			children = (
-				FF0A8BAA1337AFB700DDA47C /* Products */,
+				FF0A8C8B1337B28200DDA47C /* IRFoundations.h */,
+				FF0A8C921337B29F00DDA47C /* Foundation+IRAdditions */,
+				FF0A8CEC1337B36A00DDA47C /* QuartzCore+IRAdditions */,
+				FF0A8CFB1337B36A00DDA47C /* CGGeometry+IRAdditions */,
+				FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */,
+				FF0A8D221337B36A00DDA47C /* CoreData+IRAdditions */,
+				FF0A8BAA1337AFB700DDA47C /* Related */,
 			);
 			sourceTree = "<group>";
 		};
-		FF0A8BAA1337AFB700DDA47C /* Products */ = {
+		FF0A8BAA1337AFB700DDA47C /* Related */ = {
 			isa = PBXGroup;
 			children = (
 				FF0A8BA91337AFB700DDA47C /* libIRFoundationsTouch.a */,
 			);
-			name = Products;
+			name = Related;
+			sourceTree = "<group>";
+		};
+		FF0A8C921337B29F00DDA47C /* Foundation+IRAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				FF0A8C931337B29F00DDA47C /* Foundation+IRAdditions.h */,
+				FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */,
+				FF0A8C951337B29F00DDA47C /* IRNoOp.h */,
+				FF0A8C961337B29F00DDA47C /* IRNoOp.m */,
+				FF0A8C971337B29F00DDA47C /* IRBindings.h */,
+				FF0A8C981337B29F00DDA47C /* IRBindings.m */,
+				FF0A8C991337B29F00DDA47C /* IRObservings.h */,
+				FF0A8C9A1337B29F00DDA47C /* IRObservings.m */,
+				FF0A8C9B1337B29F00DDA47C /* IRXPathQuery.h */,
+				FF0A8C9C1337B29F00DDA47C /* IRXPathQuery.m */,
+				FF0A8C9D1337B29F00DDA47C /* IRHTMLStringFormatter.h */,
+				FF0A8C9E1337B29F00DDA47C /* IRHTMLStringFormatter.m */,
+			);
+			name = "Foundation+IRAdditions";
+			sourceTree = "<group>";
+		};
+		FF0A8CEC1337B36A00DDA47C /* QuartzCore+IRAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				FF0A8CED1337B36A00DDA47C /* QuartzCore+IRAdditions.h */,
+				FF0A8CEE1337B36A00DDA47C /* QuartzCore+IRAdditions.m */,
+				FF0A8CEF1337B36A00DDA47C /* IRStaticShapeView.h */,
+				FF0A8CF01337B36A00DDA47C /* IRStaticShapeView.m */,
+				FF0A8CF11337B36A00DDA47C /* IRShadow.h */,
+				FF0A8CF21337B36A00DDA47C /* IRShadow.m */,
+				FF0A8CF31337B36A00DDA47C /* IRView.h */,
+				FF0A8CF41337B36A00DDA47C /* IRView.m */,
+				FF0A8CF51337B36A00DDA47C /* IRShapeView.h */,
+				FF0A8CF61337B36A00DDA47C /* IRShapeView.m */,
+				FF0A8CF71337B36A00DDA47C /* IRGradientView.h */,
+				FF0A8CF81337B36A00DDA47C /* IRGradientView.m */,
+				FF0A8CF91337B36A00DDA47C /* IRConcaveView.h */,
+				FF0A8CFA1337B36A00DDA47C /* IRConcaveView.m */,
+			);
+			name = "QuartzCore+IRAdditions";
+			sourceTree = "<group>";
+		};
+		FF0A8CFB1337B36A00DDA47C /* CGGeometry+IRAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				FF0A8CFC1337B36A00DDA47C /* CGGeometry+IRAdditions.h */,
+				FF0A8CFD1337B36A00DDA47C /* CGGeometry+IRAdditions.m */,
+			);
+			name = "CGGeometry+IRAdditions";
+			sourceTree = "<group>";
+		};
+		FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */,
+				FF0A8D001337B36A00DDA47C /* IRWebView.h */,
+				FF0A8D011337B36A00DDA47C /* IRWebView.m */,
+				FF0A8D021337B36A00DDA47C /* IRWebView+DOMInjecting.js */,
+				FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */,
+				FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */,
+				FF0A8D051337B36A00DDA47C /* UITableView+IRAdditions.h */,
+				FF0A8D061337B36A00DDA47C /* UITableView+IRAdditions.m */,
+				FF0A8D071337B36A00DDA47C /* IRLabel.h */,
+				FF0A8D081337B36A00DDA47C /* IRLabel.m */,
+				FF0A8D091337B36A00DDA47C /* IRSegmentedControl.h */,
+				FF0A8D0A1337B36A00DDA47C /* IRSegmentedControl.m */,
+				FF0A8D0B1337B36A00DDA47C /* IRSegmentedControlSegment.h */,
+				FF0A8D0C1337B36A00DDA47C /* IRSegmentedControlSegment.m */,
+				FF0A8D0D1337B36A00DDA47C /* IRSemiTransparentBarButton.h */,
+				FF0A8D0E1337B36A00DDA47C /* IRSemiTransparentBarButton.m */,
+				FF0A8D0F1337B36A00DDA47C /* IRActivityIndicatorView.h */,
+				FF0A8D101337B36A00DDA47C /* IRActivityIndicatorView.m */,
+				FF0A8D111337B36A00DDA47C /* IRTransparentToolbar.h */,
+				FF0A8D121337B36A00DDA47C /* IRTransparentToolbar.m */,
+				FF0A8D131337B36A00DDA47C /* IRTableView.h */,
+				FF0A8D141337B36A00DDA47C /* IRTableView.m */,
+				FF0A8D151337B36A00DDA47C /* IRTableViewController.h */,
+				FF0A8D161337B36A00DDA47C /* IRTableViewController.m */,
+				FF0A8D171337B36A00DDA47C /* IRTableViewHeaderView.h */,
+				FF0A8D181337B36A00DDA47C /* IRTableViewHeaderView.m */,
+				FF0A8D191337B36A00DDA47C /* IRSubtitledTableViewCell.h */,
+				FF0A8D1A1337B36A00DDA47C /* IRSubtitledTableViewCell.m */,
+				FF0A8D1B1337B36A00DDA47C /* IRSubtitledTableViewCell.xib */,
+				FF0A8D1C1337B36A00DDA47C /* IRActionSheetController.h */,
+				FF0A8D1D1337B36A00DDA47C /* IRActionSheetController.m */,
+				FF0A8D1E1337B36A00DDA47C /* IRActionSheet.h */,
+				FF0A8D1F1337B36A00DDA47C /* IRActionSheet.m */,
+				FF0A8D201337B36A00DDA47C /* IRAction.h */,
+				FF0A8D211337B36A00DDA47C /* IRAction.m */,
+			);
+			name = "UIKit+IRAdditions";
+			sourceTree = "<group>";
+		};
+		FF0A8D221337B36A00DDA47C /* CoreData+IRAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				FF0A8D231337B36A00DDA47C /* CoreData+IRAdditions.h */,
+				FF0A8D241337B36A00DDA47C /* IRManagedObject.h */,
+				FF0A8D251337B36A00DDA47C /* IRManagedObject.m */,
+				FF0A8D261337B36A00DDA47C /* IRFetchedResultsController.h */,
+				FF0A8D271337B36A00DDA47C /* IRFetchedResultsController.m */,
+				FF0A8D281337B36A00DDA47C /* IRManagedObjectContext.h */,
+				FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */,
+				FF0A8D2A1337B36A00DDA47C /* NSFetchRequest+IRAdditions.h */,
+				FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */,
+			);
+			name = "CoreData+IRAdditions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -43,6 +316,43 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF0A8C8C1337B28200DDA47C /* IRFoundations.h in Headers */,
+				FF0A8C9F1337B29F00DDA47C /* Foundation+IRAdditions.h in Headers */,
+				FF0A8CA11337B29F00DDA47C /* IRNoOp.h in Headers */,
+				FF0A8CA31337B29F00DDA47C /* IRBindings.h in Headers */,
+				FF0A8CA51337B29F00DDA47C /* IRObservings.h in Headers */,
+				FF0A8CA71337B29F00DDA47C /* IRXPathQuery.h in Headers */,
+				FF0A8CA91337B29F00DDA47C /* IRHTMLStringFormatter.h in Headers */,
+				FF0A8D2C1337B36A00DDA47C /* QuartzCore+IRAdditions.h in Headers */,
+				FF0A8D2E1337B36A00DDA47C /* IRStaticShapeView.h in Headers */,
+				FF0A8D301337B36A00DDA47C /* IRShadow.h in Headers */,
+				FF0A8D321337B36A00DDA47C /* IRView.h in Headers */,
+				FF0A8D341337B36A00DDA47C /* IRShapeView.h in Headers */,
+				FF0A8D361337B36A00DDA47C /* IRGradientView.h in Headers */,
+				FF0A8D381337B36A00DDA47C /* IRConcaveView.h in Headers */,
+				FF0A8D3A1337B36A00DDA47C /* CGGeometry+IRAdditions.h in Headers */,
+				FF0A8D3C1337B36A00DDA47C /* UIKit+IRAdditions.h in Headers */,
+				FF0A8D3D1337B36A00DDA47C /* IRWebView.h in Headers */,
+				FF0A8D401337B36A00DDA47C /* IRAccordionViewController.h in Headers */,
+				FF0A8D421337B36A00DDA47C /* UITableView+IRAdditions.h in Headers */,
+				FF0A8D441337B36A00DDA47C /* IRLabel.h in Headers */,
+				FF0A8D461337B36A00DDA47C /* IRSegmentedControl.h in Headers */,
+				FF0A8D481337B36A00DDA47C /* IRSegmentedControlSegment.h in Headers */,
+				FF0A8D4A1337B36A00DDA47C /* IRSemiTransparentBarButton.h in Headers */,
+				FF0A8D4C1337B36A00DDA47C /* IRActivityIndicatorView.h in Headers */,
+				FF0A8D4E1337B36A00DDA47C /* IRTransparentToolbar.h in Headers */,
+				FF0A8D501337B36A00DDA47C /* IRTableView.h in Headers */,
+				FF0A8D521337B36A00DDA47C /* IRTableViewController.h in Headers */,
+				FF0A8D541337B36A00DDA47C /* IRTableViewHeaderView.h in Headers */,
+				FF0A8D561337B36A00DDA47C /* IRSubtitledTableViewCell.h in Headers */,
+				FF0A8D581337B36A00DDA47C /* IRActionSheetController.h in Headers */,
+				FF0A8D5A1337B36A00DDA47C /* IRActionSheet.h in Headers */,
+				FF0A8D5C1337B36A00DDA47C /* IRAction.h in Headers */,
+				FF0A8D5E1337B36A00DDA47C /* CoreData+IRAdditions.h in Headers */,
+				FF0A8D5F1337B36A00DDA47C /* IRManagedObject.h in Headers */,
+				FF0A8D611337B36A00DDA47C /* IRFetchedResultsController.h in Headers */,
+				FF0A8D631337B36A00DDA47C /* IRManagedObjectContext.h in Headers */,
+				FF0A8D651337B36A00DDA47C /* NSFetchRequest+IRAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +368,7 @@
 				FF0A8BA71337AFB700DDA47C /* Frameworks */,
 			);
 			buildRules = (
+				FF0A8DE11337B5F800DDA47C /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -82,7 +393,7 @@
 				German,
 			);
 			mainGroup = FF0A8B991337AFA800DDA47C;
-			productRefGroup = FF0A8BAA1337AFB700DDA47C /* Products */;
+			productRefGroup = FF0A8BAA1337AFB700DDA47C /* Related */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -96,6 +407,41 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF0A8CA01337B29F00DDA47C /* Foundation+IRAdditions.m in Sources */,
+				FF0A8CA21337B29F00DDA47C /* IRNoOp.m in Sources */,
+				FF0A8CA41337B29F00DDA47C /* IRBindings.m in Sources */,
+				FF0A8CA61337B29F00DDA47C /* IRObservings.m in Sources */,
+				FF0A8CA81337B29F00DDA47C /* IRXPathQuery.m in Sources */,
+				FF0A8CAA1337B29F00DDA47C /* IRHTMLStringFormatter.m in Sources */,
+				FF0A8D2D1337B36A00DDA47C /* QuartzCore+IRAdditions.m in Sources */,
+				FF0A8D2F1337B36A00DDA47C /* IRStaticShapeView.m in Sources */,
+				FF0A8D311337B36A00DDA47C /* IRShadow.m in Sources */,
+				FF0A8D331337B36A00DDA47C /* IRView.m in Sources */,
+				FF0A8D351337B36A00DDA47C /* IRShapeView.m in Sources */,
+				FF0A8D371337B36A00DDA47C /* IRGradientView.m in Sources */,
+				FF0A8D391337B36A00DDA47C /* IRConcaveView.m in Sources */,
+				FF0A8D3B1337B36A00DDA47C /* CGGeometry+IRAdditions.m in Sources */,
+				FF0A8D3E1337B36A00DDA47C /* IRWebView.m in Sources */,
+				FF0A8D3F1337B36A00DDA47C /* IRWebView+DOMInjecting.js in Sources */,
+				FF0A8D411337B36A00DDA47C /* IRAccordionViewController.m in Sources */,
+				FF0A8D431337B36A00DDA47C /* UITableView+IRAdditions.m in Sources */,
+				FF0A8D451337B36A00DDA47C /* IRLabel.m in Sources */,
+				FF0A8D471337B36A00DDA47C /* IRSegmentedControl.m in Sources */,
+				FF0A8D491337B36A00DDA47C /* IRSegmentedControlSegment.m in Sources */,
+				FF0A8D4B1337B36A00DDA47C /* IRSemiTransparentBarButton.m in Sources */,
+				FF0A8D4D1337B36A00DDA47C /* IRActivityIndicatorView.m in Sources */,
+				FF0A8D4F1337B36A00DDA47C /* IRTransparentToolbar.m in Sources */,
+				FF0A8D511337B36A00DDA47C /* IRTableView.m in Sources */,
+				FF0A8D531337B36A00DDA47C /* IRTableViewController.m in Sources */,
+				FF0A8D551337B36A00DDA47C /* IRTableViewHeaderView.m in Sources */,
+				FF0A8D571337B36A00DDA47C /* IRSubtitledTableViewCell.m in Sources */,
+				FF0A8D591337B36A00DDA47C /* IRActionSheetController.m in Sources */,
+				FF0A8D5B1337B36A00DDA47C /* IRActionSheet.m in Sources */,
+				FF0A8D5D1337B36A00DDA47C /* IRAction.m in Sources */,
+				FF0A8D601337B36A00DDA47C /* IRManagedObject.m in Sources */,
+				FF0A8D621337B36A00DDA47C /* IRFetchedResultsController.m in Sources */,
+				FF0A8D641337B36A00DDA47C /* IRManagedObjectContext.m in Sources */,
+				FF0A8D661337B36A00DDA47C /* NSFetchRequest+IRAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,10 +465,15 @@
 		FF0A8BAB1337AFB700DDA47C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					iphoneos/usr/include/libxml2,
+					/usr/include/libxml2,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = IRFoundationsTouch;
 				SDKROOT = iphoneos;
