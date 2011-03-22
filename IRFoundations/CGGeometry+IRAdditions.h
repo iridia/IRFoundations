@@ -109,7 +109,7 @@ extern CGRect IRUnitRectWithRectAndEdgeInsets (CGRect aRect, UIEdgeInsets edgeIn
 
 extern CGPoint irCGPointAddPoint(CGPoint aPoint, CGPoint anotherPoint);
 
-#define irDump(inCGExpression) (( ^ { __typeof__(inCGExpression) aCGStruct = inCGExpression; NSLog(@"%@", irDumpImpl(@encode(__typeof__(inCGExpression)), &aCGStruct)); })())
+#define irDump(inCGExpression) (( ^ { __typeof__(inCGExpression) aCGStruct = inCGExpression; NSLog(@"%@ %s", irDumpImpl(@encode(__typeof__(inCGExpression)), (void *)&aCGStruct), #inCGExpression ); })())
 
 #define irDumpLog(inCGExpression,...) (( ^ { __typeof__(inCGExpression) aCGStruct = inCGExpression; NSLog(@"%@: %@", irDumpImpl(@encode(__typeof__(inCGExpression)), (void *)&aCGStruct), [NSString stringWithFormat:__VA_ARGS__]); })())
 
