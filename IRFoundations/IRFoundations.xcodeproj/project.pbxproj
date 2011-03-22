@@ -501,6 +501,7 @@
 					iphoneos/usr/include/libxml2,
 					/usr/include/libxml2,
 				);
+				LD_NO_PIE = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = IRFoundationsTouch;
 				SDKROOT = iphoneos;
@@ -516,6 +517,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				LD_NO_PIE = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = IRFoundationsTouch;
 				SDKROOT = iphoneos;
