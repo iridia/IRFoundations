@@ -39,7 +39,6 @@
 		FF0A8D3C1337B36A00DDA47C /* UIKit+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */; };
 		FF0A8D3D1337B36A00DDA47C /* IRWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D001337B36A00DDA47C /* IRWebView.h */; };
 		FF0A8D3E1337B36A00DDA47C /* IRWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D011337B36A00DDA47C /* IRWebView.m */; };
-		FF0A8D3F1337B36A00DDA47C /* IRWebView+DOMInjecting.js in CopyFiles */ = {isa = PBXBuildFile; fileRef = FF0A8D021337B36A00DDA47C /* IRWebView+DOMInjecting.js */; };
 		FF0A8D401337B36A00DDA47C /* IRAccordionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */; };
 		FF0A8D411337B36A00DDA47C /* IRAccordionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */; };
 		FF0A8D421337B36A00DDA47C /* UITableView+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D051337B36A00DDA47C /* UITableView+IRAdditions.h */; };
@@ -102,7 +101,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				FF0A8D3F1337B36A00DDA47C /* IRWebView+DOMInjecting.js in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +140,6 @@
 		FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIKit+IRAdditions.h"; sourceTree = "<group>"; };
 		FF0A8D001337B36A00DDA47C /* IRWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRWebView.h; sourceTree = "<group>"; };
 		FF0A8D011337B36A00DDA47C /* IRWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRWebView.m; sourceTree = "<group>"; };
-		FF0A8D021337B36A00DDA47C /* IRWebView+DOMInjecting.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "IRWebView+DOMInjecting.js"; path = "Resources/IRWebView+DOMInjecting.js"; sourceTree = "<group>"; };
 		FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAccordionViewController.h; sourceTree = "<group>"; };
 		FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAccordionViewController.m; sourceTree = "<group>"; };
 		FF0A8D051337B36A00DDA47C /* UITableView+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+IRAdditions.h"; sourceTree = "<group>"; };
@@ -167,7 +164,7 @@
 		FF0A8D181337B36A00DDA47C /* IRTableViewHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRTableViewHeaderView.m; sourceTree = "<group>"; };
 		FF0A8D191337B36A00DDA47C /* IRSubtitledTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRSubtitledTableViewCell.h; sourceTree = "<group>"; };
 		FF0A8D1A1337B36A00DDA47C /* IRSubtitledTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRSubtitledTableViewCell.m; sourceTree = "<group>"; };
-		FF0A8D1B1337B36A00DDA47C /* IRSubtitledTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IRSubtitledTableViewCell.xib; sourceTree = "<group>"; };
+		FF0A8D1B1337B36A00DDA47C /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
 		FF0A8D1C1337B36A00DDA47C /* IRActionSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRActionSheetController.h; sourceTree = "<group>"; };
 		FF0A8D1D1337B36A00DDA47C /* IRActionSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRActionSheetController.m; sourceTree = "<group>"; };
 		FF0A8D1E1337B36A00DDA47C /* IRActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRActionSheet.h; sourceTree = "<group>"; };
@@ -278,7 +275,6 @@
 				FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */,
 				FF0A8D001337B36A00DDA47C /* IRWebView.h */,
 				FF0A8D011337B36A00DDA47C /* IRWebView.m */,
-				FF0A8D021337B36A00DDA47C /* IRWebView+DOMInjecting.js */,
 				FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */,
 				FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */,
 				FF0A8D051337B36A00DDA47C /* UITableView+IRAdditions.h */,
@@ -303,7 +299,6 @@
 				FF0A8D181337B36A00DDA47C /* IRTableViewHeaderView.m */,
 				FF0A8D191337B36A00DDA47C /* IRSubtitledTableViewCell.h */,
 				FF0A8D1A1337B36A00DDA47C /* IRSubtitledTableViewCell.m */,
-				FF0A8D1B1337B36A00DDA47C /* IRSubtitledTableViewCell.xib */,
 				FF0A8E7C1337B8CF00DDA47C /* IRTintedBarButtonItem.h */,
 				FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */,
 				FF0A8D1C1337B36A00DDA47C /* IRActionSheetController.h */,
@@ -312,6 +307,7 @@
 				FF0A8D1F1337B36A00DDA47C /* IRActionSheet.m */,
 				FF0A8D201337B36A00DDA47C /* IRAction.h */,
 				FF0A8D211337B36A00DDA47C /* IRAction.m */,
+				FF0A8D1B1337B36A00DDA47C /* Resources */,
 			);
 			name = "UIKit+IRAdditions";
 			sourceTree = "<group>";
