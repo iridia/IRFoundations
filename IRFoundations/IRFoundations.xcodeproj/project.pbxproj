@@ -142,7 +142,7 @@
 		FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIKit+IRAdditions.h"; sourceTree = "<group>"; };
 		FF0A8D001337B36A00DDA47C /* IRWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRWebView.h; sourceTree = "<group>"; };
 		FF0A8D011337B36A00DDA47C /* IRWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRWebView.m; sourceTree = "<group>"; };
-		FF0A8D021337B36A00DDA47C /* IRWebView+DOMInjecting.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "IRWebView+DOMInjecting.js"; sourceTree = "<group>"; };
+		FF0A8D021337B36A00DDA47C /* IRWebView+DOMInjecting.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "IRWebView+DOMInjecting.js"; path = "Resources/IRWebView+DOMInjecting.js"; sourceTree = "<group>"; };
 		FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAccordionViewController.h; sourceTree = "<group>"; };
 		FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAccordionViewController.m; sourceTree = "<group>"; };
 		FF0A8D051337B36A00DDA47C /* UITableView+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+IRAdditions.h"; sourceTree = "<group>"; };
