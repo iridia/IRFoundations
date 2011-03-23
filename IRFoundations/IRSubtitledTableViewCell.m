@@ -15,13 +15,12 @@
 
 + (IRSubtitledTableViewCell *) cell {
 
-	UIViewController *temporaryController = [[UIViewController alloc] initWithNibName:@"IRSubtitledTableViewCell" bundle:nil];
+	UINib *bundleNib = [UINib nibWithNibName:NSStringFromClass([self class]) bundle:[NSBundle bundleForClass:[self class]]];
+	NSLog(@"bundleNib %@", bundleNib);
+	NSArray *bundleObjects = [bundleNib instantiateWithOwner:nil options:nil];
+	IRSubtitledTableViewCell *cell = (IRSubtitledTableViewCell *)[bundleObjects objectAtIndex:0];
 	
-	IRSubtitledTableViewCell *cell = (IRSubtitledTableViewCell *)temporaryController.view;
-	[cell retain];
-	[temporaryController release];
-	
-	return [cell autorelease];
+	return cell;
 
 }
 
