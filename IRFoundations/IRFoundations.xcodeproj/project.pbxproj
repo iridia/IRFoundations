@@ -80,6 +80,10 @@
 		FF0A8D661337B36A00DDA47C /* NSFetchRequest+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */; };
 		FF0A8E7E1337B8CF00DDA47C /* IRTintedBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8E7C1337B8CF00DDA47C /* IRTintedBarButtonItem.h */; };
 		FF0A8E7F1337B8CF00DDA47C /* IRTintedBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */; };
+		FF27A6AB133E2C16008C8DDA /* IRBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6A9133E2C16008C8DDA /* IRBarButtonItem.h */; };
+		FF27A6AC133E2C16008C8DDA /* IRBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */; };
+		FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6E1133E3526008C8DDA /* IRBusyView.h */; };
+		FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6E2133E3526008C8DDA /* IRBusyView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -184,6 +188,10 @@
 		FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRTintedBarButtonItem.m; sourceTree = "<group>"; };
 		FF0A8E971337B98900DDA47C /* IRFoundationsFramework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRFoundationsFramework-Info.plist"; sourceTree = "<group>"; };
 		FF0A8EB71337BAD300DDA47C /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = usr/lib/libxml2.2.7.3.dylib; sourceTree = SDKROOT; };
+		FF27A6A9133E2C16008C8DDA /* IRBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBarButtonItem.h; sourceTree = "<group>"; };
+		FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBarButtonItem.m; sourceTree = "<group>"; };
+		FF27A6E1133E3526008C8DDA /* IRBusyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBusyView.h; sourceTree = "<group>"; };
+		FF27A6E2133E3526008C8DDA /* IRBusyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBusyView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +286,8 @@
 				FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */,
 				FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */,
 				FF0A8D051337B36A00DDA47C /* UITableView+IRAdditions.h */,
+				FF27A6E1133E3526008C8DDA /* IRBusyView.h */,
+				FF27A6E2133E3526008C8DDA /* IRBusyView.m */,
 				FF0A8D061337B36A00DDA47C /* UITableView+IRAdditions.m */,
 				FF0A8D071337B36A00DDA47C /* IRLabel.h */,
 				FF0A8D081337B36A00DDA47C /* IRLabel.m */,
@@ -299,6 +309,8 @@
 				FF0A8D181337B36A00DDA47C /* IRTableViewHeaderView.m */,
 				FF0A8D191337B36A00DDA47C /* IRSubtitledTableViewCell.h */,
 				FF0A8D1A1337B36A00DDA47C /* IRSubtitledTableViewCell.m */,
+				FF27A6A9133E2C16008C8DDA /* IRBarButtonItem.h */,
+				FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */,
 				FF0A8E7C1337B8CF00DDA47C /* IRTintedBarButtonItem.h */,
 				FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */,
 				FF0A8D1C1337B36A00DDA47C /* IRActionSheetController.h */,
@@ -373,6 +385,8 @@
 				FF0A8D631337B36A00DDA47C /* IRManagedObjectContext.h in Headers */,
 				FF0A8D651337B36A00DDA47C /* NSFetchRequest+IRAdditions.h in Headers */,
 				FF0A8E7E1337B8CF00DDA47C /* IRTintedBarButtonItem.h in Headers */,
+				FF27A6AB133E2C16008C8DDA /* IRBarButtonItem.h in Headers */,
+				FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +477,8 @@
 				FF0A8D641337B36A00DDA47C /* IRManagedObjectContext.m in Sources */,
 				FF0A8D661337B36A00DDA47C /* NSFetchRequest+IRAdditions.m in Sources */,
 				FF0A8E7F1337B8CF00DDA47C /* IRTintedBarButtonItem.m in Sources */,
+				FF27A6AC133E2C16008C8DDA /* IRBarButtonItem.m in Sources */,
+				FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
