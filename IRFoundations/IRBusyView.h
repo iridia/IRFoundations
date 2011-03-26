@@ -25,6 +25,8 @@ typedef enum {
 @property (nonatomic, readwrite, retain) UIView *busyOverlayView;
 @property (nonatomic, readwrite, assign) IRBusyViewStyle style;
 
+@property (nonatomic, readwrite, assign, getter=isBusy) BOOL busy;
+
 + (IRBusyView *) wrappedBusyViewForView:(UIView *)wrappedView withStyle:(IRBusyViewStyle)aStyle;
 - (void) configureForPresetStyle:(IRBusyViewStyle)aStyle; // preset
 

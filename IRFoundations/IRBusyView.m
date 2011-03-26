@@ -9,9 +9,12 @@
 #import "IRBusyView.h"
 #import "IRActivityIndicatorView.h"
 
+#import "IRBindings.h"
+#import "CGGeometry+IRAdditions.h"
+
 @implementation IRBusyView
 
-@synthesize contentView, busyOverlayView, style;
+@synthesize contentView, busyOverlayView, style, busy;
 
 + (IRBusyView *) wrappedBusyViewForView:(UIView *)wrappedView withStyle:(IRBusyViewStyle)aStyle {
 
@@ -20,6 +23,7 @@
 	
 	returnedView.contentView = wrappedView;
 	returnedView.style = aStyle;
+	returnedView.busy = NO;
 	
 	[returnedView configureForPresetStyle:aStyle];
 	[returnedView setNeedsLayout];
@@ -39,6 +43,30 @@
 			activityIndicator.animating = NO;
 			activityIndicator.userInteractionEnabled = NO;
 			
+			[activityIndicator irBind:@"hidden" toObject:self keyPath:@"busy" options:[NSDictionary dictionaryWithObjectsAndKeys:
+			
+				[[ ^ (id inOldValue, id inNewValue, NSString *changeKind) {
+				
+					return [NSNumber numberWithBool:![inNewValue boolValue]];
+				
+				} copy] autorelease], kIRBindingsValueTransformerBlock,
+				
+				[NSNumber numberWithBool:YES], kIRBindingsAssignOnMainThreadOption,
+			
+			nil]];
+			
+			[activityIndicator irBind:@"animating" toObject:self keyPath:@"busy" options:[NSDictionary dictionaryWithObjectsAndKeys:
+			
+				[NSNumber numberWithBool:YES], kIRBindingsAssignOnMainThreadOption,
+			
+			nil]];
+
+			[self.contentView irBind:@"hidden" toObject:self keyPath:@"busy" options:[NSDictionary dictionaryWithObjectsAndKeys:
+			
+				[NSNumber numberWithBool:YES], kIRBindingsAssignOnMainThreadOption,
+			
+			nil]];
+						
 			self.busyOverlayView = activityIndicator;
 			
 			break;
@@ -98,8 +126,8 @@
 
 	[super layoutSubviews];
 	
-	self.contentView.frame = self.bounds;
-	self.busyOverlayView.frame = self.bounds;
+	self.contentView.center = irCGRectGetCenterOfRectBounds(self.bounds);
+	self.busyOverlayView.center = irCGRectGetCenterOfRectBounds(self.bounds);
 
 }
 
