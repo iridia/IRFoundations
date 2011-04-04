@@ -160,8 +160,6 @@
 
 - (void) dealloc {
 
-	NSLog(@"%s", __PRETTY_FUNCTION__);
-
 	self.delayedPerformQueueFinalizing = YES;
 	[self resumeDelayedPerformQueue];
 
