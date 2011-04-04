@@ -27,6 +27,20 @@
 
 }
 
++ (id) itemWithSystemItem:(UIBarButtonSystemItem)aSystemItem wiredAction:(void(^)(IRBarButtonItem *senderItem))aBlock {
+
+	IRBarButtonItem *returnedItem = [[self alloc] initWithBarButtonSystemItem:aSystemItem target:nil action:nil];
+	if (!returnedItem) return nil;
+	
+	returnedItem.target = returnedItem;
+	returnedItem.action = @selector(handleCustomButtonAction:);
+	
+	returnedItem.block = ^ { aBlock(returnedItem); };
+	
+	 return returnedItem; 
+
+}
+
 + (id) itemWithButton:(UIButton *)aButton wiredAction:(void(^)(UIButton *senderButton, IRBarButtonItem *senderItem))aBlock {
 
 	IRBarButtonItem *returnedItem = [self itemWithCustomView:aButton];

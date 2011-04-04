@@ -16,6 +16,8 @@
 + (id) itemWithButton:(UIButton *)aButton wiredAction:(void(^)(UIButton *senderButton, IRBarButtonItem *senderItem))aBlock;
 - (IBAction) handleCustomButtonAction:(id)sender; // button will be wired to the item, which runs the block
 
++ (id) itemWithSystemItem:(UIBarButtonSystemItem)aSystemItem wiredAction:(void(^)(IRBarButtonItem *senderItem))aBlock;
+
 @property (nonatomic, readwrite, copy) void (^block)();
 
 @end
