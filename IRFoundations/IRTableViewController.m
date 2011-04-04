@@ -20,7 +20,7 @@
 
 @implementation IRTableViewController
 
-@synthesize tableView;
+@dynamic tableView;
 
 @synthesize swizzlesTableViewOnLoadView;
 @synthesize tableViewStyle;
@@ -92,7 +92,7 @@
 	
 	}
 	
-	self.view = self.tableView;
+//	self.view = self.tableView;
 
 	if (self.onLoadView)
 	self.onLoadView();
@@ -103,8 +103,8 @@
 
 	[super viewDidUnload];
 	
-	self.view = nil;
-	self.tableView = nil;
+//	self.view = nil;
+//	self.tableView = nil;
 
 }
 
