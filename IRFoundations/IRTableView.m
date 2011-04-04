@@ -160,11 +160,23 @@
 
 - (void) dealloc {
 
+	NSLog(@"%s", __PRETTY_FUNCTION__);
+
 	self.delayedPerformQueueFinalizing = YES;
 	[self resumeDelayedPerformQueue];
 
-	dispatch_release(self.delayedPerformQueue);
-	self.delayedPerformQueue = nil;
+	if (self.delayedPerformQueue) {
+
+		dispatch_debug(self.delayedPerformQueue, "self.delayedPerformQueue");
+		dispatch_release(self.delayedPerformQueue);
+		self.delayedPerformQueue = nil;
+	
+	}
+	
+	[self clearDelayedPerformQueue];
+	
+	self.dataSource = nil;
+	self.delegate = nil;
 
 	self.onTouchesShouldBeginWithEventInContentView = nil;
 	self.onTouchesShouldCancelInContentView = nil;
@@ -643,6 +655,7 @@ NSString * const IRTableViewWillResumePerformingBlocksNotification = @"IRTableVi
 	dispatch_suspend(self.delayedPerformQueue);
 	self.delayedPerformQueueSuspended = YES;
 	
+	if (!delayedPerformQueueFinalizing)
 	[[NSNotificationCenter defaultCenter] postNotificationName:IRTableViewWillSuspendPerformingBlocksNotification object:self];
 
 }
@@ -654,7 +667,8 @@ NSString * const IRTableViewWillResumePerformingBlocksNotification = @"IRTableVi
 
 	dispatch_resume(self.delayedPerformQueue);
 	self.delayedPerformQueueSuspended = NO;
-	
+
+	if (!delayedPerformQueueFinalizing)	
 	[[NSNotificationCenter defaultCenter] postNotificationName:IRTableViewWillResumePerformingBlocksNotification object:self];
 
 }
