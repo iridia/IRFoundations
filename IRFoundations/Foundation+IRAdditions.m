@@ -253,6 +253,26 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 
 }
 
+- (NSArray *) irSubarraysByBreakingArrayIntoBatchesOf:(NSInteger)maxCountPerSubarray {
+
+	NSMutableArray *returnedArray = [NSMutableArray array];
+	
+	NSUInteger exhausted = 0;
+	
+	while (exhausted < [self count]) {
+	
+		NSUInteger elementsAdded = MIN([self count] - exhausted, maxCountPerSubarray);
+	
+		[returnedArray addObject:[self subarrayWithRange:(NSRange){ exhausted, elementsAdded }]];
+		
+		exhausted += elementsAdded;
+	
+	}
+	
+	return returnedArray;
+
+}
+
 @end
 
 

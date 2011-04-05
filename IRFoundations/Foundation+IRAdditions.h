@@ -57,6 +57,8 @@ extern void IRLogExceptionAndContinue (void(^)(void));
 
 - (void) irExecuteAllObjectsAsBlocks; // excepts (void)(^)(void)
 
+- (NSArray *) irSubarraysByBreakingArrayIntoBatchesOf:(NSInteger)maxCountPerSubarray;
+
 @end
 
 @interface NSMutableArray (IRAdditions)
