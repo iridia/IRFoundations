@@ -195,6 +195,8 @@
 
 - (void) handleApplicationWillChangeStatusBarOrientationNotification:(NSNotification *)notification {
 
+	[self retain];
+	
 	[self.managedActionSheet prepareForReshowingIfAppropriate];
 	
 }
@@ -204,9 +206,11 @@
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.125 * NSEC_PER_SEC), dispatch_get_main_queue(), ^ {
 	 
 		[self.managedActionSheet reshowIfAppropriate];
+		
+		[self autorelease];
 
 	});
-
+	
 }
 
 @end
