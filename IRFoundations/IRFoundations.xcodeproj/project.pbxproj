@@ -84,6 +84,8 @@
 		FF27A6AC133E2C16008C8DDA /* IRBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */; };
 		FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6E1133E3526008C8DDA /* IRBusyView.h */; };
 		FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6E2133E3526008C8DDA /* IRBusyView.m */; };
+		FF94EF6F135117D100FE79D4 /* IRBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = FF94EF6D135117D100FE79D4 /* IRBorder.h */; };
+		FF94EF70135117D100FE79D4 /* IRBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = FF94EF6E135117D100FE79D4 /* IRBorder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -192,6 +194,8 @@
 		FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBarButtonItem.m; sourceTree = "<group>"; };
 		FF27A6E1133E3526008C8DDA /* IRBusyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBusyView.h; sourceTree = "<group>"; };
 		FF27A6E2133E3526008C8DDA /* IRBusyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBusyView.m; sourceTree = "<group>"; };
+		FF94EF6D135117D100FE79D4 /* IRBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBorder.h; sourceTree = "<group>"; };
+		FF94EF6E135117D100FE79D4 /* IRBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBorder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +258,8 @@
 				FF0A8CEE1337B36A00DDA47C /* QuartzCore+IRAdditions.m */,
 				FF0A8CEF1337B36A00DDA47C /* IRStaticShapeView.h */,
 				FF0A8CF01337B36A00DDA47C /* IRStaticShapeView.m */,
+				FF94EF6D135117D100FE79D4 /* IRBorder.h */,
+				FF94EF6E135117D100FE79D4 /* IRBorder.m */,
 				FF0A8CF11337B36A00DDA47C /* IRShadow.h */,
 				FF0A8CF21337B36A00DDA47C /* IRShadow.m */,
 				FF0A8CF31337B36A00DDA47C /* IRView.h */,
@@ -387,6 +393,7 @@
 				FF0A8E7E1337B8CF00DDA47C /* IRTintedBarButtonItem.h in Headers */,
 				FF27A6AB133E2C16008C8DDA /* IRBarButtonItem.h in Headers */,
 				FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */,
+				FF94EF6F135117D100FE79D4 /* IRBorder.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,6 +486,7 @@
 				FF0A8E7F1337B8CF00DDA47C /* IRTintedBarButtonItem.m in Sources */,
 				FF27A6AC133E2C16008C8DDA /* IRBarButtonItem.m in Sources */,
 				FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */,
+				FF94EF70135117D100FE79D4 /* IRBorder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

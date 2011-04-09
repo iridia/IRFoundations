@@ -179,7 +179,7 @@ extern NSString* irDumpImpl (const char *encodedString, void * aPointer);
 
 #define irCGRectWithRectAndOrigin(aRect, anOrigin) ((CGRect){ anOrigin, aRect.size });
 
-#define IRCGRectGetInsetRect(aRect, aPadding) CGRectInset(aRect, thePadding, thePadding)
+#define IRCGRectGetInsetRect(aRect, aPadding) CGRectInset(aRect, aPadding, aPadding)
 
 #define IRCGRectMoveToPoint irCGRectWithRectAndOrigin
 #define IRCGRectTranslate CGRectOffset
