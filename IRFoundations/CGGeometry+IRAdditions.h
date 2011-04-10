@@ -17,7 +17,7 @@
 
 typedef enum { irCenter, irTop, irTopRight, irRight, irBottomRight, irBottom, irBottomLeft, irLeft, irTopLeft } IRAnchor;
 typedef enum { irUnflipped = NO, irFlipped = YES } irFlipping;
-typedef enum { IRBorderTypeInset, IRBorderTypeNormal, IRBorderTypeOutset } IRBorderType;
+typedef enum { IRBorderTypeInset = 1, IRBorderTypeNormal = 0, IRBorderTypeOutset = -1 } IRBorderType;
 typedef CGPoint IRDelta;
 
 enum {
