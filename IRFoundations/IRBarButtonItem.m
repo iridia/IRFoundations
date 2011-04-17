@@ -104,11 +104,12 @@
 	
 	nil];
 	
-	IRShadow *buttonInnerShadow = [IRShadow shadowWithColor:[UIColor colorWithWhite:0 alpha:0.75] offset:(CGSize){ 0, 1 } spread:2];
+	IRShadow *buttonInnerShadow = [IRShadow shadowWithColor:[UIColor colorWithWhite:0 alpha:0.5] offset:(CGSize){ 0, 1 } spread:2];
 	IRBorder *buttonBorder = [IRBorder borderForEdge:IREdgeNone withType:IRBorderTypeInset width:1.0 color:[UIColor colorWithWhite:0.35 alpha:1]];
 	
 	static const UIEdgeInsets insets = (UIEdgeInsets){ 0, 12, 0, 8 };
 	static const CGFloat cornerRadius = 6;
+	static const CGFloat slopeSize = 2;
 	static const CGFloat buttonHeight = 29.0;
 	
 	CGSize titleSize = [aTitle sizeWithFont:usingFont];
@@ -120,9 +121,14 @@
 	UIBezierPath *bezierPath = (( ^ {
 	
 		UIBezierPath *bezierPath = [UIBezierPath bezierPath];
-
+		
 		[bezierPath moveToPoint:CGPointZero];
-		[bezierPath addLineToPoint:(CGPoint){ insets.left, -1 * (0.5 * buttonHeight) }];
+		
+		[bezierPath addLineToPoint:(CGPoint){ insets.left - slopeSize, -1 * (0.5 * buttonHeight - slopeSize) }];
+		
+		[bezierPath addQuadCurveToPoint:(CGPoint){ insets.left + slopeSize, -1 * (0.5 * buttonHeight) }
+		                   controlPoint:(CGPoint){ insets.left, -1 * (0.5 * buttonHeight) }];
+		
 		[bezierPath addLineToPoint:(CGPoint){ finalSize.width - insets.right - cornerRadius, -1 * (0.5 * buttonHeight) }];
 		
 		[bezierPath addQuadCurveToPoint:(CGPoint){ finalSize.width - insets.right, -1 * (0.5 * buttonHeight - cornerRadius) }
@@ -133,7 +139,11 @@
 		[bezierPath addQuadCurveToPoint:(CGPoint){ finalSize.width - insets.right - cornerRadius, 1 * (0.5 * buttonHeight) }
 											 controlPoint:(CGPoint){ finalSize.width - insets.right, 1 * (0.5 * buttonHeight) }];
 		
-		[bezierPath addLineToPoint:(CGPoint){ insets.left, 1 * (0.5 * buttonHeight) }];
+		[bezierPath addLineToPoint:(CGPoint){ insets.left + slopeSize, 1 * (0.5 * buttonHeight) }];
+
+		[bezierPath addQuadCurveToPoint:(CGPoint){ insets.left - slopeSize, 1 * (0.5 * buttonHeight - slopeSize) }
+		                   controlPoint:(CGPoint){ insets.left, 1 * (0.5 * buttonHeight) }];
+		
 		[bezierPath addLineToPoint:CGPointZero];
 		
 		[bezierPath applyTransform:CGAffineTransformMakeTranslation(0, -0.5 + 0.5 * finalSize.height)];
