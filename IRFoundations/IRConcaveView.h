@@ -11,7 +11,7 @@
 
 @interface IRConcaveView : IRView
 
-@property (nonatomic, readwrite, assign) IRShadow *innerShadow;
+@property (nonatomic, readwrite, retain) IRShadow *innerShadow;
 
 //	The inner shadow is drawn by CoreGraphics.
 
