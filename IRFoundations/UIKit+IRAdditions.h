@@ -25,6 +25,7 @@
 #import "IRSegmentedControlSegment.h"
 
 #import "IRActionSheetController.h"
+#import "IRAlertView.h"
 
 #import "IRBarButtonItem.h"
 #import "IRTintedBarButtonItem.h"
