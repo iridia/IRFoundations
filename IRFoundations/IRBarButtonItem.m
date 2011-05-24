@@ -43,10 +43,12 @@
 
 + (id) itemWithButton:(UIButton *)aButton wiredAction:(void(^)(UIButton *senderButton, IRBarButtonItem *senderItem))aBlock {
 
-	IRBarButtonItem *returnedItem = [self itemWithCustomView:aButton];
+	__block IRBarButtonItem *returnedItem = [self itemWithCustomView:aButton];
 	if (!returnedItem) return nil;
 	
-	returnedItem.block = ^ { aBlock(aButton, returnedItem); };
+	if (aBlock) {
+		returnedItem.block = ^ { aBlock(aButton, returnedItem); };
+	}
 	
 	[aButton addTarget:returnedItem action:@selector(handleCustomButtonAction:) forControlEvents:UIControlEventTouchUpInside];
 	
@@ -83,7 +85,7 @@
 
 - (IBAction) handleCustomButtonAction:(id)sender {
 
-	NSParameterAssert(self.block);
+	if (self.block)
 	self.block();
 
 }
