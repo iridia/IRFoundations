@@ -152,13 +152,13 @@
 			[bezierPath applyTransform:CGAffineTransformMakeTranslation(0, -0.5 + 0.5 * finalSize.height)];
 			
 			break;
-		
+			
 		};
 		
 		case IRBarButtonItemStyleBordered: {
 		
 			static const CGFloat cornerRadius = 6;
-			insets = (UIEdgeInsets){ 0, 4, 0, 4 };
+			insets = UIEdgeInsetsZero;
 			finalSize = (CGSize){ titleSize.width + 20, 44.0f };
 			bezierPath = [UIBezierPath bezierPathWithRoundedRect:(CGRect){
 				(CGPoint){
