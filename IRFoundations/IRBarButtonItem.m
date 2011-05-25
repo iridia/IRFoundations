@@ -58,28 +58,29 @@
 
 + (id) backItemWithTitle:(NSString *)aTitle tintColor:(UIColor *)aColor {
 
-	IRBarButtonItem *returnedItem = [self itemWithButton:(( ^ {
-	
-		UIButton *returnedButton = [UIButton buttonWithType:UIButtonTypeCustom];
-		
-		[returnedButton setImage:[[self class] backButtonImageWithTitle:aTitle font:nil backgroundColor:nil gradientColors:nil innerShadow:nil border:nil shadow:nil] forState:UIControlStateNormal];
-		
-		[returnedButton setImage:[[self class] backButtonImageWithTitle:aTitle font:nil backgroundColor:nil gradientColors:[NSArray arrayWithObjects:
-		
+	UIButton *returnedButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[returnedButton setImage:[[self class] backButtonImageWithTitle:aTitle font:nil backgroundColor:nil gradientColors:nil innerShadow:nil border:nil shadow:nil] forState:UIControlStateNormal];
+	[returnedButton setImage:[[self class] backButtonImageWithTitle:aTitle font:nil backgroundColor:nil gradientColors:[NSArray arrayWithObjects:
 		(id)[UIColor colorWithRed:1 green:1 blue:1 alpha:.75].CGColor,
 		(id)[UIColor colorWithRed:.4 green:.4 blue:.4 alpha:.75].CGColor,
-	
 	nil] innerShadow:nil border:nil shadow:nil] forState:UIControlStateHighlighted];
-		
-	//	[returnedButton setAdjustsImageWhenHighlighted:NO];
-		
-		[returnedButton sizeToFit];
-		
-		return returnedButton;
+	[returnedButton sizeToFit];
 	
-	})()) wiredAction:nil];
+	return [self itemWithButton:returnedButton  wiredAction:nil];
+
+}
+
++ (id) itemWithTitle:(NSString *)aTitle tintColor:(UIColor *)aColor {
+
+	UIButton *returnedButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[returnedButton setImage:[[self class] buttonImageForStyle:IRBarButtonItemStyleBordered withTitle:aTitle font:nil backgroundColor:nil gradientColors:nil innerShadow:nil border:nil shadow:nil] forState:UIControlStateNormal];
+	[returnedButton setImage:[[self class] buttonImageForStyle:IRBarButtonItemStyleBordered withTitle:aTitle font:nil backgroundColor:nil gradientColors:[NSArray arrayWithObjects:
+		(id)[UIColor colorWithRed:1 green:1 blue:1 alpha:.75].CGColor,
+		(id)[UIColor colorWithRed:.4 green:.4 blue:.4 alpha:.75].CGColor,
+	nil] innerShadow:nil border:nil shadow:nil] forState:UIControlStateHighlighted];
+	[returnedButton sizeToFit];
 	
-	return returnedItem;
+	return [self itemWithButton:returnedButton  wiredAction:nil];
 
 }
 
@@ -95,7 +96,14 @@
 
 
 + (UIImage *) backButtonImageWithTitle:(NSString *)aTitle font:(UIFont *)fontOrNil backgroundColor:(UIColor *)backgroundColorOrNil gradientColors:(NSArray *)backgroundGradientColorsOrNil innerShadow:(IRShadow *)innerShadowOrNil border:(IRBorder *)borderOrNil shadow:(IRShadow *)shadowOrNil {
+	
+	return [self buttonImageForStyle:IRBarButtonItemStyleBack withTitle:aTitle font:fontOrNil backgroundColor:backgroundColorOrNil gradientColors:backgroundGradientColorsOrNil innerShadow:innerShadowOrNil border:borderOrNil shadow:shadowOrNil];
 
+}
+
++ (UIImage *) buttonImageForStyle:(IRBarButtonItemStyle)aStyle withTitle:(NSString *)aTitle font:(UIFont *)fontOrNil backgroundColor:(UIColor *)backgroundColorOrNil gradientColors:(NSArray *)backgroundGradientColorsOrNil innerShadow:(IRShadow *)innerShadowOrNil border:(IRBorder *)borderOrNil shadow:(IRShadow *)shadowOrNil {
+
+	NSString *usingTitle = aTitle ? aTitle : @"";
 	UIFont *usingFont = fontOrNil ? fontOrNil : [UIFont boldSystemFontOfSize:12.0f];
 	UIColor *buttonBackgroundColor = backgroundColorOrNil ? backgroundColorOrNil : [UIColor colorWithWhite:0.35f alpha:1];
 	IRShadow *buttonShadow = shadowOrNil ? shadowOrNil : [IRShadow shadowWithColor:[UIColor colorWithWhite:1 alpha:0.5] offset:(CGSize){ 0, 1 } spread:0.5];
@@ -109,50 +117,71 @@
 	IRShadow *buttonInnerShadow = [IRShadow shadowWithColor:[UIColor colorWithWhite:0 alpha:0.5] offset:(CGSize){ 0, 1 } spread:2];
 	IRBorder *buttonBorder = [IRBorder borderForEdge:IREdgeNone withType:IRBorderTypeInset width:1.0 color:[UIColor colorWithWhite:0.35 alpha:1]];
 	
-	static const UIEdgeInsets insets = (UIEdgeInsets){ 0, 12, 0, 8 };
-	static const CGFloat cornerRadius = 6;
-	static const CGFloat slopeSize = 2;
+	UIEdgeInsets insets;
 	static const CGFloat buttonHeight = 29.0;
 	
-	CGSize titleSize = [aTitle sizeWithFont:usingFont];
-	CGSize finalSize = (CGSize){ titleSize.width + 20 + 8, 44.0f };
-
+	CGSize titleSize = [usingTitle sizeWithFont:usingFont];
+	CGSize finalSize;
+	
+	UIBezierPath *bezierPath = nil;
+	
+	switch (aStyle) {
+	
+		case IRBarButtonItemStyleBack: {
+		
+			static const CGFloat cornerRadius = 6;
+			static const CGFloat slopeSize = 2;
+			insets = (UIEdgeInsets){ 0, 12, 0, 6 };
+			finalSize = (CGSize){ titleSize.width + 20 + 8, 44.0f };
+			bezierPath = [UIBezierPath bezierPath];
+			
+			[bezierPath moveToPoint:CGPointZero];		
+			[bezierPath addLineToPoint:(CGPoint){ insets.left - slopeSize, -1 * (0.5 * buttonHeight - slopeSize) }];		
+			[bezierPath addQuadCurveToPoint:(CGPoint){ insets.left + slopeSize, -1 * (0.5 * buttonHeight) }
+												 controlPoint:(CGPoint){ insets.left, -1 * (0.5 * buttonHeight) }];
+			[bezierPath addLineToPoint:(CGPoint){ finalSize.width - insets.right - cornerRadius, -1 * (0.5 * buttonHeight) }];
+			[bezierPath addQuadCurveToPoint:(CGPoint){ finalSize.width - insets.right, -1 * (0.5 * buttonHeight - cornerRadius) }
+												 controlPoint:(CGPoint){ finalSize.width - insets.right, -1 * (0.5 * buttonHeight) }];
+			[bezierPath addLineToPoint:(CGPoint){ finalSize.width - insets.right, 1 * (0.5 * buttonHeight - cornerRadius) }];
+			[bezierPath addQuadCurveToPoint:(CGPoint){ finalSize.width - insets.right - cornerRadius, 1 * (0.5 * buttonHeight) }
+												 controlPoint:(CGPoint){ finalSize.width - insets.right, 1 * (0.5 * buttonHeight) }];
+			[bezierPath addLineToPoint:(CGPoint){ insets.left + slopeSize, 1 * (0.5 * buttonHeight) }];
+			[bezierPath addQuadCurveToPoint:(CGPoint){ insets.left - slopeSize, 1 * (0.5 * buttonHeight - slopeSize) }
+												 controlPoint:(CGPoint){ insets.left, 1 * (0.5 * buttonHeight) }];
+			[bezierPath addLineToPoint:CGPointZero];
+			[bezierPath applyTransform:CGAffineTransformMakeTranslation(0, -0.5 + 0.5 * finalSize.height)];
+			
+			break;
+		
+		};
+		
+		case IRBarButtonItemStyleBordered: {
+		
+			static const CGFloat cornerRadius = 6;
+			insets = (UIEdgeInsets){ 0, 4, 0, 4 };
+			finalSize = (CGSize){ titleSize.width + 20, 44.0f };
+			bezierPath = [UIBezierPath bezierPathWithRoundedRect:(CGRect){
+				(CGPoint){
+					insets.left,
+					floorf(0.5 * (finalSize.height - buttonHeight))
+				},
+				(CGSize){
+					finalSize.width - insets.left - insets.right,
+					buttonHeight
+				}
+			} cornerRadius:cornerRadius];
+			
+			break;
+		
+		};
+		
+		default:
+			break;
+	
+	}
+	
 	UIGraphicsBeginImageContextWithOptions(finalSize, NO, 0.0);
 	CGContextRef context = UIGraphicsGetCurrentContext();
-	
-	UIBezierPath *bezierPath = (( ^ {
-	
-		UIBezierPath *bezierPath = [UIBezierPath bezierPath];
-		
-		[bezierPath moveToPoint:CGPointZero];
-		
-		[bezierPath addLineToPoint:(CGPoint){ insets.left - slopeSize, -1 * (0.5 * buttonHeight - slopeSize) }];
-		
-		[bezierPath addQuadCurveToPoint:(CGPoint){ insets.left + slopeSize, -1 * (0.5 * buttonHeight) }
-		                   controlPoint:(CGPoint){ insets.left, -1 * (0.5 * buttonHeight) }];
-		
-		[bezierPath addLineToPoint:(CGPoint){ finalSize.width - insets.right - cornerRadius, -1 * (0.5 * buttonHeight) }];
-		
-		[bezierPath addQuadCurveToPoint:(CGPoint){ finalSize.width - insets.right, -1 * (0.5 * buttonHeight - cornerRadius) }
-											 controlPoint:(CGPoint){ finalSize.width - insets.right, -1 * (0.5 * buttonHeight) }];
-		
-		[bezierPath addLineToPoint:(CGPoint){ finalSize.width - insets.right, 1 * (0.5 * buttonHeight - cornerRadius) }];
-		
-		[bezierPath addQuadCurveToPoint:(CGPoint){ finalSize.width - insets.right - cornerRadius, 1 * (0.5 * buttonHeight) }
-											 controlPoint:(CGPoint){ finalSize.width - insets.right, 1 * (0.5 * buttonHeight) }];
-		
-		[bezierPath addLineToPoint:(CGPoint){ insets.left + slopeSize, 1 * (0.5 * buttonHeight) }];
-
-		[bezierPath addQuadCurveToPoint:(CGPoint){ insets.left - slopeSize, 1 * (0.5 * buttonHeight - slopeSize) }
-		                   controlPoint:(CGPoint){ insets.left, 1 * (0.5 * buttonHeight) }];
-		
-		[bezierPath addLineToPoint:CGPointZero];
-		
-		[bezierPath applyTransform:CGAffineTransformMakeTranslation(0, -0.5 + 0.5 * finalSize.height)];
-		
-		return bezierPath;
-	
-	})());
 	
 	if (buttonShadow) {
 	
@@ -217,13 +246,16 @@
 	
 	}
 	
-	if (aTitle) {
+	if (usingTitle) {
+	
+		
+	
+		CGRect titleRect = (CGRect){ (CGPoint){ insets.left + floorf(0.5 * (finalSize.width - insets.left - insets.right - titleSize.width)), floorf(0.5 * (finalSize.height - titleSize.height)) }, finalSize };
 	
 		CGContextSaveGState(context);
 		CGContextSetShadowWithColor(context, (CGSize){ 0, 1 }, 0, [UIColor colorWithWhite:1 alpha:0.5].CGColor);
 		CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:0.2 alpha:1].CGColor);
-		CGRect titleRect = (CGRect){ (CGPoint){ insets.left + 2, floorf(0.5 * (finalSize.height - titleSize.height)) }, finalSize };
-		[aTitle drawInRect:titleRect withFont:usingFont];
+		[usingTitle drawInRect:titleRect withFont:usingFont];
 		CGContextRestoreGState(context);
 	
 	}
