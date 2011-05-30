@@ -118,6 +118,7 @@
 	IRBorder *buttonBorder = [IRBorder borderForEdge:IREdgeNone withType:IRBorderTypeInset width:1.0 color:[UIColor colorWithWhite:0.35 alpha:1]];
 	
 	UIEdgeInsets insets;
+	CGPoint titleOffset = CGPointZero;
 	static const CGFloat buttonHeight = 29.0;
 	
 	CGSize titleSize = [usingTitle sizeWithFont:usingFont];
@@ -130,10 +131,11 @@
 		case IRBarButtonItemStyleBack: {
 		
 			static const CGFloat cornerRadius = 6;
-			static const CGFloat slopeSize = 2;
-			insets = (UIEdgeInsets){ 0, 12, 0, 6 };
-			finalSize = (CGSize){ titleSize.width + 20 + 8, 44.0f };
+			static const CGFloat slopeSize = 3;
+			insets = (UIEdgeInsets){ 0, 12, 0, 7 };
+			finalSize = (CGSize){ titleSize.width + 16 + 8, 44.0f };
 			bezierPath = [UIBezierPath bezierPath];
+			titleOffset = (CGPoint){ -2, 0 };
 			
 			[bezierPath moveToPoint:CGPointZero];		
 			[bezierPath addLineToPoint:(CGPoint){ insets.left - slopeSize, -1 * (0.5 * buttonHeight - slopeSize) }];		
@@ -248,12 +250,21 @@
 	
 	if (usingTitle) {
 	
+		CGContextSetAllowsAntialiasing(context, YES);
+		CGContextSetShouldAntialias(context, YES);
 		
+		CGContextSetAllowsFontSmoothing(context, YES);
+		CGContextSetShouldSmoothFonts(context, YES);
 	
-		CGRect titleRect = (CGRect){ (CGPoint){ insets.left + floorf(0.5 * (finalSize.width - insets.left - insets.right - titleSize.width)), floorf(0.5 * (finalSize.height - titleSize.height)) }, finalSize };
+		CGRect titleRect = (CGRect){
+			(CGPoint){
+				titleOffset.x + insets.left + floorf(0.5 * (finalSize.width - insets.left - insets.right - titleSize.width)), 
+				titleOffset.y + floorf(0.5 * (finalSize.height - titleSize.height))
+			}, finalSize
+		};
 	
 		CGContextSaveGState(context);
-		CGContextSetShadowWithColor(context, (CGSize){ 0, 1 }, 0, [UIColor colorWithWhite:1 alpha:0.5].CGColor);
+		CGContextSetShadowWithColor(context, (CGSize){ 0, 1 }, 0, [UIColor colorWithWhite:1 alpha:0.65f].CGColor);
 		CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:0.2 alpha:1].CGColor);
 		[usingTitle drawInRect:titleRect withFont:usingFont];
 		CGContextRestoreGState(context);
