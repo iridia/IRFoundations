@@ -38,7 +38,7 @@
 	
 		case IRBusyViewStyleDefaultSpinner: {
 		
-			IRActivityIndicatorView *activityIndicator = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
+			IRActivityIndicatorView *activityIndicator = [[[IRActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
 			activityIndicator.hidesWhenStopped = YES;	
 			activityIndicator.animating = NO;
 			activityIndicator.userInteractionEnabled = NO;
