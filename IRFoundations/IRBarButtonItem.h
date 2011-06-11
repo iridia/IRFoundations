@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IRShadow.h"
+#import "IRBorder.h"
 
+enum {
+	IRBarButtonItemStyleBordered = 1,
+	IRBarButtonItemStyleBack = 2
+}; typedef NSUInteger IRBarButtonItemStyle;
 
 @interface IRBarButtonItem : UIBarButtonItem
 
@@ -17,6 +23,12 @@
 - (IBAction) handleCustomButtonAction:(id)sender; // button will be wired to the item, which runs the block
 
 + (id) itemWithSystemItem:(UIBarButtonSystemItem)aSystemItem wiredAction:(void(^)(IRBarButtonItem *senderItem))aBlock;
+
++ (UIImage *) buttonImageForStyle:(IRBarButtonItemStyle)aStyle withTitle:(NSString *)aTitle font:(UIFont *)fontOrNil backgroundColor:(UIColor *)backgroundColorOrNil gradientColors:(NSArray *)backgroundGradientColorsOrNil innerShadow:(IRShadow *)innerShadowOrNil border:(IRBorder *)borderOrNil shadow:(IRShadow *)shadowOrNil;
++ (UIImage *) backButtonImageWithTitle:(NSString *)aTitle font:(UIFont *)fontOrNil backgroundColor:(UIColor *)backgroundColorOrNil gradientColors:(NSArray *)backgroundGradientColorsOrNil innerShadow:(IRShadow *)innerShadowOrNil border:(IRBorder *)borderOrNil shadow:(IRShadow *)shadowOrNil; // Typical exhibitionism
+
++ (id) backItemWithTitle:(NSString *)aTitle tintColor:(UIColor *)aColor; // actually *drawn* image
++ (id) itemWithTitle:(NSString *)aTitle tintColor:(UIColor *)aColor; // actually *drawn* image
 
 @property (nonatomic, readwrite, copy) void (^block)();
 

@@ -287,6 +287,15 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 
 }
 
+- (void) irShuffle {
+
+	unsigned int count = [self count];
+	
+	for (unsigned int i = 0; i < count; ++i)
+	[self exchangeObjectAtIndex:i withObjectAtIndex:((arc4random() % (count - i)) + i)];
+
+}
+
 @end
 
 

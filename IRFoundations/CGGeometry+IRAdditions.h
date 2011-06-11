@@ -17,7 +17,7 @@
 
 typedef enum { irCenter, irTop, irTopRight, irRight, irBottomRight, irBottom, irBottomLeft, irLeft, irTopLeft } IRAnchor;
 typedef enum { irUnflipped = NO, irFlipped = YES } irFlipping;
-typedef enum { IRBorderTypeInset, IRBorderTypeNormal, IRBorderTypeOutset } IRBorderType;
+enum { IRBorderTypeInset = 1, IRBorderTypeNormal = 0, IRBorderTypeOutset = -1 }; typedef NSUInteger IRBorderType;
 typedef CGPoint IRDelta;
 
 enum {
@@ -179,7 +179,7 @@ extern NSString* irDumpImpl (const char *encodedString, void * aPointer);
 
 #define irCGRectWithRectAndOrigin(aRect, anOrigin) ((CGRect){ anOrigin, aRect.size });
 
-#define IRCGRectGetInsetRect(aRect, aPadding) CGRectInset(aRect, thePadding, thePadding)
+#define IRCGRectGetInsetRect(aRect, aPadding) CGRectInset(aRect, aPadding, aPadding)
 
 #define IRCGRectMoveToPoint irCGRectWithRectAndOrigin
 #define IRCGRectTranslate CGRectOffset

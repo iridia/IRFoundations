@@ -85,6 +85,10 @@
 		FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6E1133E3526008C8DDA /* IRBusyView.h */; };
 		FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6E2133E3526008C8DDA /* IRBusyView.m */; };
 		FFD295C313A40E9200EA8213 /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		FF94EF6F135117D100FE79D4 /* IRBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = FF94EF6D135117D100FE79D4 /* IRBorder.h */; };
+		FF94EF70135117D100FE79D4 /* IRBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = FF94EF6E135117D100FE79D4 /* IRBorder.m */; };
+		FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */; };
+		FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -193,6 +197,10 @@
 		FF27A6E1133E3526008C8DDA /* IRBusyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBusyView.h; sourceTree = "<group>"; };
 		FF27A6E2133E3526008C8DDA /* IRBusyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBusyView.m; sourceTree = "<group>"; };
 		FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libxml2.2.7.3.dylib; sourceTree = DEVELOPER_DIR; };
+		FF94EF6D135117D100FE79D4 /* IRBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBorder.h; sourceTree = "<group>"; };
+		FF94EF6E135117D100FE79D4 /* IRBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBorder.m; sourceTree = "<group>"; };
+		FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAlertView.h; sourceTree = "<group>"; };
+		FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +264,8 @@
 				FF0A8CEE1337B36A00DDA47C /* QuartzCore+IRAdditions.m */,
 				FF0A8CEF1337B36A00DDA47C /* IRStaticShapeView.h */,
 				FF0A8CF01337B36A00DDA47C /* IRStaticShapeView.m */,
+				FF94EF6D135117D100FE79D4 /* IRBorder.h */,
+				FF94EF6E135117D100FE79D4 /* IRBorder.m */,
 				FF0A8CF11337B36A00DDA47C /* IRShadow.h */,
 				FF0A8CF21337B36A00DDA47C /* IRShadow.m */,
 				FF0A8CF31337B36A00DDA47C /* IRView.h */,
@@ -283,6 +293,8 @@
 			isa = PBXGroup;
 			children = (
 				FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */,
+				FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */,
+				FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */,
 				FF0A8D001337B36A00DDA47C /* IRWebView.h */,
 				FF0A8D011337B36A00DDA47C /* IRWebView.m */,
 				FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */,
@@ -389,6 +401,8 @@
 				FF0A8E7E1337B8CF00DDA47C /* IRTintedBarButtonItem.h in Headers */,
 				FF27A6AB133E2C16008C8DDA /* IRBarButtonItem.h in Headers */,
 				FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */,
+				FF94EF6F135117D100FE79D4 /* IRBorder.h in Headers */,
+				FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,6 +495,8 @@
 				FF0A8E7F1337B8CF00DDA47C /* IRTintedBarButtonItem.m in Sources */,
 				FF27A6AC133E2C16008C8DDA /* IRBarButtonItem.m in Sources */,
 				FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */,
+				FF94EF70135117D100FE79D4 /* IRBorder.m in Sources */,
+				FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +507,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 			};
 			name = Debug;
 		};
@@ -498,6 +518,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 			};
 			name = Release;
 		};

@@ -64,6 +64,7 @@ extern void IRLogExceptionAndContinue (void(^)(void));
 @interface NSMutableArray (IRAdditions)
 
 - (void) irEnqueueBlock:(void(^)(void))aBlock; // makes an autoreleased copy then enqueues
+- (void) irShuffle;
 
 @end
 

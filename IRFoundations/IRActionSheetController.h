@@ -15,7 +15,7 @@
 
 + (IRActionSheetController *) actionSheetControllerWithTitle:(NSString *)aTitle cancelAction:(IRAction *)cancellationAction destructiveAction:(IRAction *)destructionAction otherActions:(NSArray *)otherActionsOrNil;
 
-- (UIActionSheet *) singleUseActionSheet;
+- (IRActionSheet *) singleUseActionSheet;
 
 @property (nonatomic, readwrite, copy) NSString *title;
 @property (nonatomic, readwrite, retain) IRAction *cancellationAction;
