@@ -61,4 +61,23 @@
 
 }
 
+- (void) setBlock:(void (^)())newBlock {
+
+	if (newBlock == self.block)
+	return;
+	
+	[self willChangeValueForKey:@"block"];
+	
+	[block release];
+	block = [newBlock copy];
+	
+	[self didChangeValueForKey:@"block"];
+	
+	if (newBlock) {
+		self.target = self;
+		self.action = @selector(handleCustomButtonAction:);
+	}
+
+}
+
 @end
