@@ -11,7 +11,7 @@
 
 @interface IRConcaveView ()
 
-- (void) configure;
+- (void) irConfigure;
 
 @end
 
@@ -24,7 +24,7 @@
 	self = [super initWithFrame:frame];
 	if (!self) return nil;
 	
-	[self configure];
+	[self irConfigure];
 	
 	return self;
 
@@ -35,23 +35,23 @@
 	self = [super initWithCoder:aDecoder];
 	if (!self) return nil;
 	
-	[self configure];
+	[self irConfigure];
 	
 	return self;
 
 }
 
-- (void) configure {
+- (void) irConfigure {
 
 	self.opaque = NO;
-
 	self.innerShadow = [IRShadow shadowWithColor:[UIColor colorWithWhite:0 alpha:1] offset:CGSizeMake(0, 1) spread:6 edgeInsets:UIEdgeInsetsMake(-1, -1, -1, -1)];
 
 }
 
 - (void) dealloc {
 
-	self.innerShadow = nil;
+	[innerShadow release];
+	[super dealloc];
 
 }
 

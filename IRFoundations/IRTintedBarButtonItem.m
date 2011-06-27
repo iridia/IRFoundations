@@ -29,7 +29,6 @@
 	control.segmentedControlStyle = UISegmentedControlStyleBar;
 	control.momentary = YES;
 	
-	
 	IRTintedBarButtonItem *returnedItem = [[[self alloc] initWithCustomView:control] autorelease];
 	
 	[control addTarget:returnedItem action:@selector(irHandleSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];

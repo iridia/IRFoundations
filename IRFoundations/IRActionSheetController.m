@@ -79,7 +79,7 @@
 
 }
 
-- (UIActionSheet *) singleUseActionSheet {
+- (IRActionSheet *) singleUseActionSheet {
 
 	IRActionSheet *returnedActionSheet = [[IRActionSheet alloc] initWithTitle:self.title delegate:self cancelButtonTitle:self.cancellationAction.title destructiveButtonTitle:self.destructionAction.title otherButtonTitles:nil];
 	
@@ -90,7 +90,7 @@
 
 }
 
-- (UIActionSheet *) managedActionSheet {
+- (IRActionSheet *) managedActionSheet {
 
 	if (!managedActionSheet) {
 	
