@@ -517,6 +517,7 @@
 					"-ObjC",
 					"-all_load",
 				);
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -528,6 +529,7 @@
 					"-ObjC",
 					"-all_load",
 				);
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
