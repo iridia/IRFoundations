@@ -86,6 +86,8 @@
 		FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6E2133E3526008C8DDA /* IRBusyView.m */; };
 		FF94EF6F135117D100FE79D4 /* IRBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = FF94EF6D135117D100FE79D4 /* IRBorder.h */; };
 		FF94EF70135117D100FE79D4 /* IRBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = FF94EF6E135117D100FE79D4 /* IRBorder.m */; };
+		FFA8EB4F13B9ABB80082D789 /* IRRelativeDateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */; };
+		FFA8EB5013B9ABB80082D789 /* IRRelativeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */; };
 		FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */; };
 		FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */; };
 /* End PBXBuildFile section */
@@ -198,6 +200,8 @@
 		FF27A6E2133E3526008C8DDA /* IRBusyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBusyView.m; sourceTree = "<group>"; };
 		FF94EF6D135117D100FE79D4 /* IRBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBorder.h; sourceTree = "<group>"; };
 		FF94EF6E135117D100FE79D4 /* IRBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBorder.m; sourceTree = "<group>"; };
+		FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRRelativeDateFormatter.h; sourceTree = "<group>"; };
+		FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRRelativeDateFormatter.m; sourceTree = "<group>"; };
 		FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAlertView.h; sourceTree = "<group>"; };
 		FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -251,6 +255,8 @@
 				FF0A8C9C1337B29F00DDA47C /* IRXPathQuery.m */,
 				FF0A8C9D1337B29F00DDA47C /* IRHTMLStringFormatter.h */,
 				FF0A8C9E1337B29F00DDA47C /* IRHTMLStringFormatter.m */,
+				FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */,
+				FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */,
 			);
 			name = "Foundation+IRAdditions";
 			sourceTree = "<group>";
@@ -401,6 +407,7 @@
 				FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */,
 				FF94EF6F135117D100FE79D4 /* IRBorder.h in Headers */,
 				FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */,
+				FFA8EB4F13B9ABB80082D789 /* IRRelativeDateFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,6 +502,7 @@
 				FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */,
 				FF94EF70135117D100FE79D4 /* IRBorder.m in Sources */,
 				FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */,
+				FFA8EB5013B9ABB80082D789 /* IRRelativeDateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
