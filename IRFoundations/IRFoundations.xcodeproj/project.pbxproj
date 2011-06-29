@@ -89,6 +89,8 @@
 		FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */; };
 		FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */; };
 		FFD295C313A40E9200EA8213 /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		FFA8EB4F13B9ABB80082D789 /* IRRelativeDateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */; };
+		FFA8EB5013B9ABB80082D789 /* IRRelativeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */; };
 		FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */; };
 		FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */; };
 /* End PBXBuildFile section */
@@ -203,6 +205,8 @@
 		FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRPaginatedView.h; sourceTree = "<group>"; };
 		FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPaginatedView.m; sourceTree = "<group>"; };
 		FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libxml2.2.7.3.dylib; sourceTree = DEVELOPER_DIR; };
+		FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRRelativeDateFormatter.h; sourceTree = "<group>"; };
+		FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRRelativeDateFormatter.m; sourceTree = "<group>"; };
 		FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAlertView.h; sourceTree = "<group>"; };
 		FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -257,6 +261,8 @@
 				FF0A8C9C1337B29F00DDA47C /* IRXPathQuery.m */,
 				FF0A8C9D1337B29F00DDA47C /* IRHTMLStringFormatter.h */,
 				FF0A8C9E1337B29F00DDA47C /* IRHTMLStringFormatter.m */,
+				FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */,
+				FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */,
 			);
 			name = "Foundation+IRAdditions";
 			sourceTree = "<group>";
@@ -410,6 +416,7 @@
 				FF94EF6F135117D100FE79D4 /* IRBorder.h in Headers */,
 				FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */,
 				FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */,
+				FFA8EB4F13B9ABB80082D789 /* IRRelativeDateFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +512,7 @@
 				FF94EF70135117D100FE79D4 /* IRBorder.m in Sources */,
 				FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */,
 				FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */,
+				FFA8EB5013B9ABB80082D789 /* IRRelativeDateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +528,7 @@
 					"-all_load",
 				);
 				SDKROOT = iphoneos4.3;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -532,14 +541,16 @@
 					"-all_load",
 				);
 				SDKROOT = iphoneos4.3;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
 		FF0A8BAB1337AFB700DDA47C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -553,8 +564,9 @@
 		FF0A8BAC1337AFB700DDA47C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
