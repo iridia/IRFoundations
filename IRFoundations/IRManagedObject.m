@@ -360,6 +360,16 @@
 
 }
 
+
+
+
+
++ (NSEntityDescription *) entityDescriptionForContext:(NSManagedObjectContext *)aContext {
+
+	return [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:aContext];
+
+}
+
 @end
 
 

@@ -31,7 +31,7 @@
 
 @implementation IRTransparentToolbar
 
-@synthesize delegate, leftPadding, itemPadding, rightPadding;
+@synthesize delegate, leftPadding, itemPadding, rightPadding, usesCustomLayout;
 
 
 
@@ -67,6 +67,7 @@
 	self.leftPadding = 12;
 	self.itemPadding = 10;
 	self.rightPadding = 12;
+	self.usesCustomLayout = YES;
 
 	return self;
 
@@ -106,6 +107,9 @@
 - (void) layoutSubviews {
 
 	[super layoutSubviews];
+	
+	if (!self.usesCustomLayout)
+	return;
 	
 	[self squashStretchableItems];
 	
