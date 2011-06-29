@@ -85,6 +85,9 @@
 
 //	Makes a new object, inserting into the context, then call its -configureWithRemoteDictionary:.
 
+
++ (NSEntityDescription *) entityDescriptionForContext:(NSManagedObjectContext *)aContext;
+
 @end
 
 

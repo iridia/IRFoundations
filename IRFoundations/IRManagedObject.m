@@ -360,6 +360,16 @@
 
 }
 
+
+
+
+
++ (NSEntityDescription *) entityDescriptionForContext:(NSManagedObjectContext *)aContext {
+
+	return [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:aContext];
+
+}
+
 @end
 
 
@@ -434,7 +444,7 @@
 	
 		id aRemoteValueOrNil = [inDictionary valueForKeyPath:aRemoteKeyPath];
 	
-	//	A remote dictionary at the end means that it is a composite representation, not to be assigned as a property value
+		//	A remote dictionary at the end means that it is a composite representation, not to be assigned as a property value
 		if ([aRemoteValueOrNil isKindOfClass:[NSDictionary class]])
 		continue;
 		

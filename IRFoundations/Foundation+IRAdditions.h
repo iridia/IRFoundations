@@ -12,8 +12,8 @@
 #import "IRBindings.h"
 #import "IRObservings.h"
 #import "IRXPathQuery.h"
-
 #import "IRHTMLStringFormatter.h"
+#import "IRRelativeDateFormatter.h"
 
 #import "CGGeometry+IRAdditions.h"
 
