@@ -17,7 +17,7 @@
 + (NSString *) stringRepresentationForValueOfCalendarUnit:(NSCalendarUnit)inCalendarUnit dateComponents:(NSDateComponents *)inDateComponents;
 + (NSArray *) stringRepresentationFormatterStringsforCalendarUnit:(NSCalendarUnit)inCalendarUnit past:(BOOL)inRepresentingDateInThePast;
 
-+ (NSString *) wrappedStringRepresentationForString:(NSString *)inString representingDateInPast:(BOOL)isRepresentingDateInPast;	//	NO for future dates
++ (NSString *) wrappedStringRepresentationForString:(NSString *)inString representedDateTimepoint:(IRDateTimepoint)timePoint;	//	NO for future dates
 
 @end
 
@@ -139,12 +139,16 @@ static IRRelativeDateFormatter* IRRelativeDateFormatterSharedFormatter;
 
 }
 
-+ (NSString *) wrappedStringRepresentationForString:(NSString *)inString representingDateInPast:(BOOL)isRepresentingDateInPast {
++ (NSString *) wrappedStringRepresentationForString:(NSString *)inString representedDateTimepoint:(IRDateTimepoint)timePoint {
 
-	if (isRepresentingDateInPast)
-	return [NSString stringWithFormat:@"%@ ago", inString];
-	
-	return [NSString stringWithFormat:@"%@ later", inString];
+	switch (timePoint) {
+  case IRDateTimepointPast:
+		return [NSString stringWithFormat:@"%@ ago", inString];
+  case IRDateTimepointNow:
+		return inString;
+  case IRDateTimepointFuture:
+		return [NSString stringWithFormat:@"%@ later", inString];
+	}
 	
 }
 
@@ -163,10 +167,10 @@ static IRRelativeDateFormatter* IRRelativeDateFormatterSharedFormatter;
 	return nil;
 	
 	NSDate *incomingDate = (NSDate *)obj, *currentDate = [NSDate date];
-	NSTimeInterval dateDelta = [currentDate timeIntervalSinceDate:incomingDate];
+	NSTimeInterval dateDelta = ceilf([currentDate timeIntervalSinceDate:incomingDate]);
 	
-	if (dateDelta == 0)
-	return @"Just Now";
+	if (dateDelta <= 5)
+	return [[self class] wrappedStringRepresentationForString:@"Just Now" representedDateTimepoint:IRDateTimepointNow];
 
 	static NSCalendar *currentCalendar = nil;
 	
@@ -204,7 +208,7 @@ static IRRelativeDateFormatter* IRRelativeDateFormatterSharedFormatter;
 	
 	}
 	
-	return [[self class] wrappedStringRepresentationForString:returnedString representingDateInPast:dateIsInThePast];
+	return [[self class] wrappedStringRepresentationForString:returnedString representedDateTimepoint:(dateIsInThePast ? IRDateTimepointPast : IRDateTimepointFuture)];
 
 }
 
