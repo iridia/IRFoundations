@@ -103,6 +103,18 @@
 
 }
 
+- (void) setFrame:(CGRect)newFrame {
+
+	if (CGRectEqualToRect(newFrame, self.frame))
+		return;
+		
+	[super setFrame:newFrame];
+	
+	[self reloadViews];
+	[self scrollToPageAtIndex:self.currentPage animated:NO];
+	
+}
+
 - (CGRect) pageRectForIndex:(NSUInteger)anIndex {
 
 	return (CGRect){
