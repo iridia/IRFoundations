@@ -83,7 +83,7 @@
 	if ((self.currentPage + 1) <= numberOfPages)
 	[self ensureViewAtIndexVisible:self.currentPage];
 	
-	self.scrollView.contentSize = (CGSize){ CGRectGetWidth(self.scrollView.bounds) * self.numberOfPages + self.horizontalSpacing * (self.numberOfPages + 1), CGRectGetHeight(self.scrollView.bounds) };
+	[self setNeedsLayout];
 
 }
 
@@ -101,6 +101,18 @@
 	[self setNeedsLayout];
 	[self scrollToPageAtIndex:self.currentPage animated:NO];
 
+}
+
+- (void) setFrame:(CGRect)newFrame {
+
+	if (CGRectEqualToRect(newFrame, self.frame))
+		return;
+		
+	[super setFrame:newFrame];
+	
+	[self setNeedsLayout];
+	[self scrollToPageAtIndex:self.currentPage animated:NO];
+	
 }
 
 - (CGRect) pageRectForIndex:(NSUInteger)anIndex {
@@ -239,6 +251,8 @@
 	CGRect newFrame = CGRectInset(self.bounds, -1 * self.horizontalSpacing, 0);
 	if (!CGRectEqualToRect(self.scrollView.frame, newFrame))
 	self.scrollView.frame = newFrame;
+	
+	self.scrollView.contentSize = (CGSize){ CGRectGetWidth(self.scrollView.bounds) * self.numberOfPages + self.horizontalSpacing * (self.numberOfPages + 1), CGRectGetHeight(self.scrollView.bounds) };
 	
 	[self scrollViewDidScroll:self.scrollView];
 	
