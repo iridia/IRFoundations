@@ -141,7 +141,7 @@
 	static const CGFloat buttonHeight = 29.0;
 	
 	CGSize titleSize = [usingTitle sizeWithFont:usingFont];
-	CGSize finalSize;
+	CGSize finalSize = (CGSize){ 0, 0 };
 	
 	UIBezierPath *bezierPath = nil;
 	

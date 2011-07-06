@@ -20,6 +20,15 @@
 #define IRRelativeDateFormatterLocalizedString(key, comment) \
 [[NSBundle bundleForClass:[IRRelativeDateFormatter class]] localizedStringForKey:(key) value:@"" table:@"IRRelativeDateFormatter"]
 
+typedef enum {
+
+	IRDateTimepointPast,
+	IRDateTimepointNow,
+	IRDateTimepointFuture
+
+} IRDateTimepoint;
+
+
 #endif
 
 
