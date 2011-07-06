@@ -241,10 +241,12 @@
 	for (NSString *rootRemoteKeyPath in remoteKeyPathsToClassNames) {
 	
 		Class nodeEntityClass = NSClassFromString([remoteKeyPathsToClassNames objectForKey:rootRemoteKeyPath]);
-
+		
 		NSString *rootLocalKeyPath = [[self remoteDictionaryConfigurationMapping] objectForKey:rootRemoteKeyPath];
+		NSString *nodeLocalKeyPath = [nodeEntityClass keyPathHoldingUniqueValue];
+		NSString *nodeRemoteKeyPath = [[[nodeEntityClass remoteDictionaryConfigurationMapping] allKeysForObject:nodeLocalKeyPath] objectAtIndex:0];
 	
-	//	Skip if the local key path is not mappable
+		//	Skip if the local key path is not mappable
 		if (!rootLocalKeyPath) {
 		
 			[NSException raise:NSInternalInconsistencyException format:@"A remote mapping %@ -> %@ is not found, using mapping %@", rootRemoteKeyPath, NSStringFromClass(nodeEntityClass), [self remoteDictionaryConfigurationMapping]];
@@ -253,8 +255,8 @@
 			
 		}
 		
-		NSString *nodeLocalKeyPath = [nodeEntityClass keyPathHoldingUniqueValue];
-		NSString *nodeRemoteKeyPath = [[[nodeEntityClass remoteDictionaryConfigurationMapping] allKeysForObject:nodeLocalKeyPath] objectAtIndex:0];
+		NSParameterAssert(nodeLocalKeyPath);
+		NSParameterAssert(nodeRemoteKeyPath);
 		
 		NSArray *nodeRepresentations = [inRemoteDictionaries irMap:irMapMakeWithKeyPath(rootRemoteKeyPath)];
 		NSArray *entityRepresentations = [nodeRepresentations irFlatten];
@@ -273,40 +275,35 @@
 			if (relatedNodesCount == 0)
 			return;
 			
-			NSAssert(!([rootLocalKeyPath isEqual:[NSNull null]] || !rootLocalKeyPath), @"local key path for remote key path %@ can’t be null or nil.", rootRemoteKeyPath);
+			if ([rootLocalKeyPath isEqual:[NSNull null]] || !rootLocalKeyPath)
+				[NSException raise:NSInternalInconsistencyException format:@"Local key path for remote key path %@ can’t be null or nil.", rootRemoteKeyPath];
 			
 			NSArray *relatedEntities = [nodeEntities subarrayWithRange:NSMakeRange(consumedNodeEntities, relatedNodesCount)];
 			
+			NSParameterAssert(rootLocalKeyPath);
+			
+			[baseObject willChangeValueForKey:rootLocalKeyPath];
+			
 			if (relationIsToMany) {
-			
 				[[baseObject mutableSetValueForKeyPath:rootLocalKeyPath] addObjectsFromArray:relatedEntities];
-			
 			} else {
 			
 				[baseObject setValue:[relatedEntities objectAtIndex:0] forKeyPath:rootLocalKeyPath];
 			
 			}
 			
+			[baseObject didChangeValueForKey:rootLocalKeyPath];
+			
 			consumedNodeEntities += relatedNodesCount;
 			
-#if 0 && defined(DEBUG)
-
-		//	If you pass multiple representations of an identical object, you will surely get a lot of identical objects (same pointer!) so we will use a NSSet to check it out.
-
 			if (!(relationIsToMany || (!relationIsToMany && (relatedNodesCount == 1))))
-			if ([[NSSet setWithArray:nodeEntities] count] != 1) {
-			
-				NSAssert(NO, @"A to-one relationship has multiple related entities.");
-				
-			}
-			
-#endif
+			if ([[NSSet setWithArray:nodeEntities] count] != 1)
+				[NSException raise:NSInternalInconsistencyException format:@"A to-one relationship can’t have multiple related entities."];
 		
 		}];
 		
-		
 		if (consumedNodeEntities != [nodeEntities count])
-		[NSException raise:NSInternalInconsistencyException format:@"%s expects to exhaust all entities.", __PRETTY_FUNCTION__];
+			[NSException raise:NSInternalInconsistencyException format:@"%s expects to exhaust all entities.", __PRETTY_FUNCTION__];
 		
 	}
 	
