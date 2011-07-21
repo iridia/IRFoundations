@@ -31,3 +31,5 @@
 #import "IRTintedBarButtonItem.h"
 
 #import "IRBusyView.h"
+
+#import "IRImageUnarchiveFromDataTransformer.h"
