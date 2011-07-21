@@ -90,6 +90,8 @@
 		FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */; };
 		FF9737E313D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = FF9737E113D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h */; };
 		FF9737E413D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9737E213D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m */; };
+		FF97382813D82496003D1722 /* IRDataStore.h in Headers */ = {isa = PBXBuildFile; fileRef = FF97382613D82496003D1722 /* IRDataStore.h */; };
+		FF97382913D82496003D1722 /* IRDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FF97382713D82496003D1722 /* IRDataStore.m */; };
 		FFA8EB4F13B9ABB80082D789 /* IRRelativeDateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */; };
 		FFA8EB5013B9ABB80082D789 /* IRRelativeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */; };
 		FFD295C313A40E9200EA8213 /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -208,6 +210,8 @@
 		FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPaginatedView.m; sourceTree = "<group>"; };
 		FF9737E113D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRImageUnarchiveFromDataTransformer.h; sourceTree = "<group>"; };
 		FF9737E213D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRImageUnarchiveFromDataTransformer.m; sourceTree = "<group>"; };
+		FF97382613D82496003D1722 /* IRDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRDataStore.h; sourceTree = "<group>"; };
+		FF97382713D82496003D1722 /* IRDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRDataStore.m; sourceTree = "<group>"; };
 		FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRRelativeDateFormatter.h; sourceTree = "<group>"; };
 		FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRRelativeDateFormatter.m; sourceTree = "<group>"; };
 		FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libxml2.2.7.3.dylib; sourceTree = DEVELOPER_DIR; };
@@ -360,6 +364,8 @@
 			isa = PBXGroup;
 			children = (
 				FF0A8D231337B36A00DDA47C /* CoreData+IRAdditions.h */,
+				FF97382613D82496003D1722 /* IRDataStore.h */,
+				FF97382713D82496003D1722 /* IRDataStore.m */,
 				FF0A8D241337B36A00DDA47C /* IRManagedObject.h */,
 				FF0A8D251337B36A00DDA47C /* IRManagedObject.m */,
 				FF0A8D261337B36A00DDA47C /* IRFetchedResultsController.h */,
@@ -424,6 +430,7 @@
 				FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */,
 				FFA8EB4F13B9ABB80082D789 /* IRRelativeDateFormatter.h in Headers */,
 				FF9737E313D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h in Headers */,
+				FF97382813D82496003D1722 /* IRDataStore.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,6 +528,7 @@
 				FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */,
 				FFA8EB5013B9ABB80082D789 /* IRRelativeDateFormatter.m in Sources */,
 				FF9737E413D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m in Sources */,
+				FF97382913D82496003D1722 /* IRDataStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
