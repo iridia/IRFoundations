@@ -14,3 +14,5 @@
 #import "IRFetchedResultsController.h"
 #import "IRManagedObjectContext.h"
 #import "NSFetchRequest+IRAdditions.h"
+
+#import "IRDataStore.h"
