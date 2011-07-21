@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -86,10 +86,13 @@
 		FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6E2133E3526008C8DDA /* IRBusyView.m */; };
 		FF94EF6F135117D100FE79D4 /* IRBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = FF94EF6D135117D100FE79D4 /* IRBorder.h */; };
 		FF94EF70135117D100FE79D4 /* IRBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = FF94EF6E135117D100FE79D4 /* IRBorder.m */; };
+		FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */; };
+		FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */; };
 		FF9737E313D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = FF9737E113D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h */; };
 		FF9737E413D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9737E213D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m */; };
 		FFA8EB4F13B9ABB80082D789 /* IRRelativeDateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */; };
 		FFA8EB5013B9ABB80082D789 /* IRRelativeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */; };
+		FFD295C313A40E9200EA8213 /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */; };
 		FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */; };
 /* End PBXBuildFile section */
@@ -195,17 +198,19 @@
 		FF0A8E7C1337B8CF00DDA47C /* IRTintedBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRTintedBarButtonItem.h; sourceTree = "<group>"; };
 		FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRTintedBarButtonItem.m; sourceTree = "<group>"; };
 		FF0A8E971337B98900DDA47C /* IRFoundationsFramework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRFoundationsFramework-Info.plist"; sourceTree = "<group>"; };
-		FF0A8EB71337BAD300DDA47C /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = usr/lib/libxml2.2.7.3.dylib; sourceTree = SDKROOT; };
 		FF27A6A9133E2C16008C8DDA /* IRBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBarButtonItem.h; sourceTree = "<group>"; };
 		FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBarButtonItem.m; sourceTree = "<group>"; };
 		FF27A6E1133E3526008C8DDA /* IRBusyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBusyView.h; sourceTree = "<group>"; };
 		FF27A6E2133E3526008C8DDA /* IRBusyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBusyView.m; sourceTree = "<group>"; };
 		FF94EF6D135117D100FE79D4 /* IRBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBorder.h; sourceTree = "<group>"; };
 		FF94EF6E135117D100FE79D4 /* IRBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBorder.m; sourceTree = "<group>"; };
+		FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRPaginatedView.h; sourceTree = "<group>"; };
+		FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPaginatedView.m; sourceTree = "<group>"; };
 		FF9737E113D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRImageUnarchiveFromDataTransformer.h; sourceTree = "<group>"; };
 		FF9737E213D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRImageUnarchiveFromDataTransformer.m; sourceTree = "<group>"; };
 		FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRRelativeDateFormatter.h; sourceTree = "<group>"; };
 		FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRRelativeDateFormatter.m; sourceTree = "<group>"; };
+		FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libxml2.2.7.3.dylib; sourceTree = DEVELOPER_DIR; };
 		FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAlertView.h; sourceTree = "<group>"; };
 		FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -215,6 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFD295C313A40E9200EA8213 /* libxml2.2.7.3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +230,7 @@
 		FF0A8B991337AFA800DDA47C = {
 			isa = PBXGroup;
 			children = (
+				FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */,
 				FF0A8C8B1337B28200DDA47C /* IRFoundations.h */,
 				FF0A8C921337B29F00DDA47C /* Foundation+IRAdditions */,
 				FF0A8CEC1337B36A00DDA47C /* QuartzCore+IRAdditions */,
@@ -232,7 +239,6 @@
 				FF0A8D221337B36A00DDA47C /* CoreData+IRAdditions */,
 				FF0A8BAA1337AFB700DDA47C /* Related */,
 				FF0A8E971337B98900DDA47C /* IRFoundationsFramework-Info.plist */,
-				FF0A8EB71337BAD300DDA47C /* libxml2.2.7.3.dylib */,
 			);
 			sourceTree = "<group>";
 		};
@@ -341,6 +347,8 @@
 				FF0A8D1F1337B36A00DDA47C /* IRActionSheet.m */,
 				FF0A8D201337B36A00DDA47C /* IRAction.h */,
 				FF0A8D211337B36A00DDA47C /* IRAction.m */,
+				FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */,
+				FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */,
 				FF9737E113D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h */,
 				FF9737E213D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m */,
 				FF0A8D1B1337B36A00DDA47C /* Resources */,
@@ -413,6 +421,7 @@
 				FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */,
 				FF94EF6F135117D100FE79D4 /* IRBorder.h in Headers */,
 				FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */,
+				FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */,
 				FFA8EB4F13B9ABB80082D789 /* IRRelativeDateFormatter.h in Headers */,
 				FF9737E313D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h in Headers */,
 			);
@@ -509,6 +518,7 @@
 				FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */,
 				FF94EF70135117D100FE79D4 /* IRBorder.m in Sources */,
 				FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */,
+				FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */,
 				FFA8EB5013B9ABB80082D789 /* IRRelativeDateFormatter.m in Sources */,
 				FF9737E413D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m in Sources */,
 			);
@@ -525,6 +535,7 @@
 					"-ObjC",
 					"-all_load",
 				);
+				SDKROOT = iphoneos4.3;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -537,6 +548,7 @@
 					"-ObjC",
 					"-all_load",
 				);
+				SDKROOT = iphoneos4.3;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -545,19 +557,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
 				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = (
-					iphoneos/usr/include/libxml2,
-					/usr/include/libxml2,
-				);
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				LD_NO_PIE = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = IRFoundationsTouch;
-				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -565,19 +572,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
 				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = (
-					iphoneos/usr/include/libxml2,
-					/usr/include/libxml2,
-				);
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				LD_NO_PIE = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = IRFoundationsTouch;
-				SDKROOT = iphoneos;
 				ZERO_LINK = NO;
 			};
 			name = Release;
