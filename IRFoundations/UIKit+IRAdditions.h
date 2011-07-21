@@ -33,3 +33,4 @@
 #import "IRBusyView.h"
 
 #import "IRPaginatedView.h"
+#import "IRImageUnarchiveFromDataTransformer.h"
