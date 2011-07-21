@@ -88,6 +88,8 @@
 		FF94EF70135117D100FE79D4 /* IRBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = FF94EF6E135117D100FE79D4 /* IRBorder.m */; };
 		FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */; };
 		FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */; };
+		FF9737E313D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = FF9737E113D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h */; };
+		FF9737E413D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9737E213D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m */; };
 		FFA8EB4F13B9ABB80082D789 /* IRRelativeDateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */; };
 		FFA8EB5013B9ABB80082D789 /* IRRelativeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */; };
 		FFD295C313A40E9200EA8213 /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -204,6 +206,8 @@
 		FF94EF6E135117D100FE79D4 /* IRBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBorder.m; sourceTree = "<group>"; };
 		FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRPaginatedView.h; sourceTree = "<group>"; };
 		FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPaginatedView.m; sourceTree = "<group>"; };
+		FF9737E113D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRImageUnarchiveFromDataTransformer.h; sourceTree = "<group>"; };
+		FF9737E213D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRImageUnarchiveFromDataTransformer.m; sourceTree = "<group>"; };
 		FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRRelativeDateFormatter.h; sourceTree = "<group>"; };
 		FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRRelativeDateFormatter.m; sourceTree = "<group>"; };
 		FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libxml2.2.7.3.dylib; sourceTree = DEVELOPER_DIR; };
@@ -345,6 +349,8 @@
 				FF0A8D211337B36A00DDA47C /* IRAction.m */,
 				FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */,
 				FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */,
+				FF9737E113D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h */,
+				FF9737E213D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m */,
 				FF0A8D1B1337B36A00DDA47C /* Resources */,
 			);
 			name = "UIKit+IRAdditions";
@@ -417,6 +423,7 @@
 				FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */,
 				FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */,
 				FFA8EB4F13B9ABB80082D789 /* IRRelativeDateFormatter.h in Headers */,
+				FF9737E313D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +520,7 @@
 				FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */,
 				FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */,
 				FFA8EB5013B9ABB80082D789 /* IRRelativeDateFormatter.m in Sources */,
+				FF9737E413D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
