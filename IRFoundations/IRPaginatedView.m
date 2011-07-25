@@ -230,13 +230,11 @@
 
 	NSUInteger index = 0; for (index = 0; index < self.numberOfPages; index++) {
 	
-		if ([self requiresVisiblePageAtIndex:index]) {
-		
+		if ([self requiresVisiblePageAtIndex:index])
 			[self ensureViewAtIndexVisible:index];
-			[self existingViewForPageAtIndex:index].frame = [self pageRectForIndex:index];
-		
-		}
 	
+		[self existingViewForPageAtIndex:index].frame = [self pageRectForIndex:index];
+
 	}
 	
 	self.currentPage = [self indexOfPageAtCurrentContentOffset];
