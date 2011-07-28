@@ -130,7 +130,16 @@
 
 	CGPoint currentScrollViewOffset = self.scrollView.contentOffset;
 	
-	return (BOOL)!CGRectEqualToRect(CGRectNull, CGRectIntersection(self.bounds, CGRectInset([self pageRectForIndex:anIndex], -1 * currentScrollViewOffset.x, -1 * currentScrollViewOffset.y)));
+	if (CGRectContainsPoint([self pageRectForIndex:(anIndex - 1)], currentScrollViewOffset))
+		return YES;
+	
+	if (CGRectContainsPoint([self pageRectForIndex:anIndex], currentScrollViewOffset))
+		return YES;
+	
+	if (CGRectContainsPoint([self pageRectForIndex:(anIndex + 1)], currentScrollViewOffset))
+		return YES;
+		
+	return NO;
 
 }
 
