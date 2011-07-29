@@ -89,7 +89,7 @@
 
 - (void) setHorizontalSpacing:(CGFloat)newSpacing {
 
-	NSParameterAssert(horizontalSpacing > 0);
+	NSParameterAssert(newSpacing > 0);
 
 	if (horizontalSpacing == newSpacing)
 	return;
@@ -119,7 +119,7 @@
 
 	return (CGRect){
 	
-		{ 0.5f * (float)self.horizontalSpacing + anIndex * self.scrollView.bounds.size.width, 0 },
+		{ 1.0f * (float)self.horizontalSpacing + anIndex * self.scrollView.bounds.size.width, 0 },
 		self.bounds.size
 	
 	};
