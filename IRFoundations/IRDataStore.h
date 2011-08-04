@@ -6,6 +6,7 @@
 //  Copyright 2011 Iridia Productions. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
 //	This class is the initial implementation for the application’s data store.
@@ -27,5 +28,15 @@
 
 //	The “emperor” context
 @property (nonatomic, readonly, retain) NSManagedObjectContext *managedObjectContext;
+
+
+//	Common file operations.
+//	-oneUsePersistentFileURL returns something with an UDID embedded
+//	Other methods are conveniences
+
+- (NSURL *) oneUsePersistentFileURL;
+- (NSURL *) persistentFileURLForData:(NSData *)data;
+- (NSURL *) persistentFileURLForFileAtURL:(NSURL *)aURL;
+- (NSURL *) persistentFileURLForFileAtPath:(NSString *)aPath;
 
 @end

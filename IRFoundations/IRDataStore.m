@@ -133,4 +133,67 @@
 
 }
 
+
+
+
+
+NSString * IRDataStoreTimestamp () {
+
+	return [NSString stringWithFormat:@"%d", time(NULL)];
+
+}
+
+NSString * IRDataStoreNonce () {
+
+	NSString *uuid = nil;
+	CFUUIDRef theUUID = CFUUIDCreate(kCFAllocatorDefault);
+	
+	if (!theUUID)
+		return nil;
+	
+	uuid = [(NSString *)CFUUIDCreateString(kCFAllocatorDefault, theUUID) autorelease];
+	CFRelease(theUUID);
+	
+	return [NSString stringWithFormat:@"%@-%@-%@", IRDataStoreTimestamp(), uuid, [UIDevice currentDevice].uniqueIdentifier];
+	
+}
+
+- (NSURL *) oneUsePersistentFileURL {
+
+	NSString *documentDirectory = [(NSURL *)[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] path];
+	NSString *fileString = [documentDirectory stringByAppendingPathComponent:IRDataStoreNonce()];
+
+	return [NSURL fileURLWithPath:fileString];
+
+}
+
+- (NSURL *) persistentFileURLForData:(NSData *)data {
+
+	NSURL *fileURL = [self oneUsePersistentFileURL];
+	[data writeToURL:fileURL atomically:NO];
+	
+	return fileURL;
+
+}
+
+- (NSURL *) persistentFileURLForFileAtURL:(NSURL *)aURL {
+
+	NSURL *fileURL = [self oneUsePersistentFileURL];
+	fileURL = [NSURL fileURLWithPath:[[fileURL path] stringByAppendingPathExtension:[[aURL path] pathExtension]]];
+	
+	NSError *directoryCreationError = nil;
+	if (![[NSFileManager defaultManager] createDirectoryAtPath:[aURL path] withIntermediateDirectories:YES attributes:nil error:&directoryCreationError]) NSLog(@"Error creating directory with intermediates: %@", directoryCreationError);
+
+	NSError *copyError = nil;
+	if (![[NSFileManager defaultManager] copyItemAtURL:aURL toURL:fileURL error:&copyError])
+		NSLog(@"Error copying from %@ to %@: %@", aURL, fileURL, copyError);
+
+	return fileURL;
+
+}
+
+- (NSURL *) persistentFileURLForFileAtPath:(NSString *)aPath {
+	return [self persistentFileURLForFileAtURL:[NSURL fileURLWithPath:aPath]];
+}
+
 @end
