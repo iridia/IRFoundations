@@ -108,11 +108,13 @@
 	if (CGRectEqualToRect(newFrame, self.frame))
 		return;
 		
+	NSUInteger oldPageIndex = self.currentPage;
+		
 	[super setFrame:newFrame];
-	
 	[self setNeedsLayout];
+	self.currentPage = oldPageIndex;
 	[self scrollToPageAtIndex:self.currentPage animated:NO];
-	
+
 }
 
 - (CGRect) pageRectForIndex:(NSUInteger)anIndex {
@@ -231,20 +233,14 @@
 
 - (void) scrollToPageAtIndex:(NSUInteger)anIndex animated:(BOOL)animate {
 
-	[self.scrollView scrollRectToVisible:IRCGSizeGetCenteredInRect(self.bounds.size, [self pageRectForIndex:anIndex], 0.0f, YES) animated:animate];
+	[self.scrollView scrollRectToVisible:[self pageRectForIndex:anIndex] animated:animate];
 
 }
 
 - (void) scrollViewDidScroll:(UIScrollView *)aScrollView {
-
-	NSUInteger index = 0; for (index = 0; index < self.numberOfPages; index++) {
 	
-		if ([self requiresVisiblePageAtIndex:index])
-			[self ensureViewAtIndexVisible:index];
-	
-		[self existingViewForPageAtIndex:index].frame = [self pageRectForIndex:index];
-
-	}
+	[self setNeedsLayout];
+	[self layoutIfNeeded];
 	
 	self.currentPage = [self indexOfPageAtCurrentContentOffset];
 
@@ -254,7 +250,8 @@
 
 	[super layoutSubviews];
 	
-	//	Bug, don’t set the same frame or it will not bounce at all
+	self.scrollView.delegate = nil;
+	
 	CGRect newFrame = CGRectInset(self.bounds, -1 * self.horizontalSpacing, 0);
 	if (!CGRectEqualToRect(self.scrollView.frame, newFrame))
 		self.scrollView.frame = newFrame;
@@ -264,7 +261,16 @@
 		CGRectGetHeight(self.scrollView.bounds)
 	};
 	
-	[self scrollViewDidScroll:self.scrollView];
+	NSUInteger index = 0; for (index = 0; index < self.numberOfPages; index++) {
+	
+		if ([self requiresVisiblePageAtIndex:index])
+			[self ensureViewAtIndexVisible:index];
+	
+		[self existingViewForPageAtIndex:index].frame = [self pageRectForIndex:index];
+
+	}
+	
+	self.scrollView.delegate = self;
 	
 }
 
