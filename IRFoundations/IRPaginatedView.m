@@ -89,7 +89,7 @@
 
 - (void) setHorizontalSpacing:(CGFloat)newSpacing {
 
-	NSParameterAssert(horizontalSpacing > 0);
+	NSParameterAssert(newSpacing > 0);
 
 	if (horizontalSpacing == newSpacing)
 	return;
@@ -119,7 +119,7 @@
 
 	return (CGRect){
 	
-		{ 0.5f * (float)self.horizontalSpacing + anIndex * self.scrollView.bounds.size.width, 0 },
+		{ 1.0f * (float)self.horizontalSpacing + anIndex * self.scrollView.bounds.size.width, 0 },
 		self.bounds.size
 	
 	};
@@ -257,9 +257,12 @@
 	//	Bug, don’t set the same frame or it will not bounce at all
 	CGRect newFrame = CGRectInset(self.bounds, -1 * self.horizontalSpacing, 0);
 	if (!CGRectEqualToRect(self.scrollView.frame, newFrame))
-	self.scrollView.frame = newFrame;
+		self.scrollView.frame = newFrame;
 	
-	self.scrollView.contentSize = (CGSize){ CGRectGetWidth(self.scrollView.bounds) * self.numberOfPages + self.horizontalSpacing * (self.numberOfPages + 1), CGRectGetHeight(self.scrollView.bounds) };
+	self.scrollView.contentSize = (CGSize){
+		CGRectGetWidth(self.scrollView.bounds) * self.numberOfPages,
+		CGRectGetHeight(self.scrollView.bounds)
+	};
 	
 	[self scrollViewDidScroll:self.scrollView];
 	
