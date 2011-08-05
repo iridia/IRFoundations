@@ -181,12 +181,23 @@ NSString * IRDataStoreNonce () {
 	NSURL *fileURL = [self oneUsePersistentFileURL];
 	fileURL = [NSURL fileURLWithPath:[[fileURL path] stringByAppendingPathExtension:[[aURL path] pathExtension]]];
 	
-	NSError *directoryCreationError = nil;
-	if (![[NSFileManager defaultManager] createDirectoryAtPath:[aURL path] withIntermediateDirectories:YES attributes:nil error:&directoryCreationError]) NSLog(@"Error creating directory with intermediates: %@", directoryCreationError);
 
 	NSError *copyError = nil;
-	if (![[NSFileManager defaultManager] copyItemAtURL:aURL toURL:fileURL error:&copyError])
-		NSLog(@"Error copying from %@ to %@: %@", aURL, fileURL, copyError);
+	if (![[NSFileManager defaultManager] copyItemAtURL:aURL toURL:fileURL error:&copyError]) {
+	
+		NSLog(@"Error copying from %@ to %@: %@.  Creating intermediate directories.", aURL, fileURL, copyError);
+		copyError = nil;
+		
+		NSError *directoryCreationError = nil;
+		if (![[NSFileManager defaultManager] createDirectoryAtPath:[aURL path] withIntermediateDirectories:YES attributes:nil error:&directoryCreationError]) {
+			NSLog(@"Error creating directory with intermediates: %@", directoryCreationError);
+		}
+		
+		if (![[NSFileManager defaultManager] copyItemAtURL:aURL toURL:fileURL error:&copyError]) {
+			NSLog(@"Error copying from %@ to %@: %@", aURL, fileURL, copyError);
+		}
+		
+	}
 
 	return fileURL;
 
