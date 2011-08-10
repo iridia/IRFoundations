@@ -136,7 +136,7 @@
 	IRShadow *buttonInnerShadow = [IRShadow shadowWithColor:[UIColor colorWithWhite:0 alpha:0.5] offset:(CGSize){ 0, 1 } spread:2];
 	IRBorder *buttonBorder = [IRBorder borderForEdge:IREdgeNone withType:IRBorderTypeInset width:1.0 color:[UIColor colorWithWhite:0.35 alpha:1]];
 	
-	UIEdgeInsets insets;
+	UIEdgeInsets insets = UIEdgeInsetsZero;
 	CGPoint titleOffset = CGPointZero;
 	static const CGFloat buttonHeight = 29.0;
 	
