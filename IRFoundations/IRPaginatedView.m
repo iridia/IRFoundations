@@ -282,6 +282,8 @@
 
 	}
 	
+	[self removeOffscreenViews];
+	
 	self.scrollView.delegate = self;
 	
 }
