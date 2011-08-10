@@ -15,7 +15,7 @@
 - (void) ensureViewAtIndexVisible:(NSUInteger)anIndex;
 - (void) removeOffscreenViews;
 
-- (CGRect) pageRectForIndex:(NSUInteger)anIndex;
+- (CGRect) pageRectForIndex:(NSInteger)anIndex;
 - (UIView *) existingViewForPageAtIndex:(NSUInteger)anIndex; // may return nil if page is not there
 
 - (void) insertPageView:(UIView *)aView atIndex:(NSUInteger)anIndex; // swaps out existing object, calls methods if necessary
@@ -117,7 +117,7 @@
 
 }
 
-- (CGRect) pageRectForIndex:(NSUInteger)anIndex {
+- (CGRect) pageRectForIndex:(NSInteger)anIndex {
 
 	return (CGRect){
 	
@@ -131,25 +131,20 @@
 - (BOOL) requiresVisiblePageAtIndex:(NSUInteger)anIndex {
 
 	CGPoint currentScrollViewOffset = self.scrollView.contentOffset;
+	CGRect currentPageRect, previousPageRect, nextPageRect;
 	
-	CGRect previousPageRect = [self pageRectForIndex:(anIndex - 1)];
-	previousPageRect = CGRectInset(previousPageRect, -1 * self.horizontalSpacing, 0);
-	
-	CGRect currentPageRect = [self pageRectForIndex:anIndex];
-	currentPageRect = CGRectInset(currentPageRect, -1 * self.horizontalSpacing, 0);
-	
-	CGRect nextPageRect = [self pageRectForIndex:(anIndex + 1)];
-	nextPageRect = CGRectInset(nextPageRect, -1 * self.horizontalSpacing, 0);
-	
-	if (CGRectContainsPoint(previousPageRect, currentScrollViewOffset))
-		return YES;
-	
+	currentPageRect = CGRectInset([self pageRectForIndex:anIndex], -1 * self.horizontalSpacing, 0);
 	if (CGRectContainsPoint(currentPageRect, currentScrollViewOffset))
 		return YES;
 	
+	previousPageRect = CGRectInset([self pageRectForIndex:(anIndex - 1)], -1 * self.horizontalSpacing, 0);
+	if (CGRectContainsPoint(previousPageRect, currentScrollViewOffset))
+		return YES;
+	
+	nextPageRect = CGRectInset([self pageRectForIndex:(anIndex + 1)], -1 * self.horizontalSpacing, 0);
 	if (CGRectContainsPoint(nextPageRect, currentScrollViewOffset))
 		return YES;
-		
+	
 	return NO;
 
 }
@@ -172,8 +167,9 @@
 	[[[self.allViews copy] autorelease] enumerateObjectsUsingBlock: ^ (id viewOrNull, NSUInteger idx, BOOL *stop) {
 		
 		if ([self existingViewForPageAtIndex:idx])
-		if (![self requiresVisiblePageAtIndex:idx])
-		[self removePageView:(UIView *)viewOrNull fromIndex:idx];
+		if (![self requiresVisiblePageAtIndex:idx]) {
+			[self removePageView:(UIView *)viewOrNull fromIndex:idx];
+		}
 	
 	}];
 
@@ -254,6 +250,7 @@
 	
 	self.currentPage = [self indexOfPageAtCurrentContentOffset];
 	
+	[self removeOffscreenViews];
 	[self setNeedsLayout];
 
 }
@@ -282,7 +279,7 @@
 
 	}
 	
-	[self removeOffscreenViews];
+	//	[self removeOffscreenViews];
 	
 	self.scrollView.delegate = self;
 	
