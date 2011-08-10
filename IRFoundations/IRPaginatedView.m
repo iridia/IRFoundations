@@ -121,7 +121,7 @@
 
 	return (CGRect){
 	
-		{ 1.0f * (float)self.horizontalSpacing + anIndex * self.scrollView.bounds.size.width, 0 },
+		{ self.horizontalSpacing + anIndex * self.scrollView.bounds.size.width, 0 },
 		self.bounds.size
 	
 	};
@@ -132,13 +132,22 @@
 
 	CGPoint currentScrollViewOffset = self.scrollView.contentOffset;
 	
-	if (CGRectContainsPoint([self pageRectForIndex:(anIndex - 1)], currentScrollViewOffset))
+	CGRect previousPageRect = [self pageRectForIndex:(anIndex - 1)];
+	previousPageRect = CGRectInset(previousPageRect, -1 * self.horizontalSpacing, 0);
+	
+	CGRect currentPageRect = [self pageRectForIndex:anIndex];
+	currentPageRect = CGRectInset(currentPageRect, -1 * self.horizontalSpacing, 0);
+	
+	CGRect nextPageRect = [self pageRectForIndex:(anIndex + 1)];
+	nextPageRect = CGRectInset(nextPageRect, -1 * self.horizontalSpacing, 0);
+	
+	if (CGRectContainsPoint(previousPageRect, currentScrollViewOffset))
 		return YES;
 	
-	if (CGRectContainsPoint([self pageRectForIndex:anIndex], currentScrollViewOffset))
+	if (CGRectContainsPoint(currentPageRect, currentScrollViewOffset))
 		return YES;
 	
-	if (CGRectContainsPoint([self pageRectForIndex:(anIndex + 1)], currentScrollViewOffset))
+	if (CGRectContainsPoint(nextPageRect, currentScrollViewOffset))
 		return YES;
 		
 	return NO;
@@ -148,7 +157,7 @@
 - (void) ensureViewAtIndexVisible:(NSUInteger)anIndex {
 
 	if ([self existingViewForPageAtIndex:anIndex])
-	return;
+		return;
 	
 	UIView *requestedView = [self.delegate viewForPaginatedView:self atIndex:anIndex];
 	NSParameterAssert(requestedView);
@@ -214,7 +223,10 @@
 - (NSUInteger) indexOfPageAtCurrentContentOffset {
 
 	CGFloat pageWidth = [self pageRectForIndex:0].size.width;
-	if (pageWidth == 0) return 0;
+	if (pageWidth == 0)
+		return 0;
+	
+	pageWidth += 2.0f * self.horizontalSpacing;
 	 
 	CGFloat offsetX = self.scrollView.contentOffset.x;
 	
@@ -233,16 +245,16 @@
 
 - (void) scrollToPageAtIndex:(NSUInteger)anIndex animated:(BOOL)animate {
 
-	[self.scrollView scrollRectToVisible:[self pageRectForIndex:anIndex] animated:animate];
+	CGRect pageRectInScrollView = CGRectInset([self pageRectForIndex:anIndex], -1 * self.horizontalSpacing, 0);
+	[self.scrollView scrollRectToVisible:pageRectInScrollView animated:animate];
 
 }
 
 - (void) scrollViewDidScroll:(UIScrollView *)aScrollView {
 	
-	[self setNeedsLayout];
-	[self layoutIfNeeded];
-	
 	self.currentPage = [self indexOfPageAtCurrentContentOffset];
+	
+	[self setNeedsLayout];
 
 }
 
