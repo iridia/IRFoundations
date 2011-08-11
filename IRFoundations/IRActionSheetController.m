@@ -84,7 +84,7 @@
 	IRActionSheet *returnedActionSheet = [[IRActionSheet alloc] initWithTitle:self.title delegate:self cancelButtonTitle:self.cancellationAction.title destructiveButtonTitle:self.destructionAction.title otherButtonTitles:nil];
 	
 	for (IRAction *anOtherAction in self.otherActions)
-	[returnedActionSheet addButtonWithTitle:anOtherAction.title];
+		[returnedActionSheet addButtonWithTitle:anOtherAction.title];
 	
 	return [returnedActionSheet autorelease];
 
@@ -139,7 +139,10 @@
 
 - (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 
-	[[self actionAtIndex:buttonIndex usingActionSheet:actionSheet] invoke];
+	IRAction *invokedAction = [self actionAtIndex:buttonIndex usingActionSheet:actionSheet];
+	dispatch_async(dispatch_get_main_queue(), ^ {
+		[invokedAction invoke];
+	});
 	
 }
 
