@@ -81,6 +81,12 @@
 //	Return a NSString, so -insertOrUpdateObjectsUsingContext:withRemoteResponse:usingMapping: works.
 
 
++ (NSDictionary *) defaultHierarchicalEntityMapping;
+
+//	Returns nil by default.
+//	Returning a dictionary of attribute names to class name strings, to allow hierarchical transforms
+
+
 + (id) objectInsertingIntoContext:(NSManagedObjectContext *)inContext withRemoteDictionary:(NSDictionary *)inDictionary;
 
 //	Makes a new object, inserting into the context, then call its -configureWithRemoteDictionary:.

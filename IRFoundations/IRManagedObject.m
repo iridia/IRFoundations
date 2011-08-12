@@ -261,12 +261,14 @@
 		NSArray *nodeRepresentations = [inRemoteDictionaries irMap:irMapMakeWithKeyPath(rootRemoteKeyPath)];
 		NSArray *entityRepresentations = [nodeRepresentations irFlatten];
 		
-		NSArray *nodeEntities = [nodeEntityClass insertOrUpdateObjectsIntoContext:context withExistingProperty:nodeLocalKeyPath matchingKeyPath:nodeRemoteKeyPath ofRemoteDictionaries:entityRepresentations];
+		NSArray *nodeEntities = [nodeEntityClass insertOrUpdateObjectsUsingContext:context withRemoteResponse:entityRepresentations usingMapping:[nodeEntityClass defaultHierarchicalEntityMapping] options:0];
+		
+		//	insertOrUpdateObjectsIntoContext:context withExistingProperty:nodeLocalKeyPath matchingKeyPath:nodeRemoteKeyPath ofRemoteDictionaries:entityRepresentations];
 		
 		BOOL relationIsToMany = [[baseEntityRelationships objectForKey:rootLocalKeyPath] isToMany];
 		
 		
-		__block NSUInteger consumedNodeEntities = 0;
+		__block NSInteger consumedNodeEntities = 0;
 		
 		[baseEntities enumerateObjectsUsingBlock: ^ (IRManagedObject *baseObject, NSUInteger index, BOOL *stop) {
 		
@@ -297,7 +299,7 @@
 			consumedNodeEntities += relatedNodesCount;
 			
 			if (!(relationIsToMany || (!relationIsToMany && (relatedNodesCount == 1))))
-			if ([[NSSet setWithArray:nodeEntities] count] != 1)
+			if ([[NSSet setWithArray:nodeEntities] count] > 1)
 				[NSException raise:NSInternalInconsistencyException format:@"A to-one relationship can’t have multiple related entities."];
 		
 		}];
@@ -319,6 +321,12 @@
 
 
 + (NSString *) keyPathHoldingUniqueValue {
+
+	return nil;
+
+}
+
++ (NSDictionary *) defaultHierarchicalEntityMapping {
 
 	return nil;
 
