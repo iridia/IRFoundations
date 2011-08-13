@@ -27,9 +27,11 @@
 
 	self.lastShownInRect = CGRectNull;
 	self.lastShownInView = nil;
-
+	
+	[self retain];
 	[super dismissWithClickedButtonIndex:buttonIndex animated:animated];
-
+	[self autorelease];
+	
 }
 
 - (void) prepareForReshowingIfAppropriate {

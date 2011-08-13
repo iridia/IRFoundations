@@ -15,7 +15,7 @@
 - (void) ensureViewAtIndexVisible:(NSUInteger)anIndex;
 - (void) removeOffscreenViews;
 
-- (CGRect) pageRectForIndex:(NSUInteger)anIndex;
+- (CGRect) pageRectForIndex:(NSInteger)anIndex;
 - (UIView *) existingViewForPageAtIndex:(NSUInteger)anIndex; // may return nil if page is not there
 
 - (void) insertPageView:(UIView *)aView atIndex:(NSUInteger)anIndex; // swaps out existing object, calls methods if necessary
@@ -89,7 +89,7 @@
 
 - (void) setHorizontalSpacing:(CGFloat)newSpacing {
 
-	NSParameterAssert(horizontalSpacing > 0);
+	NSParameterAssert(newSpacing > 0);
 
 	if (horizontalSpacing == newSpacing)
 	return;
@@ -108,18 +108,20 @@
 	if (CGRectEqualToRect(newFrame, self.frame))
 		return;
 		
+	NSUInteger oldPageIndex = self.currentPage;
+		
 	[super setFrame:newFrame];
-	
 	[self setNeedsLayout];
+	self.currentPage = oldPageIndex;
 	[self scrollToPageAtIndex:self.currentPage animated:NO];
-	
+
 }
 
-- (CGRect) pageRectForIndex:(NSUInteger)anIndex {
+- (CGRect) pageRectForIndex:(NSInteger)anIndex {
 
 	return (CGRect){
 	
-		{ 0.5f * (float)self.horizontalSpacing + anIndex * self.scrollView.bounds.size.width, 0 },
+		{ self.horizontalSpacing + anIndex * self.scrollView.bounds.size.width, 0 },
 		self.bounds.size
 	
 	};
@@ -129,15 +131,28 @@
 - (BOOL) requiresVisiblePageAtIndex:(NSUInteger)anIndex {
 
 	CGPoint currentScrollViewOffset = self.scrollView.contentOffset;
+	CGRect currentPageRect, previousPageRect, nextPageRect;
 	
-	return (BOOL)!CGRectEqualToRect(CGRectNull, CGRectIntersection(self.bounds, CGRectInset([self pageRectForIndex:anIndex], -1 * currentScrollViewOffset.x, -1 * currentScrollViewOffset.y)));
+	currentPageRect = CGRectInset([self pageRectForIndex:anIndex], -1 * self.horizontalSpacing, 0);
+	if (CGRectContainsPoint(currentPageRect, currentScrollViewOffset))
+		return YES;
+	
+	previousPageRect = CGRectInset([self pageRectForIndex:(anIndex - 1)], -1 * self.horizontalSpacing, 0);
+	if (CGRectContainsPoint(previousPageRect, currentScrollViewOffset))
+		return YES;
+	
+	nextPageRect = CGRectInset([self pageRectForIndex:(anIndex + 1)], -1 * self.horizontalSpacing, 0);
+	if (CGRectContainsPoint(nextPageRect, currentScrollViewOffset))
+		return YES;
+	
+	return NO;
 
 }
 
 - (void) ensureViewAtIndexVisible:(NSUInteger)anIndex {
 
 	if ([self existingViewForPageAtIndex:anIndex])
-	return;
+		return;
 	
 	UIView *requestedView = [self.delegate viewForPaginatedView:self atIndex:anIndex];
 	NSParameterAssert(requestedView);
@@ -152,8 +167,9 @@
 	[[[self.allViews copy] autorelease] enumerateObjectsUsingBlock: ^ (id viewOrNull, NSUInteger idx, BOOL *stop) {
 		
 		if ([self existingViewForPageAtIndex:idx])
-		if (![self requiresVisiblePageAtIndex:idx])
-		[self removePageView:(UIView *)viewOrNull fromIndex:idx];
+		if (![self requiresVisiblePageAtIndex:idx]) {
+			[self removePageView:(UIView *)viewOrNull fromIndex:idx];
+		}
 	
 	}];
 
@@ -203,7 +219,10 @@
 - (NSUInteger) indexOfPageAtCurrentContentOffset {
 
 	CGFloat pageWidth = [self pageRectForIndex:0].size.width;
-	if (pageWidth == 0) return 0;
+	if (pageWidth == 0)
+		return 0;
+	
+	pageWidth += 2.0f * self.horizontalSpacing;
 	 
 	CGFloat offsetX = self.scrollView.contentOffset.x;
 	
@@ -222,24 +241,17 @@
 
 - (void) scrollToPageAtIndex:(NSUInteger)anIndex animated:(BOOL)animate {
 
-	[self.scrollView scrollRectToVisible:IRCGSizeGetCenteredInRect(self.bounds.size, [self pageRectForIndex:anIndex], 0.0f, YES) animated:animate];
+	CGRect pageRectInScrollView = CGRectInset([self pageRectForIndex:anIndex], -1 * self.horizontalSpacing, 0);
+	[self.scrollView scrollRectToVisible:pageRectInScrollView animated:animate];
 
 }
 
 - (void) scrollViewDidScroll:(UIScrollView *)aScrollView {
-
-	NSUInteger index = 0; for (index = 0; index < self.numberOfPages; index++) {
-	
-		if ([self requiresVisiblePageAtIndex:index]) {
-		
-			[self ensureViewAtIndexVisible:index];
-			[self existingViewForPageAtIndex:index].frame = [self pageRectForIndex:index];
-		
-		}
-	
-	}
 	
 	self.currentPage = [self indexOfPageAtCurrentContentOffset];
+	
+	[self removeOffscreenViews];
+	[self setNeedsLayout];
 
 }
 
@@ -247,14 +259,29 @@
 
 	[super layoutSubviews];
 	
-	//	Bug, don’t set the same frame or it will not bounce at all
+	self.scrollView.delegate = nil;
+	
 	CGRect newFrame = CGRectInset(self.bounds, -1 * self.horizontalSpacing, 0);
 	if (!CGRectEqualToRect(self.scrollView.frame, newFrame))
-	self.scrollView.frame = newFrame;
+		self.scrollView.frame = newFrame;
 	
-	self.scrollView.contentSize = (CGSize){ CGRectGetWidth(self.scrollView.bounds) * self.numberOfPages + self.horizontalSpacing * (self.numberOfPages + 1), CGRectGetHeight(self.scrollView.bounds) };
+	self.scrollView.contentSize = (CGSize){
+		CGRectGetWidth(self.scrollView.bounds) * self.numberOfPages,
+		CGRectGetHeight(self.scrollView.bounds)
+	};
 	
-	[self scrollViewDidScroll:self.scrollView];
+	NSUInteger index = 0; for (index = 0; index < self.numberOfPages; index++) {
+	
+		if ([self requiresVisiblePageAtIndex:index])
+			[self ensureViewAtIndexVisible:index];
+	
+		[self existingViewForPageAtIndex:index].frame = [self pageRectForIndex:index];
+
+	}
+	
+	//	[self removeOffscreenViews];
+	
+	self.scrollView.delegate = self;
 	
 }
 
