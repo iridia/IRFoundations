@@ -145,6 +145,12 @@
 //	Try [IRNoOp noOp] if you want to skip the key instead of niling or setting the value to [NSNull null].
 
 
++ (BOOL) skipsNonexistantRemoteKey;
++ (BOOL) skipsNullValue;
+
+//	Introspective.
+
+
 @end
 
 
