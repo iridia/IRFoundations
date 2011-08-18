@@ -242,7 +242,9 @@
 - (void) scrollToPageAtIndex:(NSUInteger)anIndex animated:(BOOL)animate {
 
 	CGRect pageRectInScrollView = CGRectInset([self pageRectForIndex:anIndex], -1 * self.horizontalSpacing, 0);
-	[self.scrollView scrollRectToVisible:pageRectInScrollView animated:animate];
+	
+	[self.scrollView setContentOffset:pageRectInScrollView.origin animated:animate];
+	[self scrollViewDidScroll:self.scrollView];
 
 }
 
