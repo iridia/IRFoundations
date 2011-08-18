@@ -288,12 +288,14 @@
 }
 
 - (UIView *) existingPageAtIndex:(NSUInteger)anIndex {
+
+	if ([self.allViews count] < (anIndex + 1))
+		return nil;
 	
-	id object = nil;
-	@try { object = [self.allViews objectAtIndex:anIndex]; }@catch (NSException *e) { };
+	id object = [self.allViews objectAtIndex:anIndex];
 	
 	if (![object isKindOfClass:[UIView class]])
-	return nil;
+		return nil;
 	
 	return (UIView *)object;
 
