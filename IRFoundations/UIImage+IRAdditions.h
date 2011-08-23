@@ -12,5 +12,6 @@
 @interface UIImage (IRAdditions)
 
 - (UIImage *) irStandardImage;
+- (UIImage *) irDecodedImage;
 
 @end

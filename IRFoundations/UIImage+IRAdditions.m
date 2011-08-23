@@ -24,4 +24,25 @@
 
 }
 
+- (UIImage *) irDecodedImage {
+
+	CGImageRef imageRef = [self CGImage];
+	CGRect rect = CGRectMake(0.f, 0.f, CGImageGetWidth(imageRef), CGImageGetHeight(imageRef));
+	CGColorSpaceRef genericColorSpace = CGColorSpaceCreateDeviceRGB();
+	
+	CGContextRef bitmapContext = CGBitmapContextCreate(NULL, rect.size.width, rect.size.height, 8, 4 * rect.size.width, genericColorSpace, kCGImageAlphaPremultipliedLast);	
+	CGContextDrawImage(bitmapContext, rect, imageRef);
+	CGImageRef decompressedImageRef = CGBitmapContextCreateImage(bitmapContext);
+	UIImage *decompressedImage = [UIImage imageWithCGImage:decompressedImageRef];
+	
+	NSParameterAssert(decompressedImage);
+	
+	CGColorSpaceRelease(genericColorSpace);
+	CGImageRelease(decompressedImageRef);
+	CGContextRelease(bitmapContext);
+
+	return decompressedImage;
+
+}
+
 @end
