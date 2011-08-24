@@ -592,6 +592,10 @@
 					"/usr/include/libxml2/**",
 				);
 				LD_NO_PIE = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = IRFoundationsTouch;
 			};
@@ -610,6 +614,10 @@
 					"/usr/include/libxml2/**",
 				);
 				LD_NO_PIE = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = IRFoundationsTouch;
 				ZERO_LINK = NO;
