@@ -303,6 +303,9 @@
 
 - (void) dealloc {
 
+	[scrollView release];
+	[allViews release];
+
 	[super dealloc];
 
 }
