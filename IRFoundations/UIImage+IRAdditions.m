@@ -38,4 +38,22 @@
 
 }
 
+- (UIImage *) irScaledImageWithSize:(CGSize)aSize {
+
+	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+	CGContextRef context = CGBitmapContextCreate(NULL, aSize.width, aSize.height, 8, 0, colorSpace, kCGImageAlphaPremultipliedLast);
+	
+	CGContextClearRect(context, (CGRect){ CGPointZero, aSize });
+	CGContextDrawImage(context, (CGRect){ CGPointZero, aSize }, self.CGImage);
+	CGImageRef scaledImage = CGBitmapContextCreateImage(context);
+	
+	CGColorSpaceRelease(colorSpace);
+	CGContextRelease(context);
+	UIImage *image = [UIImage imageWithCGImage: scaledImage];
+	CGImageRelease(scaledImage);
+	
+	return image;
+
+}
+
 @end

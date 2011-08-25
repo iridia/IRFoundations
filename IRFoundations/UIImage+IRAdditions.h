@@ -14,4 +14,6 @@
 - (UIImage *) irStandardImage;
 - (UIImage *) irDecodedImage;
 
+- (UIImage *) irScaledImageWithSize:(CGSize)aSize;
+
 @end
