@@ -219,7 +219,7 @@
 
 
 
-+ (NSArray *) insertOrUpdateObjectsUsingContext:(NSManagedObjectContext *)context withRemoteResponse:(NSArray *)inRemoteDictionaries usingMapping:(NSDictionary *)remoteKeyPathsToClassNames options:(int)options {
++ (NSArray *) insertOrUpdateObjectsUsingContext:(NSManagedObjectContext *)context withRemoteResponse:(NSArray *)inRemoteDictionaries usingMapping:(NSDictionary *)remoteKeyPathsToClassNames options:(IRManagedObjectOptions)options {
 
 	if (![inRemoteDictionaries count])
 		return [NSArray array];
@@ -269,6 +269,7 @@
 		NSArray *nodeEntities = [nodeEntityClass insertOrUpdateObjectsUsingContext:context withRemoteResponse:entityRepresentations usingMapping:[nodeEntityClass defaultHierarchicalEntityMapping] options:0];
 		
 		BOOL relationIsToMany = [[baseEntityRelationships objectForKey:rootLocalKeyPath] isToMany];
+		BOOL usesIndividualAdd = (options & IRManagedObjectOptionIndividualOperations);
 		
 		
 		__block NSInteger consumedNodeEntities = 0;
@@ -293,8 +294,17 @@
 			[baseObject willChangeValueForKey:rootLocalKeyPath];
 			
 			if (relationIsToMany) {
+			
+				if (usesIndividualAdd) {
+			
+					for (id anObject in relatedEntities)
+						[[baseObject mutableSetValueForKeyPath:rootLocalKeyPath] addObject:anObject];
+					
+				} else {
 				
-				[[baseObject mutableSetValueForKeyPath:rootLocalKeyPath] addObjectsFromArray:relatedEntities];
+					[[baseObject mutableSetValueForKeyPath:rootLocalKeyPath] addObjectsFromArray:relatedEntities];
+				
+				}
 				
 			} else {
 			
