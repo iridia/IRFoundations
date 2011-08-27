@@ -31,3 +31,8 @@
 #import "IRTintedBarButtonItem.h"
 
 #import "IRBusyView.h"
+
+#import "UIImage+IRAdditions.h"
+#import "IRPaginatedView.h"
+#import "IRImagePickerController.h"
+#import "IRImageUnarchiveFromDataTransformer.h"

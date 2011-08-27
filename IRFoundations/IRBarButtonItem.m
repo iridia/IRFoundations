@@ -27,6 +27,17 @@
 
 }
 
++ (id) itemWithTitle:(NSString *)aTitle action:(void(^)(void))aBlock {
+
+	IRBarButtonItem *returnedItem = [[[self alloc] initWithTitle:aTitle style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
+	returnedItem.target = returnedItem;
+	returnedItem.action = @selector(handleCustomButtonAction:);
+	returnedItem.block = aBlock;
+	
+	return returnedItem;
+
+}
+
 + (id) itemWithSystemItem:(UIBarButtonSystemItem)aSystemItem wiredAction:(void(^)(IRBarButtonItem *senderItem))aBlock {
 
 	IRBarButtonItem *returnedItem = [[self alloc] initWithBarButtonSystemItem:aSystemItem target:nil action:nil];
@@ -91,6 +102,25 @@
 
 }
 
+- (void) setBlock:(void (^)())newBlock {
+
+	if (newBlock == self.block)
+	return;
+	
+	[self willChangeValueForKey:@"block"];
+	
+	[block release];
+	block = [newBlock copy];
+	
+	[self didChangeValueForKey:@"block"];
+	
+	if (newBlock) {
+		self.target = self;
+		self.action = @selector(handleCustomButtonAction:);
+	}
+	
+}
+
 
 
 
@@ -117,12 +147,12 @@
 	IRShadow *buttonInnerShadow = [IRShadow shadowWithColor:[UIColor colorWithWhite:0 alpha:0.5] offset:(CGSize){ 0, 1 } spread:2];
 	IRBorder *buttonBorder = [IRBorder borderForEdge:IREdgeNone withType:IRBorderTypeInset width:1.0 color:[UIColor colorWithWhite:0.35 alpha:1]];
 	
-	UIEdgeInsets insets;
+	UIEdgeInsets insets = UIEdgeInsetsZero;
 	CGPoint titleOffset = CGPointZero;
 	static const CGFloat buttonHeight = 29.0;
 	
 	CGSize titleSize = [usingTitle sizeWithFont:usingFont];
-	CGSize finalSize;
+	CGSize finalSize = (CGSize){ 0, 0 };
 	
 	UIBezierPath *bezierPath = nil;
 	

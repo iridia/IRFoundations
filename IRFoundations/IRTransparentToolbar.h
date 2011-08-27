@@ -39,4 +39,6 @@
 @property (nonatomic, readwrite, assign) float itemPadding;
 @property (nonatomic, readwrite, assign) float rightPadding;
 
+@property (nonatomic, readwrite, assign) BOOL usesCustomLayout; // defaults to YES
+
 @end
