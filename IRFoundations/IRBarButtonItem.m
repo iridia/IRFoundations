@@ -27,6 +27,17 @@
 
 }
 
++ (id) itemWithTitle:(NSString *)aTitle action:(void(^)(void))aBlock {
+
+	IRBarButtonItem *returnedItem = [[[self alloc] initWithTitle:aTitle style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
+	returnedItem.target = returnedItem;
+	returnedItem.action = @selector(handleCustomButtonAction:);
+	returnedItem.block = aBlock;
+	
+	return returnedItem;
+
+}
+
 + (id) itemWithSystemItem:(UIBarButtonSystemItem)aSystemItem wiredAction:(void(^)(IRBarButtonItem *senderItem))aBlock {
 
 	IRBarButtonItem *returnedItem = [[self alloc] initWithBarButtonSystemItem:aSystemItem target:nil action:nil];

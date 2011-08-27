@@ -23,6 +23,13 @@
 #endif
 
 
+enum IRManagedObjectOptions {
+ 
+	IRManagedObjectOptionIndividualOperations = 1 << 1	//	Individual insertions are slower, but allow per-object overrides for synthesized ordered relationships.
+	
+}; typedef NSUInteger IRManagedObjectOptions;
+
+
 @interface IRManagedObject : NSManagedObject
 
 //	Notes:
@@ -40,7 +47,7 @@
 //	The values that the local and remote key paths point to should always respond to -compare:.
 
 
-+ (NSArray *) insertOrUpdateObjectsUsingContext:(NSManagedObjectContext *)inContext withRemoteResponse:(NSArray *)inRemoteDictionaries usingMapping:(NSDictionary *)inRemoteKeyPathsToIRManagedObjectSubclasses options:(int)aBitMask;
++ (NSArray *) insertOrUpdateObjectsUsingContext:(NSManagedObjectContext *)inContext withRemoteResponse:(NSArray *)inRemoteDictionaries usingMapping:(NSDictionary *)inRemoteKeyPathsToIRManagedObjectSubclasses options:(IRManagedObjectOptions)aBitMask;
 
 //	This is a higher-level wrapper dealing with circumstances where an object representation contains other representations that are also of interest to the developer.
 
@@ -143,6 +150,12 @@
 //	Placeholder value to use if a remote value is [NSNull null].
 //	Defaults to nil.
 //	Try [IRNoOp noOp] if you want to skip the key instead of niling or setting the value to [NSNull null].
+
+
++ (BOOL) skipsNonexistantRemoteKey;
++ (BOOL) skipsNullValue;
+
+//	Introspective.
 
 
 @end

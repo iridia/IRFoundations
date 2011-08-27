@@ -242,7 +242,9 @@
 - (void) scrollToPageAtIndex:(NSUInteger)anIndex animated:(BOOL)animate {
 
 	CGRect pageRectInScrollView = CGRectInset([self pageRectForIndex:anIndex], -1 * self.horizontalSpacing, 0);
-	[self.scrollView scrollRectToVisible:pageRectInScrollView animated:animate];
+	
+	[self.scrollView setContentOffset:pageRectInScrollView.origin animated:animate];
+	[self scrollViewDidScroll:self.scrollView];
 
 }
 
@@ -286,18 +288,23 @@
 }
 
 - (UIView *) existingPageAtIndex:(NSUInteger)anIndex {
+
+	if ([self.allViews count] < (anIndex + 1))
+		return nil;
 	
-	id object = nil;
-	@try { object = [self.allViews objectAtIndex:anIndex]; }@catch (NSException *e) { };
+	id object = [self.allViews objectAtIndex:anIndex];
 	
 	if (![object isKindOfClass:[UIView class]])
-	return nil;
+		return nil;
 	
 	return (UIView *)object;
 
 }
 
 - (void) dealloc {
+
+	[scrollView release];
+	[allViews release];
 
 	[super dealloc];
 

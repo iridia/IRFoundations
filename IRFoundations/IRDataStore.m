@@ -64,6 +64,7 @@
 	
 	if (!model) {
 		model = [self defaultManagedObjectModel];
+        NSParameterAssert(model);
 	}
 	
 	self.managedObjectModel = model;
