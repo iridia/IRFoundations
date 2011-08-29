@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -476,7 +476,7 @@
 		FF0A8B9B1337AFA800DDA47C /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = FF0A8B9E1337AFA800DDA47C /* Build configuration list for PBXProject "IRFoundations" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -589,7 +589,6 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				LD_NO_PIE = YES;
-				PREBINDING = NO;
 				PRODUCT_NAME = IRFoundationsTouch;
 			};
 			name = Debug;
@@ -600,11 +599,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				LD_NO_PIE = YES;
-				PREBINDING = NO;
 				PRODUCT_NAME = IRFoundationsTouch;
 				ZERO_LINK = NO;
 			};
