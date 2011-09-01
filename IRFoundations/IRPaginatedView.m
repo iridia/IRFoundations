@@ -130,22 +130,7 @@
 
 - (BOOL) requiresVisiblePageAtIndex:(NSUInteger)anIndex {
 
-	CGPoint currentScrollViewOffset = self.scrollView.contentOffset;
-	CGRect currentPageRect, previousPageRect, nextPageRect;
-	
-	currentPageRect = CGRectInset([self pageRectForIndex:anIndex], -1 * self.horizontalSpacing, 0);
-	if (CGRectContainsPoint(currentPageRect, currentScrollViewOffset))
-		return YES;
-	
-	previousPageRect = CGRectInset([self pageRectForIndex:(anIndex - 1)], -1 * self.horizontalSpacing, 0);
-	if (CGRectContainsPoint(previousPageRect, currentScrollViewOffset))
-		return YES;
-	
-	nextPageRect = CGRectInset([self pageRectForIndex:(anIndex + 1)], -1 * self.horizontalSpacing, 0);
-	if (CGRectContainsPoint(nextPageRect, currentScrollViewOffset))
-		return YES;
-	
-	return NO;
+	return abs(((NSInteger)anIndex - (NSInteger)self.currentPage)) <= 1;
 
 }
 
