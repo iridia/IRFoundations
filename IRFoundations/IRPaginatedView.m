@@ -119,6 +119,10 @@
 
 - (CGRect) pageRectForIndex:(NSInteger)anIndex {
 
+	if (self.bounds.size.width == 0) {
+		NSLog(@"Warning: 0 page width (%s)", __PRETTY_FUNCTION__);
+	}
+
 	return (CGRect){
 	
 		{ self.horizontalSpacing + anIndex * self.scrollView.bounds.size.width, 0 },
@@ -204,8 +208,10 @@
 - (NSUInteger) indexOfPageAtCurrentContentOffset {
 
 	CGFloat pageWidth = [self pageRectForIndex:0].size.width;
-	if (pageWidth == 0)
+	if (pageWidth == 0) {
+		NSLog(@"Warning: page width is 0, %s returns 0", __PRETTY_FUNCTION__);
 		return 0;
+	}
 	
 	pageWidth += 2.0f * self.horizontalSpacing;
 	 
