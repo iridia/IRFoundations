@@ -109,10 +109,14 @@
 		return;
 		
 	NSUInteger oldPageIndex = self.currentPage;
+	
+	self.scrollView.delegate = nil;
 		
 	[super setFrame:newFrame];
 	[self setNeedsLayout];
 	self.currentPage = oldPageIndex;
+	self.scrollView.delegate = self;
+	
 	[self scrollToPageAtIndex:self.currentPage animated:NO];
 
 }
@@ -268,11 +272,14 @@
 		if ([self requiresVisiblePageAtIndex:index])
 			[self ensureViewAtIndexVisible:index];
 	
-		[self existingViewForPageAtIndex:index].frame = [self pageRectForIndex:index];
+		UIView *existingView = [self existingViewForPageAtIndex:index];
+		
+		if (existingView)
+			existingView.frame = [self pageRectForIndex:index];
 
 	}
 	
-	//	[self removeOffscreenViews];
+	[self removeOffscreenViews];
 	
 	self.scrollView.delegate = self;
 	
