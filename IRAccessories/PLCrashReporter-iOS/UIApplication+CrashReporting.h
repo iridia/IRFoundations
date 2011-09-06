@@ -1,6 +1,6 @@
 //
 //  UIApplication+CrashReporting.h
-//  wammer-iOS
+//  IRFoundations
 //
 //  Created by Evadne Wu on 9/6/11.
 //  Copyright (c) 2011 Iridia Productions. All rights reserved.

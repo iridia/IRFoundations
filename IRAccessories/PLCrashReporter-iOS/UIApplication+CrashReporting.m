@@ -1,6 +1,6 @@
 //
 //  UIApplication+CrashReporting.m
-//  wammer-iOS
+//  IRFoundations
 //
 //  Created by Evadne Wu on 9/6/11.
 //  Copyright (c) 2011 Iridia Productions. All rights reserved.
@@ -268,7 +268,7 @@ static NSString * const kIRCrashReportRecipientsKey = @"kIRCrashReportRecipients
 	NSDictionary *bundleInfo = [[NSBundle mainBundle] infoDictionary];
 	NSString *versionString = [NSString stringWithFormat:@"%@ %@ (%@) Commit %@", [bundleInfo objectForKey:(id)kCFBundleNameKey], [bundleInfo objectForKey:@"CFBundleShortVersionString"], [bundleInfo objectForKey:(id)kCFBundleVersionKey], [bundleInfo objectForKey:@"IRCommitSHA"]];
 	
-	IRMailComposeViewController *composeViewController = [IRMailComposeViewController controllerWithMessageToRecipients:[NSArray arrayWithObjects:@"Tarotie Support <tarotie@iridia.tw>", nil] withSubject:[NSString stringWithFormat:@"%@ Defaults", versionString] messageBody:[NSString stringWithFormat:@"Device: %@\nSystem: %@ %@ \nDefaults: \n%@", [UIDevice currentDevice].uniqueIdentifier, [UIDevice currentDevice].systemName, [UIDevice currentDevice].systemVersion, [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]] inHTML:NO completion: ^ (MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error) {
+	IRMailComposeViewController *composeViewController = [IRMailComposeViewController controllerWithMessageToRecipients:[self crashReportRecipients] withSubject:[NSString stringWithFormat:@"%@ Defaults", versionString] messageBody:[NSString stringWithFormat:@"Device: %@\nSystem: %@ %@ \nDefaults: \n%@", [UIDevice currentDevice].uniqueIdentifier, [UIDevice currentDevice].systemName, [UIDevice currentDevice].systemVersion, [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]] inHTML:NO completion: ^ (MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error) {
 	
 		[controller.parentViewController dismissModalViewControllerAnimated:YES];
 	
