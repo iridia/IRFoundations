@@ -86,6 +86,8 @@
 		FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6E2133E3526008C8DDA /* IRBusyView.m */; };
 		FF61635914161868004738D3 /* IRMailComposeViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF61635714161868004738D3 /* IRMailComposeViewController.h */; };
 		FF61635A14161868004738D3 /* IRMailComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF61635814161868004738D3 /* IRMailComposeViewController.m */; };
+		FF890D1D14163AC700CD7D1F /* CALayer+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */; };
+		FF890D1E14163AC700CD7D1F /* CALayer+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */; };
 		FF94EF6F135117D100FE79D4 /* IRBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = FF94EF6D135117D100FE79D4 /* IRBorder.h */; };
 		FF94EF70135117D100FE79D4 /* IRBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = FF94EF6E135117D100FE79D4 /* IRBorder.m */; };
 		FF9737E313D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = FF9737E113D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h */; };
@@ -212,6 +214,8 @@
 		FF27A6E2133E3526008C8DDA /* IRBusyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBusyView.m; sourceTree = "<group>"; };
 		FF61635714161868004738D3 /* IRMailComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRMailComposeViewController.h; sourceTree = "<group>"; };
 		FF61635814161868004738D3 /* IRMailComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRMailComposeViewController.m; sourceTree = "<group>"; };
+		FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+IRAdditions.h"; sourceTree = "<group>"; };
+		FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+IRAdditions.m"; sourceTree = "<group>"; };
 		FF94EF6D135117D100FE79D4 /* IRBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBorder.h; sourceTree = "<group>"; };
 		FF94EF6E135117D100FE79D4 /* IRBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBorder.m; sourceTree = "<group>"; };
 		FF9737E113D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRImageUnarchiveFromDataTransformer.h; sourceTree = "<group>"; };
@@ -292,6 +296,8 @@
 			children = (
 				FF0A8CED1337B36A00DDA47C /* QuartzCore+IRAdditions.h */,
 				FF0A8CEE1337B36A00DDA47C /* QuartzCore+IRAdditions.m */,
+				FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */,
+				FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */,
 				FF0A8CEF1337B36A00DDA47C /* IRStaticShapeView.h */,
 				FF0A8CF01337B36A00DDA47C /* IRStaticShapeView.m */,
 				FF94EF6D135117D100FE79D4 /* IRBorder.h */,
@@ -452,6 +458,7 @@
 				FFC813BB13EB8E4B007B0683 /* IRImagePickerController.h in Headers */,
 				FFC813C013EB8F48007B0683 /* UIImage+IRAdditions.h in Headers */,
 				FF61635914161868004738D3 /* IRMailComposeViewController.h in Headers */,
+				FF890D1D14163AC700CD7D1F /* CALayer+IRAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,6 +560,7 @@
 				FFC813BC13EB8E4B007B0683 /* IRImagePickerController.m in Sources */,
 				FFC813C113EB8F48007B0683 /* UIImage+IRAdditions.m in Sources */,
 				FF61635A14161868004738D3 /* IRMailComposeViewController.m in Sources */,
+				FF890D1E14163AC700CD7D1F /* CALayer+IRAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
