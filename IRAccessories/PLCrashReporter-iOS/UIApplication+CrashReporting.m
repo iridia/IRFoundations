@@ -174,7 +174,7 @@ static NSString * const kIRCrashReportRecipientsKey = @"kIRCrashReportRecipients
 					case MFMailComposeResultCancelled:
 					case MFMailComposeResultSaved:
 					case MFMailComposeResultSent: {
-						actualResult = NO;
+						actualResult = YES;
 						break;
 					}
 					case MFMailComposeResultFailed:
