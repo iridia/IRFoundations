@@ -212,7 +212,6 @@
 		FF27A6E2133E3526008C8DDA /* IRBusyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBusyView.m; sourceTree = "<group>"; };
 		FF61635714161868004738D3 /* IRMailComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRMailComposeViewController.h; sourceTree = "<group>"; };
 		FF61635814161868004738D3 /* IRMailComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRMailComposeViewController.m; sourceTree = "<group>"; };
-		FF61635C141618AC004738D3 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		FF94EF6D135117D100FE79D4 /* IRBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBorder.h; sourceTree = "<group>"; };
 		FF94EF6E135117D100FE79D4 /* IRBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBorder.m; sourceTree = "<group>"; };
 		FF9737E113D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRImageUnarchiveFromDataTransformer.h; sourceTree = "<group>"; };
@@ -247,7 +246,6 @@
 		FF0A8B991337AFA800DDA47C = {
 			isa = PBXGroup;
 			children = (
-				FF61635C141618AC004738D3 /* MessageUI.framework */,
 				FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */,
 				FF0A8C8B1337B28200DDA47C /* IRFoundations.h */,
 				FF0A8C921337B29F00DDA47C /* Foundation+IRAdditions */,
