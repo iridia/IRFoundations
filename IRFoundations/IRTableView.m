@@ -65,6 +65,8 @@
 
 @synthesize pullDownHeaderView, onPullDownBegin, onPullDownMove, onPullDownEnd, onPullDownReset, pullDownHeaderViewOverlaysContentView;
 
+@synthesize onLayoutSubviews;
+
 
 
 
@@ -192,6 +194,8 @@
 	self.onDecelerationBegin = nil;
 	self.onDecelerationEnd = nil;
 	self.onScrollAnimationEnd = nil;
+	
+	self.onLayoutSubviews = nil;
 	
 	[super dealloc];
 
@@ -445,6 +449,9 @@
 
 	[super layoutSubviews];
 	[self layoutPullDownHeaderView];
+	
+	if (self.onLayoutSubviews)
+		self.onLayoutSubviews();
 
 }
 

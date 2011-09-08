@@ -77,17 +77,11 @@ typedef enum {
 # pragma mark Scroll Delegation
 
 @property (nonatomic, readwrite, copy) void (^onScroll)();
-
 @property (nonatomic, readwrite, copy) void (^onZoom)();
-
 @property (nonatomic, readwrite, copy) void (^onDragBegin)();
-
 @property (nonatomic, readwrite, copy) void (^onDragEnd)(BOOL willDecelerate);
-
 @property (nonatomic, readwrite, copy) void (^onDecelerationBegin)();
-
 @property (nonatomic, readwrite, copy) void (^onDecelerationEnd)();
-
 @property (nonatomic, readwrite, copy) void (^onScrollAnimationEnd)();
 
 
@@ -177,6 +171,14 @@ extern NSString * const IRTableViewWillResumePerformingBlocksNotification;
 - (void) irOffsetSafely:(CGPoint)offset animated:(BOOL)animated;
 
 - (CGRect) irRectForRowAtIndexPathOrCGRectNull:(NSIndexPath *)anIndexPath;
+
+
+
+
+# pragma mark -
+# pragma mark Other Behavior
+
+@property (nonatomic, readwrite, copy) void (^onLayoutSubviews)();
 
 
 
