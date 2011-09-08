@@ -84,6 +84,11 @@
 		FF27A6AC133E2C16008C8DDA /* IRBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */; };
 		FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6E1133E3526008C8DDA /* IRBusyView.h */; };
 		FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6E2133E3526008C8DDA /* IRBusyView.m */; };
+		FF59C39B1418A04900F4BF2D /* UITableView+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF59C39A1418A04900F4BF2D /* UITableView+IRAdditions.m */; };
+		FF59C3A11418A06400F4BF2D /* UIView+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF59C39D1418A06400F4BF2D /* UIView+IRAdditions.h */; };
+		FF59C3A21418A06400F4BF2D /* UIView+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF59C39E1418A06400F4BF2D /* UIView+IRAdditions.m */; };
+		FF59C3A31418A06400F4BF2D /* UIWindow+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF59C39F1418A06400F4BF2D /* UIWindow+IRAdditions.h */; };
+		FF59C3A41418A06400F4BF2D /* UIWindow+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF59C3A01418A06400F4BF2D /* UIWindow+IRAdditions.m */; };
 		FF61635914161868004738D3 /* IRMailComposeViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF61635714161868004738D3 /* IRMailComposeViewController.h */; };
 		FF61635A14161868004738D3 /* IRMailComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF61635814161868004738D3 /* IRMailComposeViewController.m */; };
 		FF890D1D14163AC700CD7D1F /* CALayer+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */; };
@@ -212,6 +217,11 @@
 		FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBarButtonItem.m; sourceTree = "<group>"; };
 		FF27A6E1133E3526008C8DDA /* IRBusyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBusyView.h; sourceTree = "<group>"; };
 		FF27A6E2133E3526008C8DDA /* IRBusyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBusyView.m; sourceTree = "<group>"; };
+		FF59C39A1418A04900F4BF2D /* UITableView+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+IRAdditions.m"; sourceTree = "<group>"; };
+		FF59C39D1418A06400F4BF2D /* UIView+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+IRAdditions.h"; sourceTree = "<group>"; };
+		FF59C39E1418A06400F4BF2D /* UIView+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+IRAdditions.m"; sourceTree = "<group>"; };
+		FF59C39F1418A06400F4BF2D /* UIWindow+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+IRAdditions.h"; sourceTree = "<group>"; };
+		FF59C3A01418A06400F4BF2D /* UIWindow+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+IRAdditions.m"; sourceTree = "<group>"; };
 		FF61635714161868004738D3 /* IRMailComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRMailComposeViewController.h; sourceTree = "<group>"; };
 		FF61635814161868004738D3 /* IRMailComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRMailComposeViewController.m; sourceTree = "<group>"; };
 		FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+IRAdditions.h"; sourceTree = "<group>"; };
@@ -329,16 +339,20 @@
 			isa = PBXGroup;
 			children = (
 				FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */,
+				FF59C39D1418A06400F4BF2D /* UIView+IRAdditions.h */,
+				FF59C39E1418A06400F4BF2D /* UIView+IRAdditions.m */,
+				FF59C39F1418A06400F4BF2D /* UIWindow+IRAdditions.h */,
+				FF59C3A01418A06400F4BF2D /* UIWindow+IRAdditions.m */,
+				FF0A8D051337B36A00DDA47C /* UITableView+IRAdditions.h */,
+				FF59C39A1418A04900F4BF2D /* UITableView+IRAdditions.m */,
 				FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */,
 				FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */,
 				FF0A8D001337B36A00DDA47C /* IRWebView.h */,
 				FF0A8D011337B36A00DDA47C /* IRWebView.m */,
 				FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */,
 				FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */,
-				FF0A8D051337B36A00DDA47C /* UITableView+IRAdditions.h */,
 				FF27A6E1133E3526008C8DDA /* IRBusyView.h */,
 				FF27A6E2133E3526008C8DDA /* IRBusyView.m */,
-				FF0A8D061337B36A00DDA47C /* UITableView+IRAdditions.m */,
 				FF0A8D071337B36A00DDA47C /* IRLabel.h */,
 				FF0A8D081337B36A00DDA47C /* IRLabel.m */,
 				FF0A8D091337B36A00DDA47C /* IRSegmentedControl.h */,
@@ -379,6 +393,7 @@
 				FF9737E213D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m */,
 				FF61635714161868004738D3 /* IRMailComposeViewController.h */,
 				FF61635814161868004738D3 /* IRMailComposeViewController.m */,
+				FF59C39A1418A04900F4BF2D /* UITableView+IRAdditions.m */,
 				FF0A8D1B1337B36A00DDA47C /* Resources */,
 			);
 			name = "UIKit+IRAdditions";
@@ -459,6 +474,8 @@
 				FFC813C013EB8F48007B0683 /* UIImage+IRAdditions.h in Headers */,
 				FF61635914161868004738D3 /* IRMailComposeViewController.h in Headers */,
 				FF890D1D14163AC700CD7D1F /* CALayer+IRAdditions.h in Headers */,
+				FF59C3A11418A06400F4BF2D /* UIView+IRAdditions.h in Headers */,
+				FF59C3A31418A06400F4BF2D /* UIWindow+IRAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,6 +578,9 @@
 				FFC813C113EB8F48007B0683 /* UIImage+IRAdditions.m in Sources */,
 				FF61635A14161868004738D3 /* IRMailComposeViewController.m in Sources */,
 				FF890D1E14163AC700CD7D1F /* CALayer+IRAdditions.m in Sources */,
+				FF59C39B1418A04900F4BF2D /* UITableView+IRAdditions.m in Sources */,
+				FF59C3A21418A06400F4BF2D /* UIView+IRAdditions.m in Sources */,
+				FF59C3A41418A06400F4BF2D /* UIWindow+IRAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
