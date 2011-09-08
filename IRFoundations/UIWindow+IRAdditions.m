@@ -107,7 +107,8 @@ NSString * const kIRWindowInterfaceBounds = @"kIRWindowInterfaceBounds";
 - (void) ir_becomeKeyWindow {
 
 	[self ir_becomeKeyWindow];
-	
+	[self irAdjustInterfaceBoundsWithKeyboardRect:CGRectZero];
+		
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		
