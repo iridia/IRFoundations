@@ -82,6 +82,7 @@
 		NSPersistentStore *addedStore = [self.persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:[NSDictionary dictionaryWithObjectsAndKeys:
 		
 			(id)kCFBooleanTrue, NSMigratePersistentStoresAutomaticallyOption,
+			(id)kCFBooleanTrue, NSInferMappingModelAutomaticallyOption,
 		
 		nil] error:&persistentStoreAddingError];
 		
