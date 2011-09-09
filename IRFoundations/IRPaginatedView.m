@@ -259,13 +259,17 @@
 	self.scrollView.delegate = nil;
 	
 	CGRect newFrame = CGRectInset(self.bounds, -1 * self.horizontalSpacing, 0);
-	if (!CGRectEqualToRect(self.scrollView.frame, newFrame))
+	if (!CGRectEqualToRect(self.scrollView.frame, newFrame)) {
 		self.scrollView.frame = newFrame;
+	}
 	
-	self.scrollView.contentSize = (CGSize){
-		CGRectGetWidth(self.scrollView.bounds) * self.numberOfPages,
-		CGRectGetHeight(self.scrollView.bounds)
+	CGSize newSize = (CGSize){
+		CGRectGetWidth(self.scrollView.frame) * self.numberOfPages,
+		CGRectGetHeight(self.scrollView.frame)
 	};
+	if (!CGSizeEqualToSize(self.scrollView.contentSize, newSize)) {
+		self.scrollView.contentSize = newSize;
+	}
 	
 	NSUInteger index = 0; for (index = 0; index < self.numberOfPages; index++) {
 	
