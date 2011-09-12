@@ -178,8 +178,6 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (void) handleTap:(UITapGestureRecognizer *)aLongPressRecognizer {
 
-	NSLog(@"tap %@ %x", aLongPressRecognizer, aLongPressRecognizer.state);
-	
 	CGPoint touchPoint = [aLongPressRecognizer locationInView:self];
 	touchPoint.y = CGRectGetHeight(self.bounds) - touchPoint.y;
 	
@@ -188,8 +186,6 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 			return !!value;
 		} copy] autorelease], kIRTextLinkAttribute,
 	nil]);
-	
-	NSLog(@"run %@", hitRun);
 	
 	NSURL *link = [(NSDictionary *)CTRunGetAttributes(hitRun) objectForKey:kIRTextLinkAttribute];
 	
