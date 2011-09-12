@@ -42,11 +42,9 @@ typedef BOOL (^IRDictionaryPairTest) (id key, id value);
 @interface NSObject (IRAdditions)
 
 - (void) irExecute; // typecasts object to (void)(^)(void)
+- (BOOL) irIsBlock;
 
 @end
-
-
-
 
 
 @interface NSArray (IRAdditions)

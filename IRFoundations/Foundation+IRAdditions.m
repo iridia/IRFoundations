@@ -169,6 +169,30 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 
 }
 
+- (BOOL) irIsBlock {
+
+	static NSSet *potentialClassNames = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		potentialClassNames = [[NSSet setWithObjects:
+			@"_NSConcreteStackBlock", 
+			@"_NSConcreteGlobalBlock",
+			@"NSStackBlock",
+			@"NSGlobalBlock",
+			@"NSMallocBlock",
+			@"NSBlock",
+		nil] retain];
+	});
+
+	NSString *ownClass = NSStringFromClass([self class]);
+	for (NSString *aClassName in potentialClassNames)
+		if ([ownClass isEqualToString:aClassName])
+			return YES;
+
+	return NO;
+
+}
+
 @end
 
 
