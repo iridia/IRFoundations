@@ -654,6 +654,7 @@
 				);
 				SDKROOT = iphoneos4.3;
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 armv6 armv7";
 			};
 			name = Debug;
 		};
@@ -669,6 +670,7 @@
 				);
 				SDKROOT = iphoneos4.3;
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 armv6 armv7";
 			};
 			name = Release;
 		};
