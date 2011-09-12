@@ -34,6 +34,8 @@ extern NSUInteger irCount (id anObject, NSUInteger placeholderValue);
 
 extern void IRLogExceptionAndContinue (void(^)(void));
 
+typedef BOOL (^IRDictionaryPairTest) (id key, id value);
+
 #endif
 
 
@@ -69,8 +71,12 @@ extern void IRLogExceptionAndContinue (void(^)(void));
 @end
 
 
+@interface NSDictionary (IRAdditions)
 
+- (BOOL) irPassesTestSuite:(NSDictionary *)aSuite;
+//	The suite is a dictionary of keys to IRDictionaryPairTest blocks
 
+@end
 
 
 @interface NSSet (IRAdditions)

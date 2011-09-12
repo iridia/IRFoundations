@@ -302,6 +302,29 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 
 
 
+@implementation NSDictionary (IRAdditions)
+
+- (BOOL) irPassesTestSuite:(NSDictionary *)aSuite {
+
+	__block BOOL passes = YES;
+
+	[self enumerateKeysAndObjectsUsingBlock: ^ (id key, id obj, BOOL *stop) {
+	
+		IRDictionaryPairTest aTest = [aSuite objectForKey:key];
+		if (!aTest || aTest(key, obj))
+			return;
+		
+		passes = NO;
+		*stop = YES;
+		
+	}];
+	
+	return passes;
+
+}
+
+@end
+
 @implementation NSSet (IRAdditions)
 
 - (NSSet *) irSetByRemovingObjectsInSet:(NSSet *)subtractedSet {
