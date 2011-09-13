@@ -87,6 +87,25 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 }
 
+- (void) setFrame:(CGRect)frame {
+
+	[super setFrame:frame];
+
+	if (ctFramesetter) {
+		CFRelease(ctFramesetter);
+		ctFramesetter = nil;
+	}
+	
+	if (ctFrame) {
+		CFRelease(ctFrame);
+		ctFrame = nil;
+	}
+	
+	if ([self isShowingRichText])
+		[self setNeedsDisplay];
+	
+}
+
 - (void) setBounds:(CGRect)bounds {
 
 	[super setBounds:bounds];
@@ -100,6 +119,9 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 		CFRelease(ctFrame);
 		ctFrame = nil;
 	}
+	
+	if ([self isShowingRichText])
+		[self setNeedsDisplay];
 
 }
 
