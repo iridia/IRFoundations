@@ -18,6 +18,9 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 @property (nonatomic, readwrite, assign) CTFramesetterRef ctFramesetter;
 @property (nonatomic, readwrite, assign) CTFrameRef ctFrame;
 @property (nonatomic, readwrite, retain) UIGestureRecognizer *tapRecognizer;
+
+- (CTRunRef) linkRunAtPoint:(CGPoint)touchPoint;
+
 @end
 
 @implementation IRLabel
@@ -58,6 +61,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 - (void) irCommonInit {
 
 	self.tapRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)] autorelease];
+	self.tapRecognizer.delegate = self;
 	[self addGestureRecognizer:self.tapRecognizer];
 
 }
@@ -176,9 +180,15 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 }
 
-- (void) handleTap:(UITapGestureRecognizer *)aLongPressRecognizer {
+- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
 
-	CGPoint touchPoint = [aLongPressRecognizer locationInView:self];
+	CTRunRef hitRun = [self linkRunAtPoint:[touch locationInView:self]];
+	return (BOOL)(!!hitRun);
+
+}
+
+- (CTRunRef) linkRunAtPoint:(CGPoint)touchPoint {
+
 	touchPoint.y = CGRectGetHeight(self.bounds) - touchPoint.y;
 	
 	CTRunRef hitRun = irCTFrameFindRunAtPoint(self.ctFrame, touchPoint, 2.0, nil, [NSDictionary dictionaryWithObjectsAndKeys:
@@ -186,6 +196,14 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 			return !!value;
 		} copy] autorelease], kIRTextLinkAttribute,
 	nil]);
+	
+	return hitRun;
+
+}
+
+- (void) handleTap:(UITapGestureRecognizer *)aLongPressRecognizer {
+
+	CTRunRef hitRun = [self linkRunAtPoint:[aLongPressRecognizer locationInView:self]];
 	
 	NSURL *link = [(NSDictionary *)CTRunGetAttributes(hitRun) objectForKey:kIRTextLinkAttribute];
 	
