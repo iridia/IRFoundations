@@ -11,19 +11,33 @@
 
 @implementation NSAttributedString (IRAdditions)
 
++ (NSDictionary *) irAttributesForFont:(UIFont *)aFont color:(UIColor *)aColor {
+
+	CTFontRef fontRef = CTFontCreateWithName((CFStringRef)(aFont.fontName), aFont.pointSize, NULL);
+	
+	NSMutableDictionary *returnedDictionary = [NSMutableDictionary dictionary];
+	[returnedDictionary setObject:(id)fontRef forKey:(NSString *)kCTFontAttributeName];
+	if (aColor)
+		[returnedDictionary setObject:(id)aColor.CGColor forKey:(NSString *)kCTForegroundColorAttributeName];
+
+	CFRelease(fontRef);
+	return returnedDictionary;
+
+}
+
 + (NSAttributedString *) irAttributedStringWithString:(NSString *)baseString attributes:(NSDictionary *)attributesOrNil {
 
 	return [[[NSAttributedString alloc] initWithString:baseString attributes:attributesOrNil] autorelease];
 
 }
 
-- (NSAttributedString *) attributedStringByReplacingMatchesOfRegularExpression:(NSRegularExpression *)anExpression withOptions:(NSRegularExpressionOptions)options range:(NSRange)aRange usingBlock:(NSAttributedString * (^)(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop))aBlock {
+- (NSAttributedString *) irAttributedStringByReplacingMatchesOfRegularExpression:(NSRegularExpression *)anExpression withOptions:(NSRegularExpressionOptions)options range:(NSRange)aRange usingBlock:(NSAttributedString * (^)(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop))aBlock {
 
-	return [self attributedStringByReplacingMatchesOfRegularExpression:anExpression withOptions:options range:aRange usingMarkedTextRange:&(NSRange){0, 0} block:aBlock];
+	return [self irAttributedStringByReplacingMatchesOfRegularExpression:anExpression withOptions:options range:aRange usingMarkedTextRange:&(NSRange){0, 0} block:aBlock];
 
 }
 
-- (NSAttributedString *) attributedStringByReplacingMatchesOfRegularExpression:(NSRegularExpression *)anExpression withOptions:(NSRegularExpressionOptions)options range:(NSRange)aRange usingMarkedTextRange:(NSRange *)markedTextRangeOrNull block:(NSAttributedString * (^)(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop))aBlock {
+- (NSAttributedString *) irAttributedStringByReplacingMatchesOfRegularExpression:(NSRegularExpression *)anExpression withOptions:(NSRegularExpressionOptions)options range:(NSRange)aRange usingMarkedTextRange:(NSRange *)markedTextRangeOrNull block:(NSAttributedString * (^)(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop))aBlock {
 
 	__block int rangeOffset = 0;
 	
@@ -65,7 +79,7 @@
 
 }
 
-- (NSAttributedString *) attributedStringByReplacingStringsWithEnumeratedAttributesInRange:(NSRange)aRange withOptions:(NSAttributedStringEnumerationOptions)options usingBlock:(NSAttributedString * (^)(NSDictionary *attrs, NSRange range, BOOL *stop))aBlock {
+- (NSAttributedString *) irAttributedStringByReplacingStringsWithEnumeratedAttributesInRange:(NSRange)aRange withOptions:(NSAttributedStringEnumerationOptions)options usingBlock:(NSAttributedString * (^)(NSDictionary *attrs, NSRange range, BOOL *stop))aBlock {
 
 	__block int rangeOffset = 0;
 	

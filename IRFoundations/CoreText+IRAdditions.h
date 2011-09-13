@@ -7,6 +7,7 @@
 //
 
 #import "Foundation+IRAdditions.h"
+#import "NSAttributedString+IRAdditions.h"
 
 #import <Foundation/Foundation.h>
 #import <CoreText/CoreText.h>
