@@ -347,6 +347,22 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 
 }
 
+- (NSDictionary *) irDictionaryBySettingObject:(id)anObject forKey:(NSString *)aKey {
+
+	return [self irDictionaryByMergingWithDictionary:[NSDictionary dictionaryWithObject:anObject forKey:aKey]];
+
+}
+
+- (NSDictionary *) irDictionaryByMergingWithDictionary:(NSDictionary *)aDictionary {
+
+	NSMutableDictionary *copy = [[self mutableCopy] autorelease];
+	[aDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		[copy setObject:obj forKey:key];
+	}];
+	return copy;
+
+}
+
 @end
 
 @implementation NSSet (IRAdditions)
