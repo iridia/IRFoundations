@@ -6,7 +6,10 @@
 //  Copyright 2011 Iridia Productions. All rights reserved.
 //
 
+#import <TargetConditionals.h>
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 #import <UIKit/UIKit.h>
+#endif
 #import <CoreData/CoreData.h>
 
 //	This class is the initial implementation for the application’s data store.

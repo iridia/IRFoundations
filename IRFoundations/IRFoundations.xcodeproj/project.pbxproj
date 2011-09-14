@@ -122,6 +122,56 @@
 		FFD295C313A40E9200EA8213 /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */; };
 		FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */; };
+		FFFDEF7314211BCC0083BEFB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFFDEF7214211BCC0083BEFB /* Cocoa.framework */; };
+		FFFDEF8214211BDE0083BEFB /* Foundation+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C931337B29F00DDA47C /* Foundation+IRAdditions.h */; };
+		FFFDEF8314211BDE0083BEFB /* Foundation+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */; };
+		FFFDEF8414211BDE0083BEFB /* IRNoOp.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C951337B29F00DDA47C /* IRNoOp.h */; };
+		FFFDEF8514211BDE0083BEFB /* IRNoOp.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C961337B29F00DDA47C /* IRNoOp.m */; };
+		FFFDEF8614211BDE0083BEFB /* IRBindings.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C971337B29F00DDA47C /* IRBindings.h */; };
+		FFFDEF8714211BDE0083BEFB /* IRBindings.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C981337B29F00DDA47C /* IRBindings.m */; };
+		FFFDEF8814211BDE0083BEFB /* IRObservings.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C991337B29F00DDA47C /* IRObservings.h */; };
+		FFFDEF8914211BDE0083BEFB /* IRObservings.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C9A1337B29F00DDA47C /* IRObservings.m */; };
+		FFFDEF8A14211BDE0083BEFB /* IRXPathQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C9B1337B29F00DDA47C /* IRXPathQuery.h */; };
+		FFFDEF8B14211BDE0083BEFB /* IRXPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C9C1337B29F00DDA47C /* IRXPathQuery.m */; };
+		FFFDEF8C14211BDE0083BEFB /* IRHTMLStringFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C9D1337B29F00DDA47C /* IRHTMLStringFormatter.h */; };
+		FFFDEF8D14211BDE0083BEFB /* IRHTMLStringFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C9E1337B29F00DDA47C /* IRHTMLStringFormatter.m */; };
+		FFFDEF8E14211BDE0083BEFB /* IRRelativeDateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */; };
+		FFFDEF8F14211BDE0083BEFB /* IRRelativeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */; };
+		FFFDEF9014211BE10083BEFB /* IRFoundations.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C8B1337B28200DDA47C /* IRFoundations.h */; };
+		FFFDEF9214211BE70083BEFB /* CGGeometry+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CFD1337B36A00DDA47C /* CGGeometry+IRAdditions.m */; };
+		FFFDEF9314211BED0083BEFB /* QuartzCore+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CED1337B36A00DDA47C /* QuartzCore+IRAdditions.h */; };
+		FFFDEF9414211BED0083BEFB /* QuartzCore+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CEE1337B36A00DDA47C /* QuartzCore+IRAdditions.m */; };
+		FFFDEF9514211BED0083BEFB /* CALayer+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */; };
+		FFFDEF9614211BED0083BEFB /* CALayer+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */; };
+		FFFDEF9714211BED0083BEFB /* IRStaticShapeView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CEF1337B36A00DDA47C /* IRStaticShapeView.h */; };
+		FFFDEF9814211BED0083BEFB /* IRStaticShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CF01337B36A00DDA47C /* IRStaticShapeView.m */; };
+		FFFDEF9914211BED0083BEFB /* IRBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = FF94EF6D135117D100FE79D4 /* IRBorder.h */; };
+		FFFDEF9A14211BED0083BEFB /* IRBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = FF94EF6E135117D100FE79D4 /* IRBorder.m */; };
+		FFFDEF9B14211BED0083BEFB /* IRShadow.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CF11337B36A00DDA47C /* IRShadow.h */; };
+		FFFDEF9C14211BED0083BEFB /* IRShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CF21337B36A00DDA47C /* IRShadow.m */; };
+		FFFDEF9D14211BED0083BEFB /* IRView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CF31337B36A00DDA47C /* IRView.h */; };
+		FFFDEF9E14211BED0083BEFB /* IRView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CF41337B36A00DDA47C /* IRView.m */; };
+		FFFDEF9F14211BED0083BEFB /* IRShapeView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CF51337B36A00DDA47C /* IRShapeView.h */; };
+		FFFDEFA014211BED0083BEFB /* IRShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CF61337B36A00DDA47C /* IRShapeView.m */; };
+		FFFDEFA114211BED0083BEFB /* IRGradientView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CF71337B36A00DDA47C /* IRGradientView.h */; };
+		FFFDEFA214211BED0083BEFB /* IRGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CF81337B36A00DDA47C /* IRGradientView.m */; };
+		FFFDEFA314211BED0083BEFB /* IRConcaveView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CF91337B36A00DDA47C /* IRConcaveView.h */; };
+		FFFDEFA414211BED0083BEFB /* IRConcaveView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CFA1337B36A00DDA47C /* IRConcaveView.m */; };
+		FFFDEFA514211BF30083BEFB /* CoreData+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D231337B36A00DDA47C /* CoreData+IRAdditions.h */; };
+		FFFDEFA614211BF30083BEFB /* IRDataStore.h in Headers */ = {isa = PBXBuildFile; fileRef = FF97382613D82496003D1722 /* IRDataStore.h */; };
+		FFFDEFA714211BF30083BEFB /* IRDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FF97382713D82496003D1722 /* IRDataStore.m */; };
+		FFFDEFA814211BF30083BEFB /* IRManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D241337B36A00DDA47C /* IRManagedObject.h */; };
+		FFFDEFA914211BF30083BEFB /* IRManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D251337B36A00DDA47C /* IRManagedObject.m */; };
+		FFFDEFAA14211BF30083BEFB /* IRFetchedResultsController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D261337B36A00DDA47C /* IRFetchedResultsController.h */; };
+		FFFDEFAB14211BF30083BEFB /* IRFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D271337B36A00DDA47C /* IRFetchedResultsController.m */; };
+		FFFDEFAC14211BF30083BEFB /* IRManagedObjectContext.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D281337B36A00DDA47C /* IRManagedObjectContext.h */; };
+		FFFDEFAD14211BF30083BEFB /* IRManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */; };
+		FFFDEFAE14211BF30083BEFB /* NSFetchRequest+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D2A1337B36A00DDA47C /* NSFetchRequest+IRAdditions.h */; };
+		FFFDEFAF14211BF30083BEFB /* NSFetchRequest+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */; };
+		FFFDEFB014211BF90083BEFB /* CoreText+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FFB6797C141E406B006F84E3 /* CoreText+IRAdditions.h */; };
+		FFFDEFB114211BF90083BEFB /* CoreText+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB6797D141E406B006F84E3 /* CoreText+IRAdditions.m */; };
+		FFFDEFB214211BF90083BEFB /* NSAttributedString+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FFB67982141E415C006F84E3 /* NSAttributedString+IRAdditions.h */; };
+		FFFDEFB314211BF90083BEFB /* NSAttributedString+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB67983141E415C006F84E3 /* NSAttributedString+IRAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -267,6 +317,11 @@
 		FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.7.3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libxml2.2.7.3.dylib; sourceTree = DEVELOPER_DIR; };
 		FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAlertView.h; sourceTree = "<group>"; };
 		FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAlertView.m; sourceTree = "<group>"; };
+		FFFDEF7014211BCC0083BEFB /* libIRFoundations.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIRFoundations.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFFDEF7214211BCC0083BEFB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		FFFDEF7514211BCC0083BEFB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		FFFDEF7614211BCC0083BEFB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		FFFDEF7714211BCC0083BEFB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,6 +341,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FFFDEF6D14211BCC0083BEFB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFFDEF7314211BCC0083BEFB /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -301,6 +364,7 @@
 				FFB6797B141E3F71006F84E3 /* CoreText+IRAdditions */,
 				FF0A8BAA1337AFB700DDA47C /* Related */,
 				FF0A8E971337B98900DDA47C /* IRFoundationsFramework-Info.plist */,
+				FFFDEF7114211BCC0083BEFB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -317,6 +381,7 @@
 				FFB67958141E383D006F84E3 /* CoreText.framework */,
 				FFD295C213A40E9200EA8213 /* libxml2.2.7.3.dylib */,
 				FF0A8BA91337AFB700DDA47C /* libIRFoundationsTouch.a */,
+				FFFDEF7014211BCC0083BEFB /* libIRFoundations.a */,
 			);
 			name = Related;
 			sourceTree = "<group>";
@@ -468,6 +533,25 @@
 			name = "CoreText+IRAdditions";
 			sourceTree = "<group>";
 		};
+		FFFDEF7114211BCC0083BEFB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FFFDEF7214211BCC0083BEFB /* Cocoa.framework */,
+				FFFDEF7414211BCC0083BEFB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FFFDEF7414211BCC0083BEFB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FFFDEF7514211BCC0083BEFB /* AppKit.framework */,
+				FFFDEF7614211BCC0083BEFB /* CoreData.framework */,
+				FFFDEF7714211BCC0083BEFB /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -532,6 +616,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FFFDEF6E14211BCC0083BEFB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFFDEF8214211BDE0083BEFB /* Foundation+IRAdditions.h in Headers */,
+				FFFDEF8414211BDE0083BEFB /* IRNoOp.h in Headers */,
+				FFFDEF8614211BDE0083BEFB /* IRBindings.h in Headers */,
+				FFFDEF8814211BDE0083BEFB /* IRObservings.h in Headers */,
+				FFFDEF8A14211BDE0083BEFB /* IRXPathQuery.h in Headers */,
+				FFFDEF8C14211BDE0083BEFB /* IRHTMLStringFormatter.h in Headers */,
+				FFFDEF8E14211BDE0083BEFB /* IRRelativeDateFormatter.h in Headers */,
+				FFFDEF9014211BE10083BEFB /* IRFoundations.h in Headers */,
+				FFFDEF9314211BED0083BEFB /* QuartzCore+IRAdditions.h in Headers */,
+				FFFDEF9514211BED0083BEFB /* CALayer+IRAdditions.h in Headers */,
+				FFFDEF9714211BED0083BEFB /* IRStaticShapeView.h in Headers */,
+				FFFDEF9914211BED0083BEFB /* IRBorder.h in Headers */,
+				FFFDEF9B14211BED0083BEFB /* IRShadow.h in Headers */,
+				FFFDEF9D14211BED0083BEFB /* IRView.h in Headers */,
+				FFFDEF9F14211BED0083BEFB /* IRShapeView.h in Headers */,
+				FFFDEFA114211BED0083BEFB /* IRGradientView.h in Headers */,
+				FFFDEFA314211BED0083BEFB /* IRConcaveView.h in Headers */,
+				FFFDEFA514211BF30083BEFB /* CoreData+IRAdditions.h in Headers */,
+				FFFDEFA614211BF30083BEFB /* IRDataStore.h in Headers */,
+				FFFDEFA814211BF30083BEFB /* IRManagedObject.h in Headers */,
+				FFFDEFAA14211BF30083BEFB /* IRFetchedResultsController.h in Headers */,
+				FFFDEFAC14211BF30083BEFB /* IRManagedObjectContext.h in Headers */,
+				FFFDEFAE14211BF30083BEFB /* NSFetchRequest+IRAdditions.h in Headers */,
+				FFFDEFB014211BF90083BEFB /* CoreText+IRAdditions.h in Headers */,
+				FFFDEFB214211BF90083BEFB /* NSAttributedString+IRAdditions.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -552,6 +668,23 @@
 			name = IRFoundationsTouch;
 			productName = IRFoundationsTouch;
 			productReference = FF0A8BA91337AFB700DDA47C /* libIRFoundationsTouch.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		FFFDEF6F14211BCC0083BEFB /* IRFoundations */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FFFDEF8014211BCC0083BEFB /* Build configuration list for PBXNativeTarget "IRFoundations" */;
+			buildPhases = (
+				FFFDEF6C14211BCC0083BEFB /* Sources */,
+				FFFDEF6D14211BCC0083BEFB /* Frameworks */,
+				FFFDEF6E14211BCC0083BEFB /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IRFoundations;
+			productName = IRFoundations;
+			productReference = FFFDEF7014211BCC0083BEFB /* libIRFoundations.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -575,6 +708,7 @@
 			projectRoot = "";
 			targets = (
 				FF0A8BA81337AFB700DDA47C /* IRFoundationsTouch */,
+				FFFDEF6F14211BCC0083BEFB /* IRFoundations */,
 			);
 		};
 /* End PBXProject section */
@@ -636,6 +770,37 @@
 				FFB6797F141E406B006F84E3 /* CoreText+IRAdditions.m in Sources */,
 				FFB67981141E40D2006F84E3 /* UITableView+IRAdditions.m in Sources */,
 				FFB67985141E415C006F84E3 /* NSAttributedString+IRAdditions.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFFDEF6C14211BCC0083BEFB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFFDEF8314211BDE0083BEFB /* Foundation+IRAdditions.m in Sources */,
+				FFFDEF8514211BDE0083BEFB /* IRNoOp.m in Sources */,
+				FFFDEF8714211BDE0083BEFB /* IRBindings.m in Sources */,
+				FFFDEF8914211BDE0083BEFB /* IRObservings.m in Sources */,
+				FFFDEF8B14211BDE0083BEFB /* IRXPathQuery.m in Sources */,
+				FFFDEF8D14211BDE0083BEFB /* IRHTMLStringFormatter.m in Sources */,
+				FFFDEF8F14211BDE0083BEFB /* IRRelativeDateFormatter.m in Sources */,
+				FFFDEF9214211BE70083BEFB /* CGGeometry+IRAdditions.m in Sources */,
+				FFFDEF9414211BED0083BEFB /* QuartzCore+IRAdditions.m in Sources */,
+				FFFDEF9614211BED0083BEFB /* CALayer+IRAdditions.m in Sources */,
+				FFFDEF9814211BED0083BEFB /* IRStaticShapeView.m in Sources */,
+				FFFDEF9A14211BED0083BEFB /* IRBorder.m in Sources */,
+				FFFDEF9C14211BED0083BEFB /* IRShadow.m in Sources */,
+				FFFDEF9E14211BED0083BEFB /* IRView.m in Sources */,
+				FFFDEFA014211BED0083BEFB /* IRShapeView.m in Sources */,
+				FFFDEFA214211BED0083BEFB /* IRGradientView.m in Sources */,
+				FFFDEFA414211BED0083BEFB /* IRConcaveView.m in Sources */,
+				FFFDEFA714211BF30083BEFB /* IRDataStore.m in Sources */,
+				FFFDEFA914211BF30083BEFB /* IRManagedObject.m in Sources */,
+				FFFDEFAB14211BF30083BEFB /* IRFetchedResultsController.m in Sources */,
+				FFFDEFAD14211BF30083BEFB /* IRManagedObjectContext.m in Sources */,
+				FFFDEFAF14211BF30083BEFB /* NSFetchRequest+IRAdditions.m in Sources */,
+				FFFDEFB114211BF90083BEFB /* CoreText+IRAdditions.m in Sources */,
+				FFFDEFB314211BF90083BEFB /* NSAttributedString+IRAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,6 +867,62 @@
 			};
 			name = Release;
 		};
+		FFFDEF7E14211BCC0083BEFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IRFoundations/IRFoundations-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		FFFDEF7F14211BCC0083BEFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IRFoundations/IRFoundations-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -719,6 +940,15 @@
 			buildConfigurations = (
 				FF0A8BAB1337AFB700DDA47C /* Debug */,
 				FF0A8BAC1337AFB700DDA47C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FFFDEF8014211BCC0083BEFB /* Build configuration list for PBXNativeTarget "IRFoundations" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FFFDEF7E14211BCC0083BEFB /* Debug */,
+				FFFDEF7F14211BCC0083BEFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
