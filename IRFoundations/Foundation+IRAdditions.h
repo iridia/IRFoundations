@@ -34,17 +34,17 @@ extern NSUInteger irCount (id anObject, NSUInteger placeholderValue);
 
 extern void IRLogExceptionAndContinue (void(^)(void));
 
+typedef BOOL (^IRDictionaryPairTest) (id key, id value);
+
 #endif
 
 
 @interface NSObject (IRAdditions)
 
 - (void) irExecute; // typecasts object to (void)(^)(void)
+- (BOOL) irIsBlock;
 
 @end
-
-
-
 
 
 @interface NSArray (IRAdditions)
@@ -69,8 +69,17 @@ extern void IRLogExceptionAndContinue (void(^)(void));
 @end
 
 
+@interface NSDictionary (IRAdditions)
 
+- (BOOL) irPassesTestSuite:(NSDictionary *)aSuite;
+//	The suite is a dictionary of keys to IRDictionaryPairTest blocks
 
+- (NSDictionary *) irDictionaryBySettingObject:(id)anObject forKey:(NSString *)aKey;
+
+- (NSDictionary *) irDictionaryByMergingWithDictionary:(NSDictionary *)aDictionary;
+//	Currently a shallow merge
+
+@end
 
 
 @interface NSSet (IRAdditions)
