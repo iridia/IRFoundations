@@ -19,6 +19,8 @@ enum {
 
 + (id) itemWithCustomView:(UIView *)aView;
 
++ (id) itemWithTitle:(NSString *)aTitle action:(void(^)(void))aBlock;
+
 + (id) itemWithButton:(UIButton *)aButton wiredAction:(void(^)(UIButton *senderButton, IRBarButtonItem *senderItem))aBlock;
 - (IBAction) handleCustomButtonAction:(id)sender; // button will be wired to the item, which runs the block
 

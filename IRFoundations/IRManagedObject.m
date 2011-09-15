@@ -219,10 +219,10 @@
 
 
 
-+ (NSArray *) insertOrUpdateObjectsUsingContext:(NSManagedObjectContext *)context withRemoteResponse:(NSArray *)inRemoteDictionaries usingMapping:(NSDictionary *)remoteKeyPathsToClassNames options:(int)options {
++ (NSArray *) insertOrUpdateObjectsUsingContext:(NSManagedObjectContext *)context withRemoteResponse:(NSArray *)inRemoteDictionaries usingMapping:(NSDictionary *)remoteKeyPathsToClassNames options:(IRManagedObjectOptions)options {
 
-	if (!inRemoteDictionaries)
-	return [NSArray array];
+	if (![inRemoteDictionaries count])
+		return [NSArray array];
 	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
@@ -234,6 +234,7 @@
 	NSString *remoteKeyPath = [[[self remoteDictionaryConfigurationMapping] allKeysForObject:localKeyPath] objectAtIndex:0];
 	
 	NSArray *baseEntities = [self insertOrUpdateObjectsIntoContext:context withExistingProperty:localKeyPath matchingKeyPath:remoteKeyPath ofRemoteDictionaries:inRemoteDictionaries];
+	NSParameterAssert(baseEntities);
 	
 	NSDictionary *baseEntityRelationships = [[[[[context persistentStoreCoordinator] managedObjectModel] entitiesByName] objectForKey:[self coreDataEntityName]] relationshipsByName];
 	
@@ -249,7 +250,11 @@
 		//	Skip if the local key path is not mappable
 		if (!rootLocalKeyPath) {
 		
-			[NSException raise:NSInternalInconsistencyException format:@"A remote mapping %@ -> %@ is not found, using mapping %@", rootRemoteKeyPath, NSStringFromClass(nodeEntityClass), [self remoteDictionaryConfigurationMapping]];
+			if (![self skipsNonexistantRemoteKey]) {
+			
+				[NSException raise:NSInternalInconsistencyException format:@"A remote mapping %@ -> %@ is not found, using mapping %@", rootRemoteKeyPath, NSStringFromClass(nodeEntityClass), [self remoteDictionaryConfigurationMapping]];
+			
+			}
 			
 			continue;
 			
@@ -263,19 +268,21 @@
 		
 		NSArray *nodeEntities = [nodeEntityClass insertOrUpdateObjectsUsingContext:context withRemoteResponse:entityRepresentations usingMapping:[nodeEntityClass defaultHierarchicalEntityMapping] options:0];
 		
-		//	insertOrUpdateObjectsIntoContext:context withExistingProperty:nodeLocalKeyPath matchingKeyPath:nodeRemoteKeyPath ofRemoteDictionaries:entityRepresentations];
-		
 		BOOL relationIsToMany = [[baseEntityRelationships objectForKey:rootLocalKeyPath] isToMany];
+		BOOL usesIndividualAdd = (options & IRManagedObjectOptionIndividualOperations);
 		
 		
 		__block NSInteger consumedNodeEntities = 0;
 		
 		[baseEntities enumerateObjectsUsingBlock: ^ (IRManagedObject *baseObject, NSUInteger index, BOOL *stop) {
 		
+			NSParameterAssert([baseObject isKindOfClass:[IRManagedObject class]]);
+			[[baseObject retain] autorelease];
+		
 			NSUInteger relatedNodesCount = irCount([nodeRepresentations objectAtIndex:index], 0);
 			
-			if (relatedNodesCount == 0)
-			return;
+			if ((relatedNodesCount == 0) || (relatedNodesCount == NSNotFound))
+				return;
 			
 			if ([rootLocalKeyPath isEqual:[NSNull null]] || !rootLocalKeyPath)
 				[NSException raise:NSInternalInconsistencyException format:@"Local key path for remote key path %@ can’t be null or nil.", rootRemoteKeyPath];
@@ -287,7 +294,18 @@
 			[baseObject willChangeValueForKey:rootLocalKeyPath];
 			
 			if (relationIsToMany) {
-				[[baseObject mutableSetValueForKeyPath:rootLocalKeyPath] addObjectsFromArray:relatedEntities];
+			
+				if (usesIndividualAdd) {
+			
+					for (id anObject in relatedEntities)
+						[[baseObject mutableSetValueForKeyPath:rootLocalKeyPath] addObject:anObject];
+					
+				} else {
+				
+					[[baseObject mutableSetValueForKeyPath:rootLocalKeyPath] addObjectsFromArray:relatedEntities];
+				
+				}
+				
 			} else {
 			
 				[baseObject setValue:[relatedEntities objectAtIndex:0] forKeyPath:rootLocalKeyPath];
@@ -381,29 +399,6 @@
 
 
 
-@interface IRManagedObject (WebAPIImporting_Private)
-
-+ (BOOL) skipsNonexistantRemoteKey;
-+ (BOOL) skipsNullValue;
-
-@end
-
-@implementation IRManagedObject (WebAPIImporting_Private)
-
-+ (BOOL) skipsNonexistantRemoteKey {
-
-	return [[self placeholderForNonexistantKey] isEqual:[IRNoOp noOp]];
-
-}
-
-+ (BOOL) skipsNullValue {
-
-	return [[self placeholderForNullValue] isEqual:[IRNoOp noOp]];	
-
-}
-
-@end
-
 @implementation IRManagedObject (WebAPIImporting)
 
 + (NSDictionary *) remoteDictionaryConfigurationMapping {
@@ -427,6 +422,18 @@
 + (id<NSObject>) placeholderForNullValue {
 
 	return nil;
+
+}
+
++ (BOOL) skipsNonexistantRemoteKey {
+
+	return [[self placeholderForNonexistantKey] isEqual:[IRNoOp noOp]];
+
+}
+
++ (BOOL) skipsNullValue {
+
+	return [[self placeholderForNullValue] isEqual:[IRNoOp noOp]];	
 
 }
 
