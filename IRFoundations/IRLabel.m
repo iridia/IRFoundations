@@ -149,13 +149,30 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (NSAttributedString *) attributedStringForString:(NSString *)aString {
 
-	CTFontRef font = CTFontCreateWithName((CFStringRef)self.font.fontName, self.font.pointSize, NULL);
+	return [self attributedStringForString:aString font:self.font color:self.textColor];
+
+}
+
+- (NSAttributedString *) attributedStringForString:(NSString *)aString font:(UIFont *)aFont color:(UIColor *)aColor {
+
+	CTFontRef font = CTFontCreateWithName((CFStringRef)aFont.fontName, aFont.pointSize, NULL);
+	
+	//	CTLineBreakMode lineBreakMode = kCTLineBreakByTruncatingTail;
+	//	CTParagraphStyleSetting paragraphStyles[] = (CTParagraphStyleSetting[]){
+	//		{ kCTParagraphStyleSpecifierLineBreakMode, sizeof(lineBreakMode), &lineBreakMode },
+	//	};
+	//	
+	//	CFIndex paragraphStylesCount = sizeof(paragraphStyles) / sizeof(CTParagraphStyleSetting);
+	//	CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(paragraphStyles, paragraphStylesCount);
 
 	NSAttributedString *returnedString = [[[NSAttributedString alloc] initWithString:aString attributes:[NSDictionary dictionaryWithObjectsAndKeys:
 		(id)font, kCTFontAttributeName,
+	//	(id)paragraphStyle, kCTParagraphStyleAttributeName,
+		(id)aColor, kCTForegroundColorAttributeName,
 	nil]] autorelease];
 	
 	CFRelease(font);
+	//	CFRelease(paragraphStyle);
 	
 	return returnedString;
 

@@ -20,5 +20,6 @@ extern NSString * const kIRTextActiveBackgroundColorAttribute;
 + (IRLabel *) labelWithFont:(UIFont *)aFont color:(UIColor *)aColor;
 
 - (NSAttributedString *) attributedStringForString:(NSString *)aString;
+- (NSAttributedString *) attributedStringForString:(NSString *)aString font:(UIFont *)aFont color:(UIColor *)aColor;
 
 @end
