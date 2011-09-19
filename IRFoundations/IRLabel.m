@@ -17,15 +17,14 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 - (void) irCommonInit;
 @property (nonatomic, readwrite, assign) CTFramesetterRef ctFramesetter;
 @property (nonatomic, readwrite, assign) CTFrameRef ctFrame;
-@property (nonatomic, readwrite, retain) UIGestureRecognizer *tapRecognizer;
-
+@property (nonatomic, readwrite, retain) UIBezierPath *lastHighlightedRunOutline;
 - (CTRunRef) linkRunAtPoint:(CGPoint)touchPoint;
 
 @end
 
 @implementation IRLabel
 
-@synthesize attributedText, ctFramesetter, ctFrame, tapRecognizer;
+@synthesize attributedText, ctFramesetter, ctFrame, lastHighlightedRunOutline;
 
 + (IRLabel *) labelWithFont:(UIFont *)aFont color:(UIColor *)aColor {
 
@@ -60,10 +59,16 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (void) irCommonInit {
 
-	self.tapRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)] autorelease];
-	self.tapRecognizer.delegate = self;
-	[self addGestureRecognizer:self.tapRecognizer];
-
+	UITapGestureRecognizer *tapRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)] autorelease];
+	tapRecognizer.delegate = self;
+	
+	UILongPressGestureRecognizer *longPressRecognizer = [[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)] autorelease];
+	longPressRecognizer.delegate = self;
+	longPressRecognizer.minimumPressDuration = 0.01f;
+	
+	[self addGestureRecognizer:tapRecognizer];
+	[self addGestureRecognizer:longPressRecognizer];
+	
 }
 
 - (BOOL) isShowingRichText {
@@ -74,8 +79,8 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (void) dealloc {
 
-	[tapRecognizer release];
 	[attributedText release];
+	[lastHighlightedRunOutline release];
 	
 	if (ctFramesetter)
 		CFRelease(ctFramesetter);
@@ -213,7 +218,30 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 }
 
+- (void) drawRect:(CGRect)rect {
+	
+	CGContextRef context = UIGraphicsGetCurrentContext();	
+	if (self.lastHighlightedRunOutline) {
+		CGContextSaveGState(context);
+		CGContextConcatCTM(context, CGAffineTransformMake(
+			1, 0, 0, -1, 0, CGRectGetHeight(self.bounds)
+		));
+		
+		CGContextAddPath(context, self.lastHighlightedRunOutline.CGPath);
+		CGContextSetFillColorWithColor(context, [[UIColor blackColor] colorWithAlphaComponent:0.15f].CGColor);
+		CGContextFillPath(context);
+		CGContextRestoreGState(context);	
+	}
+
+	[super drawRect:rect];
+	
+}
+
 - (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+
+	if ([self.gestureRecognizers containsObject:gestureRecognizer])
+	if ([self.gestureRecognizers containsObject:otherGestureRecognizer])
+		return YES;
 
 	if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] && [self.gestureRecognizers containsObject:gestureRecognizer])
 		return NO;
@@ -221,6 +249,12 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	if ([otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] && [self.gestureRecognizers containsObject:otherGestureRecognizer])
 		return NO;
 	
+	if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]] && [self.gestureRecognizers containsObject:gestureRecognizer])
+		return NO;
+
+	if ([otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]] && [self.gestureRecognizers containsObject:otherGestureRecognizer])
+		return NO;
+
 	return YES;
 
 }
@@ -246,14 +280,58 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 }
 
-- (void) handleTap:(UITapGestureRecognizer *)aLongPressRecognizer {
+- (void) handleTap:(UITapGestureRecognizer *)aTapRecognizer {
 
-	CTRunRef hitRun = [self linkRunAtPoint:[aLongPressRecognizer locationInView:self]];
+	CTRunRef hitRun = [self linkRunAtPoint:[aTapRecognizer locationInView:self]];
 	
 	NSURL *link = [(NSDictionary *)CTRunGetAttributes(hitRun) objectForKey:kIRTextLinkAttribute];
 	
 	if ([link isKindOfClass:[NSURL class]])
 		[[UIApplication sharedApplication] openURL:link];
+
+}
+
+- (void) handleLongPress:(UILongPressGestureRecognizer *)aLongPressRecognizer {
+
+	CTRunRef hitRun = [self linkRunAtPoint:[aLongPressRecognizer locationInView:self]];
+		
+	switch (aLongPressRecognizer.state) {
+		case UIGestureRecognizerStatePossible: {
+			break;
+		}
+    case UIGestureRecognizerStateBegan:
+    case UIGestureRecognizerStateChanged: {
+			
+			if (hitRun) {
+				
+				self.lastHighlightedRunOutline = irCTFrameGetRunOutline(self.ctFrame, irCTFrameFindNeighborRuns(self.ctFrame, hitRun, [NSDictionary dictionaryWithObjectsAndKeys:
+					[[^ (id key, id value) { return !!value; } copy] autorelease], kIRTextLinkAttribute,
+				nil]), UIEdgeInsetsZero, 4.0f, YES, YES, NO);
+				
+				[self setNeedsDisplay];
+				
+			} else {
+			
+				self.lastHighlightedRunOutline = nil;
+				
+				[self setNeedsDisplay];
+			
+			}
+			
+			break;
+		}
+    case UIGestureRecognizerStateEnded:
+    case UIGestureRecognizerStateCancelled:
+		case UIGestureRecognizerStateFailed: {
+		
+			self.lastHighlightedRunOutline = nil;
+			
+			[self setNeedsDisplay];
+		
+			break;
+			
+		}
+	};
 
 }
 
