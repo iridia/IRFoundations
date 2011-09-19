@@ -331,11 +331,12 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 - (BOOL) irPassesTestSuite:(NSDictionary *)aSuite {
 
 	__block BOOL passes = YES;
-
-	[self enumerateKeysAndObjectsUsingBlock: ^ (id key, id obj, BOOL *stop) {
+	
+	[aSuite enumerateKeysAndObjectsUsingBlock: ^ (id key, id obj, BOOL *stop) {
 	
 		IRDictionaryPairTest aTest = [aSuite objectForKey:key];
-		if (!aTest || aTest(key, obj))
+		
+		if (!aTest || aTest(key, [self objectForKey:key]))
 			return;
 		
 		passes = NO;
