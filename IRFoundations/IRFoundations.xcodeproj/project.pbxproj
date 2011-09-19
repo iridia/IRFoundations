@@ -112,7 +112,6 @@
 		FFB67968141E384F006F84E3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB67967141E384F006F84E3 /* Security.framework */; };
 		FFB6797E141E406B006F84E3 /* CoreText+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FFB6797C141E406B006F84E3 /* CoreText+IRAdditions.h */; };
 		FFB6797F141E406B006F84E3 /* CoreText+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB6797D141E406B006F84E3 /* CoreText+IRAdditions.m */; };
-		FFB67981141E40D2006F84E3 /* UITableView+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB67980141E40D2006F84E3 /* UITableView+IRAdditions.m */; };
 		FFB67984141E415C006F84E3 /* NSAttributedString+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FFB67982141E415C006F84E3 /* NSAttributedString+IRAdditions.h */; };
 		FFB67985141E415C006F84E3 /* NSAttributedString+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB67983141E415C006F84E3 /* NSAttributedString+IRAdditions.m */; };
 		FFC813BB13EB8E4B007B0683 /* IRImagePickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = FFC813B913EB8E4B007B0683 /* IRImagePickerController.h */; };
@@ -768,7 +767,6 @@
 				FF59C3A21418A06400F4BF2D /* UIView+IRAdditions.m in Sources */,
 				FF59C3A41418A06400F4BF2D /* UIWindow+IRAdditions.m in Sources */,
 				FFB6797F141E406B006F84E3 /* CoreText+IRAdditions.m in Sources */,
-				FFB67981141E40D2006F84E3 /* UITableView+IRAdditions.m in Sources */,
 				FFB67985141E415C006F84E3 /* NSAttributedString+IRAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
