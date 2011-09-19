@@ -11,6 +11,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreText/CoreText.h>
+#import <UIKit/UIKit.h>
 
 #ifndef __CoreText_IRAdditions__
 #define __CoreText_IRAdditions__
@@ -23,5 +24,9 @@ extern CTParagraphStyleRef irCTParagraphStyleCreateWithFixedLines(CGFloat linehe
 extern CTRunRef irCTFrameFindRunAtPoint (CTFrameRef aFrame, CGPoint aPoint, CGFloat searchTolerance, CFDictionaryRef *usedRunAttributes, NSDictionary *testSuite);
 //	The suite is a dictionary containing keys to IRDictionaryPairTest blocks
 //	If nil, there will be no testing, otherwise only runs whose attributes conform to the test suite would be returned
+
+extern NSArray * irCTFrameFindNeighborRuns (CTFrameRef aFrame, CTRunRef aRun, NSDictionary *testSuite);
+
+extern UIBezierPath * irCTFrameGetRunOutline (CTFrameRef aFrame, NSArray *runs, UIEdgeInsets edgeInsets, CGFloat cornerRadius, BOOL shouldFlushEdges, BOOL shouldUseIntegralRects, BOOL compensateLeading);
 
 #endif
