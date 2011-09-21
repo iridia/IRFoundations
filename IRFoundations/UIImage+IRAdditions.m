@@ -31,6 +31,8 @@
 	size_t height = CGImageGetHeight(cgImage);
 	
 	CGContextRef context = CGBitmapContextCreate(NULL, width, height, 8, width * 4, CGImageGetColorSpace(cgImage), kCGImageAlphaNoneSkipFirst);
+	if (!width && !height)
+		return self;
 	CGContextDrawImage(context, CGRectMake(0, 0, width, height), cgImage);
 	CGContextRelease(context);
 
@@ -39,6 +41,9 @@
 }
 
 - (UIImage *) irScaledImageWithSize:(CGSize)aSize {
+
+	if (CGSizeEqualToSize(aSize, CGSizeZero))
+		return self;
 
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 	CGContextRef context = CGBitmapContextCreate(NULL, aSize.width, aSize.height, 8, 0, colorSpace, kCGImageAlphaPremultipliedLast);
