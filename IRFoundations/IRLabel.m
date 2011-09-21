@@ -200,7 +200,12 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	//	Note: we might have label bounds that are shorter than even one line of text, so in that case constrain the size to at least the height of the first row to avoid bugs where the label will show nothing
 
 	if (!ctFrame)
-		ctFrame = CTFramesetterCreateFrame(self.ctFramesetter, (CFRange){ 0, 0 }, [UIBezierPath bezierPathWithRect:self.bounds].CGPath, nil);
+		ctFrame = CTFramesetterCreateFrame(self.ctFramesetter, (CFRange){ 0, 0 }, [UIBezierPath bezierPathWithRect:(CGRect){
+			0,
+			-4,
+			self.bounds.size.width,
+			self.bounds.size.height + 4
+		}].CGPath, nil);
 	
 	return ctFrame;
 
