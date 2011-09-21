@@ -8,6 +8,7 @@
 
 #import <CoreText/CoreText.h>
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 
 extern NSString * const kIRTextLinkAttribute;

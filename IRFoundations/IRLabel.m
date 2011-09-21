@@ -185,8 +185,11 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (CTFramesetterRef) ctFramesetter {
 
+	CFAttributedStringRef text = (CFAttributedStringRef)self.attributedText;
+	[[(id)text retain] autorelease];
+
 	if (!ctFramesetter)
-		ctFramesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.attributedText);
+		ctFramesetter = CTFramesetterCreateWithAttributedString(text);
 	
 	return ctFramesetter;
 
