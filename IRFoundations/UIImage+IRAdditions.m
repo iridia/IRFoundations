@@ -30,11 +30,24 @@
 	size_t width = CGImageGetWidth(cgImage);
 	size_t height = CGImageGetHeight(cgImage);
 	
-	CGContextRef context = CGBitmapContextCreate(NULL, width, height, 8, width * 4, CGImageGetColorSpace(cgImage), kCGImageAlphaNoneSkipFirst);
 	if (!width && !height)
 		return self;
+		
+	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+	CGContextRef context = CGBitmapContextCreate(
+		NULL, 
+		width, 
+		height, 8, 
+		width * 4, 
+		colorSpace,
+		kCGImageAlphaNoneSkipFirst
+	);
+	
+	NSParameterAssert(context);
+	
 	CGContextDrawImage(context, CGRectMake(0, 0, width, height), cgImage);
 	CGContextRelease(context);
+	CGColorSpaceRelease(colorSpace);
 
 	return self;
 
