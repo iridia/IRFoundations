@@ -66,6 +66,8 @@ typedef BOOL (^IRDictionaryPairTest) (id key, id value);
 - (void) irEnqueueBlock:(void(^)(void))aBlock; // makes an autoreleased copy then enqueues
 - (void) irShuffle;
 
++ (NSMutableArray *) irArrayByRepeatingObject:(id)anObject count:(NSUInteger)count;
+
 @end
 
 

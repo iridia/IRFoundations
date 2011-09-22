@@ -320,6 +320,12 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 
 }
 
++ (NSMutableArray *) irArrayByRepeatingObject:(id)anObject count:(NSUInteger)count {
+
+	return (NSMutableArray *)[super irArrayByRepeatingObject:anObject count:count];
+
+}
+
 @end
 
 
