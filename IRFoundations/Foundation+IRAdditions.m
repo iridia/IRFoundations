@@ -297,6 +297,12 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 
 }
 
+- (NSArray *) irShuffle {
+	NSMutableArray *returnedArray = [[self mutableCopy] autorelease];
+	[returnedArray irShuffle];
+	return returnedArray;
+}
+
 @end
 
 

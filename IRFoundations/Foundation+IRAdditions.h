@@ -52,6 +52,7 @@ typedef BOOL (^IRDictionaryPairTest) (id key, id value);
 - (NSArray *) irMap:(id(^)(id inObject, int index, BOOL *stop))block;
 - (NSArray *) irFlatten;	// flattens contents of any array node, inserts them in place
 - (NSArray *) irUnique;
+- (NSArray *) irShuffle;
 
 + (NSArray *) irArrayByRepeatingObject:(id)anObject count:(NSUInteger)count;
 
