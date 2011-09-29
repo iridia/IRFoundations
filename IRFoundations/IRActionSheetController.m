@@ -81,11 +81,19 @@
 
 - (IRActionSheet *) singleUseActionSheet {
 
-	IRActionSheet *returnedActionSheet = [[IRActionSheet alloc] initWithTitle:self.title delegate:self cancelButtonTitle:self.cancellationAction.title destructiveButtonTitle:self.destructionAction.title otherButtonTitles:nil];
+	IRActionSheet *returnedActionSheet = [[IRActionSheet alloc] initWithTitle:self.title delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
 	
+  if (self.destructionAction) {
+    returnedActionSheet.destructiveButtonIndex = [returnedActionSheet addButtonWithTitle:self.destructionAction.title];
+	}
+  
 	for (IRAction *anOtherAction in self.otherActions)
 		[returnedActionSheet addButtonWithTitle:anOtherAction.title];
-	
+  
+  if (self.cancellationAction) {
+    returnedActionSheet.cancelButtonIndex = [returnedActionSheet addButtonWithTitle:self.cancellationAction.title];
+  }
+  
 	return [returnedActionSheet autorelease];
 
 }
