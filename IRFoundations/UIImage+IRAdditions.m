@@ -7,10 +7,51 @@
 //
 
 #import <libkern/OSAtomic.h>
+#import <objc/runtime.h>
 
 #import "UIImage+IRAdditions.h"
 
+static void __attribute__((constructor)) initialize() {
+
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+	if ([[[UIDevice currentDevice] systemVersion] localizedCompare:@"5.0"] == NSOrderedAscending) {
+		Class class = [UIImage class];
+
+		if (!class_addMethod(
+			class,
+			@selector(initWithCoder:), class_getMethodImplementation(class, @selector(_irInitWithCoder:)),
+			protocol_getMethodDescription(@protocol(NSCoding), @selector(initWithCoder:), YES, YES).types
+		)) {
+			NSLog(@"Error swizzling -[UIImage initWithCoder:] off.  Expect mayhem.");
+		}
+
+		if (!class_addMethod(
+			class, 
+			@selector(encodeWithCoder:),
+			class_getMethodImplementation(class, @selector(_irEncodeWithCoder:)), 
+			protocol_getMethodDescription(@protocol(NSCoding), @selector(encodeWithCoder:), YES, YES).types)
+		) {
+			NSLog(@"Error swizzling -[UIImage encodeWithCoder:] off.  Expect mayhem.");
+		}
+
+	}
+	
+	[pool drain];
+	
+}
+
+
 @implementation UIImage (IRAdditions)
+
+- (id) _irInitWithCoder:(NSCoder *)decoder {
+	NSLog(@"%s: shouldn’t have been called, swizzling anyway.", __FUNCTION__);
+	return nil;
+}
+
+- (void) _irEncodeWithCoder:(NSCoder *)aCoder {
+	NSLog(@"%s: shouldn’t have been called, swizzling anyway.", __FUNCTION__);
+}
 
 - (UIImage *) irStandardImage {
 
