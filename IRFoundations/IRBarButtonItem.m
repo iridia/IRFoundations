@@ -91,7 +91,7 @@
 	nil] innerShadow:nil border:nil shadow:nil] forState:UIControlStateHighlighted];
 	[returnedButton sizeToFit];
 	
-	return [self itemWithButton:returnedButton  wiredAction:nil];
+	return [self itemWithButton:returnedButton wiredAction:nil];
 
 }
 
@@ -144,8 +144,8 @@
 	
 	nil];
 	
-	IRShadow *buttonInnerShadow = [IRShadow shadowWithColor:[UIColor colorWithWhite:0 alpha:0.5] offset:(CGSize){ 0, 1 } spread:2];
-	IRBorder *buttonBorder = [IRBorder borderForEdge:IREdgeNone withType:IRBorderTypeInset width:1.0 color:[UIColor colorWithWhite:0.35 alpha:1]];
+	IRShadow *buttonInnerShadow = innerShadowOrNil ? innerShadowOrNil : [IRShadow shadowWithColor:[UIColor colorWithWhite:0 alpha:0.5] offset:(CGSize){ 0, 1 } spread:2];
+	IRBorder *buttonBorder = borderOrNil ? borderOrNil : [IRBorder borderForEdge:IREdgeNone withType:IRBorderTypeInset width:1.0 color:[UIColor colorWithWhite:0.35 alpha:1]];
 	
 	UIEdgeInsets insets = UIEdgeInsetsZero;
 	CGPoint titleOffset = CGPointZero;
