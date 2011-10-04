@@ -52,7 +52,7 @@
 
 - (UIImage *) irRenderedImage {
 
-	UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, 0.0);
+	UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
 	CGContextRef bitmapContext = UIGraphicsGetCurrentContext();
 	[self renderInContext:bitmapContext];
 	UIImage *returnedImage = UIGraphicsGetImageFromCurrentImageContext();
