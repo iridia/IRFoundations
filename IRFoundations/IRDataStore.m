@@ -156,7 +156,7 @@ NSString * IRDataStoreNonce () {
 	uuid = [(NSString *)CFUUIDCreateString(kCFAllocatorDefault, theUUID) autorelease];
 	CFRelease(theUUID);
 	
-	return [NSString stringWithFormat:@"%@-%@-%@", IRDataStoreTimestamp(), uuid, [UIDevice currentDevice].uniqueIdentifier];
+	return [NSString stringWithFormat:@"%@-%@", IRDataStoreTimestamp(), uuid];
 	
 }
 

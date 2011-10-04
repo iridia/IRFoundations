@@ -105,7 +105,7 @@
 			CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
 			CFStringRef uuidString = CFUUIDCreateString(kCFAllocatorDefault, uuidRef);
 			
-			NSString *fileName = [NSString stringWithFormat:@"%d-%@-%@", time(NULL), (NSString *)uuidString, [UIDevice currentDevice].uniqueIdentifier];
+			NSString *fileName = [NSString stringWithFormat:@"%d-%@", time(NULL), (NSString *)uuidString];
 			
 			CFRelease(uuidRef);
 			CFRelease(uuidString);
