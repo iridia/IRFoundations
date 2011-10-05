@@ -98,34 +98,40 @@
 	NSURL *tempMediaURL = [info valueForKey:UIImagePickerControllerMediaURL];
 	//	NSDictionary *tempMediaMetadata = [info valueForKey:UIImagePickerControllerMediaMetadata];
 	
+	void (^bounceImage)(UIImage *) = ^ (UIImage *anImage) {
+	
+		CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
+		CFStringRef uuidString = CFUUIDCreateString(kCFAllocatorDefault, uuidRef);
+		
+		NSString *fileName = [NSString stringWithFormat:@"%d-%@", time(NULL), (NSString *)uuidString];
+		
+		CFRelease(uuidRef);
+		CFRelease(uuidString);
+	
+		NSString *filePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:fileName] stringByAppendingPathExtension:@"jpeg"];
+		NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+		NSError *fileWritingError = nil;
+
+		if (![UIImageJPEGRepresentation([anImage irStandardImage], 1.0f) writeToURL:fileURL options:NSDataWritingAtomic error:&fileWritingError]) {
+		
+			NSLog(@"Error writing file to temporary path %@: %@", fileURL, fileWritingError);
+			fileURL = nil;
+		
+		};
+	
+		if (self.callbackBlock)
+			self.callbackBlock(fileURL, nil);
+			
+		[[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
+	
+	};
+	
 	if (!assetURL) {
 	
 		if (assetImage) {
 		
-			CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
-			CFStringRef uuidString = CFUUIDCreateString(kCFAllocatorDefault, uuidRef);
-			
-			NSString *fileName = [NSString stringWithFormat:@"%d-%@", time(NULL), (NSString *)uuidString];
-			
-			CFRelease(uuidRef);
-			CFRelease(uuidString);
-		
-			NSString *filePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:fileName] stringByAppendingPathExtension:@"jpeg"];
-			NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-			NSError *fileWritingError = nil;
-
-			if (![UIImageJPEGRepresentation([assetImage irStandardImage], 1.0f) writeToURL:fileURL options:NSDataWritingAtomic error:&fileWritingError]) {
-			
-				NSLog(@"Error writing file to temporary path %@: %@", fileURL, fileWritingError);
-				fileURL = nil;
-			
-			};
-		
-			if (self.callbackBlock)
-				self.callbackBlock(fileURL, nil);
-				
-			[[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
-		
+			bounceImage(assetImage);
+								
 		} else {
 
 			if (self.callbackBlock)
@@ -135,7 +141,7 @@
 	        
 	} else {
         
-		if (YES) {
+		if (YES /* uses ALAssetsLibrary */) {
             
 			[[[[ALAssetsLibrary alloc] init] autorelease] assetForURL:assetURL resultBlock: ^ (ALAsset *asset) {
                 
@@ -143,6 +149,11 @@
 					self.callbackBlock(tempMediaURL, asset);
                 
 			} failureBlock: ^ (NSError *error) {
+			
+				if (assetImage) {
+					bounceImage(assetImage);
+					return;
+				}
                 
 				if (self.callbackBlock)
 					self.callbackBlock(tempMediaURL, nil);
