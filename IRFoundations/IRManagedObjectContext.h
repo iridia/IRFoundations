@@ -12,6 +12,13 @@
 
 - (NSManagedObject *) irManagedObjectForURI:(NSURL *)anURI;
 
+
+//	Calling this causes the managed object context to register for NSManagedObjectContextDidSave notifications, and on the case that a) the saved context is not itself, and b) the model and persistent store is the same as the listener context, it’ll call -mergeChangesFromManagedObjectContextDidSaveNotification: automatically
+
+- (void) irBeginMergingFromSavesAutomatically;
+- (void) irStopMergingFromSavesAutomatically;
+- (BOOL) irIsMergingFromSavesAutomatically;
+
 @end
 
 @interface IRManagedObjectContext : NSManagedObjectContext
