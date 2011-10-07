@@ -162,17 +162,8 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 	CTFontRef font = CTFontCreateWithName((CFStringRef)aFont.fontName, aFont.pointSize, NULL);
 	
-	//	CTLineBreakMode lineBreakMode = kCTLineBreakByTruncatingTail;
-	//	CTParagraphStyleSetting paragraphStyles[] = (CTParagraphStyleSetting[]){
-	//		{ kCTParagraphStyleSpecifierLineBreakMode, sizeof(lineBreakMode), &lineBreakMode },
-	//	};
-	//	
-	//	CFIndex paragraphStylesCount = sizeof(paragraphStyles) / sizeof(CTParagraphStyleSetting);
-	//	CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(paragraphStyles, paragraphStylesCount);
-
 	NSAttributedString *returnedString = [[[NSAttributedString alloc] initWithString:aString attributes:[NSDictionary dictionaryWithObjectsAndKeys:
 		(id)font, kCTFontAttributeName,
-	//	(id)paragraphStyle, kCTParagraphStyleAttributeName,
 		(id)aColor, kCTForegroundColorAttributeName,
 	nil]] autorelease];
 	
@@ -199,13 +190,23 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 	//	Note: we might have label bounds that are shorter than even one line of text, so in that case constrain the size to at least the height of the first row to avoid bugs where the label will show nothing
 
-	if (!ctFrame)
-		ctFrame = CTFramesetterCreateFrame(self.ctFramesetter, (CFRange){ 0, 0 }, [UIBezierPath bezierPathWithRect:(CGRect){
-			0,
-			-4,
-			self.bounds.size.width,
-			self.bounds.size.height + 4
-		}].CGPath, nil);
+	if (ctFrame)
+		return ctFrame;
+	
+	CGRect frameRect = (CGRect){
+		0,
+		-4,
+		self.bounds.size.width,
+		self.bounds.size.height + 4
+	};
+	
+	CFRange actualRange = (CFRange){ 0, 0 };
+	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(self.ctFramesetter, (CFRange){ 0, 0 }, nil, (CGSize){
+		frameRect.size.width,
+		frameRect.size.height
+	}, &actualRange);
+	
+	ctFrame = CTFramesetterCreateFrame(self.ctFramesetter, actualRange, [UIBezierPath bezierPathWithRect:frameRect].CGPath, nil);
 	
 	return ctFrame;
 
@@ -230,8 +231,8 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (void) drawRect:(CGRect)rect {
 	
-	CGContextRef context = UIGraphicsGetCurrentContext();	
 	if (self.lastHighlightedRunOutline) {
+		CGContextRef context = UIGraphicsGetCurrentContext();	
 		CGContextSaveGState(context);
 		CGContextConcatCTM(context, CGAffineTransformMake(
 			1, 0, 0, -1, 0, CGRectGetHeight(self.bounds)
