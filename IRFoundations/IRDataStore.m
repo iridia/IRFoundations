@@ -133,7 +133,6 @@
 		}];
 		
 		objc_setAssociatedObject(self, &kDefaultAutoUpdatedMOC, returnedContext, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-		[self irRequestAssociatedStoreRemovalOnDeallocation];
 	
 	}
 	

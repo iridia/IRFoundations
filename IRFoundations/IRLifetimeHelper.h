@@ -9,13 +9,6 @@
 #import <Foundation/Foundation.h>
 
 
-@interface NSObject (IRAssociatedStoreAdditions)
-
-- (void) irRequestAssociatedStoreRemovalOnDeallocation;
-
-@end
-
-
 @interface NSObject (IRLifetimeHelperAdditions)
 
 - (void) irPerformOnDeallocation:(void(^)(void))aBlock;
@@ -27,7 +20,6 @@
 @interface IRLifetimeHelper : NSObject
 
 + (id) helperWithDeallocationCallback:(void(^)(void))aBlock;
-
 @property (nonatomic, readwrite, copy) void (^deallocationCallback)(void);
 
 @end
