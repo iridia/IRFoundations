@@ -1,6 +1,6 @@
 //
 //  IRSegmentedControlSegment.h
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 12/1/10.
 //  Copyright 2010 Iridia Productions. All rights reserved.
@@ -20,9 +20,7 @@
 @end
 
 
-@interface IRSegmentedControlSegment : UIView {
-	
-}
+@interface IRSegmentedControlSegment : UIView
 
 - (id) initWithFrame:(CGRect)inFrame image:(UIImage *)inImage highlightedImage:(UIImage *)inHighlightedImage activeBackdrop:(UIImage *)inActiveBackdrop;
 
