@@ -126,7 +126,7 @@ NSString * const kAssociatedIRBindingsHelper = @"kAssociatedIRBindingsHelper";
 	
 	id context = [self.boundLocalKeyPathsToRemoteObjectContexts objectForKey:inLocalKeyPath];
 	
-	[inRemoteObject addObserver:self forKeyPath:inRemoteKeyPath options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:context];
+	[inRemoteObject addObserver:self forKeyPath:inRemoteKeyPath options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:context];
 
 }
 
@@ -151,13 +151,9 @@ NSString * const kAssociatedIRBindingsHelper = @"kAssociatedIRBindingsHelper";
 	NSArray *allKeysForObject = [self.boundLocalKeyPathsToRemoteObjectContexts allKeysForObject:context];
 	
 	if (!allKeysForObject || ([allKeysForObject count] == 0)) {
-
 		NSLog(@"%s: No keys for context object.  Unbinding.", __PRETTY_FUNCTION__);
-		
 		[self.owner irUnbind:keyPath];
-	
 		return;
-	
 	}	
 
 	id localKeyPath = [allKeysForObject objectAtIndex:0];
@@ -175,27 +171,16 @@ NSString * const kAssociatedIRBindingsHelper = @"kAssociatedIRBindingsHelper";
 	if ((valueTransformerOrNil = [optionsDictionary objectForKey:kIRBindingsValueTransformerBlock]))
 	setValue = valueTransformerOrNil(oldValue, newValue, changeKind);
 	
-	if ((setValue != nil) && ![setValue isEqual:[self.owner valueForKeyPath:localKeyPath]]) {
-	
-		BOOL assignmentOnMainThread = [[optionsDictionary objectForKey:kIRBindingsAssignOnMainThreadOption] boolValue];
+	BOOL assignmentOnMainThread = [[optionsDictionary objectForKey:kIRBindingsAssignOnMainThreadOption] boolValue];
 
-		void (^operation)() = ^ {
-	
-			[self.owner setValue:setValue forKeyPath:localKeyPath];
-			
-		};
-		
-		if (assignmentOnMainThread) {
-		
-			dispatch_async(dispatch_get_main_queue(), operation);
-		
-		} else {
-		
-			operation();
-		
-		}
-	
-	}
+	void (^operation)() = ^ {
+		[self.owner setValue:setValue forKeyPath:localKeyPath];
+	};
+
+	if (assignmentOnMainThread && ![NSThread isMainThread])
+		dispatch_async(dispatch_get_main_queue(), operation);
+	else
+		operation();
 
 }
 
