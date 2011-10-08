@@ -13,13 +13,6 @@
 #import "IRStaticShapeView.h"
 #import "IRGradientView.h"
 #import "IRConcaveView.h"
+#import "CALayer+IRAdditions.h"
 
 extern void IRCATransact(void(^aBlock)(void));
-
-@interface CALayer (IRAdditions)
-
-+ (NSMutableDictionary *) irDefaultNoActionsDictionary;
-
-- (void) irSetShadowColor:(UIColor *)color alpha:(CGFloat)alpha spread:(CGFloat)spread offset:(CGSize)offset;
-
-@end

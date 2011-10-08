@@ -6,7 +6,10 @@
 //  Copyright 2011 Iridia Productions. All rights reserved.
 //
 
+#import <objc/runtime.h>
 #import "IRDataStore.h"
+#import "IRManagedObjectContext.h"
+#import "IRLifetimeHelper.h"
 
 @interface IRDataStore ()
 
@@ -36,7 +39,8 @@
 - (IRDataStore *) init {
 
 	self = [self initWithManagedObjectModel:nil];
-	if (!self) return nil;
+	if (!self)
+		return nil;
 	
 	return self;
 
@@ -64,6 +68,7 @@
 	
 	if (!model) {
 		model = [self defaultManagedObjectModel];
+        NSParameterAssert(model);
 	}
 	
 	self.managedObjectModel = model;
@@ -81,6 +86,7 @@
 		NSPersistentStore *addedStore = [self.persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:[NSDictionary dictionaryWithObjectsAndKeys:
 		
 			(id)kCFBooleanTrue, NSMigratePersistentStoresAutomaticallyOption,
+			(id)kCFBooleanTrue, NSInferMappingModelAutomaticallyOption,
 		
 		nil] error:&persistentStoreAddingError];
 		
@@ -110,6 +116,28 @@
 	NSParameterAssert([self.persistentStoreCoordinator.persistentStores count]);
 
 	return self;
+
+}
+
+- (NSManagedObjectContext *) defaultAutoUpdatedMOC {
+
+	static NSString * const kDefaultAutoUpdatedMOC = @"DefaultAutoUpdatedMOC";
+	__block NSManagedObjectContext *returnedContext = objc_getAssociatedObject(self, &kDefaultAutoUpdatedMOC);
+	
+	if (!returnedContext) {
+	
+		returnedContext = [self disposableMOC];
+		[returnedContext irBeginMergingFromSavesAutomatically];
+		[returnedContext irPerformOnDeallocation: ^ {
+			[returnedContext irStopMergingFromSavesAutomatically];
+		}];
+		
+		objc_setAssociatedObject(self, &kDefaultAutoUpdatedMOC, returnedContext, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+		[self irRequestAssociatedStoreRemovalOnDeallocation];
+	
+	}
+	
+	return returnedContext;
 
 }
 
@@ -154,7 +182,7 @@ NSString * IRDataStoreNonce () {
 	uuid = [(NSString *)CFUUIDCreateString(kCFAllocatorDefault, theUUID) autorelease];
 	CFRelease(theUUID);
 	
-	return [NSString stringWithFormat:@"%@-%@-%@", IRDataStoreTimestamp(), uuid, [UIDevice currentDevice].uniqueIdentifier];
+	return [NSString stringWithFormat:@"%@-%@", IRDataStoreTimestamp(), uuid];
 	
 }
 

@@ -169,6 +169,30 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 
 }
 
+- (BOOL) irIsBlock {
+
+	static NSSet *potentialClassNames = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		potentialClassNames = [[NSSet setWithObjects:
+			@"_NSConcreteStackBlock", 
+			@"_NSConcreteGlobalBlock",
+			@"NSStackBlock",
+			@"NSGlobalBlock",
+			@"NSMallocBlock",
+			@"NSBlock",
+		nil] retain];
+	});
+
+	NSString *ownClass = NSStringFromClass([self class]);
+	for (NSString *aClassName in potentialClassNames)
+		if ([ownClass isEqualToString:aClassName])
+			return YES;
+
+	return NO;
+
+}
+
 @end
 
 
@@ -273,6 +297,12 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 
 }
 
+- (NSArray *) irShuffle {
+	NSMutableArray *returnedArray = [[self mutableCopy] autorelease];
+	[returnedArray irShuffle];
+	return returnedArray;
+}
+
 @end
 
 
@@ -296,11 +326,57 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 
 }
 
++ (NSMutableArray *) irArrayByRepeatingObject:(id)anObject count:(NSUInteger)count {
+
+	return (NSMutableArray *)[super irArrayByRepeatingObject:anObject count:count];
+
+}
+
 @end
 
 
 
 
+
+@implementation NSDictionary (IRAdditions)
+
+- (BOOL) irPassesTestSuite:(NSDictionary *)aSuite {
+
+	__block BOOL passes = YES;
+	
+	[aSuite enumerateKeysAndObjectsUsingBlock: ^ (id key, id obj, BOOL *stop) {
+	
+		IRDictionaryPairTest aTest = [aSuite objectForKey:key];
+		
+		if (!aTest || aTest(key, [self objectForKey:key]))
+			return;
+		
+		passes = NO;
+		*stop = YES;
+		
+	}];
+	
+	return passes;
+
+}
+
+- (NSDictionary *) irDictionaryBySettingObject:(id)anObject forKey:(NSString *)aKey {
+
+	return [self irDictionaryByMergingWithDictionary:[NSDictionary dictionaryWithObject:anObject forKey:aKey]];
+
+}
+
+- (NSDictionary *) irDictionaryByMergingWithDictionary:(NSDictionary *)aDictionary {
+
+	NSMutableDictionary *copy = [[self mutableCopy] autorelease];
+	[aDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		[copy setObject:obj forKey:key];
+	}];
+	return copy;
+
+}
+
+@end
 
 @implementation NSSet (IRAdditions)
 

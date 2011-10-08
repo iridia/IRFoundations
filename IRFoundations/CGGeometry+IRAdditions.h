@@ -8,8 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import <QuartzCore/QuartzCore.h>
+#import "TargetConditionals.h"
+
+#if TARGET_OS_IPHONE
 #import <CoreGraphics/CGBase.h>
+#else
+#import <ApplicationServices/ApplicationServices.h>
+#endif
+
+#import <QuartzCore/QuartzCore.h>
 #import <CoreFoundation/CFDictionary.h>
 
 #ifndef __CGGeometry_IRAdditions_Defines__

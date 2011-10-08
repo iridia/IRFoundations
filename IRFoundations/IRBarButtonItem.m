@@ -27,6 +27,17 @@
 
 }
 
++ (id) itemWithTitle:(NSString *)aTitle action:(void(^)(void))aBlock {
+
+	IRBarButtonItem *returnedItem = [[[self alloc] initWithTitle:aTitle style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
+	returnedItem.target = returnedItem;
+	returnedItem.action = @selector(handleCustomButtonAction:);
+	returnedItem.block = aBlock;
+	
+	return returnedItem;
+
+}
+
 + (id) itemWithSystemItem:(UIBarButtonSystemItem)aSystemItem wiredAction:(void(^)(IRBarButtonItem *senderItem))aBlock {
 
 	IRBarButtonItem *returnedItem = [[self alloc] initWithBarButtonSystemItem:aSystemItem target:nil action:nil];
@@ -80,7 +91,7 @@
 	nil] innerShadow:nil border:nil shadow:nil] forState:UIControlStateHighlighted];
 	[returnedButton sizeToFit];
 	
-	return [self itemWithButton:returnedButton  wiredAction:nil];
+	return [self itemWithButton:returnedButton wiredAction:nil];
 
 }
 
@@ -133,8 +144,8 @@
 	
 	nil];
 	
-	IRShadow *buttonInnerShadow = [IRShadow shadowWithColor:[UIColor colorWithWhite:0 alpha:0.5] offset:(CGSize){ 0, 1 } spread:2];
-	IRBorder *buttonBorder = [IRBorder borderForEdge:IREdgeNone withType:IRBorderTypeInset width:1.0 color:[UIColor colorWithWhite:0.35 alpha:1]];
+	IRShadow *buttonInnerShadow = innerShadowOrNil ? innerShadowOrNil : [IRShadow shadowWithColor:[UIColor colorWithWhite:0 alpha:0.5] offset:(CGSize){ 0, 1 } spread:2];
+	IRBorder *buttonBorder = borderOrNil ? borderOrNil : [IRBorder borderForEdge:IREdgeNone withType:IRBorderTypeInset width:1.0 color:[UIColor colorWithWhite:0.35 alpha:1]];
 	
 	UIEdgeInsets insets = UIEdgeInsetsZero;
 	CGPoint titleOffset = CGPointZero;

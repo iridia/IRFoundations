@@ -34,17 +34,17 @@ extern NSUInteger irCount (id anObject, NSUInteger placeholderValue);
 
 extern void IRLogExceptionAndContinue (void(^)(void));
 
+typedef BOOL (^IRDictionaryPairTest) (id key, id value);
+
 #endif
 
 
 @interface NSObject (IRAdditions)
 
 - (void) irExecute; // typecasts object to (void)(^)(void)
+- (BOOL) irIsBlock;
 
 @end
-
-
-
 
 
 @interface NSArray (IRAdditions)
@@ -52,6 +52,7 @@ extern void IRLogExceptionAndContinue (void(^)(void));
 - (NSArray *) irMap:(id(^)(id inObject, int index, BOOL *stop))block;
 - (NSArray *) irFlatten;	// flattens contents of any array node, inserts them in place
 - (NSArray *) irUnique;
+- (NSArray *) irShuffle;
 
 + (NSArray *) irArrayByRepeatingObject:(id)anObject count:(NSUInteger)count;
 
@@ -66,11 +67,22 @@ extern void IRLogExceptionAndContinue (void(^)(void));
 - (void) irEnqueueBlock:(void(^)(void))aBlock; // makes an autoreleased copy then enqueues
 - (void) irShuffle;
 
++ (NSMutableArray *) irArrayByRepeatingObject:(id)anObject count:(NSUInteger)count;
+
 @end
 
 
+@interface NSDictionary (IRAdditions)
 
+- (BOOL) irPassesTestSuite:(NSDictionary *)aSuite;
+//	The suite is a dictionary of keys to IRDictionaryPairTest blocks
 
+- (NSDictionary *) irDictionaryBySettingObject:(id)anObject forKey:(NSString *)aKey;
+
+- (NSDictionary *) irDictionaryByMergingWithDictionary:(NSDictionary *)aDictionary;
+//	Currently a shallow merge
+
+@end
 
 
 @interface NSSet (IRAdditions)

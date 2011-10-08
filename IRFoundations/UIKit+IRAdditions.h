@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "UIImage+IRAdditions.h"
+#import "UIView+IRAdditions.h"
+#import "UIWindow+IRAdditions.h"
+
 #import "IRWebView.h"
 #import "IRLabel.h"
 #import "IRActivityIndicatorView.h"
@@ -32,7 +36,6 @@
 
 #import "IRBusyView.h"
 
-#import "UIImage+IRAdditions.h"
 #import "IRPaginatedView.h"
 #import "IRImagePickerController.h"
 #import "IRImageUnarchiveFromDataTransformer.h"

@@ -109,15 +109,23 @@
 		return;
 		
 	NSUInteger oldPageIndex = self.currentPage;
+	
+	self.scrollView.delegate = nil;
 		
 	[super setFrame:newFrame];
 	[self setNeedsLayout];
 	self.currentPage = oldPageIndex;
+	self.scrollView.delegate = self;
+	
 	[self scrollToPageAtIndex:self.currentPage animated:NO];
 
 }
 
 - (CGRect) pageRectForIndex:(NSInteger)anIndex {
+
+	if (self.bounds.size.width == 0) {
+		NSLog(@"Warning: 0 page width (%s)", __PRETTY_FUNCTION__);
+	}
 
 	return (CGRect){
 	
@@ -130,22 +138,7 @@
 
 - (BOOL) requiresVisiblePageAtIndex:(NSUInteger)anIndex {
 
-	CGPoint currentScrollViewOffset = self.scrollView.contentOffset;
-	CGRect currentPageRect, previousPageRect, nextPageRect;
-	
-	currentPageRect = CGRectInset([self pageRectForIndex:anIndex], -1 * self.horizontalSpacing, 0);
-	if (CGRectContainsPoint(currentPageRect, currentScrollViewOffset))
-		return YES;
-	
-	previousPageRect = CGRectInset([self pageRectForIndex:(anIndex - 1)], -1 * self.horizontalSpacing, 0);
-	if (CGRectContainsPoint(previousPageRect, currentScrollViewOffset))
-		return YES;
-	
-	nextPageRect = CGRectInset([self pageRectForIndex:(anIndex + 1)], -1 * self.horizontalSpacing, 0);
-	if (CGRectContainsPoint(nextPageRect, currentScrollViewOffset))
-		return YES;
-	
-	return NO;
+	return abs(((NSInteger)anIndex - (NSInteger)self.currentPage)) <= 1;
 
 }
 
@@ -219,8 +212,10 @@
 - (NSUInteger) indexOfPageAtCurrentContentOffset {
 
 	CGFloat pageWidth = [self pageRectForIndex:0].size.width;
-	if (pageWidth == 0)
+	if (pageWidth == 0) {
+		NSLog(@"Warning: page width is 0, %s returns 0", __PRETTY_FUNCTION__);
 		return 0;
+	}
 	
 	pageWidth += 2.0f * self.horizontalSpacing;
 	 
@@ -242,7 +237,9 @@
 - (void) scrollToPageAtIndex:(NSUInteger)anIndex animated:(BOOL)animate {
 
 	CGRect pageRectInScrollView = CGRectInset([self pageRectForIndex:anIndex], -1 * self.horizontalSpacing, 0);
-	[self.scrollView scrollRectToVisible:pageRectInScrollView animated:animate];
+	
+	[self.scrollView setContentOffset:pageRectInScrollView.origin animated:animate];
+	[self scrollViewDidScroll:self.scrollView];
 
 }
 
@@ -250,6 +247,17 @@
 	
 	self.currentPage = [self indexOfPageAtCurrentContentOffset];
 	
+	if (!aScrollView.decelerating) {
+	
+		[self removeOffscreenViews];
+		[self setNeedsLayout];
+	
+	}
+
+}
+
+- (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+
 	[self removeOffscreenViews];
 	[self setNeedsLayout];
 
@@ -262,42 +270,54 @@
 	self.scrollView.delegate = nil;
 	
 	CGRect newFrame = CGRectInset(self.bounds, -1 * self.horizontalSpacing, 0);
-	if (!CGRectEqualToRect(self.scrollView.frame, newFrame))
+	if (!CGRectEqualToRect(self.scrollView.frame, newFrame)) {
 		self.scrollView.frame = newFrame;
+	}
 	
-	self.scrollView.contentSize = (CGSize){
-		CGRectGetWidth(self.scrollView.bounds) * self.numberOfPages,
-		CGRectGetHeight(self.scrollView.bounds)
+	CGSize newSize = (CGSize){
+		CGRectGetWidth(self.scrollView.frame) * self.numberOfPages,
+		CGRectGetHeight(self.scrollView.frame)
 	};
+	if (!CGSizeEqualToSize(self.scrollView.contentSize, newSize)) {
+		self.scrollView.contentSize = newSize;
+	}
 	
 	NSUInteger index = 0; for (index = 0; index < self.numberOfPages; index++) {
 	
 		if ([self requiresVisiblePageAtIndex:index])
 			[self ensureViewAtIndexVisible:index];
 	
-		[self existingViewForPageAtIndex:index].frame = [self pageRectForIndex:index];
+		UIView *existingView = [self existingViewForPageAtIndex:index];
+		
+		if (existingView)
+			existingView.frame = [self pageRectForIndex:index];
 
 	}
 	
-	//	[self removeOffscreenViews];
+	[self removeOffscreenViews];
 	
 	self.scrollView.delegate = self;
 	
 }
 
 - (UIView *) existingPageAtIndex:(NSUInteger)anIndex {
+
+	if ([self.allViews count] < (anIndex + 1))
+		return nil;
 	
-	id object = nil;
-	@try { object = [self.allViews objectAtIndex:anIndex]; }@catch (NSException *e) { };
+	id object = [self.allViews objectAtIndex:anIndex];
 	
 	if (![object isKindOfClass:[UIView class]])
-	return nil;
+		return nil;
 	
 	return (UIView *)object;
 
 }
 
 - (void) dealloc {
+
+	[scrollView release];
+	[allViews release];
 
 	[super dealloc];
 
