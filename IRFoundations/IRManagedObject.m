@@ -495,6 +495,49 @@
 	
 }
 
+
+
+
+
+- (BOOL) irIsDirectlyRelatedToObject:(NSManagedObject *)anObject {
+
+	//	Since walking indirect relationships is so hard we’re limiting this to direct entities only
+
+	__block BOOL returnedAnswer = NO;
+
+	[self.entity.relationshipsByName enumerateKeysAndObjectsUsingBlock: ^ (NSString *relationshipName, NSRelationshipDescription *relationship, BOOL *stop) {
+	
+		if (![relationship.entity isEqual:anObject.entity])
+			return;
+	
+		if (relationship.isToMany) {
+		
+			if ([[self mutableSetValueForKey:relationshipName] containsObject:anObject]) {
+			
+				returnedAnswer = YES;
+				*stop = YES;
+				return;
+			
+			}
+		
+		} else {
+		
+			if ([[self valueForKey:relationshipName] isEqual:anObject]) {
+			
+				returnedAnswer = YES;
+				*stop = YES;
+				return;
+			
+			}
+		
+		}
+		
+	}];
+	
+	return returnedAnswer;
+
+}
+
 @end
 
 

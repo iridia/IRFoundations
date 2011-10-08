@@ -6,7 +6,10 @@
 //  Copyright 2011 Iridia Productions. All rights reserved.
 //
 
+#import <objc/runtime.h>
 #import "IRDataStore.h"
+#import "IRManagedObjectContext.h"
+#import "IRLifetimeHelper.h"
 
 @interface IRDataStore ()
 
@@ -36,7 +39,8 @@
 - (IRDataStore *) init {
 
 	self = [self initWithManagedObjectModel:nil];
-	if (!self) return nil;
+	if (!self)
+		return nil;
 	
 	return self;
 
@@ -112,6 +116,28 @@
 	NSParameterAssert([self.persistentStoreCoordinator.persistentStores count]);
 
 	return self;
+
+}
+
+- (NSManagedObjectContext *) defaultAutoUpdatedMOC {
+
+	static NSString * const kDefaultAutoUpdatedMOC = @"DefaultAutoUpdatedMOC";
+	__block NSManagedObjectContext *returnedContext = objc_getAssociatedObject(self, &kDefaultAutoUpdatedMOC);
+	
+	if (!returnedContext) {
+	
+		returnedContext = [self disposableMOC];
+		[returnedContext irBeginMergingFromSavesAutomatically];
+		[returnedContext irPerformOnDeallocation: ^ {
+			[returnedContext irStopMergingFromSavesAutomatically];
+		}];
+		
+		objc_setAssociatedObject(self, &kDefaultAutoUpdatedMOC, returnedContext, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+		[self irRequestAssociatedStoreRemovalOnDeallocation];
+	
+	}
+	
+	return returnedContext;
 
 }
 

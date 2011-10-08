@@ -23,6 +23,7 @@
 - (NSManagedObjectModel *) defaultManagedObjectModel;
 - (NSURL *) defaultPersistentStoreURL;
 
+- (NSManagedObjectContext *) defaultAutoUpdatedMOC;
 - (NSManagedObjectContext *) disposableMOC;
 
 //	Internally used Core Data stuff
