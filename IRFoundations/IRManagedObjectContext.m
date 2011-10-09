@@ -83,13 +83,19 @@ static NSString * const kIRManagedObjectContextDidSaveNotificationListener = @"I
 
 	if (self.irMOCSaveAutomergeCount == 0) {
 	
-		NSLog(@"%@ should start observing and merging", self);
-		
 		__block __typeof__(self) nrSelf = self;
+		__block dispatch_queue_t ownQueue = [NSThread isMainThread] ? dispatch_get_main_queue() : dispatch_get_current_queue();
+		dispatch_retain(ownQueue);
 		
 		__block id listenerObject = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
 		
-			[nrSelf mergeChangesFromContextDidSaveNotification:note];
+			dispatch_async(ownQueue, ^ {
+		
+				[nrSelf mergeChangesFromContextDidSaveNotification:note];
+			
+			});
+			
+			dispatch_release(ownQueue);
 			
 		}];
 		
