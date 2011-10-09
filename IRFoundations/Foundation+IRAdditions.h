@@ -20,14 +20,14 @@
 #ifndef __Foundation_IRAdditions__
 #define __Foundation_IRAdditions__
 
-typedef id (^IRMapCallback) (id inObject, int index, BOOL *stop);
+typedef id (^IRMapCallback) (id inObject, NSUInteger index, BOOL *stop);
 
 extern IRMapCallback irMapMakeWithKeyPath (NSString * aKeyPath);
-extern IRMapCallback irMapNullFilterMake ();
-extern IRMapCallback irMapFrameValuesFromViews ();
-extern IRMapCallback irMapBoundsValuesFromViews ();
-extern IRMapCallback irMapOriginValuesFromRectValues ();
-extern IRMapCallback irMapCenterPointValuesFromRectValues ();
+extern IRMapCallback irMapNullFilterMake (void);
+extern IRMapCallback irMapFrameValuesFromViews (void);
+extern IRMapCallback irMapBoundsValuesFromViews (void);
+extern IRMapCallback irMapOriginValuesFromRectValues (void);
+extern IRMapCallback irMapCenterPointValuesFromRectValues (void);
 
 extern NSComparator irComparatorMakeWithNodeKeyPath (NSString *aKeyPath);
 extern NSUInteger irCount (id anObject, NSUInteger placeholderValue);
@@ -49,7 +49,7 @@ typedef BOOL (^IRDictionaryPairTest) (id key, id value);
 
 @interface NSArray (IRAdditions)
 
-- (NSArray *) irMap:(id(^)(id inObject, int index, BOOL *stop))block;
+- (NSArray *) irMap:(id(^)(id inObject, NSUInteger index, BOOL *stop))block;
 - (NSArray *) irFlatten;	// flattens contents of any array node, inserts them in place
 - (NSArray *) irUnique;
 - (NSArray *) irShuffle;

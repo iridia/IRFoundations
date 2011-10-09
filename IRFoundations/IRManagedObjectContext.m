@@ -60,7 +60,7 @@ static NSString * const kIRManagedObjectContextDidSaveNotificationListener = @"I
 			
 			NSLog(@"%s: URI Representation: %@", __PRETTY_FUNCTION__, anURI);
 			NSLog(@"%s: Object Store ID: %@", __PRETTY_FUNCTION__, [anURI host]);
-			NSLog(@"%s: All Store IDs: %@", __PRETTY_FUNCTION__, [self.persistentStoreCoordinator.persistentStores irMap: ^ (NSPersistentStore *aStore, int index, BOOL *stop) {
+			NSLog(@"%s: All Store IDs: %@", __PRETTY_FUNCTION__, [self.persistentStoreCoordinator.persistentStores irMap: ^ (NSPersistentStore *aStore, NSUInteger index, BOOL *stop) {
 				return [aStore identifier];
 			}]);
 		
