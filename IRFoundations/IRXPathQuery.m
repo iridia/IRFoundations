@@ -14,7 +14,7 @@
 + (NSArray *) queryDocument:(NSData *)aDocument usingXPath:(NSString *)aXPath {
 
 	xmlDocPtr document = NULL;
-	document = xmlReadMemory([aDocument bytes], [aDocument length], "", NULL, XML_PARSE_RECOVER);
+	document = xmlReadMemory([aDocument bytes], (int)[aDocument length], "", NULL, XML_PARSE_RECOVER);
 	
 	if (document == NULL) {
 	
@@ -32,7 +32,7 @@
 + (NSArray *) queryHTMLDocument:(NSData *)aDocument usingXPath:(NSString *)aXPath {
 
 	xmlDocPtr document = NULL;
-	document = htmlReadMemory([aDocument bytes], [aDocument length], "", NULL, HTML_PARSE_NOWARNING | HTML_PARSE_NOERROR);
+	document = htmlReadMemory([aDocument bytes], (int)[aDocument length], "", NULL, HTML_PARSE_NOWARNING | HTML_PARSE_NOERROR);
 	
 	if (document == NULL) {
 	
