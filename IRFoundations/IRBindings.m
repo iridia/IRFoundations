@@ -173,8 +173,9 @@ NSString * const kAssociatedIRBindingsHelper = @"kAssociatedIRBindingsHelper";
 	
 	BOOL assignmentOnMainThread = [[optionsDictionary objectForKey:kIRBindingsAssignOnMainThreadOption] boolValue];
 
+	id ownerRef = self.owner;
 	void (^operation)() = ^ {
-		[self.owner setValue:setValue forKeyPath:localKeyPath];
+		[ownerRef setValue:setValue forKeyPath:localKeyPath];
 	};
 
 	if (assignmentOnMainThread && ![NSThread isMainThread])
