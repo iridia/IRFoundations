@@ -13,7 +13,7 @@
 
 @property (nonatomic, readwrite, retain) NSString *tokenSeparatorComponent;
 
-+ (int) valueForUnit:(NSCalendarUnit)inCalendarUnit inDateComponents:(NSDateComponents *)inDateComponents;
++ (NSInteger) valueForUnit:(NSCalendarUnit)inCalendarUnit inDateComponents:(NSDateComponents *)inDateComponents;
 + (NSString *) stringRepresentationForValueOfCalendarUnit:(NSCalendarUnit)inCalendarUnit dateComponents:(NSDateComponents *)inDateComponents;
 + (NSArray *) stringRepresentationFormatterStringsforCalendarUnit:(NSCalendarUnit)inCalendarUnit past:(BOOL)inRepresentingDateInThePast;
 
@@ -68,7 +68,7 @@ static IRRelativeDateFormatter* IRRelativeDateFormatterSharedFormatter;
 
 
 
-+ (int) valueForUnit:(NSCalendarUnit)inCalendarUnit inDateComponents:(NSDateComponents *)inDateComponents {
++ (NSInteger) valueForUnit:(NSCalendarUnit)inCalendarUnit inDateComponents:(NSDateComponents *)inDateComponents {
 		
 	switch (inCalendarUnit) {
 
@@ -121,16 +121,17 @@ static IRRelativeDateFormatter* IRRelativeDateFormatterSharedFormatter;
 
 + (NSString *) stringRepresentationForValueOfCalendarUnit:(NSCalendarUnit)inCalendarUnit dateComponents:(NSDateComponents *)inDateComponents {
 
-	int value = [self valueForUnit:inCalendarUnit inDateComponents:inDateComponents];
-	if (value == 0) return @"";
+	NSUInteger value = [self valueForUnit:inCalendarUnit inDateComponents:inDateComponents];
+	if (value == 0)
+		return @"";
 	
-	NSArray *availableRepresentations = [self stringRepresentationFormatterStringsforCalendarUnit:inCalendarUnit past:(value < 0)];
+	NSArray *availableRepresentations = [self stringRepresentationFormatterStringsforCalendarUnit:inCalendarUnit past:NO];
 	
 	NSString *finalFormatterString = [availableRepresentations objectAtIndex:(MIN([availableRepresentations count], ABS(value)) - 1)];
 	
 	if ([finalFormatterString rangeOfString:@"%d"].location == NSNotFound) {
 	
-		NSLog(@"Warning: formatter string for calendar unit %x is malformed, does not contain formatter.", inCalendarUnit);
+		NSLog(@"Warning: formatter string for calendar unit %lu is malformed, does not contain formatter.", inCalendarUnit);
 		return @"";
 	
 	}
