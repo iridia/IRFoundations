@@ -131,7 +131,7 @@ static IRRelativeDateFormatter* IRRelativeDateFormatterSharedFormatter;
 	
 	if ([finalFormatterString rangeOfString:@"%d"].location == NSNotFound) {
 	
-		NSLog(@"Warning: formatter string for calendar unit %lu is malformed, does not contain formatter.", inCalendarUnit);
+		NSLog(@"Warning: formatter string for calendar unit %lu is malformed, does not contain formatter.", (unsigned long)inCalendarUnit);
 		return @"";
 	
 	}
