@@ -81,8 +81,8 @@ static NSString *kIRLifetimeHelpers = @"IRLifetimeHelpers";
 
 - (void) irPerformOnDeallocation:(void(^)(void))aBlock {
 
-	if ([self retainCount] == UINT_MAX)
-		NSLog(@"%s: object is unlikely to be deallocated at all.", __PRETTY_FUNCTION__);
+	if (([self retainCount] == UINT_MAX) || ([self retainCount] == INT_MAX))
+		NSLog(@"%s: object <%@ %x> is unlikely to be deallocated at all.", __PRETTY_FUNCTION__, NSStringFromClass([self class]), (unsigned int)self);
 	
 	[[self irLifetimeHelpers] addObject:[IRLifetimeHelper helperWithDeallocationCallback:aBlock]];
 
