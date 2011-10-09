@@ -44,3 +44,7 @@
 - (NSURL *) persistentFileURLForFileAtPath:(NSString *)aPath;
 
 @end
+
+
+extern NSString * IRDataStoreTimestamp (void);
+extern NSString * IRDataStoreNonce (void);
