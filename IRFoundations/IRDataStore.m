@@ -211,10 +211,20 @@ NSString * IRDataStoreNonce () {
 
 - (NSURL *) persistentFileURLForData:(NSData *)data {
 
+	return [self persistentFileURLForData:data extension:nil];
+	
+}
+
+- (NSURL *) persistentFileURLForData:(NSData *)data extension:(NSString *)fileExtension {
+
 	NSURL *fileURL = [self oneUsePersistentFileURL];
+	
+	if (fileExtension)
+		fileURL = [fileURL URLByAppendingPathExtension:fileExtension];
+	
 	[data writeToURL:fileURL atomically:NO];
 	
-	return fileURL;
+	return fileURL;	
 
 }
 
