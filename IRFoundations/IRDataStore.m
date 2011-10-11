@@ -57,7 +57,19 @@
 
 	NSString *defaultFilename = [[[NSBundle mainBundle] bundleIdentifier] stringByAppendingPathExtension:@"sqlite"];
 	
+	#if TARGET_OS_MAC
+	
+	NSString *usedAppName = [[[NSBundle mainBundle] infoDictionary] objectForKey:(id)kCFBundleNameKey];
+	if (!usedAppName)
+		usedAppName = [[NSBundle mainBundle] bundleIdentifier];
+
+	return [[(NSURL *)[[[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject] URLByAppendingPathComponent:usedAppName] URLByAppendingPathComponent:defaultFilename];
+	
+	#else
+	
 	return [(NSURL *)[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] URLByAppendingPathComponent:defaultFilename];
+	
+	#endif
 
 }
 
@@ -83,6 +95,9 @@
 	while (continuesTrying) {
 	
 		NSError *persistentStoreAddingError = nil;
+		
+		[[NSFileManager defaultManager] createDirectoryAtPath:[[storeURL path] stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:nil];
+				
 		NSPersistentStore *addedStore = [self.persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:[NSDictionary dictionaryWithObjectsAndKeys:
 		
 			(id)kCFBooleanTrue, NSMigratePersistentStoresAutomaticallyOption,
