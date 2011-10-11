@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import "TargetConditionals.h"
+#import <UIKit/UIKit.h>
 
 #if TARGET_OS_IPHONE
 #import <CoreGraphics/CGBase.h>
