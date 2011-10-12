@@ -361,3 +361,36 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 }
 
 @end
+
+
+@implementation UILabel (IRAdditions)
+
+- (void) irPlaceBehindLabel:(UILabel *)anotherLabel {
+
+	[self irPlaceBehindLabel:anotherLabel withEdgeInsets:UIEdgeInsetsZero];
+
+}
+
+- (void) irPlaceBehindLabel:(UILabel *)anotherLabel withEdgeInsets:(UIEdgeInsets)edgeInsets {
+
+	NSParameterAssert(anotherLabel.superview == self.superview);
+	
+	//	Not really useful:
+	//	CGRect initialFrame = [anotherLabel convertRect:[anotherLabel textRectForBounds:anotherLabel.bounds limitedToNumberOfLines:anotherLabel.numberOfLines] toView:anotherLabel.superview];
+	
+	CGRect initialFrame = anotherLabel.frame;
+	
+	if (!UIEdgeInsetsEqualToEdgeInsets(UIEdgeInsetsZero, edgeInsets))
+		initialFrame = UIEdgeInsetsInsetRect(initialFrame, edgeInsets);
+	
+	self.frame = (CGRect){
+		(CGPoint){
+			CGRectGetMaxX(initialFrame),
+			roundf(CGRectGetMaxY(initialFrame) - CGRectGetHeight(self.frame) + anotherLabel.font.descender - self.font.descender)
+		},
+		self.frame.size
+	};
+
+}
+
+@end
