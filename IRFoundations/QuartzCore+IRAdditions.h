@@ -1,6 +1,6 @@
 //
 //  QuartzCore+IRAdditions.h
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 2/15/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -16,3 +16,5 @@
 #import "CALayer+IRAdditions.h"
 
 extern void IRCATransact(void(^aBlock)(void));
+
+extern CGRect IRGravitize (CGRect enclosingRect, CGSize contentSize, NSString *contentsGravity);
