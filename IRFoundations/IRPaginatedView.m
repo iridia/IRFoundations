@@ -245,7 +245,7 @@
 
 - (void) scrollViewDidScroll:(UIScrollView *)aScrollView {
 	
-	self.currentPage = [self indexOfPageAtCurrentContentOffset];
+	self.currentPage = MAX(0, MIN(self.numberOfPages - 1, [self indexOfPageAtCurrentContentOffset]));
 	
 	if (!aScrollView.decelerating) {
 	
