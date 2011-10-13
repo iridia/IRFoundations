@@ -247,18 +247,6 @@
 	
 	self.currentPage = MAX(0, MIN(self.numberOfPages - 1, [self indexOfPageAtCurrentContentOffset]));
 	
-	if (!aScrollView.decelerating) {
-	
-		[self removeOffscreenViews];
-		[self setNeedsLayout];
-	
-	}
-
-}
-
-- (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-
-	[self removeOffscreenViews];
 	[self setNeedsLayout];
 
 }
