@@ -245,10 +245,13 @@
 
 - (void) scrollViewDidScroll:(UIScrollView *)aScrollView {
 	
+	NSUInteger oldCurrentPage = currentPage;
 	self.currentPage = MAX(0, MIN(self.numberOfPages - 1, [self indexOfPageAtCurrentContentOffset]));
 	
-	[self setNeedsLayout];
-
+	if (oldCurrentPage != currentPage) {
+		[self setNeedsLayout];
+	}
+	
 }
 
 - (void) layoutSubviews {
