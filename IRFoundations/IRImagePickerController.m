@@ -162,8 +162,13 @@
             
 		}	else {
             
-				if (self.callbackBlock)
-					self.callbackBlock(tempMediaURL, nil);
+			if (assetImage) {
+				bounceImage(assetImage);
+				return;
+			}
+			
+			if (self.callbackBlock)
+				self.callbackBlock(tempMediaURL, nil);
             
 		}
         
