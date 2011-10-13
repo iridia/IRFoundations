@@ -25,4 +25,21 @@
 
 }
 
+- (NSArray *) irSubviewsWithPredicate:(NSPredicate *)aPredicate {
+
+	NSArray *returnedArray = [NSArray array];
+	
+	for (UIView *aSubview in self.subviews) {
+
+		[returnedArray arrayByAddingObjectsFromArray:[aSubview irSubviewsWithPredicate:aPredicate]];
+
+		if ([aPredicate evaluateWithObject:aSubview])
+			returnedArray = [returnedArray arrayByAddingObject:aSubview];
+			
+	}
+	
+	return returnedArray;
+
+}
+
 @end

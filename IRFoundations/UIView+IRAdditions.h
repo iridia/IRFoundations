@@ -12,4 +12,6 @@
 
 - (UIView *) irFirstResponderInView;
 
+- (NSArray *) irSubviewsWithPredicate:(NSPredicate *)aPredicate;
+
 @end
