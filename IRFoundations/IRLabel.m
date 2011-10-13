@@ -164,7 +164,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	
 	NSAttributedString *returnedString = [[[NSAttributedString alloc] initWithString:aString attributes:[NSDictionary dictionaryWithObjectsAndKeys:
 		(id)font, kCTFontAttributeName,
-		(id)aColor, kCTForegroundColorAttributeName,
+		(id)(aColor ? aColor.CGColor : [UIColor blackColor].CGColor), kCTForegroundColorAttributeName,
 	nil]] autorelease];
 	
 	CFRelease(font);
