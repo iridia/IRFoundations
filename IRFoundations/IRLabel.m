@@ -250,6 +250,8 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
 
+	return YES;
+
 	if ([self.gestureRecognizers containsObject:gestureRecognizer])
 	if ([self.gestureRecognizers containsObject:otherGestureRecognizer])
 		return YES;
