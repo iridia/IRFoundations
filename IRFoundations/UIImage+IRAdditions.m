@@ -10,6 +10,7 @@
 #import <objc/runtime.h>
 
 #import "UIImage+IRAdditions.h"
+#import "IRShadow.h"
 
 static void __attribute__((constructor)) initialize() {
 
@@ -112,6 +113,60 @@ static void __attribute__((constructor)) initialize() {
 	CGImageRelease(scaledImage);
 	
 	return image;
+
+}
+
+- (UIImage *) irSolidImageWithFillColor:(UIColor *)fillColor shadow:(IRShadow *)shadowOrNil {
+
+	NSParameterAssert(fillColor);
+	
+	CGRect contextRect = (CGRect){ CGPointZero, self.size };
+	CGPoint imageOffset = CGPointZero;
+	
+	if (shadowOrNil) {
+		
+		CGRect spillRect = CGRectInset(
+			CGRectOffset(
+				(CGRect){ CGPointZero, self.size }, 
+				shadowOrNil.offset.width, 
+				shadowOrNil.offset.height
+			),
+			-1 * shadowOrNil.spread,
+			-1 * shadowOrNil.spread
+		);
+		
+		contextRect = CGRectUnion(contextRect, spillRect);
+		imageOffset = (CGPoint){
+			spillRect.origin.x + shadowOrNil.spread,
+			spillRect.origin.y + shadowOrNil.spread
+		};
+		contextRect.origin = CGPointZero;
+		
+	}
+	
+	
+	UIGraphicsBeginImageContextWithOptions(contextRect.size, NO, 0.0f);
+	CGContextRef context = UIGraphicsGetCurrentContext();
+	
+	if (shadowOrNil)
+		CGContextSetShadowWithColor(context, shadowOrNil.offset, shadowOrNil.spread, shadowOrNil.color.CGColor);
+	
+	CGContextSaveGState(context);
+	CGContextConcatCTM(context, CGAffineTransformMakeTranslation(
+		-1 * imageOffset.x,
+		-1 * imageOffset.y
+	));
+	CGContextBeginTransparencyLayer(context, nil);
+	CGContextClipToMask(context, (CGRect){ imageOffset, self.size }, self.CGImage);
+	CGContextSetFillColorWithColor(context, fillColor.CGColor);
+	CGContextFillRect(context, contextRect);	
+	CGContextEndTransparencyLayer(context);
+	CGContextRestoreGState(context);
+	
+	UIImage *returnedImage = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+
+	return returnedImage;
 
 }
 
