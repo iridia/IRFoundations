@@ -11,8 +11,12 @@
 #import "Foundation+IRAdditions.h"
 
 #import "IRManagedObject.h"
-#import "IRFetchedResultsController.h"
 #import "IRManagedObjectContext.h"
 #import "NSFetchRequest+IRAdditions.h"
 
 #import "IRDataStore.h"
+
+#if TARGET_OS_IPHONE
+#import "IRFetchedResultsController.h"
+#endif
+

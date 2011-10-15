@@ -86,6 +86,22 @@
 		FF27A6AC133E2C16008C8DDA /* IRBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */; };
 		FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6E1133E3526008C8DDA /* IRBusyView.h */; };
 		FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6E2133E3526008C8DDA /* IRBusyView.m */; };
+		FF59A3C91441CB8400BB1FDC /* Foundation+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */; };
+		FF59A3CA1441CB8A00BB1FDC /* IRNoOp.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C961337B29F00DDA47C /* IRNoOp.m */; };
+		FF59A3CB1441CB8A00BB1FDC /* IRBindings.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C981337B29F00DDA47C /* IRBindings.m */; };
+		FF59A3CC1441CB8A00BB1FDC /* IRObservings.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C9A1337B29F00DDA47C /* IRObservings.m */; };
+		FF59A3CD1441CB8A00BB1FDC /* IRLifetimeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FF12AA8D143F2F11002346BD /* IRLifetimeHelper.m */; };
+		FF59A3CE1441CB8A00BB1FDC /* IRXPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C9C1337B29F00DDA47C /* IRXPathQuery.m */; };
+		FF59A3CF1441CB8A00BB1FDC /* IRHTMLStringFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C9E1337B29F00DDA47C /* IRHTMLStringFormatter.m */; };
+		FF59A3D01441CB8A00BB1FDC /* IRRelativeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */; };
+		FF59A3D21441CC7100BB1FDC /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FF59A3D11441CC7100BB1FDC /* libxml2.dylib */; };
+		FF59A3D31441CCB300BB1FDC /* CGGeometry+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CFD1337B36A00DDA47C /* CGGeometry+IRAdditions.m */; };
+		FF59A3D51441CCC400BB1FDC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF59A3D41441CCC400BB1FDC /* QuartzCore.framework */; };
+		FF59A3D71441CCD200BB1FDC /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF59A3D61441CCD200BB1FDC /* Quartz.framework */; };
+		FF59A3D81441CDD300BB1FDC /* IRDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FF97382713D82496003D1722 /* IRDataStore.m */; };
+		FF59A3D91441CDD300BB1FDC /* IRManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D251337B36A00DDA47C /* IRManagedObject.m */; };
+		FF59A3DB1441CDD300BB1FDC /* IRManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */; };
+		FF59A3DC1441CDD300BB1FDC /* NSFetchRequest+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */; };
 		FF59C3A11418A06400F4BF2D /* UIView+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF59C39D1418A06400F4BF2D /* UIView+IRAdditions.h */; };
 		FF59C3A21418A06400F4BF2D /* UIView+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF59C39E1418A06400F4BF2D /* UIView+IRAdditions.m */; };
 		FF59C3A31418A06400F4BF2D /* UIWindow+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF59C39F1418A06400F4BF2D /* UIWindow+IRAdditions.h */; };
@@ -95,6 +111,10 @@
 		FF72C1F214278ABF00B5D838 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFFDEF7214211BCC0083BEFB /* Cocoa.framework */; };
 		FF72C1F814278ABF00B5D838 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF72C1F614278ABF00B5D838 /* InfoPlist.strings */; };
 		FF72C1FC14278ABF00B5D838 /* IRFoundationsX.m in Sources */ = {isa = PBXBuildFile; fileRef = FF72C1FB14278ABF00B5D838 /* IRFoundationsX.m */; };
+		FF789D2F1442FDE00080F210 /* IRAsyncOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */; };
+		FF789D301442FDE00080F210 /* IRAsyncOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */; };
+		FF789D311442FDE00080F210 /* IRAsyncOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */; };
+		FF789D321442FDE00080F210 /* IRAsyncOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */; };
 		FF890D1D14163AC700CD7D1F /* CALayer+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */; };
 		FF890D1E14163AC700CD7D1F /* CALayer+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */; };
 		FF94EF6F135117D100FE79D4 /* IRBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = FF94EF6D135117D100FE79D4 /* IRBorder.h */; };
@@ -234,21 +254,23 @@
 		FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBarButtonItem.m; sourceTree = "<group>"; };
 		FF27A6E1133E3526008C8DDA /* IRBusyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBusyView.h; sourceTree = "<group>"; };
 		FF27A6E2133E3526008C8DDA /* IRBusyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBusyView.m; sourceTree = "<group>"; };
+		FF59A3D11441CC7100BB1FDC /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = SDKs/MacOSX10.7.sdk/usr/lib/libxml2.dylib; sourceTree = DEVELOPER_DIR; };
+		FF59A3D41441CCC400BB1FDC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		FF59A3D61441CCD200BB1FDC /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Quartz.framework; sourceTree = DEVELOPER_DIR; };
 		FF59C39D1418A06400F4BF2D /* UIView+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+IRAdditions.h"; sourceTree = "<group>"; };
 		FF59C39E1418A06400F4BF2D /* UIView+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+IRAdditions.m"; sourceTree = "<group>"; };
 		FF59C39F1418A06400F4BF2D /* UIWindow+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+IRAdditions.h"; sourceTree = "<group>"; };
 		FF59C3A01418A06400F4BF2D /* UIWindow+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+IRAdditions.m"; sourceTree = "<group>"; };
 		FF61635714161868004738D3 /* IRMailComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRMailComposeViewController.h; sourceTree = "<group>"; };
 		FF61635814161868004738D3 /* IRMailComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRMailComposeViewController.m; sourceTree = "<group>"; };
-		FF72C12E142789E300B5D838 /* IRFoundationsX-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IRFoundationsX-Prefix.pch"; sourceTree = "<group>"; };
-		FF72C12F142789E300B5D838 /* IRFoundationsX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRFoundationsX.h; sourceTree = "<group>"; };
-		FF72C130142789E300B5D838 /* IRFoundationsX.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRFoundationsX.m; sourceTree = "<group>"; };
 		FF72C1F114278ABF00B5D838 /* IRFoundationsX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IRFoundationsX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF72C1F514278ABF00B5D838 /* IRFoundationsX-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRFoundationsX-Info.plist"; sourceTree = "<group>"; };
 		FF72C1F714278ABF00B5D838 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF72C1F914278ABF00B5D838 /* IRFoundationsX-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IRFoundationsX-Prefix.pch"; sourceTree = "<group>"; };
 		FF72C1FA14278ABF00B5D838 /* IRFoundationsX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRFoundationsX.h; sourceTree = "<group>"; };
 		FF72C1FB14278ABF00B5D838 /* IRFoundationsX.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRFoundationsX.m; sourceTree = "<group>"; };
+		FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAsyncOperation.h; sourceTree = "<group>"; };
+		FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAsyncOperation.m; sourceTree = "<group>"; };
 		FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+IRAdditions.h"; sourceTree = "<group>"; };
 		FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+IRAdditions.m"; sourceTree = "<group>"; };
 		FF94EF6D135117D100FE79D4 /* IRBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBorder.h; sourceTree = "<group>"; };
@@ -308,6 +330,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF59A3D71441CCD200BB1FDC /* Quartz.framework in Frameworks */,
+				FF59A3D51441CCC400BB1FDC /* QuartzCore.framework in Frameworks */,
+				FF59A3D21441CC7100BB1FDC /* libxml2.dylib in Frameworks */,
 				FF72C1F214278ABF00B5D838 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,14 +350,12 @@
 				FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */,
 				FF0A8D221337B36A00DDA47C /* CoreData+IRAdditions */,
 				FFB6797B141E3F71006F84E3 /* CoreText+IRAdditions */,
-				FF0A8BAA1337AFB700DDA47C /* Related */,
-				FF72C12C142789E300B5D838 /* IRFoundationsX */,
+				FF0A8BAA1337AFB700DDA47C /* IRFoundationsTouch */,
 				FF72C1F314278ABF00B5D838 /* IRFoundationsX */,
-				FFFDEF7114211BCC0083BEFB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		FF0A8BAA1337AFB700DDA47C /* Related */ = {
+		FF0A8BAA1337AFB700DDA47C /* IRFoundationsTouch */ = {
 			isa = PBXGroup;
 			children = (
 				FFB67967141E384F006F84E3 /* Security.framework */,
@@ -347,7 +370,7 @@
 				FF0A8BA91337AFB700DDA47C /* libIRFoundationsTouch.a */,
 				FF72C1F114278ABF00B5D838 /* IRFoundationsX.framework */,
 			);
-			name = Related;
+			name = IRFoundationsTouch;
 			sourceTree = "<group>";
 		};
 		FF0A8C921337B29F00DDA47C /* Foundation+IRAdditions */ = {
@@ -369,6 +392,8 @@
 				FF0A8C9E1337B29F00DDA47C /* IRHTMLStringFormatter.m */,
 				FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */,
 				FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */,
+				FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */,
+				FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */,
 			);
 			name = "Foundation+IRAdditions";
 			sourceTree = "<group>";
@@ -488,30 +513,13 @@
 			name = "CoreData+IRAdditions";
 			sourceTree = "<group>";
 		};
-		FF72C12C142789E300B5D838 /* IRFoundationsX */ = {
-			isa = PBXGroup;
-			children = (
-				FF72C12F142789E300B5D838 /* IRFoundationsX.h */,
-				FF72C130142789E300B5D838 /* IRFoundationsX.m */,
-				FF72C12D142789E300B5D838 /* Supporting Files */,
-			);
-			path = IRFoundationsX;
-			sourceTree = "<group>";
-		};
-		FF72C12D142789E300B5D838 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				FF72C12E142789E300B5D838 /* IRFoundationsX-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		FF72C1F314278ABF00B5D838 /* IRFoundationsX */ = {
 			isa = PBXGroup;
 			children = (
 				FF72C1FA14278ABF00B5D838 /* IRFoundationsX.h */,
 				FF72C1FB14278ABF00B5D838 /* IRFoundationsX.m */,
 				FF72C1F414278ABF00B5D838 /* Supporting Files */,
+				FFFDEF7114211BCC0083BEFB /* Frameworks */,
 			);
 			path = IRFoundationsX;
 			sourceTree = "<group>";
@@ -540,20 +548,16 @@
 		FFFDEF7114211BCC0083BEFB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FFFDEF7214211BCC0083BEFB /* Cocoa.framework */,
-				FFFDEF7414211BCC0083BEFB /* Other Frameworks */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		FFFDEF7414211BCC0083BEFB /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
+				FF59A3D61441CCD200BB1FDC /* Quartz.framework */,
+				FF59A3D41441CCC400BB1FDC /* QuartzCore.framework */,
+				FF59A3D11441CC7100BB1FDC /* libxml2.dylib */,
 				FFFDEF7514211BCC0083BEFB /* AppKit.framework */,
 				FFFDEF7614211BCC0083BEFB /* CoreData.framework */,
 				FFFDEF7714211BCC0083BEFB /* Foundation.framework */,
+				FFFDEF7214211BCC0083BEFB /* Cocoa.framework */,
 			);
-			name = "Other Frameworks";
+			name = Frameworks;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -618,6 +622,7 @@
 				FFB6797E141E406B006F84E3 /* CoreText+IRAdditions.h in Headers */,
 				FFB67984141E415C006F84E3 /* NSAttributedString+IRAdditions.h in Headers */,
 				FF12AA8E143F2F11002346BD /* IRLifetimeHelper.h in Headers */,
+				FF789D2F1442FDE00080F210 /* IRAsyncOperation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,6 +630,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF789D301442FDE00080F210 /* IRAsyncOperation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,7 +691,7 @@
 				en,
 			);
 			mainGroup = FF0A8B991337AFA800DDA47C;
-			productRefGroup = FF0A8BAA1337AFB700DDA47C /* Related */;
+			productRefGroup = FF0A8BAA1337AFB700DDA47C /* IRFoundationsTouch */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -763,6 +769,7 @@
 				FFB6797F141E406B006F84E3 /* CoreText+IRAdditions.m in Sources */,
 				FFB67985141E415C006F84E3 /* NSAttributedString+IRAdditions.m in Sources */,
 				FF12AA8F143F2F11002346BD /* IRLifetimeHelper.m in Sources */,
+				FF789D311442FDE00080F210 /* IRAsyncOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -771,6 +778,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF72C1FC14278ABF00B5D838 /* IRFoundationsX.m in Sources */,
+				FF59A3C91441CB8400BB1FDC /* Foundation+IRAdditions.m in Sources */,
+				FF59A3CA1441CB8A00BB1FDC /* IRNoOp.m in Sources */,
+				FF59A3CB1441CB8A00BB1FDC /* IRBindings.m in Sources */,
+				FF59A3CC1441CB8A00BB1FDC /* IRObservings.m in Sources */,
+				FF59A3CD1441CB8A00BB1FDC /* IRLifetimeHelper.m in Sources */,
+				FF59A3CE1441CB8A00BB1FDC /* IRXPathQuery.m in Sources */,
+				FF59A3CF1441CB8A00BB1FDC /* IRHTMLStringFormatter.m in Sources */,
+				FF59A3D01441CB8A00BB1FDC /* IRRelativeDateFormatter.m in Sources */,
+				FF59A3D31441CCB300BB1FDC /* CGGeometry+IRAdditions.m in Sources */,
+				FF59A3D81441CDD300BB1FDC /* IRDataStore.m in Sources */,
+				FF59A3D91441CDD300BB1FDC /* IRManagedObject.m in Sources */,
+				FF59A3DB1441CDD300BB1FDC /* IRManagedObjectContext.m in Sources */,
+				FF59A3DC1441CDD300BB1FDC /* NSFetchRequest+IRAdditions.m in Sources */,
+				FF789D321442FDE00080F210 /* IRAsyncOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -837,7 +858,6 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = IRFoundationsTouch;
 			};
 			name = Debug;
@@ -858,7 +878,6 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = IRFoundationsTouch;
 				ZERO_LINK = NO;
 			};
@@ -891,9 +910,18 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SDKROOT}/usr/include/libxml2",
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = "IRFoundationsX/IRFoundationsX-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lxml2",
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = framework;
@@ -922,8 +950,17 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SDKROOT}/usr/include/libxml2",
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = "IRFoundationsX/IRFoundationsX-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = (
+					"-lxml2",
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = framework;

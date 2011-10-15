@@ -714,7 +714,7 @@ NSString * const IRTableViewWillResumePerformingBlocksNotification = @"IRTableVi
 
 - (NSArray *) irRectsForVisibleCells {
 
-	return [[self indexPathsForVisibleRows] irMap: ^ (NSIndexPath *indexPath, int index, BOOL *stop) {
+	return [[self indexPathsForVisibleRows] irMap: ^ (NSIndexPath *indexPath, NSUInteger index, BOOL *stop) {
 	
 		return [NSValue valueWithCGRect:[self rectForRowAtIndexPath:indexPath]];
 		

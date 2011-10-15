@@ -245,22 +245,13 @@
 
 - (void) scrollViewDidScroll:(UIScrollView *)aScrollView {
 	
-	self.currentPage = [self indexOfPageAtCurrentContentOffset];
+	NSUInteger oldCurrentPage = currentPage;
+	self.currentPage = MAX(0, MIN(self.numberOfPages - 1, [self indexOfPageAtCurrentContentOffset]));
 	
-	if (!aScrollView.decelerating) {
-	
-		[self removeOffscreenViews];
+	if (oldCurrentPage != currentPage) {
 		[self setNeedsLayout];
-	
 	}
-
-}
-
-- (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-
-	[self removeOffscreenViews];
-	[self setNeedsLayout];
-
+	
 }
 
 - (void) layoutSubviews {

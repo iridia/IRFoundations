@@ -39,8 +39,13 @@
 //	Other methods are conveniences
 
 - (NSURL *) oneUsePersistentFileURL;
-- (NSURL *) persistentFileURLForData:(NSData *)data;
+- (NSURL *) persistentFileURLForData:(NSData *)data; // no extension
+- (NSURL *) persistentFileURLForData:(NSData *)data extension:(NSString *)fileExtension;
 - (NSURL *) persistentFileURLForFileAtURL:(NSURL *)aURL;
 - (NSURL *) persistentFileURLForFileAtPath:(NSString *)aPath;
 
 @end
+
+
+extern NSString * IRDataStoreTimestamp (void);
+extern NSString * IRDataStoreNonce (void);

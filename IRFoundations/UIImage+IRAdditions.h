@@ -9,11 +9,13 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
+@class IRShadow;
 @interface UIImage (IRAdditions)
 
 - (UIImage *) irStandardImage;
 - (UIImage *) irDecodedImage;
 
 - (UIImage *) irScaledImageWithSize:(CGSize)aSize;
+- (UIImage *) irSolidImageWithFillColor:(UIColor *)fillColor shadow:(IRShadow *)shadowOrNil;
 
 @end

@@ -24,3 +24,14 @@ extern NSString * const kIRTextActiveBackgroundColorAttribute;
 - (NSAttributedString *) attributedStringForString:(NSString *)aString font:(UIFont *)aFont color:(UIColor *)aColor;
 
 @end
+
+
+
+
+
+@interface UILabel (IRAdditions)
+
+- (void) irPlaceBehindLabel:(UILabel *)anotherLabel; // UIEdgeInsetsZero
+- (void) irPlaceBehindLabel:(UILabel *)anotherLabel withEdgeInsets:(UIEdgeInsets)edgeInsets;
+
+@end

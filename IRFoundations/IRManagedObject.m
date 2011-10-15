@@ -91,7 +91,7 @@
 
 	__block NSMutableArray *currentWrapperArray = nil;
 	
-	NSArray *uniqueValues = [[sortedRemoteDictionaries irMap:^(id inObject, int index, BOOL *stop) {
+	NSArray *uniqueValues = [[sortedRemoteDictionaries irMap:^(id inObject, NSUInteger index, BOOL *stop) {
 	
 		return [inObject valueForKeyPath:dictionaryKeyPath];
 	

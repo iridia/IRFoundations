@@ -11,7 +11,7 @@
 
 IRMapCallback irMapMakeWithKeyPath (NSString * inKeyPath) {
 	
-	return (IRMapCallback)[[ ^ (id object, int index, BOOL *stop) {
+	return (IRMapCallback)[[ ^ (id object, NSUInteger index, BOOL *stop) {
 	
 		id returnedObject = [object valueForKeyPath:inKeyPath];
 		return returnedObject ? returnedObject : [NSNull null];
@@ -22,7 +22,7 @@ IRMapCallback irMapMakeWithKeyPath (NSString * inKeyPath) {
 
 IRMapCallback irMapNullFilterMake () {
 
-	return (IRMapCallback)[[ ^ (id object, int index, BOOL *stop) {
+	return (IRMapCallback)[[ ^ (id object, NSUInteger index, BOOL *stop) {
 
 		return (!object || [object isEqual:[NSNull null]]) ? nil : object;
 	
@@ -32,7 +32,7 @@ IRMapCallback irMapNullFilterMake () {
 
 IRMapCallback irMapFrameValuesFromViews () {
 
-	return (IRMapCallback)[[ ^ (UIView *aView, int index, BOOL *stop) {
+	return (IRMapCallback)[[ ^ (UIView *aView, NSUInteger index, BOOL *stop) {
 
 		return [NSValue valueWithCGRect:aView.frame];
 	
@@ -42,7 +42,7 @@ IRMapCallback irMapFrameValuesFromViews () {
 
 IRMapCallback irMapBoundsValuesFromViews () {
 
-	return (IRMapCallback)[[ ^ (UIView *aView, int index, BOOL *stop) {
+	return (IRMapCallback)[[ ^ (UIView *aView, NSUInteger index, BOOL *stop) {
 
 		return [NSValue valueWithCGRect:aView.bounds];
 	
@@ -52,7 +52,7 @@ IRMapCallback irMapBoundsValuesFromViews () {
 
 IRMapCallback irMapOriginValuesFromRectValues () {
 
-	return (IRMapCallback)[[ ^ (NSValue *aRectValue, int index, BOOL *stop) {
+	return (IRMapCallback)[[ ^ (NSValue *aRectValue, NSUInteger index, BOOL *stop) {
 
 		return [NSValue valueWithCGPoint:[aRectValue CGRectValue].origin];	
 	
@@ -62,7 +62,7 @@ IRMapCallback irMapOriginValuesFromRectValues () {
 
 IRMapCallback irMapCenterPointValuesFromRectValues () {
 
-	return (IRMapCallback)[[ ^ (NSValue *aRectValue, int index, BOOL *stop) {
+	return (IRMapCallback)[[ ^ (NSValue *aRectValue, NSUInteger index, BOOL *stop) {
 
 		return [NSValue valueWithCGPoint:irCGRectAnchor([aRectValue CGRectValue], irCenter, YES)];	
 	
@@ -89,11 +89,11 @@ NSComparator irComparatorMakeWithNodeKeyPath (NSString *aKeyPath) {
 		
 		NSComparisonResult (^resultsFromBooleans)(BOOL lBool, BOOL rBool) = ^ (BOOL lBool, BOOL rBool) {
 		
-			if (lBool && rBool) return NSOrderedSame;
-			if (lBool) return NSOrderedAscending;
-			if (rBool) return NSOrderedDescending;
+			if (lBool && rBool) return (NSComparisonResult)NSOrderedSame;
+			if (lBool) return (NSComparisonResult)NSOrderedAscending;
+			if (rBool) return (NSComparisonResult)NSOrderedDescending;
 			
-			return NSOrderedSame;
+			return (NSComparisonResult)NSOrderedSame;
 		
 		};
 		
@@ -201,7 +201,7 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 
 @implementation NSArray (IRAdditions)
 
-- (NSArray *) irMap:(id(^)(id inObject, int index, BOOL *stop))mapBlock {
+- (NSArray *) irMap:(id(^)(id inObject, NSUInteger index, BOOL *stop))mapBlock {
 
 	NSMutableArray *returnedArray = [NSMutableArray arrayWithCapacity:[self count]];
 
@@ -319,7 +319,7 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 
 - (void) irShuffle {
 
-	unsigned int count = [self count];
+	NSUInteger count = [self count];
 	
 	for (unsigned int i = 0; i < count; ++i)
 	[self exchangeObjectAtIndex:i withObjectAtIndex:((arc4random() % (count - i)) + i)];
