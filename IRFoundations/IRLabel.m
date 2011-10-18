@@ -79,14 +79,14 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (void) dealloc {
 
-	[attributedText release];
-	[lastHighlightedRunOutline release];
-	
 	if (ctFramesetter)
 		CFRelease(ctFramesetter);
 	
 	if (ctFrame)
 		CFRelease(ctFrame);
+	
+	[attributedText release];
+	[lastHighlightedRunOutline release];
 	
 	[super dealloc];
 
@@ -133,17 +133,22 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 - (void) setAttributedText:(NSAttributedString *)newAttributedText {
 
 	[self willChangeValueForKey:@"attributedText"];
-	[attributedText release];
-	attributedText = [newAttributedText copy];
 	
-	if (ctFramesetter) {
-		CFRelease(ctFramesetter);
-		ctFramesetter = nil;
-	}
+	@synchronized (self) {
 	
-	if (ctFrame) {
-		CFRelease(ctFrame);
-		ctFrame = nil;
+		[attributedText release];
+		attributedText = [newAttributedText copy];
+		
+		if (ctFramesetter) {
+			CFRelease(ctFramesetter);
+			ctFramesetter = nil;
+		}
+		
+		if (ctFrame) {
+			CFRelease(ctFrame);
+			ctFrame = nil;
+		}
+	
 	}
 	
 	[self didChangeValueForKey:@"attributedText"];
@@ -176,11 +181,11 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (CTFramesetterRef) ctFramesetter {
 
-	CFAttributedStringRef text = (CFAttributedStringRef)self.attributedText;
-	[[(id)text retain] autorelease];
-
+	if (ctFramesetter)
+		return ctFramesetter;
+	
 	if (!ctFramesetter)
-		ctFramesetter = CTFramesetterCreateWithAttributedString(text);
+		ctFramesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.attributedText);
 	
 	return ctFramesetter;
 
