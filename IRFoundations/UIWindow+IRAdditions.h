@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString * const IRWindowInterfaceBoundsDidChangeNotification;
+extern NSString * const IRWindowInterfaceChangeUnderlyingKeyboardNotificationKey;	//	In the notification’s user info, wraps around the original notification
+extern NSString * const IRWindowInterfaceChangeNewBoundsKey;	//	In the notification’s user info, wraps around window.irInterfaceBounds
+
+extern NSString * const IRInterfaceBoundsKey;	//	KVO-able on the window
+
 @interface UIWindow (IRAdditions)
 
 //	Returns a CGRect that is guaranteed not to be covered by elements such as the UIKeyboard
