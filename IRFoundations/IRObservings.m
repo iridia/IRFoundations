@@ -24,7 +24,6 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 @interface NSObject (IRObservingsPrivate)
 
 @property (nonatomic, readonly, retain) NSMutableDictionary *irObservingsHelpers;
-- (NSMutableArray *) irObservingsHelperBlocksForKeyPath:(NSString *)aKeyPath;
 
 @end
 
@@ -65,13 +64,12 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 
 }
 
-- (void) irAddObserverBlock:(void(^)(id inOldValue, id inNewValue, NSString *changeKind))aBlock forKeyPath:(NSString *)aKeyPath options:(NSKeyValueObservingOptions)options context:(void *)context {
+- (id) irAddObserverBlock:(void(^)(id inOldValue, id inNewValue, NSString *changeKind))aBlock forKeyPath:(NSString *)aKeyPath options:(NSKeyValueObservingOptions)options context:(void *)context {
 
-	[[self irObservingsHelperBlocksForKeyPath:aKeyPath] addObject:
+	id returnedHelper = [[[IRObservingsHelper alloc] initWithObserverBlock:aBlock withOwner:self keyPath:aKeyPath options:options context:context] autorelease];
+	[[self irObservingsHelperBlocksForKeyPath:aKeyPath] addObject:returnedHelper];
 	
-		[[[IRObservingsHelper alloc] initWithObserverBlock:aBlock withOwner:self keyPath:aKeyPath options:options context:context] autorelease]
-	
-	];
+	return returnedHelper;
 
 }
 
