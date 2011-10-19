@@ -136,18 +136,18 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	
 	@synchronized (self) {
 	
-		[attributedText release];
-		attributedText = [newAttributedText copy];
+		if (ctFrame) {
+			CFRelease(ctFrame);
+			ctFrame = nil;
+		}
 		
 		if (ctFramesetter) {
 			CFRelease(ctFramesetter);
 			ctFramesetter = nil;
 		}
 		
-		if (ctFrame) {
-			CFRelease(ctFrame);
-			ctFrame = nil;
-		}
+		[attributedText release];
+		attributedText = [newAttributedText copy];
 	
 	}
 	
@@ -205,13 +205,21 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 		self.bounds.size.height + 4
 	};
 	
+	CTFramesetterRef currentFramesetter = self.ctFramesetter;
+	CFAttributedStringRef currentAttributedString = (CFAttributedStringRef)self.attributedText;
+	CFRetain(currentFramesetter);
+	CFRetain(currentAttributedString);
+	
 	CFRange actualRange = (CFRange){ 0, 0 };
-	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(self.ctFramesetter, (CFRange){ 0, 0 }, nil, (CGSize){
+	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(currentFramesetter, (CFRange){ 0, 0 }, nil, (CGSize){
 		frameRect.size.width,
 		frameRect.size.height
 	}, &actualRange);
 	
-	ctFrame = CTFramesetterCreateFrame(self.ctFramesetter, actualRange, [UIBezierPath bezierPathWithRect:frameRect].CGPath, nil);
+	ctFrame = CTFramesetterCreateFrame(currentFramesetter, actualRange, [UIBezierPath bezierPathWithRect:frameRect].CGPath, nil);
+
+	CFRelease(currentAttributedString);
+	CFRelease(currentFramesetter);
 	
 	return ctFrame;
 
@@ -339,11 +347,19 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	
 	if (![self isShowingRichText])
 		return [super sizeThatFits:size];
+		
+	if (![self.attributedText length])
+		return CGSizeZero;
 	
-	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(self.ctFramesetter, (CFRange){ 0, 0 }, nil, (CGSize){
+	CTFramesetterRef currentFramesetter = self.ctFramesetter;
+	CFRetain(currentFramesetter);
+	
+	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(currentFramesetter, (CFRange){ 0, 0 }, nil, (CGSize){
 		CGRectGetWidth(self.bounds),
 		MAXFLOAT
 	}, NULL);
+	
+	CFRelease(currentFramesetter);
 	
 	return suggestedSize;
 	
