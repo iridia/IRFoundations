@@ -94,6 +94,10 @@
     
 	NSURL *assetURL = [info valueForKey:UIImagePickerControllerReferenceURL];
 	UIImage *assetImage = [info valueForKey:UIImagePickerControllerOriginalImage];
+	UIImage *editedImage = UIImagePickerControllerEditedImage;
+	
+	if (editedImage)
+		assetImage = editedImage;
 	
 	NSURL *tempMediaURL = [info valueForKey:UIImagePickerControllerMediaURL];
 	//	NSDictionary *tempMediaMetadata = [info valueForKey:UIImagePickerControllerMediaMetadata];
