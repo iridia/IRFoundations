@@ -18,8 +18,10 @@ typedef void (^IRObservingsCallbackBlock) (id inOldValue, id inNewValue, NSStrin
 
 @interface NSObject (IRObservings)
 
-- (void) irAddObserverBlock:(void(^)(id inOldValue, id inNewValue, NSString *changeKind))aBlock forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
+- (id) irAddObserverBlock:(void(^)(id inOldValue, id inNewValue, NSString *changeKind))aBlock forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
 
 - (void) irRemoveObserverBlocksForKeyPath:(NSString *)aKeyPath;
+
+- (NSMutableArray *) irObservingsHelperBlocksForKeyPath:(NSString *)aKeyPath;
 
 @end

@@ -67,17 +67,29 @@
 
 }
 
-+ (id) backItemWithTitle:(NSString *)aTitle tintColor:(UIColor *)aColor {
++ (id) itemWithCustomImage:(UIImage *)aFullImage highlightedImage:(UIImage *)aHighlightedImage {
 
 	UIButton *returnedButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	[returnedButton setImage:[[self class] backButtonImageWithTitle:aTitle font:nil backgroundColor:nil gradientColors:nil innerShadow:nil border:nil shadow:nil] forState:UIControlStateNormal];
-	[returnedButton setImage:[[self class] backButtonImageWithTitle:aTitle font:nil backgroundColor:nil gradientColors:[NSArray arrayWithObjects:
-		(id)[UIColor colorWithRed:1 green:1 blue:1 alpha:.75].CGColor,
-		(id)[UIColor colorWithRed:.4 green:.4 blue:.4 alpha:.75].CGColor,
-	nil] innerShadow:nil border:nil shadow:nil] forState:UIControlStateHighlighted];
+	[returnedButton setImage:aFullImage forState:UIControlStateNormal];
+	
+	if (aHighlightedImage)
+		[returnedButton setImage:aHighlightedImage forState:UIControlStateHighlighted];
+	
 	[returnedButton sizeToFit];
 	
-	return [self itemWithButton:returnedButton  wiredAction:nil];
+	return [self itemWithButton:returnedButton wiredAction:nil];
+
+}
+
++ (id) backItemWithTitle:(NSString *)aTitle tintColor:(UIColor *)aColor {
+
+	UIImage *image = [[self class] backButtonImageWithTitle:aTitle font:nil backgroundColor:nil gradientColors:nil innerShadow:nil border:nil shadow:nil];
+	UIImage *highlightedImage = [[self class] backButtonImageWithTitle:aTitle font:nil backgroundColor:nil gradientColors:[NSArray arrayWithObjects:
+			(id)[UIColor colorWithRed:1 green:1 blue:1 alpha:.75].CGColor,
+			(id)[UIColor colorWithRed:.4 green:.4 blue:.4 alpha:.75].CGColor,
+		nil] innerShadow:nil border:nil shadow:nil];
+	
+	return [self itemWithCustomImage:image highlightedImage:highlightedImage];
 
 }
 
@@ -133,6 +145,12 @@
 
 + (UIImage *) buttonImageForStyle:(IRBarButtonItemStyle)aStyle withTitle:(NSString *)aTitle font:(UIFont *)fontOrNil backgroundColor:(UIColor *)backgroundColorOrNil gradientColors:(NSArray *)backgroundGradientColorsOrNil innerShadow:(IRShadow *)innerShadowOrNil border:(IRBorder *)borderOrNil shadow:(IRShadow *)shadowOrNil {
 
+	return [self buttonImageForStyle:aStyle withTitle:aTitle font:fontOrNil color:nil shadow:nil backgroundColor:backgroundColorOrNil gradientColors:backgroundGradientColorsOrNil innerShadow:innerShadowOrNil border:borderOrNil shadow:shadowOrNil];
+
+}
+
++ (UIImage *) buttonImageForStyle:(IRBarButtonItemStyle)aStyle withTitle:(NSString *)aTitle font:(UIFont *)fontOrNil color:(UIColor *)titleColor shadow:(IRShadow *)titleShadow backgroundColor:(UIColor *)backgroundColorOrNil gradientColors:(NSArray *)backgroundGradientColorsOrNil innerShadow:(IRShadow *)innerShadowOrNil border:(IRBorder *)borderOrNil shadow:(IRShadow *)shadowOrNil {
+
 	NSString *usingTitle = aTitle ? aTitle : @"";
 	UIFont *usingFont = fontOrNil ? fontOrNil : [UIFont boldSystemFontOfSize:12.0f];
 	UIColor *buttonBackgroundColor = backgroundColorOrNil ? backgroundColorOrNil : [UIColor colorWithWhite:0.35f alpha:1];
@@ -143,6 +161,9 @@
 		(id)[UIColor colorWithRed:.4 green:.4 blue:.4 alpha:1].CGColor,
 	
 	nil];
+	
+	UIColor *usingTitleColor = titleColor ? titleColor : [UIColor colorWithWhite:0.2 alpha:1];
+	IRShadow *usingTitleShadow = titleShadow ? titleShadow : [IRShadow shadowWithColor:[UIColor colorWithWhite:1 alpha:0.65f] offset:(CGSize){ 0, 1 } spread:0];
 	
 	IRShadow *buttonInnerShadow = innerShadowOrNil ? innerShadowOrNil : [IRShadow shadowWithColor:[UIColor colorWithWhite:0 alpha:0.5] offset:(CGSize){ 0, 1 } spread:2];
 	IRBorder *buttonBorder = borderOrNil ? borderOrNil : [IRBorder borderForEdge:IREdgeNone withType:IRBorderTypeInset width:1.0 color:[UIColor colorWithWhite:0.35 alpha:1]];
@@ -238,9 +259,12 @@
 		CGContextSaveGState(context);
 		CGContextAddPath(context, bezierPath.CGPath);
 		CGContextClip(context);
-		CGGradientRef topGradient = CGGradientCreateWithColors(NULL, (CFArrayRef)buttonGradientColors, NULL);
+		CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+		CGGradientRef topGradient = CGGradientCreateWithColors(colorSpace, (CFArrayRef)buttonGradientColors, NULL);
+		CGColorSpaceRelease(colorSpace);
 		CGContextDrawLinearGradient(context, topGradient, CGPointZero, (CGPoint){ 0, floorf(1 * finalSize.height) }, 0);
 		CGGradientRelease(topGradient);
+
 		CGContextRestoreGState(context);
 	
 	}
@@ -294,8 +318,8 @@
 		};
 	
 		CGContextSaveGState(context);
-		CGContextSetShadowWithColor(context, (CGSize){ 0, 1 }, 0, [UIColor colorWithWhite:1 alpha:0.65f].CGColor);
-		CGContextSetFillColorWithColor(context, [UIColor colorWithWhite:0.2 alpha:1].CGColor);
+		CGContextSetShadowWithColor(context, usingTitleShadow.offset, usingTitleShadow.spread, usingTitleShadow.color.CGColor);
+		CGContextSetFillColorWithColor(context, usingTitleColor.CGColor);
 		[usingTitle drawInRect:titleRect withFont:usingFont];
 		CGContextRestoreGState(context);
 	

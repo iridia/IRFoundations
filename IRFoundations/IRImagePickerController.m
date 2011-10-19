@@ -94,35 +94,51 @@
     
 	NSURL *assetURL = [info valueForKey:UIImagePickerControllerReferenceURL];
 	UIImage *assetImage = [info valueForKey:UIImagePickerControllerOriginalImage];
+	UIImage *editedImage = UIImagePickerControllerEditedImage;
+	
+	if (editedImage)
+		assetImage = editedImage;
 	
 	NSURL *tempMediaURL = [info valueForKey:UIImagePickerControllerMediaURL];
 	//	NSDictionary *tempMediaMetadata = [info valueForKey:UIImagePickerControllerMediaMetadata];
 	
 	void (^bounceImage)(UIImage *) = ^ (UIImage *anImage) {
 	
-		CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
-		CFStringRef uuidString = CFUUIDCreateString(kCFAllocatorDefault, uuidRef);
-		
-		NSString *fileName = [NSString stringWithFormat:@"%d-%@", time(NULL), (NSString *)uuidString];
-		
-		CFRelease(uuidRef);
-		CFRelease(uuidString);
-	
-		NSString *filePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:fileName] stringByAppendingPathExtension:@"jpeg"];
-		NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-		NSError *fileWritingError = nil;
-
-		if (![UIImageJPEGRepresentation([anImage irStandardImage], 1.0f) writeToURL:fileURL options:NSDataWritingAtomic error:&fileWritingError]) {
-		
-			NSLog(@"Error writing file to temporary path %@: %@", fileURL, fileWritingError);
-			fileURL = nil;
-		
-		};
-	
-		if (self.callbackBlock)
-			self.callbackBlock(fileURL, nil);
+		dispatch_async(dispatch_get_global_queue(0, 0), ^ {
 			
-		[[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
+			CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
+			CFStringRef uuidString = CFUUIDCreateString(kCFAllocatorDefault, uuidRef);
+			
+			NSString *fileName = [NSString stringWithFormat:@"%d-%@", time(NULL), (NSString *)uuidString];
+			
+			CFRelease(uuidRef);
+			CFRelease(uuidString);
+		
+			NSString *filePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:fileName] stringByAppendingPathExtension:@"jpeg"];
+			NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+			NSError *fileWritingError = nil;
+
+			if (![UIImageJPEGRepresentation([anImage irStandardImage], 1.0f) writeToURL:fileURL options:NSDataWritingAtomic error:&fileWritingError]) {
+			
+				NSLog(@"Error writing file to temporary path %@: %@", fileURL, fileWritingError);
+				fileURL = nil;
+			
+			};
+			
+			dispatch_async(dispatch_get_main_queue(), ^ {
+		
+				if (self.callbackBlock)
+					self.callbackBlock(fileURL, nil);
+				
+				dispatch_async(dispatch_get_global_queue(0, 0), ^ {
+				
+					[[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
+				
+				});
+		
+			});
+			
+		});
 	
 	};
 	

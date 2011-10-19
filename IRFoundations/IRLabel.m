@@ -79,14 +79,14 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (void) dealloc {
 
-	[attributedText release];
-	[lastHighlightedRunOutline release];
-	
 	if (ctFramesetter)
 		CFRelease(ctFramesetter);
 	
 	if (ctFrame)
 		CFRelease(ctFrame);
+	
+	[attributedText release];
+	[lastHighlightedRunOutline release];
 	
 	[super dealloc];
 
@@ -133,17 +133,22 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 - (void) setAttributedText:(NSAttributedString *)newAttributedText {
 
 	[self willChangeValueForKey:@"attributedText"];
-	[attributedText release];
-	attributedText = [newAttributedText copy];
 	
-	if (ctFramesetter) {
-		CFRelease(ctFramesetter);
-		ctFramesetter = nil;
-	}
+	@synchronized (self) {
 	
-	if (ctFrame) {
-		CFRelease(ctFrame);
-		ctFrame = nil;
+		if (ctFrame) {
+			CFRelease(ctFrame);
+			ctFrame = nil;
+		}
+		
+		if (ctFramesetter) {
+			CFRelease(ctFramesetter);
+			ctFramesetter = nil;
+		}
+		
+		[attributedText release];
+		attributedText = [newAttributedText copy];
+	
 	}
 	
 	[self didChangeValueForKey:@"attributedText"];
@@ -176,11 +181,11 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (CTFramesetterRef) ctFramesetter {
 
-	CFAttributedStringRef text = (CFAttributedStringRef)self.attributedText;
-	[[(id)text retain] autorelease];
-
+	if (ctFramesetter)
+		return ctFramesetter;
+	
 	if (!ctFramesetter)
-		ctFramesetter = CTFramesetterCreateWithAttributedString(text);
+		ctFramesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.attributedText);
 	
 	return ctFramesetter;
 
@@ -200,13 +205,21 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 		self.bounds.size.height + 4
 	};
 	
+	CTFramesetterRef currentFramesetter = self.ctFramesetter;
+	CFAttributedStringRef currentAttributedString = (CFAttributedStringRef)self.attributedText;
+	CFRetain(currentFramesetter);
+	CFRetain(currentAttributedString);
+	
 	CFRange actualRange = (CFRange){ 0, 0 };
-	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(self.ctFramesetter, (CFRange){ 0, 0 }, nil, (CGSize){
+	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(currentFramesetter, (CFRange){ 0, 0 }, nil, (CGSize){
 		frameRect.size.width,
 		frameRect.size.height
 	}, &actualRange);
 	
-	ctFrame = CTFramesetterCreateFrame(self.ctFramesetter, actualRange, [UIBezierPath bezierPathWithRect:frameRect].CGPath, nil);
+	ctFrame = CTFramesetterCreateFrame(currentFramesetter, actualRange, [UIBezierPath bezierPathWithRect:frameRect].CGPath, nil);
+
+	CFRelease(currentAttributedString);
+	CFRelease(currentFramesetter);
 	
 	return ctFrame;
 
@@ -250,25 +263,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
 
-	return YES;
-
-	if ([self.gestureRecognizers containsObject:gestureRecognizer])
-	if ([self.gestureRecognizers containsObject:otherGestureRecognizer])
-		return YES;
-
-	if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] && [self.gestureRecognizers containsObject:gestureRecognizer])
-		return NO;
-	
-	if ([otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] && [self.gestureRecognizers containsObject:otherGestureRecognizer])
-		return NO;
-	
-	if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]] && [self.gestureRecognizers containsObject:gestureRecognizer])
-		return NO;
-
-	if ([otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]] && [self.gestureRecognizers containsObject:otherGestureRecognizer])
-		return NO;
-
-	return YES;
+	return ![otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]];
 
 }
 
@@ -352,11 +347,19 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	
 	if (![self isShowingRichText])
 		return [super sizeThatFits:size];
+		
+	if (![self.attributedText length])
+		return CGSizeZero;
 	
-	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(self.ctFramesetter, (CFRange){ 0, 0 }, nil, (CGSize){
+	CTFramesetterRef currentFramesetter = self.ctFramesetter;
+	CFRetain(currentFramesetter);
+	
+	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(currentFramesetter, (CFRange){ 0, 0 }, nil, (CGSize){
 		CGRectGetWidth(self.bounds),
 		MAXFLOAT
 	}, NULL);
+	
+	CFRelease(currentFramesetter);
 	
 	return suggestedSize;
 	
