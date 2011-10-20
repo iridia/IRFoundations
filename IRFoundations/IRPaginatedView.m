@@ -31,6 +31,7 @@
 @implementation IRPaginatedView
 @synthesize currentPage, numberOfPages;
 @synthesize delegate, horizontalSpacing, scrollView, allViews;
+@synthesize onPointInsideWithEvent;
 
 - (id) initWithFrame:(CGRect)frame {
 
@@ -305,10 +306,23 @@
 
 }
 
+- (BOOL) pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+
+	BOOL answer = [super pointInside:point withEvent:event];
+
+	if (self.onPointInsideWithEvent)
+		answer = self.onPointInsideWithEvent(point, event, answer);
+	
+	return answer;
+
+}
+
 - (void) dealloc {
 
 	[scrollView release];
 	[allViews release];
+	
+	[onPointInsideWithEvent release];
 
 	[super dealloc];
 
