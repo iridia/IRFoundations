@@ -96,14 +96,16 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 	[super setFrame:frame];
 
-	if (ctFramesetter) {
-		CFRelease(ctFramesetter);
-		ctFramesetter = nil;
+	if (ctFrame) {
+		CTFrameRef oldFrame = ctFrame;
+		ctFrame = nil;
+		CFRelease(oldFrame);
 	}
 	
-	if (ctFrame) {
-		CFRelease(ctFrame);
-		ctFrame = nil;
+	if (ctFramesetter) {
+		CTFramesetterRef oldFramesetter = ctFramesetter;
+		ctFramesetter = nil;
+		CFRelease(oldFramesetter);
 	}
 	
 	if ([self isShowingRichText])
@@ -115,14 +117,16 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 	[super setBounds:bounds];
 	
-	if (ctFramesetter) {
-		CFRelease(ctFramesetter);
-		ctFramesetter = nil;
+	if (ctFrame) {
+		CTFrameRef oldFrame = ctFrame;
+		ctFrame = nil;
+		CFRelease(oldFrame);
 	}
 	
-	if (ctFrame) {
-		CFRelease(ctFrame);
-		ctFrame = nil;
+	if (ctFramesetter) {
+		CTFramesetterRef oldFramesetter = ctFramesetter;
+		ctFramesetter = nil;
+		CFRelease(oldFramesetter);
 	}
 	
 	if ([self isShowingRichText])
@@ -138,13 +142,15 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	[self willChangeValueForKey:@"attributedText"];
 	
 	if (ctFrame) {
-		CFRelease(ctFrame);
+		CTFrameRef oldFrame = ctFrame;
 		ctFrame = nil;
+		CFRelease(oldFrame);
 	}
 	
 	if (ctFramesetter) {
-		CFRelease(ctFramesetter);
+		CTFramesetterRef oldFramesetter = ctFramesetter;
 		ctFramesetter = nil;
+		CFRelease(oldFramesetter);
 	}
 	
 	[attributedText release];
@@ -181,7 +187,12 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	if (ctFramesetter)
 		return ctFramesetter;
 	
-	ctFramesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attributedText);
+	@synchronized (self) {
+		
+		ctFramesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attributedText);
+		
+	}
+	
 	return ctFramesetter;
 
 }
@@ -215,7 +226,11 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 		frameRect.size.height
 	}, &actualRange);
 	
-	ctFrame = CTFramesetterCreateFrame(currentFramesetter, actualRange, [UIBezierPath bezierPathWithRect:frameRect].CGPath, nil);
+	@synchronized (self) {
+	
+		ctFrame = CTFramesetterCreateFrame(currentFramesetter, actualRange, [UIBezierPath bezierPathWithRect:frameRect].CGPath, nil);
+	
+	}
 
 	CFRelease(currentAttributedString);
 	CFRelease(currentFramesetter);
