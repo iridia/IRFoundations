@@ -52,9 +52,19 @@
 
 - (UIImage *) irRenderedImage {
 
-	UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
+	return [self irRenderedImageWithEdgeInsets:UIEdgeInsetsZero];
+
+}
+
+- (UIImage *) irRenderedImageWithEdgeInsets:(UIEdgeInsets)insets {
+
+	CGSize actualSize = UIEdgeInsetsInsetRect(self.bounds, insets).size;
+	
+	UIGraphicsBeginImageContextWithOptions(actualSize, NO, 0.0);
 	CGContextRef bitmapContext = UIGraphicsGetCurrentContext();
+	
 	[self renderInContext:bitmapContext];
+	
 	UIImage *returnedImage = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
 	

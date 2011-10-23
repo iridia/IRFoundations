@@ -132,27 +132,25 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (void) setAttributedText:(NSAttributedString *)newAttributedText {
 
+	if (attributedText == newAttributedText)
+		return;
+	
 	[self willChangeValueForKey:@"attributedText"];
 	
-	@synchronized (self) {
-	
-		if (ctFrame) {
-			CFRelease(ctFrame);
-			ctFrame = nil;
-		}
-		
-		if (ctFramesetter) {
-			CFRelease(ctFramesetter);
-			ctFramesetter = nil;
-		}
-		
-		[attributedText release];
-		attributedText = [newAttributedText copy];
-	
+	if (ctFrame) {
+		CFRelease(ctFrame);
+		ctFrame = nil;
 	}
 	
-	[self didChangeValueForKey:@"attributedText"];
+	if (ctFramesetter) {
+		CFRelease(ctFramesetter);
+		ctFramesetter = nil;
+	}
 	
+	[attributedText release];
+	attributedText = [newAttributedText copy];
+	
+	[self didChangeValueForKey:@"attributedText"];
 	[self setNeedsDisplay];
 
 }
@@ -173,7 +171,6 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	nil]] autorelease];
 	
 	CFRelease(font);
-	//	CFRelease(paragraphStyle);
 	
 	return returnedString;
 
@@ -184,9 +181,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	if (ctFramesetter)
 		return ctFramesetter;
 	
-	if (!ctFramesetter)
-		ctFramesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.attributedText);
-	
+	ctFramesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attributedText);
 	return ctFramesetter;
 
 }
@@ -205,10 +200,14 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 		self.bounds.size.height + 4
 	};
 	
-	CTFramesetterRef currentFramesetter = self.ctFramesetter;
 	CFAttributedStringRef currentAttributedString = (CFAttributedStringRef)self.attributedText;
-	CFRetain(currentFramesetter);
+	if (!currentAttributedString)
+		return;
+	
 	CFRetain(currentAttributedString);
+	
+	CTFramesetterRef currentFramesetter = self.ctFramesetter;
+	CFRetain(currentFramesetter);
 	
 	CFRange actualRange = (CFRange){ 0, 0 };
 	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(currentFramesetter, (CFRange){ 0, 0 }, nil, (CGSize){
@@ -275,6 +274,9 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 }
 
 - (CTRunRef) linkRunAtPoint:(CGPoint)touchPoint {
+
+	if (!self.attributedText)
+		return nil;
 
 	touchPoint.y = CGRectGetHeight(self.bounds) - touchPoint.y;
 	
@@ -352,6 +354,9 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 		return CGSizeZero;
 	
 	CTFramesetterRef currentFramesetter = self.ctFramesetter;
+	if (!currentFramesetter)
+		return CGSizeZero;
+	
 	CFRetain(currentFramesetter);
 	
 	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(currentFramesetter, (CFRange){ 0, 0 }, nil, (CGSize){

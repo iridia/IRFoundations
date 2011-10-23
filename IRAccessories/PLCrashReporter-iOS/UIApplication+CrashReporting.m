@@ -16,8 +16,8 @@
 #import "PLCrashReport.h"
 #import "PLCrashReportTextFormatter.h"
 
-static NSString * const kIRCrashReportingEnabledKey = @"kIRCrashReportingEnabledKey";
-static NSString * const kIRCrashReportRecipientsKey = @"kIRCrashReportRecipientsKey";
+NSString * const kIRCrashReportingEnabledKey = @"IRCrashReportingEnabled";
+NSString * const kIRCrashReportRecipientsKey = @"IRCrashReportRecipients";
 
 @implementation UIApplication (CrashReporting)
 
@@ -27,7 +27,7 @@ static NSString * const kIRCrashReportRecipientsKey = @"kIRCrashReportRecipients
 	if (possibleKey)
 		return possibleKey;
 
-	[self setCrashReportingEnabledUserDefaultsKey:@"kIRCrashReportingEnabled"];
+	[self setCrashReportingEnabledUserDefaultsKey:kIRCrashReportingEnabledKey];
 	return [self crashReportingEnabledUserDefaultsKey];
 
 }
@@ -43,8 +43,20 @@ static NSString * const kIRCrashReportRecipientsKey = @"kIRCrashReportRecipients
 	NSArray *recipients = objc_getAssociatedObject(self, &kIRCrashReportRecipientsKey);
 	if (recipients)
 		return recipients;
+		
+	NSArray *definedRecipients = [[NSUserDefaults standardUserDefaults] arrayForKey:kIRCrashReportRecipientsKey];
 
-	[self setCrashReportRecipients:[NSArray arrayWithObjects:@"Iridia Support <base@iridia.tw>", nil]];
+	if (definedRecipients) {
+
+		[self setCrashReportRecipients:definedRecipients];
+		
+	} else {
+
+		[self setCrashReportRecipients:[NSArray arrayWithObjects:@"Iridia Support <base@iridia.tw>", nil]];
+
+	
+	}
+	
 	return [self crashReportRecipients];
 
 }
