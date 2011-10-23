@@ -117,6 +117,10 @@
 		FF789D321442FDE00080F210 /* IRAsyncOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */; };
 		FF890D1D14163AC700CD7D1F /* CALayer+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */; };
 		FF890D1E14163AC700CD7D1F /* CALayer+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */; };
+		FF915A2614540703005F63FC /* AssetsLibrary+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF915A2414540703005F63FC /* AssetsLibrary+IRAdditions.h */; };
+		FF915A2714540703005F63FC /* AssetsLibrary+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF915A2514540703005F63FC /* AssetsLibrary+IRAdditions.m */; };
+		FF915A2A1454080E005F63FC /* ALAssetRepresentation+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF915A281454080E005F63FC /* ALAssetRepresentation+IRAdditions.h */; };
+		FF915A2B1454080E005F63FC /* ALAssetRepresentation+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF915A291454080E005F63FC /* ALAssetRepresentation+IRAdditions.m */; };
 		FF94EF6F135117D100FE79D4 /* IRBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = FF94EF6D135117D100FE79D4 /* IRBorder.h */; };
 		FF94EF70135117D100FE79D4 /* IRBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = FF94EF6E135117D100FE79D4 /* IRBorder.m */; };
 		FF9737E313D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = FF9737E113D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h */; };
@@ -273,6 +277,10 @@
 		FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAsyncOperation.m; sourceTree = "<group>"; };
 		FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+IRAdditions.h"; sourceTree = "<group>"; };
 		FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+IRAdditions.m"; sourceTree = "<group>"; };
+		FF915A2414540703005F63FC /* AssetsLibrary+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AssetsLibrary+IRAdditions.h"; sourceTree = "<group>"; };
+		FF915A2514540703005F63FC /* AssetsLibrary+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AssetsLibrary+IRAdditions.m"; sourceTree = "<group>"; };
+		FF915A281454080E005F63FC /* ALAssetRepresentation+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetRepresentation+IRAdditions.h"; sourceTree = "<group>"; };
+		FF915A291454080E005F63FC /* ALAssetRepresentation+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAssetRepresentation+IRAdditions.m"; sourceTree = "<group>"; };
 		FF94EF6D135117D100FE79D4 /* IRBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBorder.h; sourceTree = "<group>"; };
 		FF94EF6E135117D100FE79D4 /* IRBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBorder.m; sourceTree = "<group>"; };
 		FF9737E113D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRImageUnarchiveFromDataTransformer.h; sourceTree = "<group>"; };
@@ -348,6 +356,7 @@
 				FF0A8CEC1337B36A00DDA47C /* QuartzCore+IRAdditions */,
 				FF0A8CFB1337B36A00DDA47C /* CGGeometry+IRAdditions */,
 				FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */,
+				FF915A22145406EB005F63FC /* AssetsLibrary+IRAdditions */,
 				FF0A8D221337B36A00DDA47C /* CoreData+IRAdditions */,
 				FFB6797B141E3F71006F84E3 /* CoreText+IRAdditions */,
 				FF0A8BAA1337AFB700DDA47C /* IRFoundationsTouch */,
@@ -534,6 +543,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		FF915A22145406EB005F63FC /* AssetsLibrary+IRAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				FF915A281454080E005F63FC /* ALAssetRepresentation+IRAdditions.h */,
+				FF915A291454080E005F63FC /* ALAssetRepresentation+IRAdditions.m */,
+				FF915A2414540703005F63FC /* AssetsLibrary+IRAdditions.h */,
+				FF915A2514540703005F63FC /* AssetsLibrary+IRAdditions.m */,
+			);
+			name = "AssetsLibrary+IRAdditions";
+			sourceTree = "<group>";
+		};
 		FFB6797B141E3F71006F84E3 /* CoreText+IRAdditions */ = {
 			isa = PBXGroup;
 			children = (
@@ -623,6 +643,8 @@
 				FFB67984141E415C006F84E3 /* NSAttributedString+IRAdditions.h in Headers */,
 				FF12AA8E143F2F11002346BD /* IRLifetimeHelper.h in Headers */,
 				FF789D2F1442FDE00080F210 /* IRAsyncOperation.h in Headers */,
+				FF915A2614540703005F63FC /* AssetsLibrary+IRAdditions.h in Headers */,
+				FF915A2A1454080E005F63FC /* ALAssetRepresentation+IRAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -679,6 +701,9 @@
 /* Begin PBXProject section */
 		FF0A8B9B1337AFA800DDA47C /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Iridia Productions";
+			};
 			buildConfigurationList = FF0A8B9E1337AFA800DDA47C /* Build configuration list for PBXProject "IRFoundations" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -770,6 +795,8 @@
 				FFB67985141E415C006F84E3 /* NSAttributedString+IRAdditions.m in Sources */,
 				FF12AA8F143F2F11002346BD /* IRLifetimeHelper.m in Sources */,
 				FF789D311442FDE00080F210 /* IRAsyncOperation.m in Sources */,
+				FF915A2714540703005F63FC /* AssetsLibrary+IRAdditions.m in Sources */,
+				FF915A2B1454080E005F63FC /* ALAssetRepresentation+IRAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
