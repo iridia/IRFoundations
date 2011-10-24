@@ -11,6 +11,8 @@
 #import "IRImagePickerController.h"
 
 
+static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerControllerAssetLibrary";
+
 @interface IRImagePickerController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic, readwrite, copy) IRImagePickerCallback callbackBlock;
@@ -158,9 +160,12 @@
 	} else {
         
 		if (YES /* uses ALAssetsLibrary */) {
-            
-			[[[[ALAssetsLibrary alloc] init] autorelease] assetForURL:assetURL resultBlock: ^ (ALAsset *asset) {
+       
+			ALAssetsLibrary *library = [[[ALAssetsLibrary alloc] init] autorelease];
+			[library assetForURL:assetURL resultBlock: ^ (ALAsset *asset) {
                 
+				objc_setAssociatedObject(asset, &kIRImagePickerControllerAssetLibrary, library, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+				
 				if (self.callbackBlock)
 					self.callbackBlock(tempMediaURL, asset);
                 
