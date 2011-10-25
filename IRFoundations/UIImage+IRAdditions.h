@@ -18,4 +18,6 @@
 - (UIImage *) irScaledImageWithSize:(CGSize)aSize;
 - (UIImage *) irSolidImageWithFillColor:(UIColor *)fillColor shadow:(IRShadow *)shadowOrNil;
 
+@property (nonatomic, readwrite, retain, getter=irRepresentedObject, setter=irSetRepresentedObject:) id irRepresentedObject;
+
 @end

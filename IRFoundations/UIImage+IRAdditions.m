@@ -12,6 +12,8 @@
 #import "UIImage+IRAdditions.h"
 #import "IRShadow.h"
 
+static NSString * const kUIImageIRAdditionsRepresentedObject = @"kUIImageIRAdditionsRepresentedObject";
+
 static void __attribute__((constructor)) initialize() {
 
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -167,6 +169,25 @@ static void __attribute__((constructor)) initialize() {
 	UIGraphicsEndImageContext();
 
 	return returnedImage;
+
+}
+
+- (id) irRepresentedObject {
+
+	return objc_getAssociatedObject(self, &kUIImageIRAdditionsRepresentedObject);
+
+}
+
+- (void) irSetRepresentedObject:(id)newObject {
+
+	if (self.irRepresentedObject == newObject)
+		return;
+	
+	[self willChangeValueForKey:@"irRepresentedObject"];
+
+	objc_setAssociatedObject(self, &kUIImageIRAdditionsRepresentedObject, newObject, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+	[self didChangeValueForKey:@"irRepresentedObject"];
 
 }
 
