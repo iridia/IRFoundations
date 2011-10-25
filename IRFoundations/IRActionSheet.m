@@ -9,9 +9,17 @@
 #import "IRActionSheet.h"
 
 
+@interface IRActionSheet ()
+
+@property (nonatomic, readwrite, assign) BOOL canUseCustomReshowing;
+
+@end
+
+
 @implementation IRActionSheet
 
 @synthesize lastShownInRect, lastShownInView, canUseCustomReshowing;
+@synthesize dismissesOnOrientationChange;
 
 - (void) showFromRect:(CGRect)rect inView:(UIView *)view animated:(BOOL)animated {
 
@@ -37,7 +45,7 @@
 - (void) prepareForReshowingIfAppropriate {
 
 	if (!self.canUseCustomReshowing)
-	return;
+		return;
 
 	if (CGRectEqualToRect(self.lastShownInRect, CGRectNull))
 	return;

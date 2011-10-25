@@ -13,9 +13,10 @@
 
 @property (nonatomic, readwrite, assign) CGRect lastShownInRect;
 @property (nonatomic, readwrite, assign) UIView *lastShownInView;
-@property (nonatomic, readwrite, assign) BOOL canUseCustomReshowing;
 
 - (void) prepareForReshowingIfAppropriate;
 - (void) reshowIfAppropriate;	// re-show the action sheet from the rect in a view, if the action was shown in that rect / view
+
+@property (nonatomic, readwrite, assign) BOOL dismissesOnOrientationChange;
 
 @end
