@@ -246,13 +246,19 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 		return;
 	}
 	
+	CTFrameRef usedFrame = self.ctFrame;
+	if (!usedFrame)
+		return;
+	
+	CFRetain(usedFrame);
 	CGContextRef context = UIGraphicsGetCurrentContext();	
 	CGContextSaveGState(context);
 	CGContextConcatCTM(context, CGAffineTransformMake(
 		1, 0, 0, -1, 0, CGRectGetHeight(self.bounds)
 	));
-	CTFrameDraw(self.ctFrame, context);
+	CTFrameDraw(usedFrame, context);
 	CGContextRestoreGState(context);
+	CFRelease(usedFrame);
 
 }
 
