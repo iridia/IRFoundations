@@ -127,7 +127,7 @@ static IRRelativeDateFormatter* IRRelativeDateFormatterSharedFormatter;
 	
 	NSArray *availableRepresentations = [self stringRepresentationFormatterStringsforCalendarUnit:inCalendarUnit past:NO];
 	
-	NSString *finalFormatterString = [availableRepresentations objectAtIndex:(MIN([availableRepresentations count], ABS(value)) - 1)];
+	NSString *finalFormatterString = [availableRepresentations objectAtIndex:(MIN([availableRepresentations count], value) - 1)];
 	
 	if ([finalFormatterString rangeOfString:@"%d"].location == NSNotFound) {
 	
@@ -136,7 +136,7 @@ static IRRelativeDateFormatter* IRRelativeDateFormatterSharedFormatter;
 	
 	}
 	
-	return [NSString stringWithFormat:finalFormatterString, ABS(value)];
+	return [NSString stringWithFormat:finalFormatterString, value];
 
 }
 
