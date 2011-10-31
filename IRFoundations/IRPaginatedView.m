@@ -260,6 +260,7 @@
 	if (decelerate)
 		return;
 	
+	if (self.numberOfPages)
 	if ([self.delegate respondsToSelector:@selector(paginatedView:didShowView:atIndex:)])
 		[self.delegate paginatedView:self didShowView:[self existingPageAtIndex:self.currentPage] atIndex:self.currentPage];
 
@@ -267,6 +268,7 @@
 
 - (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
 
+	if (self.numberOfPages)
 	if ([self.delegate respondsToSelector:@selector(paginatedView:didShowView:atIndex:)])
 		[self.delegate paginatedView:self didShowView:[self existingPageAtIndex:self.currentPage] atIndex:self.currentPage];
 
