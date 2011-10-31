@@ -89,8 +89,11 @@ static NSString * const kIRManagedObjectContextDidSaveNotificationListener = @"I
 		
 		__block id listenerObject = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
 		
+			if (note.object == nrSelf)
+				return;
+
 			dispatch_async(ownQueue, ^ {
-		
+			
 				[nrSelf mergeChangesFromContextDidSaveNotification:note];
 			
 			});
