@@ -82,13 +82,13 @@ static NSString * const kIRManagedObjectContextDidSaveNotificationListener = @"I
 - (void) irBeginMergingFromSavesAutomatically {
 
 	if (self.irMOCSaveAutomergeCount == 0) {
-	
+
 		__block __typeof__(self) nrSelf = self;
 		__block dispatch_queue_t ownQueue = [NSThread isMainThread] ? dispatch_get_main_queue() : dispatch_get_current_queue();
 		dispatch_retain(ownQueue);
 		
 		__block id listenerObject = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
-		
+
 			if (note.object == nrSelf)
 				return;
 
@@ -98,13 +98,12 @@ static NSString * const kIRManagedObjectContextDidSaveNotificationListener = @"I
 			
 			});
 			
-			dispatch_release(ownQueue);
-			
 		}];
 		
 		[listenerObject irPerformOnDeallocation: ^ {
 		
 			[[NSNotificationCenter defaultCenter] removeObserver:listenerObject];
+			dispatch_release(ownQueue);
 			
 		}];
 		
