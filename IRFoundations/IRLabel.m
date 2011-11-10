@@ -169,6 +169,9 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (NSAttributedString *) attributedStringForString:(NSString *)aString font:(UIFont *)aFont color:(UIColor *)aColor {
 
+	if (!aString)
+		return nil;
+
 	CTFontRef font = CTFontCreateWithName((CFStringRef)aFont.fontName, aFont.pointSize, NULL);
 	
 	NSAttributedString *returnedString = [[[NSAttributedString alloc] initWithString:aString attributes:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -186,6 +189,9 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 	if (ctFramesetter)
 		return ctFramesetter;
+	
+	if (!attributedText)
+		return nil;
 	
 	@synchronized (self) {
 		
