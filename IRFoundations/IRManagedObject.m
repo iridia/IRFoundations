@@ -249,6 +249,10 @@
 	[[context retain] autorelease];
 	[[inRemoteDictionaries retain] autorelease];
 	[[remoteKeyPathsToClassNames retain] autorelease];
+	
+	if (!remoteKeyPathsToClassNames)
+		remoteKeyPathsToClassNames = [self defaultHierarchicalEntityMapping];
+	
 	NSArray *usedRemoteDictionaries = [inRemoteDictionaries irMap: ^ (NSDictionary *aRepresentation, NSUInteger index, BOOL *stop) {
 		return [self transformedRepresentationForRemoteRepresentation:aRepresentation];
 	}];
