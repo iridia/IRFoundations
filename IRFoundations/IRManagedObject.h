@@ -101,6 +101,11 @@ enum IRManagedObjectOptions {
 
 + (NSEntityDescription *) entityDescriptionForContext:(NSManagedObjectContext *)aContext;
 
+
++ (NSDictionary *) transformedRepresentationForRemoteRepresentation:(NSDictionary *)incomingRepresentation;
+//	Convert identifier fields to object prototypes containing an identifier field, for example.
+//	Default implementation returns incoming representation.
+
 @end
 
 

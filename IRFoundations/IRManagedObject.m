@@ -229,11 +229,14 @@
 	[[context retain] autorelease];
 	[[inRemoteDictionaries retain] autorelease];
 	[[remoteKeyPathsToClassNames retain] autorelease];
+	NSArray *usedRemoteDictionaries = [inRemoteDictionaries irMap: ^ (NSDictionary *aRepresentation, NSUInteger index, BOOL *stop) {
+		return [self transformedRepresentationForRemoteRepresentation:aRepresentation];
+	}];
 
 	NSString *localKeyPath = [self keyPathHoldingUniqueValue];
 	NSString *remoteKeyPath = [[[self remoteDictionaryConfigurationMapping] allKeysForObject:localKeyPath] objectAtIndex:0];
 	
-	NSArray *baseEntities = [self insertOrUpdateObjectsIntoContext:context withExistingProperty:localKeyPath matchingKeyPath:remoteKeyPath ofRemoteDictionaries:inRemoteDictionaries];
+	NSArray *baseEntities = [self insertOrUpdateObjectsIntoContext:context withExistingProperty:localKeyPath matchingKeyPath:remoteKeyPath ofRemoteDictionaries:usedRemoteDictionaries];
 	NSParameterAssert(baseEntities);
 	
 	NSDictionary *baseEntityRelationships = [[[[[context persistentStoreCoordinator] managedObjectModel] entitiesByName] objectForKey:[self coreDataEntityName]] relationshipsByName];
@@ -263,7 +266,7 @@
 		NSParameterAssert(nodeLocalKeyPath);
 		NSParameterAssert(nodeRemoteKeyPath);
 		
-		NSArray *nodeRepresentations = [inRemoteDictionaries irMap:irMapMakeWithKeyPath(rootRemoteKeyPath)];
+		NSArray *nodeRepresentations = [usedRemoteDictionaries irMap:irMapMakeWithKeyPath(rootRemoteKeyPath)];
 		NSArray *entityRepresentations = [nodeRepresentations irFlatten];
 		
 		NSArray *nodeEntities = [nodeEntityClass insertOrUpdateObjectsUsingContext:context withRemoteResponse:entityRepresentations usingMapping:[nodeEntityClass defaultHierarchicalEntityMapping] options:0];
@@ -390,6 +393,16 @@
 + (NSEntityDescription *) entityDescriptionForContext:(NSManagedObjectContext *)aContext {
 
 	return [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:aContext];
+
+}
+
+
+
+
+
++ (NSDictionary *) transformedRepresentationForRemoteRepresentation:(NSDictionary *)incomingRepresentation {
+
+	return incomingRepresentation;
 
 }
 
