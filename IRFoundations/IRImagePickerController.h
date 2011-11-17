@@ -26,4 +26,6 @@ typedef void (^IRImagePickerCallback) (NSURL *selectedAssetURI, ALAsset *represe
 
 + (IRImagePickerController *) pickerWithSourceType:(UIImagePickerControllerSourceType)sourceType mediaTypes:(NSArray *)mediaTypes completionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil;
 
+@property (nonatomic, readwrite, assign) BOOL takesPictureOnVolumeUpKeypress;
+
 @end
