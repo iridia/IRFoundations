@@ -80,6 +80,8 @@
 		FF0A8D661337B36A00DDA47C /* NSFetchRequest+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */; };
 		FF0A8E7E1337B8CF00DDA47C /* IRTintedBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8E7C1337B8CF00DDA47C /* IRTintedBarButtonItem.h */; };
 		FF0A8E7F1337B8CF00DDA47C /* IRTintedBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */; };
+		FF0D46BB1475885900340287 /* UIViewController+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0D46B91475885900340287 /* UIViewController+IRAdditions.h */; };
+		FF0D46BC1475885900340287 /* UIViewController+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0D46BA1475885900340287 /* UIViewController+IRAdditions.m */; };
 		FF12AA8E143F2F11002346BD /* IRLifetimeHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FF12AA8C143F2F11002346BD /* IRLifetimeHelper.h */; };
 		FF12AA8F143F2F11002346BD /* IRLifetimeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FF12AA8D143F2F11002346BD /* IRLifetimeHelper.m */; };
 		FF27A6AB133E2C16008C8DDA /* IRBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6A9133E2C16008C8DDA /* IRBarButtonItem.h */; };
@@ -252,6 +254,8 @@
 		FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchRequest+IRAdditions.m"; sourceTree = "<group>"; };
 		FF0A8E7C1337B8CF00DDA47C /* IRTintedBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRTintedBarButtonItem.h; sourceTree = "<group>"; };
 		FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRTintedBarButtonItem.m; sourceTree = "<group>"; };
+		FF0D46B91475885900340287 /* UIViewController+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+IRAdditions.h"; sourceTree = "<group>"; };
+		FF0D46BA1475885900340287 /* UIViewController+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+IRAdditions.m"; sourceTree = "<group>"; };
 		FF12AA8C143F2F11002346BD /* IRLifetimeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRLifetimeHelper.h; sourceTree = "<group>"; };
 		FF12AA8D143F2F11002346BD /* IRLifetimeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRLifetimeHelper.m; sourceTree = "<group>"; };
 		FF27A6A9133E2C16008C8DDA /* IRBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBarButtonItem.h; sourceTree = "<group>"; };
@@ -500,6 +504,8 @@
 				FF61635714161868004738D3 /* IRMailComposeViewController.h */,
 				FF61635814161868004738D3 /* IRMailComposeViewController.m */,
 				FF0A8D1B1337B36A00DDA47C /* Resources */,
+				FF0D46B91475885900340287 /* UIViewController+IRAdditions.h */,
+				FF0D46BA1475885900340287 /* UIViewController+IRAdditions.m */,
 			);
 			name = "UIKit+IRAdditions";
 			sourceTree = "<group>";
@@ -645,6 +651,7 @@
 				FF789D2F1442FDE00080F210 /* IRAsyncOperation.h in Headers */,
 				FF915A2614540703005F63FC /* AssetsLibrary+IRAdditions.h in Headers */,
 				FF915A2A1454080E005F63FC /* ALAssetRepresentation+IRAdditions.h in Headers */,
+				FF0D46BB1475885900340287 /* UIViewController+IRAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -797,6 +804,7 @@
 				FF789D311442FDE00080F210 /* IRAsyncOperation.m in Sources */,
 				FF915A2714540703005F63FC /* AssetsLibrary+IRAdditions.m in Sources */,
 				FF915A2B1454080E005F63FC /* ALAssetRepresentation+IRAdditions.m in Sources */,
+				FF0D46BC1475885900340287 /* UIViewController+IRAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
