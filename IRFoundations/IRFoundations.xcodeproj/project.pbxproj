@@ -82,6 +82,8 @@
 		FF0A8E7F1337B8CF00DDA47C /* IRTintedBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */; };
 		FF0D46BB1475885900340287 /* UIViewController+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0D46B91475885900340287 /* UIViewController+IRAdditions.h */; };
 		FF0D46BC1475885900340287 /* UIViewController+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0D46BA1475885900340287 /* UIViewController+IRAdditions.m */; };
+		FF0D46C014759E4A00340287 /* UIApplication+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0D46BE14759E4A00340287 /* UIApplication+IRAdditions.h */; };
+		FF0D46C114759E4A00340287 /* UIApplication+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0D46BF14759E4A00340287 /* UIApplication+IRAdditions.m */; };
 		FF12AA8E143F2F11002346BD /* IRLifetimeHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FF12AA8C143F2F11002346BD /* IRLifetimeHelper.h */; };
 		FF12AA8F143F2F11002346BD /* IRLifetimeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FF12AA8D143F2F11002346BD /* IRLifetimeHelper.m */; };
 		FF27A6AB133E2C16008C8DDA /* IRBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6A9133E2C16008C8DDA /* IRBarButtonItem.h */; };
@@ -256,6 +258,8 @@
 		FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRTintedBarButtonItem.m; sourceTree = "<group>"; };
 		FF0D46B91475885900340287 /* UIViewController+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+IRAdditions.h"; sourceTree = "<group>"; };
 		FF0D46BA1475885900340287 /* UIViewController+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+IRAdditions.m"; sourceTree = "<group>"; };
+		FF0D46BE14759E4A00340287 /* UIApplication+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+IRAdditions.h"; sourceTree = "<group>"; };
+		FF0D46BF14759E4A00340287 /* UIApplication+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+IRAdditions.m"; sourceTree = "<group>"; };
 		FF12AA8C143F2F11002346BD /* IRLifetimeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRLifetimeHelper.h; sourceTree = "<group>"; };
 		FF12AA8D143F2F11002346BD /* IRLifetimeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRLifetimeHelper.m; sourceTree = "<group>"; };
 		FF27A6A9133E2C16008C8DDA /* IRBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBarButtonItem.h; sourceTree = "<group>"; };
@@ -448,6 +452,8 @@
 		FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */ = {
 			isa = PBXGroup;
 			children = (
+				FF0D46BE14759E4A00340287 /* UIApplication+IRAdditions.h */,
+				FF0D46BF14759E4A00340287 /* UIApplication+IRAdditions.m */,
 				FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */,
 				FF59C39D1418A06400F4BF2D /* UIView+IRAdditions.h */,
 				FF59C39E1418A06400F4BF2D /* UIView+IRAdditions.m */,
@@ -652,6 +658,7 @@
 				FF915A2614540703005F63FC /* AssetsLibrary+IRAdditions.h in Headers */,
 				FF915A2A1454080E005F63FC /* ALAssetRepresentation+IRAdditions.h in Headers */,
 				FF0D46BB1475885900340287 /* UIViewController+IRAdditions.h in Headers */,
+				FF0D46C014759E4A00340287 /* UIApplication+IRAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -805,6 +812,7 @@
 				FF915A2714540703005F63FC /* AssetsLibrary+IRAdditions.m in Sources */,
 				FF915A2B1454080E005F63FC /* ALAssetRepresentation+IRAdditions.m in Sources */,
 				FF0D46BC1475885900340287 /* UIViewController+IRAdditions.m in Sources */,
+				FF0D46C114759E4A00340287 /* UIApplication+IRAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
