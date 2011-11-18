@@ -237,31 +237,39 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 
 	[super viewDidAppear:animated];
 	
-	//	CGRect rectInWindow = [self.view.window convertRect:[self.view.window.screen applicationFrame] fromWindow:nil];
+	if (self.sourceType == UIImagePickerControllerSourceTypeCamera) {
 	
-	#if 0
-	self.view.layer.borderColor = [UIColor redColor].CGColor;
-	self.view.layer.borderWidth = 1.0f;
-	#endif
+		//	CGRect rectInWindow = [self.view.window convertRect:[self.view.window.screen applicationFrame] fromWindow:nil];
+		
+		#if 0
+		self.view.layer.borderColor = [UIColor redColor].CGColor;
+		self.view.layer.borderWidth = 1.0f;
+		#endif
+		
+		self.showsCameraControls = NO;
+		//	self.view.frame = rectInWindow;
+		
+		double delayInSeconds = 2.0;
+		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+			CGRect rectInWindow = [self.view.window convertRect:[self.view.window.screen applicationFrame] fromWindow:nil];
+			self.showsCameraControls = YES;
+			self.view.frame = rectInWindow;
+		});
 	
-	self.showsCameraControls = NO;
-	//	self.view.frame = rectInWindow;
-	
-	double delayInSeconds = 2.0;
-	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-		CGRect rectInWindow = [self.view.window convertRect:[self.view.window.screen applicationFrame] fromWindow:nil];
-		self.showsCameraControls = YES;
-		self.view.frame = rectInWindow;
-	});
+	}
 	
 }
 
 - (void) handleVolumeChanged:(NSNotification *)aNotification {
 
-	if (self.takesPictureOnVolumeUpKeypress)
-	if ([self sourceType] == UIImagePickerControllerSourceTypeCamera)
-		[self takePicture];
+	if (self.sourceType == UIImagePickerControllerSourceTypeCamera) {
+	
+		if (self.takesPictureOnVolumeUpKeypress)
+		if ([self sourceType] == UIImagePickerControllerSourceTypeCamera)
+			[self takePicture];
+			
+	}
 
 }
 
@@ -277,16 +285,16 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 
 
 
-- (BOOL) wantsFullScreenLayout {
-
-	return NO;
-
-}
-
-- (void) setWantsFullScreenLayout:(BOOL)wantsFullScreenLayout {
-	
-	[super setWantsFullScreenLayout:NO];
-
-}
+//- (BOOL) wantsFullScreenLayout {
+//
+//	return NO;
+//
+//}
+//
+//- (void) setWantsFullScreenLayout:(BOOL)wantsFullScreenLayout {
+//	
+//	[super setWantsFullScreenLayout:NO];
+//
+//}
 
 @end
