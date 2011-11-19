@@ -10,7 +10,7 @@
 #import "Foundation+IRAdditions.h"
 
 @class IRPaginatedView;
-@protocol IRPaginatedViewDelegate
+@protocol IRPaginatedViewDelegate <NSObject>
 
 - (NSUInteger) numberOfViewsInPaginatedView:(IRPaginatedView *)paginatedView;
 - (UIView *) viewForPaginatedView:(IRPaginatedView *)paginatedView atIndex:(NSUInteger)index;

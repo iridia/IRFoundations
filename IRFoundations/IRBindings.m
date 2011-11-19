@@ -162,16 +162,19 @@ NSString * const kAssociatedIRBindingsHelper = @"kAssociatedIRBindingsHelper";
 	id newValue = [change objectForKey:NSKeyValueChangeNewKey];
 	NSString *changeKind = [change objectForKey:NSKeyValueChangeKindKey];
 	id setValue = newValue;
-	
+		
 	NSDictionary *optionsDictionary = [(id)context objectForKey:@"options"];
 	optionsDictionary = ([optionsDictionary isEqual:[NSNull null]]) ? nil : optionsDictionary;
-		
+	
 	IRBindingsValueTransformer valueTransformerOrNil;
 	
 	if ((valueTransformerOrNil = [optionsDictionary objectForKey:kIRBindingsValueTransformerBlock]))
 	setValue = valueTransformerOrNil(oldValue, newValue, changeKind);
 	
 	BOOL assignmentOnMainThread = [[optionsDictionary objectForKey:kIRBindingsAssignOnMainThreadOption] boolValue];
+
+	if ([setValue isEqual:[NSNull null]])
+		setValue = nil;
 
 	id ownerRef = self.owner;
 	void (^operation)() = ^ {

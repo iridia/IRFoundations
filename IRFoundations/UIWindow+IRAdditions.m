@@ -28,7 +28,9 @@ NSString * const kIRWindowInterfaceBounds = @"kIRWindowInterfaceBounds";
 
 - (CGRect) irInterfaceBounds {
 
-	return [objc_getAssociatedObject(self, &kIRWindowInterfaceBounds) CGRectValue];
+	NSValue *boundsValue = objc_getAssociatedObject(self, &kIRWindowInterfaceBounds);
+
+	return boundsValue ? [boundsValue CGRectValue] : self.bounds;
 
 }
 

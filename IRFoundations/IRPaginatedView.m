@@ -255,6 +255,25 @@
 	
 }
 
+- (void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+
+	if (decelerate)
+		return;
+	
+	if (self.numberOfPages)
+	if ([self.delegate respondsToSelector:@selector(paginatedView:didShowView:atIndex:)])
+		[self.delegate paginatedView:self didShowView:[self existingPageAtIndex:self.currentPage] atIndex:self.currentPage];
+
+}
+
+- (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+
+	if (self.numberOfPages)
+	if ([self.delegate respondsToSelector:@selector(paginatedView:didShowView:atIndex:)])
+		[self.delegate paginatedView:self didShowView:[self existingPageAtIndex:self.currentPage] atIndex:self.currentPage];
+
+}
+
 - (void) layoutSubviews {
 
 	[super layoutSubviews];
@@ -281,8 +300,20 @@
 	
 		UIView *existingView = [self existingViewForPageAtIndex:index];
 		
-		if (existingView)
-			existingView.frame = [self pageRectForIndex:index];
+		if (!existingView)
+			continue;
+		
+		CGRect pageRect = [self pageRectForIndex:index];
+		
+		existingView.bounds = (CGRect){
+			CGPointZero,
+			pageRect.size
+		};
+		
+		existingView.center = (CGPoint){
+			CGRectGetMidX(pageRect),
+			CGRectGetMidY(pageRect)
+		};
 
 	}
 	

@@ -97,6 +97,8 @@
 	
 	}] irMap:irMapNullFilterMake()];
 	
+	NSMutableArray *unusedRemoteDictionaries = [[sortedRemoteDictionaries mutableCopy] autorelease];
+	
 	[uniqueValues enumerateObjectsUsingBlock: ^ (id currentUniqueValue, NSUInteger idx, BOOL *stop) {
 	
 		id currentObject = [sortedRemoteDictionaries objectAtIndex:idx];
@@ -105,6 +107,7 @@
 		if ([currentUniqueValue isEqual:[uniqueValues objectAtIndex:(idx - 1)]]) {
 
 			[currentWrapperArray addObject:currentObject];
+			[unusedRemoteDictionaries removeObject:currentObject];
 			return;
 		
 		}
@@ -112,11 +115,15 @@
 		NSMutableArray *wrapperArray = [NSMutableArray array];
 		[updatedOrInsertedReps addObject:wrapperArray];
 		[wrapperArray addObject:currentObject];
+		[unusedRemoteDictionaries removeObject:currentObject];
 		
 		currentWrapperArray = wrapperArray;
 	
 	}];
 	
+
+	for (NSDictionary *anUnusedRemoteDictionary in unusedRemoteDictionaries)
+		[updatedOrInsertedReps addObject:[NSArray arrayWithObject:anUnusedRemoteDictionary]];
 	
 	//	There is a circumstance, where the multiple remote dictionaries can have a same value at dictionaryKeyPath
 	
@@ -178,8 +185,8 @@
 		
 		
 	//	If there are multiple representations, use them up
-		
-		[[returnedEntities indexesOfObjectsPassingTest: ^ (id obj, NSUInteger idx, BOOL *stop) {
+	
+		NSIndexSet *indexes = [returnedEntities indexesOfObjectsPassingTest: ^ (id obj, NSUInteger idx, BOOL *stop) {
 		
 			if (![obj isKindOfClass:[NSDictionary class]])
 			return NO;
@@ -190,11 +197,24 @@
 		//	For example, Twitter itself can change its mind about an user’s following count in the middle of a response body!
 		//	return [obj isEqual:currentDictionary];
 		
-		}] enumerateIndexesUsingBlock: ^ (NSUInteger idx, BOOL *stop) {
+		}];
+		
+		
+		
+		[indexes enumerateIndexesUsingBlock: ^ (NSUInteger idx, BOOL *stop) {
 
 			[returnedEntities replaceObjectAtIndex:idx withObject:touchedEntity];
 		
 		}];
+		
+		if (![indexes count]) {
+		
+		
+		
+			NSUInteger foundIndex = [returnedEntities indexOfObjectIdenticalTo:currentDictionary];
+			if (foundIndex != NSNotFound)
+				[returnedEntities replaceObjectAtIndex:foundIndex withObject:touchedEntity];
+		}
 		
 	}
 	
@@ -229,11 +249,18 @@
 	[[context retain] autorelease];
 	[[inRemoteDictionaries retain] autorelease];
 	[[remoteKeyPathsToClassNames retain] autorelease];
+	
+	if (!remoteKeyPathsToClassNames)
+		remoteKeyPathsToClassNames = [self defaultHierarchicalEntityMapping];
+	
+	NSArray *usedRemoteDictionaries = [inRemoteDictionaries irMap: ^ (NSDictionary *aRepresentation, NSUInteger index, BOOL *stop) {
+		return [self transformedRepresentationForRemoteRepresentation:aRepresentation];
+	}];
 
 	NSString *localKeyPath = [self keyPathHoldingUniqueValue];
 	NSString *remoteKeyPath = [[[self remoteDictionaryConfigurationMapping] allKeysForObject:localKeyPath] objectAtIndex:0];
 	
-	NSArray *baseEntities = [self insertOrUpdateObjectsIntoContext:context withExistingProperty:localKeyPath matchingKeyPath:remoteKeyPath ofRemoteDictionaries:inRemoteDictionaries];
+	NSArray *baseEntities = [self insertOrUpdateObjectsIntoContext:context withExistingProperty:localKeyPath matchingKeyPath:remoteKeyPath ofRemoteDictionaries:usedRemoteDictionaries];
 	NSParameterAssert(baseEntities);
 	
 	NSDictionary *baseEntityRelationships = [[[[[context persistentStoreCoordinator] managedObjectModel] entitiesByName] objectForKey:[self coreDataEntityName]] relationshipsByName];
@@ -263,7 +290,7 @@
 		NSParameterAssert(nodeLocalKeyPath);
 		NSParameterAssert(nodeRemoteKeyPath);
 		
-		NSArray *nodeRepresentations = [inRemoteDictionaries irMap:irMapMakeWithKeyPath(rootRemoteKeyPath)];
+		NSArray *nodeRepresentations = [usedRemoteDictionaries irMap:irMapMakeWithKeyPath(rootRemoteKeyPath)];
 		NSArray *entityRepresentations = [nodeRepresentations irFlatten];
 		
 		NSArray *nodeEntities = [nodeEntityClass insertOrUpdateObjectsUsingContext:context withRemoteResponse:entityRepresentations usingMapping:[nodeEntityClass defaultHierarchicalEntityMapping] options:0];
@@ -390,6 +417,16 @@
 + (NSEntityDescription *) entityDescriptionForContext:(NSManagedObjectContext *)aContext {
 
 	return [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:aContext];
+
+}
+
+
+
+
+
++ (NSDictionary *) transformedRepresentationForRemoteRepresentation:(NSDictionary *)incomingRepresentation {
+
+	return incomingRepresentation;
 
 }
 

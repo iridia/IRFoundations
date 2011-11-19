@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <objc/runtime.h>
 
 @interface IRImagePickerController : UIImagePickerController
 
@@ -24,5 +25,7 @@ typedef void (^IRImagePickerCallback) (NSURL *selectedAssetURI, ALAsset *represe
 + (IRImagePickerController *) cameraVideoCapturePickerWithCompletionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil;
 
 + (IRImagePickerController *) pickerWithSourceType:(UIImagePickerControllerSourceType)sourceType mediaTypes:(NSArray *)mediaTypes completionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil;
+
+@property (nonatomic, readwrite, assign) BOOL takesPictureOnVolumeUpKeypress;
 
 @end
