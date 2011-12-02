@@ -154,17 +154,22 @@ static void __attribute__((constructor)) initialize() {
 		CGContextSetShadowWithColor(context, shadowOrNil.offset, shadowOrNil.spread, shadowOrNil.color.CGColor);
 	
 	CGContextSaveGState(context);
+	CGContextConcatCTM(context, (CGAffineTransform){ 1, 0, 0, -1, 0, contextRect.size.height });
+
 	CGContextConcatCTM(context, CGAffineTransformMakeTranslation(
 		-1 * imageOffset.x,
-		-1 * imageOffset.y
+		-1 * (contextRect.size.height - imageOffset.y - self.size.height) //imageOffset.y
 	));
+	
 	CGContextBeginTransparencyLayer(context, nil);
 	CGContextClipToMask(context, (CGRect){ imageOffset, self.size }, self.CGImage);
 	CGContextSetFillColorWithColor(context, fillColor.CGColor);
-	CGContextFillRect(context, contextRect);	
-	CGContextEndTransparencyLayer(context);
-	CGContextRestoreGState(context);
+	CGContextFillRect(context, contextRect);
 	
+	CGContextEndTransparencyLayer(context);
+	
+	CGContextSaveGState(context);
+
 	UIImage *returnedImage = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
 
