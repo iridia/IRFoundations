@@ -10,10 +10,13 @@
 
 @interface IRManagedObject (SimulatedOrderedRelationship)
 
+//	Call in -awakeFromFetch
 - (void) irReconcileObjectOrderWithKey:(NSString *)aKey usingArrayKeyed:(NSString *)arrayKey;
 
+//	Call in array getter
 - (NSArray *) irBackingOrderArrayKeyed:(NSString *)aKey;
 
+//	Call in -didChangeValueForKey:withSetMutation:usingObjects:
 - (void) irUpdateObjects:(NSSet *)changedObjects withRelationshipKey:(NSString *)relationshipKey usingOrderArray:(NSString *)arrayKey withSetMutation:(NSKeyValueSetMutationKind)mutationKind;
 
 @end

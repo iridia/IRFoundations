@@ -101,9 +101,15 @@
 	switch (mutationKind) {
 	
 		case NSKeyValueUnionSetMutation: {
-			
+		
 			NSMutableArray *newOrder = [[existingOrder mutableCopy] autorelease];
-			[newOrder addObjectsFromArray:changedObjectURIs];
+			
+			[newOrder addObjectsFromArray:[changedObjectURIs filteredArrayUsingPredicate:[NSPredicate predicateWithBlock: ^ (id evaluatedObject, NSDictionary *bindings) {
+		
+				return (BOOL)![existingOrder containsObject:evaluatedObject];
+				
+			}]]];
+		
       [self setValue:newOrder forKey:arrayKey];
 			
 			break;
@@ -113,9 +119,9 @@
 		case NSKeyValueMinusSetMutation: {
 			
       NSMutableArray *newOrder = [[existingOrder mutableCopy] autorelease];
-			[newOrder removeObjectsInArray:[existingOrder objectsAtIndexes:[existingOrder indexesOfObjectsPassingTest: ^ (id obj, NSUInteger idx, BOOL *stop) {
-				return [changedObjectURIs containsObject:obj];
-			}]]];
+			
+			[newOrder removeObjectsInArray:changedObjectURIs];
+			
       [self setValue:newOrder forKey:arrayKey];
       
 			break;
@@ -125,7 +131,15 @@
 		case NSKeyValueIntersectSetMutation: {
 		
 			NSMutableArray *newOrder = [[existingOrder mutableCopy] autorelease];
+			
 			[newOrder removeObjectsInArray:changedObjectURIs];
+			
+			[newOrder addObjectsFromArray:[changedObjectURIs filteredArrayUsingPredicate:[NSPredicate predicateWithBlock: ^ (id evaluatedObject, NSDictionary *bindings) {
+		
+				return (BOOL)![existingOrder containsObject:evaluatedObject];
+				
+			}]]];
+			
       [self setValue:newOrder forKey:arrayKey];
 			
 			break;
@@ -135,6 +149,7 @@
 		case NSKeyValueSetSetMutation: {
 		
       [self setValue:changedObjectURIs forKey:arrayKey];
+			
 			break;
 			
 		}
