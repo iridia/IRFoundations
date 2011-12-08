@@ -181,3 +181,5 @@ enum IRManagedObjectOptions {
 
 
 
+
+#import "IRManagedObject+SimulatedOrderedRelationship.h"
