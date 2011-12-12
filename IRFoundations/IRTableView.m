@@ -505,6 +505,9 @@
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView {
 
+	if (self.onScroll)
+		self.onScroll();
+
 	if (self.pullDownToRefreshState == IRTableViewPullDownRefreshStateBegan)
 	if ([self contentOffsetAllowsVisiblePullToRefreshHeader])
 	dispatch_async(dispatch_get_main_queue(), ^ {
