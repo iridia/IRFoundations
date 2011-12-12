@@ -750,4 +750,14 @@ NSString * const IRTableViewWillResumePerformingBlocksNotification = @"IRTableVi
 
 
 
+- (UIEdgeInsets) actualContentInset {
+
+	return [super contentInset];
+
+}
+
+
+
+
+
 @end

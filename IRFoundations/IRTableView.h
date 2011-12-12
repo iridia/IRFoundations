@@ -180,6 +180,8 @@ extern NSString * const IRTableViewWillResumePerformingBlocksNotification;
 
 @property (nonatomic, readwrite, copy) void (^onLayoutSubviews)();
 
+- (UIEdgeInsets) actualContentInset;
+
 
 
 
