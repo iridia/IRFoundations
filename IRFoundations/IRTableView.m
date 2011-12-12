@@ -359,6 +359,7 @@
 		
 			self.pullDownToRefreshState = IRTableViewPullDownRefreshStateInactive;
 			[self setContentInset:self.originalEdgeInsets];
+			[self layoutSubviews];
 
 		} completion: ^ (BOOL finished) {
 					
@@ -548,7 +549,8 @@
 		
 		[UIView animateWithDuration:0.25 animations: ^ {
 		
-			[self setContentInset:self.originalEdgeInsets];				
+			[self setContentInset:self.originalEdgeInsets];
+			[self layoutSubviews];			
 		
 		}];
 
