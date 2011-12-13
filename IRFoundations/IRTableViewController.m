@@ -26,6 +26,7 @@
 @synthesize tableViewStyle;
 @synthesize onLoadView;
 @synthesize persistsContentOffset;
+@synthesize persistsContentInset;
 @synthesize persistsStateWhenViewWillDisappear;
 @synthesize restoresStateWhenViewDidAppear;
 
@@ -72,6 +73,7 @@
 
 	self.tableViewStyle = UITableViewStylePlain;
 	self.persistsContentOffset = YES;
+	self.persistsContentInset = YES;
 	
 	self.persistsStateWhenViewWillDisappear = YES;
 	self.restoresStateWhenViewDidAppear = YES;
@@ -168,12 +170,13 @@
 
 - (NSMutableDictionary *) persistenceRepresentation {
 
-	NSMutableDictionary *persistenceRep = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-
-		NSStringFromCGPoint(self.tableView.contentOffset), @"contentOffset",
-		NSStringFromUIEdgeInsets(self.tableView.contentInset), @"contentInset",
+	NSMutableDictionary *persistenceRep = [NSMutableDictionary dictionary];
 	
-	nil];
+	if (self.persistsContentOffset)
+		[persistenceRep setObject:NSStringFromCGPoint(self.tableView.contentOffset) forKey:@"contentOffset"];
+		
+	if (self.persistsContentInset)
+		[persistenceRep setObject:NSStringFromUIEdgeInsets(self.tableView.contentInset) forKey:@"contentInset"];
 	
 	return persistenceRep;
 
@@ -182,25 +185,18 @@
 - (void) restoreFromPersistenceRepresentation:(NSDictionary *)inPersistenceRepresentation {
 
 	NSString *persistedContentOffsetRep = [inPersistenceRepresentation objectForKey:@"contentOffset"];
+	CGPoint	persistedContentOffset = persistedContentOffsetRep ? CGPointFromString(persistedContentOffsetRep) : CGPointZero;
+	
 	NSString *persistedContentInsetRep = [inPersistenceRepresentation objectForKey:@"contentInset"];
-	
-	if (!persistedContentOffsetRep || !persistedContentInsetRep)
-		return;
-	
-	CGPoint	persistedContentOffset = CGPointFromString(persistedContentOffsetRep);
-	UIEdgeInsets persistedContentInset = UIEdgeInsetsFromString(persistedContentInsetRep);
-	CGFloat persistedTopOffsetSum = persistedContentOffset.y - persistedContentInset.top;
-	
-	CGPoint	currentContentOffset = self.tableView.contentOffset;
-	UIEdgeInsets currentContentInset = self.tableView.contentInset;
-	CGFloat currentTopOffsetSum = currentContentOffset.y - currentContentInset.top;
-	
-	CGPoint newContentOffset = currentContentOffset;
-	newContentOffset.y += (persistedTopOffsetSum - currentTopOffsetSum);
-	
-	newContentOffset.y = MIN(MAX(0, newContentOffset.y), MAX(self.tableView.contentSize.height, CGRectGetHeight(self.tableView.bounds)) - CGRectGetHeight(self.tableView.bounds));
-	
-	[self.tableView setContentOffset:newContentOffset animated:NO];
+	UIEdgeInsets persistedContentInset = persistedContentInsetRep ? UIEdgeInsetsFromString(persistedContentInsetRep) : UIEdgeInsetsZero;
+
+	if (self.persistsContentOffset) {
+		persistedContentOffset.y = MIN(MAX(-1 * persistedContentInset.top, persistedContentOffset.y), self.tableView.contentSize.height - CGRectGetHeight(self.tableView.bounds));
+		[self.tableView setContentOffset:persistedContentOffset animated:NO];
+	}
+
+	if (self.persistsContentInset)
+		[self.tableView setContentInset:persistedContentInset];
 
 }
 
