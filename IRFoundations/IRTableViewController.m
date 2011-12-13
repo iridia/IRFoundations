@@ -192,6 +192,8 @@
 	CGPoint newContentOffset = currentContentOffset;
 	newContentOffset.y += (persistedTopOffsetSum - currentTopOffsetSum);
 	
+	newContentOffset.y = MIN(MAX(0, newContentOffset.y), self.tableView.contentSize.height - CGRectGetHeight(self.tableView.bounds));
+	
 	[self.tableView setContentOffset:newContentOffset animated:NO];
 
 }
