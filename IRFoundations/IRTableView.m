@@ -348,8 +348,6 @@
 	[self refreshPullDownToRefreshEligibility];
 	
 	self.pullDownToRefreshState = IRTableViewPullDownRefreshStateInactive;
-	[self layoutSubviews];
-	[self setNeedsLayout];
 	
 	[self retain];
 	
