@@ -348,6 +348,8 @@
 	[self refreshPullDownToRefreshEligibility];
 	
 	self.pullDownToRefreshState = IRTableViewPullDownRefreshStateInactive;
+	[self layoutSubviews];
+	[self setNeedsLayout];
 	
 	[self retain];
 	
@@ -463,7 +465,7 @@
 	self.pullDownHeaderView.frame = CGRectMake(
 	
 		0,
-		-1 * (self.pullDownHeaderView.frame.size.height + self.originalEdgeInsets.top),
+		0 - self.pullDownHeaderView.frame.size.height,//-1 * (self.pullDownHeaderView.frame.size.height + self.originalEdgeInsets.top),
 		self.bounds.size.width,
 		self.pullDownHeaderView.frame.size.height
 	
