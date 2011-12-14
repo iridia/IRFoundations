@@ -191,7 +191,7 @@
 	UIEdgeInsets persistedContentInset = persistedContentInsetRep ? UIEdgeInsetsFromString(persistedContentInsetRep) : UIEdgeInsetsZero;
 
 	if (self.persistsContentOffset) {
-		persistedContentOffset.y = MIN(MAX(-1 * persistedContentInset.top, persistedContentOffset.y), self.tableView.contentSize.height - CGRectGetHeight(self.tableView.bounds));
+		persistedContentOffset.y = MAX(0, MIN(MAX(-1 * persistedContentInset.top, persistedContentOffset.y), self.tableView.contentSize.height - CGRectGetHeight(self.tableView.bounds)));
 		[self.tableView setContentOffset:persistedContentOffset animated:NO];
 	}
 
