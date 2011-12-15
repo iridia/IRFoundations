@@ -86,8 +86,11 @@ static void __attribute__((constructor)) initialize() {
 		colorSpace,
 		kCGImageAlphaNoneSkipFirst
 	);
-	
-	NSParameterAssert(context);
+		
+	if (!context)
+		return self;
+		
+	//	Image is bad if can’t decode
 	
 	CGContextDrawImage(context, CGRectMake(0, 0, width, height), cgImage);
 	CGContextRelease(context);
