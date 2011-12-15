@@ -22,6 +22,7 @@
 @implementation IRDataStore
 
 @synthesize managedObjectContext, managedObjectModel, persistentStoreCoordinator;
+@synthesize persistentStoreName;
 
 + (IRDataStore *) defaultStore {
 
@@ -55,7 +56,8 @@
 
 - (NSURL *) defaultPersistentStoreURL {
 
-	NSString *defaultFilename = [[[NSBundle mainBundle] bundleIdentifier] stringByAppendingPathExtension:@"sqlite"];
+	NSString *defaultFilename = [self.persistentStoreName stringByAppendingPathExtension:@"sqlite"];
+	NSParameterAssert(defaultFilename);
 	
 	#if TARGET_OS_MAC
 	
@@ -82,6 +84,8 @@
 		model = [self defaultManagedObjectModel];
         NSParameterAssert(model);
 	}
+	
+	self.persistentStoreName = [[NSBundle mainBundle] bundleIdentifier];
 	
 	self.managedObjectModel = model;
 	self.persistentStoreCoordinator = [[[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel] autorelease];
@@ -134,6 +138,18 @@
 
 }
 
+- (void) setPersistentStoreName:(NSString *)newPersistentStoreName {
+
+	if (persistentStoreName == newPersistentStoreName)
+		return;
+	
+	[persistentStoreName release];
+	persistentStoreName = [newPersistentStoreName retain];
+
+	self.persistentStoreCoordinator = nil;
+	
+}
+
 - (NSManagedObjectContext *) defaultAutoUpdatedMOC {
 
 	static NSString * const kDefaultAutoUpdatedMOC = @"DefaultAutoUpdatedMOC";
@@ -166,6 +182,8 @@
 }
 
 - (void) dealloc {
+
+	[persistentStoreName release];
 
 	[managedObjectModel release];
 	[managedObjectContext release];
