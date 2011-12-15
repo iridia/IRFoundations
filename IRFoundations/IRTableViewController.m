@@ -164,7 +164,7 @@
 
 - (NSString *) persistenceIdentifier {
 
-	return NSStringFromClass([self class]);
+	return nil;
 
 }
 
@@ -191,8 +191,19 @@
 	UIEdgeInsets persistedContentInset = persistedContentInsetRep ? UIEdgeInsetsFromString(persistedContentInsetRep) : UIEdgeInsetsZero;
 
 	if (self.persistsContentOffset) {
-		persistedContentOffset.y = MAX(0, MIN(MAX(-1 * persistedContentInset.top, persistedContentOffset.y), self.tableView.contentSize.height - CGRectGetHeight(self.tableView.bounds)));
+	
+		CGFloat usedY = persistedContentOffset.y;
+		
+		if (self.persistsContentInset)
+			usedY = MAX(-1 * persistedContentInset.top, usedY);
+	
+		persistedContentOffset.y = MIN(usedY, self.tableView.contentSize.height - CGRectGetHeight(self.tableView.bounds));
+		
+		if (self.persistsContentInset)
+			persistedContentOffset.y = MAX(0, persistedContentOffset.y);
+		
 		[self.tableView setContentOffset:persistedContentOffset animated:NO];
+		
 	}
 
 	if (self.persistsContentInset)
