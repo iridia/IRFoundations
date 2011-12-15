@@ -359,6 +359,7 @@
 		
 			self.pullDownToRefreshState = IRTableViewPullDownRefreshStateInactive;
 			[self setContentInset:self.originalEdgeInsets];
+			[self layoutSubviews];
 
 		} completion: ^ (BOOL finished) {
 					
@@ -462,7 +463,7 @@
 	self.pullDownHeaderView.frame = CGRectMake(
 	
 		0,
-		-1 * (self.pullDownHeaderView.frame.size.height + self.originalEdgeInsets.top),
+		0 - self.pullDownHeaderView.frame.size.height,//-1 * (self.pullDownHeaderView.frame.size.height + self.originalEdgeInsets.top),
 		self.bounds.size.width,
 		self.pullDownHeaderView.frame.size.height
 	
@@ -505,6 +506,9 @@
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView {
 
+	if (self.onScroll)
+		self.onScroll();
+
 	if (self.pullDownToRefreshState == IRTableViewPullDownRefreshStateBegan)
 	if ([self contentOffsetAllowsVisiblePullToRefreshHeader])
 	dispatch_async(dispatch_get_main_queue(), ^ {
@@ -545,7 +549,8 @@
 		
 		[UIView animateWithDuration:0.25 animations: ^ {
 		
-			[self setContentInset:self.originalEdgeInsets];				
+			[self setContentInset:self.originalEdgeInsets];
+			[self layoutSubviews];			
 		
 		}];
 
@@ -740,6 +745,16 @@ NSString * const IRTableViewWillResumePerformingBlocksNotification = @"IRTableVi
 	return CGRectNull;
 	
 	return [super rectForRowAtIndexPath:anIndexPath];
+
+}
+
+
+
+
+
+- (UIEdgeInsets) actualContentInset {
+
+	return [super contentInset];
 
 }
 

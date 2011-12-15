@@ -44,6 +44,9 @@
 - (NSURL *) persistentFileURLForFileAtURL:(NSURL *)aURL;
 - (NSURL *) persistentFileURLForFileAtPath:(NSString *)aPath;
 
+
+@property (nonatomic, readwrite, retain) NSString *persistentStoreName; //	Defaults to the name of the application if nil
+
 @end
 
 

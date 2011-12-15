@@ -119,6 +119,8 @@
 		FF789D301442FDE00080F210 /* IRAsyncOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */; };
 		FF789D311442FDE00080F210 /* IRAsyncOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */; };
 		FF789D321442FDE00080F210 /* IRAsyncOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */; };
+		FF7997A414909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */ = {isa = PBXBuildFile; fileRef = FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */; };
+		FF7997A514909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */; };
 		FF890D1D14163AC700CD7D1F /* CALayer+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */; };
 		FF890D1E14163AC700CD7D1F /* CALayer+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */; };
 		FF915A2614540703005F63FC /* AssetsLibrary+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF915A2414540703005F63FC /* AssetsLibrary+IRAdditions.h */; };
@@ -283,6 +285,8 @@
 		FF72C1FB14278ABF00B5D838 /* IRFoundationsX.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRFoundationsX.m; sourceTree = "<group>"; };
 		FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAsyncOperation.h; sourceTree = "<group>"; };
 		FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAsyncOperation.m; sourceTree = "<group>"; };
+		FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRManagedObject+SimulatedOrderedRelationship.h"; sourceTree = "<group>"; };
+		FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IRManagedObject+SimulatedOrderedRelationship.m"; sourceTree = "<group>"; };
 		FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+IRAdditions.h"; sourceTree = "<group>"; };
 		FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+IRAdditions.m"; sourceTree = "<group>"; };
 		FF915A2414540703005F63FC /* AssetsLibrary+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AssetsLibrary+IRAdditions.h"; sourceTree = "<group>"; };
@@ -524,6 +528,8 @@
 				FF97382713D82496003D1722 /* IRDataStore.m */,
 				FF0A8D241337B36A00DDA47C /* IRManagedObject.h */,
 				FF0A8D251337B36A00DDA47C /* IRManagedObject.m */,
+				FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */,
+				FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */,
 				FF0A8D261337B36A00DDA47C /* IRFetchedResultsController.h */,
 				FF0A8D271337B36A00DDA47C /* IRFetchedResultsController.m */,
 				FF0A8D281337B36A00DDA47C /* IRManagedObjectContext.h */,
@@ -659,6 +665,7 @@
 				FF915A2A1454080E005F63FC /* ALAssetRepresentation+IRAdditions.h in Headers */,
 				FF0D46BB1475885900340287 /* UIViewController+IRAdditions.h in Headers */,
 				FF0D46C014759E4A00340287 /* UIApplication+IRAdditions.h in Headers */,
+				FF7997A414909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -813,6 +820,7 @@
 				FF915A2B1454080E005F63FC /* ALAssetRepresentation+IRAdditions.m in Sources */,
 				FF0D46BC1475885900340287 /* UIViewController+IRAdditions.m in Sources */,
 				FF0D46C114759E4A00340287 /* UIApplication+IRAdditions.m in Sources */,
+				FF7997A514909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
