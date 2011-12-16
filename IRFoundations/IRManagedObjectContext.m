@@ -120,7 +120,7 @@ static NSString * const kIRManagedObjectContextDidSaveNotificationListener = @"I
 	self.irMOCSaveAutomergeCount = self.irMOCSaveAutomergeCount - 1;
 	
 	if (!self.irMOCSaveAutomergeCount) {
-
+		[[NSNotificationCenter defaultCenter] removeObserver:objc_getAssociatedObject(self, &kIRManagedObjectContextDidSaveNotificationListener)];
 		objc_setAssociatedObject(self, &kIRManagedObjectContextDidSaveNotificationListener, nil, OBJC_ASSOCIATION_ASSIGN);
 	
 		NSLog(@"%@ should stop observing and merging", self);
