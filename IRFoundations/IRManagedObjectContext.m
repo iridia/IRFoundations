@@ -94,7 +94,11 @@ static NSString * const kIRManagedObjectContextDidSaveNotificationListener = @"I
 
 			dispatch_async(ownQueue, ^ {
 			
-				[nrSelf mergeChangesFromContextDidSaveNotification:note];
+				@try {
+					[nrSelf mergeChangesFromContextDidSaveNotification:note];
+				} @catch (NSException *e) {
+					NSLog(@"%@", e);
+				}
 			
 			});
 			
