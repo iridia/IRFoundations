@@ -197,7 +197,7 @@
 		if (self.persistsContentInset)
 			usedY = MAX(-1 * persistedContentInset.top, usedY);
 	
-		persistedContentOffset.y = MIN(usedY, self.tableView.contentSize.height - CGRectGetHeight(self.tableView.bounds));
+		persistedContentOffset.y = MIN(usedY, MAX(0, self.tableView.contentSize.height - CGRectGetHeight(self.tableView.bounds)));
 		
 		if (self.persistsContentInset)
 			persistedContentOffset.y = MAX(0, persistedContentOffset.y);
