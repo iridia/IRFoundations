@@ -12,7 +12,8 @@
 #import "UIImage+IRAdditions.h"
 #import "IRShadow.h"
 
-static NSString * const kUIImageIRAdditionsRepresentedObject = @"kUIImageIRAdditionsRepresentedObject";
+static NSString * const kUIImage_IRAdditions_representedObject = @"kUIImageIRAdditionsRepresentedObject";
+static NSString * const kUIImage_IRAdditions_didWriteToSavedPhotosCallback = @"UIImage_IRAdditions_didWriteToSavedPhotosCallback";
 
 static void __attribute__((constructor)) initialize() {
 
@@ -182,7 +183,7 @@ static void __attribute__((constructor)) initialize() {
 
 - (id) irRepresentedObject {
 
-	return objc_getAssociatedObject(self, &kUIImageIRAdditionsRepresentedObject);
+	return objc_getAssociatedObject(self, &kUIImage_IRAdditions_representedObject);
 
 }
 
@@ -193,9 +194,42 @@ static void __attribute__((constructor)) initialize() {
 	
 	[self willChangeValueForKey:@"irRepresentedObject"];
 
-	objc_setAssociatedObject(self, &kUIImageIRAdditionsRepresentedObject, newObject, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+	objc_setAssociatedObject(self, &kUIImage_IRAdditions_representedObject, newObject, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
 	[self didChangeValueForKey:@"irRepresentedObject"];
+
+}
+
+- (void) irWriteToSavedPhotosAlbumWithCompletion:(void(^)(BOOL didWrite, NSError *error))aBlock {
+
+	__block NSDictionary *contextInfo = nil;
+	
+	contextInfo = [[NSDictionary dictionaryWithObjectsAndKeys:
+	
+		[[ ^ (NSError *error) {
+		
+			if (aBlock)
+				aBlock((BOOL)!error, error);
+			
+			[contextInfo autorelease];
+		
+		} copy] autorelease], kUIImage_IRAdditions_didWriteToSavedPhotosCallback,
+	
+	nil] retain];
+
+	UIImageWriteToSavedPhotosAlbum(self, self, @selector(handleDidWriteImageToSavedPhotosAlbum:withError:contextInfo:), contextInfo);
+
+}
+
+- (void) handleDidWriteImageToSavedPhotosAlbum:(UIImage *)image withError:(NSError *)error contextInfo:(NSDictionary *)contextInfo {
+
+	if (image != self)
+		return;
+	
+	void (^callback)(NSError *) = [contextInfo objectForKey:kUIImage_IRAdditions_didWriteToSavedPhotosCallback];
+	
+	if (callback)
+		callback(error);
 
 }
 

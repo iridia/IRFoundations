@@ -32,7 +32,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 
 @implementation IRImagePickerController
 
-@synthesize callbackBlock, takesPictureOnVolumeUpKeypress;
+@synthesize callbackBlock, takesPictureOnVolumeUpKeypress, usesAssetsLibrary, savesCameraImageCapturesToSavedPhotos;
 
 + (IRImagePickerController *) savedImagePickerWithCompletionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
     
@@ -81,6 +81,8 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 	returned.mediaTypes = inMediaTypes;
 	returned.callbackBlock = aCallbackBlockOrNil;
 	returned.delegate = returned;
+	returned.usesAssetsLibrary = YES;
+	returned.savesCameraImageCapturesToSavedPhotos = NO;
 	
 	return returned;
     
@@ -111,6 +113,13 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 	
 	if (editedImage)
 		assetImage = editedImage;
+	
+	if (self.sourceType == UIImagePickerControllerSourceTypeCamera)
+	if (self.savesCameraImageCapturesToSavedPhotos) {
+		[assetImage irWriteToSavedPhotosAlbumWithCompletion:^(BOOL didWrite, NSError *error) {
+			//	NSLog(@"Written.");
+		}];
+	}
 	
 	NSURL *tempMediaURL = [info valueForKey:UIImagePickerControllerMediaURL];
 	//	NSDictionary *tempMediaMetadata = [info valueForKey:UIImagePickerControllerMediaMetadata];
@@ -170,7 +179,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 	        
 	} else {
         
-		if (YES /* uses ALAssetsLibrary */) {
+		if (self.usesAssetsLibrary) {
        
 			ALAssetsLibrary *library = [[[ALAssetsLibrary alloc] init] autorelease];
 			[library assetForURL:assetURL resultBlock: ^ (ALAsset *asset) {
