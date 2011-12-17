@@ -106,7 +106,6 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 
 	persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
 	NSURL *storeURL = [self defaultPersistentStoreURL];
-	NSLog(@"making persistentStoreCoordinator using name %@", storeURL);
 	
 	BOOL continuesTrying = YES;
 	
@@ -155,8 +154,6 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 	if (persistentStoreName == newPersistentStoreName)
 		return;
 	
-	NSLog(@"%s: %@ -> %@", __PRETTY_FUNCTION__, persistentStoreName, newPersistentStoreName);
-	
 	[persistentStoreName release];
 	persistentStoreName = [newPersistentStoreName retain];
 
@@ -186,8 +183,6 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 }
 
 - (NSManagedObjectContext *) disposableMOC {
-
-	NSLog(@"%s: Using %@", __PRETTY_FUNCTION__, self.persistentStoreCoordinator);
 
 	NSManagedObjectContext *returnedContext = [[[NSManagedObjectContext alloc] init] autorelease];
 	[returnedContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
