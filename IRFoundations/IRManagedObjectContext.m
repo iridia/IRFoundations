@@ -91,6 +91,13 @@ static NSString * const kIRManagedObjectContextDidSaveNotificationListener = @"I
 
 			if (note.object == nrSelf)
 				return;
+			
+			NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
+			
+			if (savedContext.persistentStoreCoordinator != self.persistentStoreCoordinator) {
+				NSLog(@"Different PSC — Skip merging");
+				return;
+			}
 
 			dispatch_async(ownQueue, ^ {
 			
