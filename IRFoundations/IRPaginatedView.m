@@ -195,7 +195,7 @@
 	[viewController viewWillDisappear:NO];
 	[aView removeFromSuperview];
 	[self.scrollView setNeedsLayout];
-	[viewController viewWillDisappear:NO];
+	[viewController viewDidDisappear:NO];
 
 }
 
@@ -304,17 +304,9 @@
 			continue;
 		
 		CGRect pageRect = [self pageRectForIndex:index];
+				 
+		existingView.frame = pageRect;
 		
-		existingView.bounds = (CGRect){
-			CGPointZero,
-			pageRect.size
-		};
-		
-		existingView.center = (CGPoint){
-			CGRectGetMidX(pageRect),
-			CGRectGetMidY(pageRect)
-		};
-
 	}
 	
 	[self removeOffscreenViews];
