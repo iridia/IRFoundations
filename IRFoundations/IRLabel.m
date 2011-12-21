@@ -385,7 +385,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	CFRetain(currentFramesetter);
 	
 	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(currentFramesetter, (CFRange){ 0, 0 }, nil, (CGSize){
-		CGRectGetWidth(self.bounds),
+		size.width, //CGRectGetWidth(self.bounds),
 		MAXFLOAT
 	}, NULL);
 	
