@@ -13,14 +13,18 @@
 NSString * const kIRTextLinkAttribute = @"kIRTextLinkAttribute";
 NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgroundColorAttribute";
 
+
 @interface IRLabel () <UIGestureRecognizerDelegate>
+
 - (void) irCommonInit;
+
 @property (nonatomic, readwrite, assign) CTFramesetterRef ctFramesetter;
 @property (nonatomic, readwrite, assign) CTFrameRef ctFrame;
 @property (nonatomic, readwrite, retain) UIBezierPath *lastHighlightedRunOutline;
 - (CTRunRef) linkRunAtPoint:(CGPoint)touchPoint;
 
 @end
+
 
 @implementation IRLabel
 
@@ -171,15 +175,34 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 	if (!aString)
 		return nil;
-
-	CTFontRef font = CTFontCreateWithName((CFStringRef)aFont.fontName, aFont.pointSize, NULL);
+	
+	float_t lineHeight = aFont.pointSize;
+	
+	id fontAttr = [NSMakeCollectable(CTFontCreateWithName((CFStringRef)aFont.fontName, aFont.pointSize, NULL)) autorelease];
+	id foregroundColorAttr = (id)(aColor ? aColor.CGColor : [UIColor blackColor].CGColor);
+	id paragraphStyleAttr = ((^ {
+		
+		CTParagraphStyleSetting paragraphStyles[] = (CTParagraphStyleSetting[]){
+			(CTParagraphStyleSetting){ kCTParagraphStyleSpecifierLineHeightMultiple, sizeof(float_t), (float_t[]){ 0.01f } },
+			(CTParagraphStyleSetting){ kCTParagraphStyleSpecifierMinimumLineHeight, sizeof(float_t), (float_t[]){ lineHeight } },
+			(CTParagraphStyleSetting){ kCTParagraphStyleSpecifierMaximumLineHeight, sizeof(float_t), (float_t[]){ lineHeight } },
+			(CTParagraphStyleSetting){ kCTParagraphStyleSpecifierLineSpacing, sizeof(float_t), (float_t[]){ 0.0f } },
+			(CTParagraphStyleSetting){ kCTParagraphStyleSpecifierMinimumLineSpacing, sizeof(float_t), (float_t[]){ 0.0f } },
+			(CTParagraphStyleSetting){ kCTParagraphStyleSpecifierMaximumLineSpacing, sizeof(float_t), (float_t[]){ 0.0f } }
+			
+		};
+	
+		CTParagraphStyleRef paragraphStyleRef = CTParagraphStyleCreate(paragraphStyles, sizeof(paragraphStyles) / sizeof(CTParagraphStyleSetting));
+		return [NSMakeCollectable(paragraphStyleRef) autorelease];
+		
+	})());
 	
 	NSAttributedString *returnedString = [[[NSAttributedString alloc] initWithString:aString attributes:[NSDictionary dictionaryWithObjectsAndKeys:
-		(id)font, kCTFontAttributeName,
-		(id)(aColor ? aColor.CGColor : [UIColor blackColor].CGColor), kCTForegroundColorAttributeName,
+		fontAttr, kCTFontAttributeName,
+		foregroundColorAttr, kCTForegroundColorAttributeName,
+		paragraphStyleAttr, kCTParagraphStyleAttributeName,
+		[NSNumber numberWithInt:kCTUnderlineStyleSingle], kCTUnderlineStyleAttributeName,
 	nil]] autorelease];
-	
-	CFRelease(font);
 	
 	return returnedString;
 
@@ -203,42 +226,26 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (CTFrameRef) ctFrame {
 
-	//	Note: we might have label bounds that are shorter than even one line of text, so in that case constrain the size to at least the height of the first row to avoid bugs where the label will show nothing
+	NSParameterAssert([NSThread isMainThread]);
 
 	if (ctFrame)
 		return ctFrame;
 	
 	CGRect frameRect = (CGRect){
-		0,
-		-4,
-		self.bounds.size.width,
-		self.bounds.size.height + 4
+		CGPointZero,
+		self.bounds.size
+		//	(CGSize){
+		//		self.bounds.size.width,
+		//		MAXFLOAT
+		//	}
 	};
 	
-	CFAttributedStringRef currentAttributedString = (CFAttributedStringRef)self.attributedText;
-	if (!currentAttributedString)
-		return;
-	
-	CFRetain(currentAttributedString);
-	
 	CTFramesetterRef currentFramesetter = self.ctFramesetter;
-	CFRetain(currentFramesetter);
 	
 	CFRange actualRange = (CFRange){ 0, 0 };
-	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(currentFramesetter, (CFRange){ 0, 0 }, nil, (CGSize){
-		frameRect.size.width,
-		frameRect.size.height
-	}, &actualRange);
-	
-	@synchronized (self) {
-	
-		ctFrame = CTFramesetterCreateFrame(currentFramesetter, actualRange, [UIBezierPath bezierPathWithRect:frameRect].CGPath, nil);
-	
-	}
+	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(currentFramesetter, (CFRange){ 0, 0 }, nil, frameRect.size, &actualRange);
 
-	CFRelease(currentAttributedString);
-	CFRelease(currentFramesetter);
-	
+	ctFrame = CTFramesetterCreateFrame(currentFramesetter, actualRange, [UIBezierPath bezierPathWithRect:frameRect].CGPath, nil);
 	return ctFrame;
 
 }
@@ -256,12 +263,30 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	
 	CFRetain(usedFrame);
 	CGContextRef context = UIGraphicsGetCurrentContext();	
-	CGContextSaveGState(context);
 	CGContextConcatCTM(context, CGAffineTransformMake(
 		1, 0, 0, -1, 0, CGRectGetHeight(self.bounds)
 	));
+	
+#if 1
+	
+	__block CGFloat usableHeight = CGRectGetHeight(self.bounds);
+	usableHeight -= self.font.descender;
+	CGContextSetTextMatrix(context, CGAffineTransformIdentity);	
+	irCTFrameEnumerateLines(usedFrame, ^(CTLineRef aLine, CGPoint lineOrigin, BOOL *stop) {
+		
+		usableHeight -= self.font.pointSize;
+		
+		CGContextSetTextPosition(context, lineOrigin.x, usableHeight );
+		CTLineDraw(aLine, context);
+		
+	});
+
+#else
+	
 	CTFrameDraw(usedFrame, context);
-	CGContextRestoreGState(context);
+
+#endif
+	
 	CFRelease(usedFrame);
 
 }
