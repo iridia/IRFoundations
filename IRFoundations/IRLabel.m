@@ -255,12 +255,14 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 		[super drawTextInRect:rect];
 		return;
 	}
-	
+
+	CTFramesetterRef usedFramesetter = self.ctFramesetter;	
 	CTFrameRef usedFrame = self.ctFrame;
-	if (!usedFrame)
+	if (!usedFrame || !usedFramesetter)
 		return;
 	
 	CFRetain(usedFrame);
+	CFRetain(usedFramesetter);
 	CGContextRef context = UIGraphicsGetCurrentContext();	
 	CGContextConcatCTM(context, CGAffineTransformMake(
 		1, 0, 0, -1, 0, CGRectGetHeight(self.bounds)
@@ -269,14 +271,42 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 #if 1
 	
 	__block CGFloat usableHeight = CGRectGetHeight(self.bounds);
-//	usableHeight -= self.font.descender;
-	CGContextSetTextMatrix(context, CGAffineTransformIdentity);	
+	__block CFArrayRef usedLines = CTFrameGetLines(usedFrame);
+	NSUInteger stringLength = [attributedText length];
+	BOOL needsTailTruncation = NO;
+	
+	CFRange drawnRange = CTFrameGetStringRange(usedFrame);
+	NSUInteger drawnLength = drawnRange.location + drawnRange.length;
+	if (drawnLength < stringLength)
+		needsTailTruncation = YES;
+	
+	CGContextSetTextMatrix(context, CGAffineTransformIdentity);
 	irCTFrameEnumerateLines(usedFrame, ^(CTLineRef aLine, CGPoint lineOrigin, BOOL *stop) {
 		
 		usableHeight -= self.font.leading;
 		
-		CGContextSetTextPosition(context, lineOrigin.x, usableHeight - self.font.descender );
-		CTLineDraw(aLine, context);
+		CGContextSetTextPosition(context, lineOrigin.x, usableHeight - self.font.descender);
+		
+		CFRange lineRange = CTLineGetStringRange(aLine);
+		if (needsTailTruncation && (drawnLength == (lineRange.location + lineRange.length))) {
+		
+			CGFloat ownWidth = CGRectGetWidth(self.bounds);
+			CTLineRef realLastLine, truncationToken, truncatedLine;
+			realLastLine = CTTypesetterCreateLine(CTFramesetterGetTypesetter(usedFramesetter), (CFRange){ lineRange.location, 0 });
+			truncationToken = CTLineCreateWithAttributedString((CFAttributedStringRef)[[NSAttributedString alloc] initWithString:[NSString stringWithCharacters:(UniChar[]){ 0x2026 } length:1] attributes:(NSDictionary *)CTRunGetAttributes((CTRunRef)[(NSArray *)CTLineGetGlyphRuns(aLine) lastObject])]);
+			truncatedLine = CTLineCreateTruncatedLine(realLastLine, ownWidth, kCTLineTruncationEnd, truncationToken);
+			
+			CTLineDraw(truncatedLine, context);
+			
+			CFRelease(truncatedLine);
+			CFRelease(realLastLine);
+			CFRelease(truncationToken);
+				
+		} else {
+		
+			CTLineDraw(aLine, context);
+		
+		}
 		
 	});
 
