@@ -201,7 +201,6 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 		fontAttr, kCTFontAttributeName,
 		foregroundColorAttr, kCTForegroundColorAttributeName,
 		paragraphStyleAttr, kCTParagraphStyleAttributeName,
-		[NSNumber numberWithInt:kCTUnderlineStyleSingle], kCTUnderlineStyleAttributeName,
 	nil]] autorelease];
 	
 	return returnedString;
