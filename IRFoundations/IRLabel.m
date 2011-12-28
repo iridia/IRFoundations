@@ -176,7 +176,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	if (!aString)
 		return nil;
 	
-	float_t lineHeight = aFont.pointSize;
+	float_t lineHeight = aFont.leading;
 	
 	id fontAttr = [NSMakeCollectable(CTFontCreateWithName((CFStringRef)aFont.fontName, aFont.pointSize, NULL)) autorelease];
 	id foregroundColorAttr = (id)(aColor ? aColor.CGColor : [UIColor blackColor].CGColor);
@@ -269,13 +269,13 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 #if 1
 	
 	__block CGFloat usableHeight = CGRectGetHeight(self.bounds);
-	usableHeight -= self.font.descender;
+//	usableHeight -= self.font.descender;
 	CGContextSetTextMatrix(context, CGAffineTransformIdentity);	
 	irCTFrameEnumerateLines(usedFrame, ^(CTLineRef aLine, CGPoint lineOrigin, BOOL *stop) {
 		
-		usableHeight -= self.font.pointSize;
+		usableHeight -= self.font.leading;
 		
-		CGContextSetTextPosition(context, lineOrigin.x, usableHeight );
+		CGContextSetTextPosition(context, lineOrigin.x, usableHeight - self.font.descender );
 		CTLineDraw(aLine, context);
 		
 	});
