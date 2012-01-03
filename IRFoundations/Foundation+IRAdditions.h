@@ -47,6 +47,13 @@ typedef BOOL (^IRDictionaryPairTest) (id key, id value);
 @end
 
 
+@interface NSString (IRAdditions)
+
+- (NSString *) irTailTruncatedStringWithMaxLength:(NSUInteger)maxCharacters;
+
+@end
+
+
 @interface NSArray (IRAdditions)
 
 - (NSArray *) irMap:(id(^)(id inObject, NSUInteger index, BOOL *stop))block;

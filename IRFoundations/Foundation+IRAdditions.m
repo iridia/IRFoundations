@@ -199,6 +199,20 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 
 
 
+@implementation NSString (IRAdditions)
+
+- (NSString *) irTailTruncatedStringWithMaxLength:(NSUInteger)maxCharacters {
+
+	return [[self substringToIndex:MIN([self length], maxCharacters)] stringByAppendingString:([self length] > maxCharacters) ? @"…" : @""];
+
+}
+
+@end
+
+
+
+
+
 @implementation NSArray (IRAdditions)
 
 - (NSArray *) irMap:(id(^)(id inObject, NSUInteger index, BOOL *stop))mapBlock {
