@@ -91,10 +91,21 @@ static NSString * const kIRManagedObjectContextDidSaveNotificationListener = @"I
 
 			if (note.object == nrSelf)
 				return;
+			
+			NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
+			
+			if (savedContext.persistentStoreCoordinator != self.persistentStoreCoordinator) {
+				NSLog(@"Different PSC — Skip merging");
+				return;
+			}
 
 			dispatch_async(ownQueue, ^ {
 			
-				[nrSelf mergeChangesFromContextDidSaveNotification:note];
+				@try {
+					[nrSelf mergeChangesFromContextDidSaveNotification:note];
+				} @catch (NSException *e) {
+					NSLog(@"%@", e);
+				}
 			
 			});
 			
@@ -120,7 +131,7 @@ static NSString * const kIRManagedObjectContextDidSaveNotificationListener = @"I
 	self.irMOCSaveAutomergeCount = self.irMOCSaveAutomergeCount - 1;
 	
 	if (!self.irMOCSaveAutomergeCount) {
-
+		[[NSNotificationCenter defaultCenter] removeObserver:objc_getAssociatedObject(self, &kIRManagedObjectContextDidSaveNotificationListener)];
 		objc_setAssociatedObject(self, &kIRManagedObjectContextDidSaveNotificationListener, nil, OBJC_ASSOCIATION_ASSIGN);
 	
 		NSLog(@"%@ should stop observing and merging", self);

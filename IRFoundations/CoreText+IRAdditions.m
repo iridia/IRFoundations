@@ -21,7 +21,7 @@ void irCTFrameEnumerateLines(CTFrameRef aFrame, void (^aBlock)(CTLineRef aLine, 
 	if (!lineCount)
 		return;
 	
-	CGPoint *lineOrigins = malloc(sizeof(*lineOrigins) * lineCount);
+	CGPoint *lineOrigins = malloc(sizeof(CGPoint) * lineCount);
 	CTFrameGetLineOrigins(aFrame, (CFRange) { 0, lineCount }, lineOrigins);
 	
 	[((NSArray *)lines) enumerateObjectsUsingBlock: ^ (id aLine, NSUInteger idx, BOOL *stop) {

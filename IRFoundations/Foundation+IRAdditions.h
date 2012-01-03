@@ -44,6 +44,16 @@ typedef BOOL (^IRDictionaryPairTest) (id key, id value);
 - (void) irExecute; // typecasts object to (void)(^)(void)
 - (BOOL) irIsBlock;
 
+- (BOOL) irHasDifferentSuperClassMethodForSelector:(SEL)aSelector;
+- (BOOL) irHasDifferentSuperInstanceMethodForSelector:(SEL)aSelector;
+
+@end
+
+
+@interface NSString (IRAdditions)
+
+- (NSString *) irTailTruncatedStringWithMaxLength:(NSUInteger)maxCharacters;
+
 @end
 
 

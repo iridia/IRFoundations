@@ -73,6 +73,7 @@
 	
 		NSLog(@"%s: %@", __PRETTY_FUNCTION__, exception);
 		returnedOrder = [NSArray array];
+		[self setPrimitiveValue:returnedOrder forKey:aKey];
 	
 	}
 		

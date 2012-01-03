@@ -11,17 +11,19 @@
 #import "IRManagedObjectContext.h"
 #import "IRLifetimeHelper.h"
 
+
+NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoUpdatedMOC";
+
 @interface IRDataStore ()
 
 @property (nonatomic, readwrite, retain) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, readwrite, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (nonatomic, readwrite, retain) NSManagedObjectContext *managedObjectContext;
 
 @end
 
 @implementation IRDataStore
 
-@synthesize managedObjectContext, managedObjectModel, persistentStoreCoordinator;
+@synthesize managedObjectModel, persistentStoreCoordinator;
 @synthesize persistentStoreName;
 
 + (IRDataStore *) defaultStore {
@@ -78,30 +80,40 @@
 - (IRDataStore *) initWithManagedObjectModel:(NSManagedObjectModel *)model {
 
 	self = [super init];
-	if (!self) return nil;
+	if (!self)
+		return nil;
 	
-	if (!model) {
-		model = [self defaultManagedObjectModel];
-        NSParameterAssert(model);
-	}
-	
-	self.persistentStoreName = [[NSBundle mainBundle] bundleIdentifier];
-	
-	self.managedObjectModel = model;
-	self.persistentStoreCoordinator = [[[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel] autorelease];
-	self.managedObjectContext = [[[NSManagedObjectContext alloc] init] autorelease];
-	[self.managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];	
-	
+	persistentStoreName = [[[NSBundle mainBundle] bundleIdentifier] copy];
+
+	return self;
+
+}
+
+- (NSManagedObjectModel *) managedObjectModel {
+
+	if (managedObjectModel)
+		return managedObjectModel;
+
+	managedObjectModel = [[self defaultManagedObjectModel] retain];
+	return managedObjectModel;
+
+}
+
+- (NSPersistentStoreCoordinator *) persistentStoreCoordinator {
+
+	if (persistentStoreCoordinator)
+		return persistentStoreCoordinator;
+
+	persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
 	NSURL *storeURL = [self defaultPersistentStoreURL];
 	
 	BOOL continuesTrying = YES;
 	
 	while (continuesTrying) {
 	
-		NSError *persistentStoreAddingError = nil;
-		
 		[[NSFileManager defaultManager] createDirectoryAtPath:[[storeURL path] stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:nil];
 				
+		NSError *persistentStoreAddingError = nil;
 		NSPersistentStore *addedStore = [self.persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:[NSDictionary dictionaryWithObjectsAndKeys:
 		
 			(id)kCFBooleanTrue, NSMigratePersistentStoresAutomaticallyOption,
@@ -132,9 +144,8 @@
 	
 	}
 	
-	NSParameterAssert([self.persistentStoreCoordinator.persistentStores count]);
-
-	return self;
+	NSParameterAssert([persistentStoreCoordinator.persistentStores count]);
+	return persistentStoreCoordinator;
 
 }
 
@@ -147,13 +158,13 @@
 	persistentStoreName = [newPersistentStoreName retain];
 
 	self.persistentStoreCoordinator = nil;
-	
+	objc_setAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC, nil, OBJC_ASSOCIATION_ASSIGN);
+		
 }
 
 - (NSManagedObjectContext *) defaultAutoUpdatedMOC {
 
-	static NSString * const kDefaultAutoUpdatedMOC = @"DefaultAutoUpdatedMOC";
-	__block NSManagedObjectContext *returnedContext = objc_getAssociatedObject(self, &kDefaultAutoUpdatedMOC);
+	__block NSManagedObjectContext *returnedContext = objc_getAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC);
 	
 	if (!returnedContext) {
 	
@@ -163,7 +174,7 @@
 			[returnedContext irStopMergingFromSavesAutomatically];
 		}];
 		
-		objc_setAssociatedObject(self, &kDefaultAutoUpdatedMOC, returnedContext, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+		objc_setAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC, returnedContext, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 	
 	}
 	
@@ -184,9 +195,7 @@
 - (void) dealloc {
 
 	[persistentStoreName release];
-
 	[managedObjectModel release];
-	[managedObjectContext release];
 	[persistentStoreCoordinator release];
 
 	[super dealloc];
