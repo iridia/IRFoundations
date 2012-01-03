@@ -193,6 +193,24 @@ void IRLogExceptionAndContinue (void(^operation)(void)) {
 
 }
 
+- (BOOL) irHasDifferentSuperClassMethodForSelector:(SEL)aSelector {
+
+	Method ownMethod = class_getClassMethod([self class], aSelector);
+	Method superMethod = class_getClassMethod([self superclass], aSelector);
+	
+	return (superMethod && (superMethod != ownMethod));
+
+}
+
+- (BOOL) irHasDifferentSuperInstanceMethodForSelector:(SEL)aSelector {
+
+	Method ownMethod = class_getInstanceMethod([self class], aSelector);
+	Method superMethod = class_getInstanceMethod([self superclass], aSelector);
+	
+	return (superMethod && (superMethod != ownMethod));
+
+}
+
 @end
 
 
