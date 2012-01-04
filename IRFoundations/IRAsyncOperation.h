@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IRAsyncOperation : NSOperation
+@interface IRAsyncOperation : NSOperation <NSCopying>
 
 @property (nonatomic, readonly, assign, getter=isExecuting) BOOL executing;
 @property (nonatomic, readonly, assign, getter=isFinished) BOOL finished;

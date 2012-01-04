@@ -34,6 +34,17 @@
 
 }
 
+- (id) copyWithZone:(NSZone *)zone {
+
+	IRAsyncOperation *returnedOperation = [[[self class] alloc] init];
+	returnedOperation.workerBlock = [[workerBlock copy] autorelease];
+	returnedOperation.workCompletionBlock = [[workCompletionBlock copy] autorelease];
+	returnedOperation.results = [[results copy] autorelease];
+	
+	return returnedOperation;
+
+}
+
 - (void) dealloc {
 
 	[workerBlock release];
