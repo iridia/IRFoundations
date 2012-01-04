@@ -249,20 +249,18 @@
 	NSUInteger oldCurrentPage = currentPage;
 	self.currentPage = MAX(0, MIN(self.numberOfPages - 1, [self indexOfPageAtCurrentContentOffset]));
 	
-	if (oldCurrentPage != currentPage) {
+	if (![self.scrollView isTracking] && ![self.scrollView isZooming])
+	if (oldCurrentPage != currentPage)
 		[self setNeedsLayout];
-	}
 	
 }
 
-- (void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+- (void) scrollViewDidEndDragging:(UIScrollView *)aSV willDecelerate:(BOOL)decelerate {
 
 	if (decelerate)
 		return;
 	
-	if (self.numberOfPages)
-	if ([self.delegate respondsToSelector:@selector(paginatedView:didShowView:atIndex:)])
-		[self.delegate paginatedView:self didShowView:[self existingPageAtIndex:self.currentPage] atIndex:self.currentPage];
+	[self scrollViewDidEndDecelerating:aSV];
 
 }
 
@@ -271,7 +269,11 @@
 	if (self.numberOfPages)
 	if ([self.delegate respondsToSelector:@selector(paginatedView:didShowView:atIndex:)])
 		[self.delegate paginatedView:self didShowView:[self existingPageAtIndex:self.currentPage] atIndex:self.currentPage];
+	
+	[self removeOffscreenViews];
 
+	[self setNeedsLayout];
+	
 }
 
 - (void) layoutSubviews {
@@ -304,12 +306,11 @@
 			continue;
 		
 		CGRect pageRect = [self pageRectForIndex:index];
-				 
-		existingView.frame = pageRect;
+		
+		if (!CGRectEqualToRect(existingView.frame, pageRect))
+			existingView.frame = pageRect;
 		
 	}
-	
-	[self removeOffscreenViews];
 	
 	self.scrollView.delegate = self;
 	
