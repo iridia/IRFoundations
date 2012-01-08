@@ -19,6 +19,11 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 
 - (id) initWithObserverBlock:(IRObservingsCallbackBlock)block withOwner:(id)owner keyPath:(NSString *)keypath options:(NSKeyValueObservingOptions)options context:(void *)context;
 
+@property (nonatomic, readonly, assign) id owner;
+@property (nonatomic, readonly, copy) IRObservingsCallbackBlock callback;
+@property (nonatomic, readonly, copy) NSString *observedKeyPath;
+@property (nonatomic, readonly, assign) void *context;
+
 @end
 
 @interface NSObject (IRObservingsPrivate)
@@ -73,9 +78,35 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 
 }
 
-- (void) irRemoveObserverBlocksForKeyPath:(NSString *)aKeyPath {
+- (void) irRemoveObservingsHelper:(id)aHelper {
 
-	[[self irObservingsHelperBlocksForKeyPath:aKeyPath] removeAllObjects];
+	IRObservingsHelper *castHelper = (IRObservingsHelper *)aHelper;
+	NSParameterAssert([castHelper isKindOfClass:[IRObservingsHelper class]]);
+	
+	[[self irObservingsHelperBlocksForKeyPath:castHelper.observedKeyPath] removeObject:castHelper];
+
+}
+
+- (void) irRemoveObserverBlocksForKeyPath:(NSString *)keyPath {
+
+	[self irRemoveObserverBlocksForKeyPath:keyPath context:nil];
+
+}
+
+- (void) irRemoveObserverBlocksForKeyPath:(NSString *)keyPath context:(void *)context {
+
+	NSMutableArray *allHelpers = [self irObservingsHelperBlocksForKeyPath:keyPath];
+	NSArray *removedHelpers = allHelpers;
+	
+	if (context) {
+		
+		removedHelpers = [allHelpers filteredArrayUsingPredicate:[NSPredicate predicateWithBlock: ^ (IRObservingsHelper *aHelper, NSDictionary *bindings) {
+			return (BOOL)(aHelper.context == context);
+		}]];
+		
+	}
+
+	[allHelpers removeObjectsInArray:removedHelpers];
 
 }
 
@@ -90,14 +121,15 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 @property (nonatomic, readwrite, assign) id owner;
 @property (nonatomic, readwrite, copy) IRObservingsCallbackBlock callback;
 @property (nonatomic, readwrite, copy) NSString *observedKeyPath;
+@property (nonatomic, readwrite, assign) void *context;
 
 @end
 
 @implementation IRObservingsHelper
 
-@synthesize owner, callback, observedKeyPath;
+@synthesize owner, callback, observedKeyPath, context;
 
-- (id) initWithObserverBlock:(IRObservingsCallbackBlock)block withOwner:(id)inOwner keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context {
+- (id) initWithObserverBlock:(IRObservingsCallbackBlock)block withOwner:(id)inOwner keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)inContext {
 
 	self = [super init];
 	if (!self) return nil;
@@ -105,8 +137,9 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 	self.owner = inOwner;
 	self.observedKeyPath = keyPath;
 	self.callback = block;
+	self.context = inContext;
 	
-	[self.owner addObserver:self forKeyPath:keyPath options:options context:context];
+	[self.owner addObserver:self forKeyPath:keyPath options:options context:inContext];
 	
 	return self;
 
