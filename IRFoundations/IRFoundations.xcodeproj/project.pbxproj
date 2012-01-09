@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF06363A14B346EA00E7AF78 /* QuartzCore+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CED1337B36A00DDA47C /* QuartzCore+IRAdditions.h */; };
+		FF06363B14B346EA00E7AF78 /* QuartzCore+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CEE1337B36A00DDA47C /* QuartzCore+IRAdditions.m */; };
 		FF0A8C8C1337B28200DDA47C /* IRFoundations.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C8B1337B28200DDA47C /* IRFoundations.h */; };
 		FF0A8C9F1337B29F00DDA47C /* Foundation+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C931337B29F00DDA47C /* Foundation+IRAdditions.h */; };
 		FF0A8CA01337B29F00DDA47C /* Foundation+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */; };
@@ -677,6 +679,7 @@
 			files = (
 				FF789D301442FDE00080F210 /* IRAsyncOperation.h in Headers */,
 				FF460D36149CFA2E00DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */,
+				FF06363A14B346EA00E7AF78 /* QuartzCore+IRAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -847,6 +850,7 @@
 				FF59A3DC1441CDD300BB1FDC /* NSFetchRequest+IRAdditions.m in Sources */,
 				FF789D321442FDE00080F210 /* IRAsyncOperation.m in Sources */,
 				FF460D42149CFB7400DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */,
+				FF06363B14B346EA00E7AF78 /* QuartzCore+IRAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

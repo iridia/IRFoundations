@@ -11,6 +11,26 @@
 
 @implementation IRManagedObject
 
+- (void) awakeFromFetch {
+
+	[super awakeFromFetch];
+	[self irAwake];
+
+}
+
+- (void) awakeFromInsert {
+
+	[super awakeFromInsert];
+	[self irAwake];
+
+}
+
+- (void) irAwake {
+
+	//	No Op
+
+}
+
 + (NSArray *) insertOrUpdateObjectsIntoContext:(NSManagedObjectContext *)context withExistingProperty:(NSString *)managedObjectKeyPath matchingKeyPath:(NSString *)dictionaryKeyPath ofRemoteDictionaries:(NSArray *)dictionaries {
 
 //	The value that local or remote key paths point to will be called markers
