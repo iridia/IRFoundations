@@ -73,3 +73,17 @@
 }
 
 @end
+
+
+@implementation UIView (IRQuartzCoreAdditions)
+
+- (UIView *) irRenderedProxyView {
+
+	UIView *returnedView = [[[[self class] alloc] initWithFrame:self.bounds] autorelease];
+	returnedView.layer.contents = (id)[self.layer irRenderedImage].CGImage;
+	
+	return returnedView;
+
+}
+
+@end
