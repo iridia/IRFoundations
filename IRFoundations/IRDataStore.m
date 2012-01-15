@@ -67,6 +67,13 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 	if (!usedAppName)
 		usedAppName = [[NSBundle mainBundle] bundleIdentifier];
 
+	if (!usedAppName) {
+		//	Could be in test cases
+		usedAppName = [[NSBundle bundleForClass:(id)[self class]] bundleIdentifier];
+	}
+	
+	NSParameterAssert(usedAppName);
+
 	return [[(NSURL *)[[[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject] URLByAppendingPathComponent:usedAppName] URLByAppendingPathComponent:defaultFilename];
 	
 	#else
@@ -84,6 +91,10 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 		return nil;
 	
 	persistentStoreName = [[[NSBundle mainBundle] bundleIdentifier] copy];
+	if (!persistentStoreName)
+		persistentStoreName = [@"PersistentStore" copy];
+	
+	managedObjectModel = [model retain];
 
 	return self;
 
