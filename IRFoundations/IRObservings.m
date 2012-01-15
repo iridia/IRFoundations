@@ -26,14 +26,23 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 
 @end
 
+
 @interface NSObject (IRObservingsPrivate)
 
 @property (nonatomic, readonly, retain) NSMutableDictionary *irObservingsHelpers;
 
 @end
 
+@interface IRObservingsHelper ()
 
+@property (nonatomic, readwrite, assign) id owner;
+@property (nonatomic, readwrite, copy) IRObservingsCallbackBlock callback;
+@property (nonatomic, readwrite, copy) NSString *observedKeyPath;
+@property (nonatomic, readwrite, assign) void *context;
 
+- (void) kill;
+
+@end
 
 
 @implementation NSObject (IRObservings)
@@ -83,7 +92,9 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 	IRObservingsHelper *castHelper = (IRObservingsHelper *)aHelper;
 	NSParameterAssert([castHelper isKindOfClass:[IRObservingsHelper class]]);
 	
+	[[castHelper retain] autorelease];
 	[[self irObservingsHelperBlocksForKeyPath:castHelper.observedKeyPath] removeObject:castHelper];
+	[castHelper kill];
 
 }
 
@@ -105,6 +116,9 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 		}]];
 		
 	}
+	
+	for (IRObservingsHelper *aHelper in removedHelpers)
+		[aHelper kill];
 
 	[allHelpers removeObjectsInArray:removedHelpers];
 
@@ -112,18 +126,6 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 
 @end
 
-
-
-
-
-@interface IRObservingsHelper ()
-
-@property (nonatomic, readwrite, assign) id owner;
-@property (nonatomic, readwrite, copy) IRObservingsCallbackBlock callback;
-@property (nonatomic, readwrite, copy) NSString *observedKeyPath;
-@property (nonatomic, readwrite, assign) void *context;
-
-@end
 
 @implementation IRObservingsHelper
 
@@ -156,13 +158,20 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 
 }
 
-- (void) dealloc {
+- (void) kill {
 
-	[self.owner removeObserver:self forKeyPath:self.observedKeyPath];
+	if (owner && observedKeyPath)
+		[owner removeObserver:self forKeyPath:observedKeyPath];
 	
 	self.owner = nil;
 	self.observedKeyPath = nil;
 	self.callback = nil;
+
+}
+
+- (void) dealloc {
+
+	[self kill];
 	
 	[super dealloc];
 

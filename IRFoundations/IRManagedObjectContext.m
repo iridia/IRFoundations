@@ -13,36 +13,6 @@
 #import "NSFetchRequest+IRAdditions.h"
 
 
-static NSString * const kIRManagedObjectContextDidSaveNotificationObservingCount = @"IRManagedObjectContextDidSaveNotificationObservingCount";
-static NSString * const kIRManagedObjectContextDidSaveNotificationListener = @"IRManagedObjectContextDidSaveNotificationListener";
-
-
-@interface NSManagedObjectContext (IRAdditions_Private)
-
-@property (nonatomic, readwrite, assign, setter=irSetMOCSaveAutomergeCount:, getter=irMOCSaveAutomergeCount) int irMOCSaveAutomergeCount;
-
-@end
-
-
-@implementation NSManagedObjectContext (IRAdditions_Private)
-
-- (void) irSetMOCSaveAutomergeCount:(int)newCount {
-
-	objc_setAssociatedObject(self, &kIRManagedObjectContextDidSaveNotificationObservingCount, [NSNumber numberWithInt:newCount], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-
-}
-
-- (int) irMOCSaveAutomergeCount {
-
-	NSNumber *currentNumber = objc_getAssociatedObject(self, &kIRManagedObjectContextDidSaveNotificationObservingCount);
-	
-	return currentNumber ? [currentNumber intValue] : 0;
-
-}
-
-@end
-
-
 @implementation NSManagedObjectContext (IRAdditions)
 
 - (NSManagedObject *) irManagedObjectForURI:(NSURL *)anURI {
@@ -79,82 +49,22 @@ static NSString * const kIRManagedObjectContextDidSaveNotificationListener = @"I
 
 }
 
-- (void) irBeginMergingFromSavesAutomatically {
+@end
 
-	if (self.irMOCSaveAutomergeCount == 0) {
 
-		__block __typeof__(self) nrSelf = self;
-		__block dispatch_queue_t ownQueue = [NSThread isMainThread] ? dispatch_get_main_queue() : dispatch_get_current_queue();
-		dispatch_retain(ownQueue);
-		
-		__block id listenerObject = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
+@interface IRManagedObjectContext ()
 
-			if (note.object == nrSelf)
-				return;
-			
-			NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
-			
-			if (savedContext.persistentStoreCoordinator != self.persistentStoreCoordinator) {
-				NSLog(@"Different PSC — Skip merging");
-				return;
-			}
+@property (nonatomic, readwrite, assign, setter=irSetAutoMergeStackCount:, getter=irAutoMergeStackCount) NSUInteger irAutoMergeStackCount;
+@property (nonatomic, readwrite, retain) id irAutoMergeListener;
 
-			dispatch_async(ownQueue, ^ {
-			
-				@try {
-					[nrSelf mergeChangesFromContextDidSaveNotification:note];
-				} @catch (NSException *e) {
-					NSLog(@"%@", e);
-				}
-			
-			});
-			
-		}];
-		
-		[listenerObject irPerformOnDeallocation: ^ {
-		
-			[[NSNotificationCenter defaultCenter] removeObserver:listenerObject];
-			dispatch_release(ownQueue);
-			
-		}];
-		
-		objc_setAssociatedObject(self, &kIRManagedObjectContextDidSaveNotificationListener, listenerObject, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-	
-	}
-
-	self.irMOCSaveAutomergeCount = self.irMOCSaveAutomergeCount + 1;
-
-}
-
-- (void) irStopMergingFromSavesAutomatically {
-
-	self.irMOCSaveAutomergeCount = self.irMOCSaveAutomergeCount - 1;
-	
-	if (!self.irMOCSaveAutomergeCount) {
-		[[NSNotificationCenter defaultCenter] removeObserver:objc_getAssociatedObject(self, &kIRManagedObjectContextDidSaveNotificationListener)];
-		objc_setAssociatedObject(self, &kIRManagedObjectContextDidSaveNotificationListener, nil, OBJC_ASSOCIATION_ASSIGN);
-	
-		NSLog(@"%@ should stop observing and merging", self);
-	
-	}
-
-}
-
-- (BOOL) irIsMergingFromSavesAutomatically {
-
-	NSParameterAssert(!!self.irMOCSaveAutomergeCount == !!objc_getAssociatedObject(self, &kIRManagedObjectContextDidSaveNotificationListener));
-	
-	return (self.irMOCSaveAutomergeCount > 0);
-
-}
+- (void) irAutoMergeSetUp;
+- (void) irAutoMergeTearDown;
 
 @end
 
 
-
-
-
 @implementation IRManagedObjectContext
+@synthesize irAutoMergeStackCount, irAutoMergeListener;
 
 - (NSArray *) executeFetchRequest:(NSFetchRequest *)request error:(NSError **)error {
 
@@ -166,6 +76,122 @@ static NSString * const kIRManagedObjectContextDidSaveNotificationListener = @"I
 
 	return [super executeFetchRequest:request error:error];
 
+}
+
+- (void) dealloc {
+
+	if (irAutoMergeListener) {
+		[[NSNotificationCenter defaultCenter] removeObserver:irAutoMergeListener];
+		[irAutoMergeListener release];
+	}
+	
+	[super dealloc];
+
+}
+
+- (void) irBeginMergingFromSavesAutomatically {
+
+	self.irAutoMergeStackCount = self.irAutoMergeStackCount + 1;
+	
+}
+
+- (void) irStopMergingFromSavesAutomatically {
+
+	self.irAutoMergeStackCount = self.irAutoMergeStackCount - 1;
+
+}
+
+- (BOOL) irIsMergingFromSavesAutomatically {
+
+	return !!self.irAutoMergeStackCount;
+
+}
+
+- (void) irSetAutoMergeStackCount:(NSUInteger)newCount {
+
+	NSUInteger oldCount = irAutoMergeStackCount;
+	
+	[self willChangeValueForKey:@"irAutoMergeStackCount"];
+	
+	irAutoMergeStackCount = newCount;
+	
+	if ((oldCount == 0) && (newCount == 1)) {
+	
+		[self irAutoMergeSetUp];
+	
+	} else if ((oldCount == 1) && (newCount == 0)) {
+	
+		[self irAutoMergeTearDown];
+	
+	}
+
+	[self didChangeValueForKey:@"irAutoMergeStackCount"];
+	
+}
+
+- (void) irAutoMergeSetUp {
+
+	NSParameterAssert(!self.irAutoMergeListener);
+
+	dispatch_queue_t (^currentQueue)() = ^ {
+		return [NSThread isMainThread] ? dispatch_get_main_queue() : dispatch_get_current_queue();
+	};
+
+	__block __typeof__(self) nrSelf = self;
+	__block dispatch_queue_t ownQueue = currentQueue();
+	dispatch_retain(ownQueue);
+	
+	__block id listenerObject = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
+		
+		NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
+		
+		if (savedContext == nrSelf)
+			return;
+		
+		if (savedContext.persistentStoreCoordinator != nrSelf.persistentStoreCoordinator)
+			return;
+			
+		void (^merge)(void) = ^ {
+			
+			@try {
+				[nrSelf mergeChangesFromContextDidSaveNotification:note];
+			} @catch (NSException *e) {
+				NSLog(@"%@", e);
+			}
+		
+		};
+			
+		if (ownQueue == currentQueue())
+			merge();
+		else 
+			dispatch_async(ownQueue, merge);
+		
+	}];
+	
+	[listenerObject irPerformOnDeallocation:^{
+	
+		dispatch_release(ownQueue);
+		
+	}];
+
+	self.irAutoMergeListener = listenerObject;
+
+}
+
+- (void) irAutoMergeTearDown {
+	
+	NSParameterAssert(self.irAutoMergeListener);
+	[[NSNotificationCenter defaultCenter] removeObserver:self.irAutoMergeListener];
+
+}
+
+- (void) irHandleManagedObjectContextDidSaveNotification:(NSNotification *)note {
+	
+	NSParameterAssert([self irIsMergingFromSavesAutomatically]);
+	
+	__block __typeof__(self) nrSelf = self;
+	
+	
 }
 
 @end
