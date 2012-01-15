@@ -18,3 +18,10 @@
 - (UIImage *) irRenderedImageWithEdgeInsets:(UIEdgeInsets)insets;
 
 @end
+
+
+@interface UIView (IRQuartzCoreAdditions)
+
+- (UIView *) irRenderedProxyView;
+
+@end

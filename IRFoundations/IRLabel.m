@@ -296,9 +296,13 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 			truncationToken = CTLineCreateWithAttributedString((CFAttributedStringRef)[[NSAttributedString alloc] initWithString:[NSString stringWithCharacters:(UniChar[]){ 0x2026 } length:1] attributes:(NSDictionary *)CTRunGetAttributes((CTRunRef)[(NSArray *)CTLineGetGlyphRuns(aLine) lastObject])]);
 			truncatedLine = CTLineCreateTruncatedLine(realLastLine, ownWidth, kCTLineTruncationEnd, truncationToken);
 			
-			CTLineDraw(truncatedLine, context);
+			if (truncatedLine) {
+				CTLineDraw(truncatedLine, context);
+				CFRelease(truncatedLine);
+			} else {
+				CTLineDraw(realLastLine, context);
+			}
 			
-			CFRelease(truncatedLine);
 			CFRelease(realLastLine);
 			CFRelease(truncationToken);
 				
