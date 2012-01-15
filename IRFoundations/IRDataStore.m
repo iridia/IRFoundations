@@ -132,13 +132,15 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 		
 		nil] error:&persistentStoreAddingError];
 		
+		NSFileManager *fileManager = [NSFileManager defaultManager];
+		
 		if (!addedStore) {
 		
 			NSLog(@"Error adding persistent store: %@", persistentStoreAddingError);
 				
-			if ([[NSFileManager defaultManager] fileExistsAtPath:[storeURL path]]) {
+			if ([fileManager fileExistsAtPath:[storeURL path]]) {
 			
-				[[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
+				[fileManager removeItemAtURL:storeURL error:nil];
 				continuesTrying = YES;
 		
 			} else {
@@ -154,6 +156,9 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 		};
 	
 	}
+	
+	//	At this point, things might be okay
+	//	Let’s save to the file at least once
 	
 	NSParameterAssert([persistentStoreCoordinator.persistentStores count]);
 	return persistentStoreCoordinator;
@@ -173,13 +178,13 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 		
 }
 
-- (NSManagedObjectContext *) defaultAutoUpdatedMOC {
+- (IRManagedObjectContext *) defaultAutoUpdatedMOC {
 
-	__block NSManagedObjectContext *returnedContext = objc_getAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC);
+	__block IRManagedObjectContext *returnedContext = objc_getAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC);
 	
 	if (!returnedContext) {
 	
-		returnedContext = [self disposableMOC];
+		returnedContext = (IRManagedObjectContext *)[self disposableMOC];
 		[returnedContext irBeginMergingFromSavesAutomatically];
 		[returnedContext irPerformOnDeallocation: ^ {
 			[returnedContext irStopMergingFromSavesAutomatically];
@@ -193,9 +198,9 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 
 }
 
-- (NSManagedObjectContext *) disposableMOC {
+- (IRManagedObjectContext *) disposableMOC {
 
-	NSManagedObjectContext *returnedContext = [[[NSManagedObjectContext alloc] init] autorelease];
+	IRManagedObjectContext *returnedContext = [[[IRManagedObjectContext alloc] init] autorelease];
 	[returnedContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
 	[returnedContext setUndoManager:nil];
 	
@@ -205,6 +210,14 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 
 - (void) dealloc {
 
+	__block NSManagedObjectContext *autoUpdatedMOC = objc_getAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC);
+	if (autoUpdatedMOC) {
+		@autoreleasepool {
+			[[autoUpdatedMOC retain] autorelease];
+			objc_setAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC, nil, OBJC_ASSOCIATION_ASSIGN);
+		}
+	}
+	
 	[persistentStoreName release];
 	[managedObjectModel release];
 	[persistentStoreCoordinator release];
