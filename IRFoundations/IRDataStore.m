@@ -281,28 +281,25 @@ NSString * IRDataStoreNonce () {
 
 - (NSURL *) persistentFileURLForFileAtURL:(NSURL *)aURL {
 
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	
+#ifndef NS_BLOCK_ASSERTIONS
+{	
+	BOOL isDirectoryURL = NO;
+	NSAssert2(([fileManager fileExistsAtPath:[aURL path] isDirectory:&isDirectoryURL] && !isDirectoryURL), @"URL %@ must exist%@.", aURL, (isDirectoryURL ? @" and should not be a directory" : @""));
+};
+#endif
+	
 	NSURL *fileURL = [self oneUsePersistentFileURL];
 	fileURL = [NSURL fileURLWithPath:[[fileURL path] stringByAppendingPathExtension:[[aURL path] pathExtension]]];
 	
-
-	NSError *copyError = nil;
-	if (![[NSFileManager defaultManager] copyItemAtURL:aURL toURL:fileURL error:&copyError]) {
-	
-		NSLog(@"Error copying from %@ to %@: %@.  Creating intermediate directories.", aURL, fileURL, copyError);
-		copyError = nil;
+	NSError *error = nil;
+	if ([fileManager createDirectoryAtPath:[[aURL path] stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:&error])
+	if ([fileManager copyItemAtURL:aURL toURL:fileURL error:&error])
+		return fileURL;
 		
-		NSError *directoryCreationError = nil;
-		if (![[NSFileManager defaultManager] createDirectoryAtPath:[aURL path] withIntermediateDirectories:YES attributes:nil error:&directoryCreationError]) {
-			NSLog(@"Error creating directory with intermediates: %@", directoryCreationError);
-		}
-		
-		if (![[NSFileManager defaultManager] copyItemAtURL:aURL toURL:fileURL error:&copyError]) {
-			NSLog(@"Error copying from %@ to %@: %@", aURL, fileURL, copyError);
-		}
-		
-	}
-
-	return fileURL;
+	NSLog(@"%s: Error copying from %@ to %@: %@", __PRETTY_FUNCTION__, aURL, fileURL, error);
+	return nil;
 
 }
 

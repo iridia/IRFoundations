@@ -139,7 +139,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 			NSString *filePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:fileName] stringByAppendingPathExtension:@"jpeg"];
 			NSURL *fileURL = [NSURL fileURLWithPath:filePath];
 			NSError *fileWritingError = nil;
-
+			
 			if (![UIImageJPEGRepresentation([anImage irStandardImage], 1.0f) writeToURL:fileURL options:NSDataWritingAtomic error:&fileWritingError]) {
 			
 				NSLog(@"Error writing file to temporary path %@: %@", fileURL, fileWritingError);
