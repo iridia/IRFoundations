@@ -67,6 +67,13 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 	if (!usedAppName)
 		usedAppName = [[NSBundle mainBundle] bundleIdentifier];
 
+	if (!usedAppName) {
+		//	Could be in test cases
+		usedAppName = [[NSBundle bundleForClass:(id)[self class]] bundleIdentifier];
+	}
+	
+	NSParameterAssert(usedAppName);
+
 	return [[(NSURL *)[[[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject] URLByAppendingPathComponent:usedAppName] URLByAppendingPathComponent:defaultFilename];
 	
 	#else
@@ -84,6 +91,10 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 		return nil;
 	
 	persistentStoreName = [[[NSBundle mainBundle] bundleIdentifier] copy];
+	if (!persistentStoreName)
+		persistentStoreName = [@"PersistentStore" copy];
+	
+	managedObjectModel = [model retain];
 
 	return self;
 
@@ -121,13 +132,15 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 		
 		nil] error:&persistentStoreAddingError];
 		
+		NSFileManager *fileManager = [NSFileManager defaultManager];
+		
 		if (!addedStore) {
 		
 			NSLog(@"Error adding persistent store: %@", persistentStoreAddingError);
 				
-			if ([[NSFileManager defaultManager] fileExistsAtPath:[storeURL path]]) {
+			if ([fileManager fileExistsAtPath:[storeURL path]]) {
 			
-				[[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
+				[fileManager removeItemAtURL:storeURL error:nil];
 				continuesTrying = YES;
 		
 			} else {
@@ -143,6 +156,9 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 		};
 	
 	}
+	
+	//	At this point, things might be okay
+	//	Let’s save to the file at least once
 	
 	NSParameterAssert([persistentStoreCoordinator.persistentStores count]);
 	return persistentStoreCoordinator;
@@ -162,13 +178,13 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 		
 }
 
-- (NSManagedObjectContext *) defaultAutoUpdatedMOC {
+- (IRManagedObjectContext *) defaultAutoUpdatedMOC {
 
-	__block NSManagedObjectContext *returnedContext = objc_getAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC);
+	__block IRManagedObjectContext *returnedContext = objc_getAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC);
 	
 	if (!returnedContext) {
 	
-		returnedContext = [self disposableMOC];
+		returnedContext = (IRManagedObjectContext *)[self disposableMOC];
 		[returnedContext irBeginMergingFromSavesAutomatically];
 		[returnedContext irPerformOnDeallocation: ^ {
 			[returnedContext irStopMergingFromSavesAutomatically];
@@ -182,9 +198,9 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 
 }
 
-- (NSManagedObjectContext *) disposableMOC {
+- (IRManagedObjectContext *) disposableMOC {
 
-	NSManagedObjectContext *returnedContext = [[[NSManagedObjectContext alloc] init] autorelease];
+	IRManagedObjectContext *returnedContext = [[[IRManagedObjectContext alloc] init] autorelease];
 	[returnedContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
 	[returnedContext setUndoManager:nil];
 	
@@ -194,6 +210,14 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 
 - (void) dealloc {
 
+	__block NSManagedObjectContext *autoUpdatedMOC = objc_getAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC);
+	if (autoUpdatedMOC) {
+		@autoreleasepool {
+			[[autoUpdatedMOC retain] autorelease];
+			objc_setAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC, nil, OBJC_ASSOCIATION_ASSIGN);
+		}
+	}
+	
 	[persistentStoreName release];
 	[managedObjectModel release];
 	[persistentStoreCoordinator release];
@@ -257,28 +281,25 @@ NSString * IRDataStoreNonce () {
 
 - (NSURL *) persistentFileURLForFileAtURL:(NSURL *)aURL {
 
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	
+#ifndef NS_BLOCK_ASSERTIONS
+{	
+	BOOL isDirectoryURL = NO;
+	NSAssert2(([fileManager fileExistsAtPath:[aURL path] isDirectory:&isDirectoryURL] && !isDirectoryURL), @"URL %@ must exist%@.", aURL, (isDirectoryURL ? @" and should not be a directory" : @""));
+};
+#endif
+	
 	NSURL *fileURL = [self oneUsePersistentFileURL];
 	fileURL = [NSURL fileURLWithPath:[[fileURL path] stringByAppendingPathExtension:[[aURL path] pathExtension]]];
 	
-
-	NSError *copyError = nil;
-	if (![[NSFileManager defaultManager] copyItemAtURL:aURL toURL:fileURL error:&copyError]) {
-	
-		NSLog(@"Error copying from %@ to %@: %@.  Creating intermediate directories.", aURL, fileURL, copyError);
-		copyError = nil;
+	NSError *error = nil;
+	if ([fileManager createDirectoryAtPath:[[aURL path] stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:&error])
+	if ([fileManager copyItemAtURL:aURL toURL:fileURL error:&error])
+		return fileURL;
 		
-		NSError *directoryCreationError = nil;
-		if (![[NSFileManager defaultManager] createDirectoryAtPath:[aURL path] withIntermediateDirectories:YES attributes:nil error:&directoryCreationError]) {
-			NSLog(@"Error creating directory with intermediates: %@", directoryCreationError);
-		}
-		
-		if (![[NSFileManager defaultManager] copyItemAtURL:aURL toURL:fileURL error:&copyError]) {
-			NSLog(@"Error copying from %@ to %@: %@", aURL, fileURL, copyError);
-		}
-		
-	}
-
-	return fileURL;
+	NSLog(@"%s: Error copying from %@ to %@: %@", __PRETTY_FUNCTION__, aURL, fileURL, error);
+	return nil;
 
 }
 
