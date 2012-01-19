@@ -31,6 +31,7 @@
 @implementation IRPaginatedView
 @synthesize currentPage, numberOfPages;
 @synthesize delegate, horizontalSpacing, scrollView, allViews;
+@synthesize onPointInsideWithEvent;
 
 - (id) initWithFrame:(CGRect)frame {
 
@@ -194,7 +195,7 @@
 	[viewController viewWillDisappear:NO];
 	[aView removeFromSuperview];
 	[self.scrollView setNeedsLayout];
-	[viewController viewWillDisappear:NO];
+	[viewController viewDidDisappear:NO];
 
 }
 
@@ -245,11 +246,34 @@
 
 - (void) scrollViewDidScroll:(UIScrollView *)aScrollView {
 	
-	self.currentPage = [self indexOfPageAtCurrentContentOffset];
+	NSUInteger oldCurrentPage = currentPage;
+	self.currentPage = MAX(0, MIN(self.numberOfPages - 1, [self indexOfPageAtCurrentContentOffset]));
+	
+	if (![self.scrollView isTracking] && ![self.scrollView isZooming])
+	if (oldCurrentPage != currentPage)
+		[self setNeedsLayout];
+	
+}
+
+- (void) scrollViewDidEndDragging:(UIScrollView *)aSV willDecelerate:(BOOL)decelerate {
+
+	if (decelerate)
+		return;
+	
+	[self scrollViewDidEndDecelerating:aSV];
+
+}
+
+- (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+
+	if (self.numberOfPages)
+	if ([self.delegate respondsToSelector:@selector(paginatedView:didShowView:atIndex:)])
+		[self.delegate paginatedView:self didShowView:[self existingPageAtIndex:self.currentPage] atIndex:self.currentPage];
 	
 	[self removeOffscreenViews];
-	[self setNeedsLayout];
 
+	[self setNeedsLayout];
+	
 }
 
 - (void) layoutSubviews {
@@ -278,12 +302,15 @@
 	
 		UIView *existingView = [self existingViewForPageAtIndex:index];
 		
-		if (existingView)
-			existingView.frame = [self pageRectForIndex:index];
-
+		if (!existingView)
+			continue;
+		
+		CGRect pageRect = [self pageRectForIndex:index];
+		
+		if (!CGRectEqualToRect(existingView.frame, pageRect))
+			existingView.frame = pageRect;
+		
 	}
-	
-	[self removeOffscreenViews];
 	
 	self.scrollView.delegate = self;
 	
@@ -303,10 +330,23 @@
 
 }
 
+- (BOOL) pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+
+	BOOL answer = [super pointInside:point withEvent:event];
+
+	if (self.onPointInsideWithEvent)
+		answer = self.onPointInsideWithEvent(point, event, answer);
+	
+	return answer;
+
+}
+
 - (void) dealloc {
 
 	[scrollView release];
 	[allViews release];
+	
+	[onPointInsideWithEvent release];
 
 	[super dealloc];
 

@@ -8,6 +8,7 @@
 
 #import <CoreText/CoreText.h>
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 
 extern NSString * const kIRTextLinkAttribute;
@@ -20,5 +21,17 @@ extern NSString * const kIRTextActiveBackgroundColorAttribute;
 + (IRLabel *) labelWithFont:(UIFont *)aFont color:(UIColor *)aColor;
 
 - (NSAttributedString *) attributedStringForString:(NSString *)aString;
+- (NSAttributedString *) attributedStringForString:(NSString *)aString font:(UIFont *)aFont color:(UIColor *)aColor;
+
+@end
+
+
+
+
+
+@interface UILabel (IRAdditions)
+
+- (void) irPlaceBehindLabel:(UILabel *)anotherLabel; // UIEdgeInsetsZero
+- (void) irPlaceBehindLabel:(UILabel *)anotherLabel withEdgeInsets:(UIEdgeInsets)edgeInsets;
 
 @end

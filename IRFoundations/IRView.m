@@ -10,7 +10,6 @@
 
 
 @implementation IRView
-
 @synthesize onDrawRect;
 
 - (void) drawRect:(CGRect)rect {
@@ -22,11 +21,9 @@
 
 - (void) dealloc {
 
-	self.onDrawRect = nil;
-
+	[onDrawRect release];
 	[super dealloc];
 
 }
-
 
 @end

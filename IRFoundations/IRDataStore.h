@@ -21,16 +21,16 @@
 
 - (IRDataStore *) initWithManagedObjectModel:(NSManagedObjectModel *)model;
 - (NSManagedObjectModel *) defaultManagedObjectModel;
-- (NSURL *) defaultPersistentStoreURL;
 
+@property (nonatomic, readwrite, retain) NSString *persistentStoreName; //	Defaults to the name of the application if nil
+- (NSURL *) defaultPersistentStoreURL;	//	Root implementation looks at persistentStoreName
+
+- (NSManagedObjectContext *) defaultAutoUpdatedMOC;
 - (NSManagedObjectContext *) disposableMOC;
 
 //	Internally used Core Data stuff
 @property (nonatomic, readonly, retain) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, readonly, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
-//	The “emperor” context
-@property (nonatomic, readonly, retain) NSManagedObjectContext *managedObjectContext;
 
 
 //	Common file operations.
@@ -38,8 +38,13 @@
 //	Other methods are conveniences
 
 - (NSURL *) oneUsePersistentFileURL;
-- (NSURL *) persistentFileURLForData:(NSData *)data;
+- (NSURL *) persistentFileURLForData:(NSData *)data; // no extension
+- (NSURL *) persistentFileURLForData:(NSData *)data extension:(NSString *)fileExtension;
 - (NSURL *) persistentFileURLForFileAtURL:(NSURL *)aURL;
 - (NSURL *) persistentFileURLForFileAtPath:(NSString *)aPath;
 
 @end
+
+
+extern NSString * IRDataStoreTimestamp (void);
+extern NSString * IRDataStoreNonce (void);

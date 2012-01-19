@@ -9,6 +9,11 @@
 #import <objc/runtime.h>
 #import "UIWindow+IRAdditions.h"
 
+NSString * const IRWindowInterfaceBoundsDidChangeNotification = @"IRWindowInterfaceBoundsDidChangeNotification";
+NSString * const IRWindowInterfaceChangeUnderlyingKeyboardNotificationKey = @"IRWindowInterfaceChangeUnderlyingKeyboardNotificationKey";
+NSString * const IRWindowInterfaceChangeNewBoundsKey = @"IRWindowInterfaceChangeNewBoundsKey";
+
+NSString * const IRInterfaceBoundsKey = @"irInterfaceBounds";
 NSString * const kIRWindowInterfaceBounds = @"kIRWindowInterfaceBounds";
 
 @interface UIWindow (IRAdditionsPrivate)
@@ -23,7 +28,9 @@ NSString * const kIRWindowInterfaceBounds = @"kIRWindowInterfaceBounds";
 
 - (CGRect) irInterfaceBounds {
 
-	return [objc_getAssociatedObject(self, &kIRWindowInterfaceBounds) CGRectValue];
+	NSValue *boundsValue = objc_getAssociatedObject(self, &kIRWindowInterfaceBounds);
+
+	return boundsValue ? [boundsValue CGRectValue] : self.bounds;
 
 }
 
@@ -33,9 +40,9 @@ NSString * const kIRWindowInterfaceBounds = @"kIRWindowInterfaceBounds";
 	if (CGRectEqualToRect(oldBounds, newBounds))
 		return;
 	
-	[self willChangeValueForKey:@"irInterfaceBounds"];
+	[self willChangeValueForKey:IRInterfaceBoundsKey];
 	objc_setAssociatedObject(self, &kIRWindowInterfaceBounds, [NSValue valueWithCGRect:newBounds], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-	[self didChangeValueForKey:@"irInterfaceBounds"];
+	[self didChangeValueForKey:IRInterfaceBoundsKey];
 	
 }
 
@@ -95,11 +102,6 @@ NSString * const kIRWindowInterfaceBounds = @"kIRWindowInterfaceBounds";
 			class_getInstanceMethod(self, @selector(ir_becomeKeyWindow))
 		);
 
-		//	method_exchangeImplementations(
-		//		class_getInstanceMethod(self, @selector(resignKeyWindow)),
-		//		class_getInstanceMethod(self, @selector(ir_resignKeyWindow))
-		//	);
-		
 	});
 	
 }
@@ -116,9 +118,22 @@ NSString * const kIRWindowInterfaceBounds = @"kIRWindowInterfaceBounds";
 		
 			CGRect keyboardEndFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
 			
-			for (UIWindow *aWindow in [UIApplication sharedApplication].windows)
-				if ([aWindow isMemberOfClass:[UIWindow class]])
+			for (UIWindow *aWindow in [UIApplication sharedApplication].windows) {
+				
+				if ([aWindow isMemberOfClass:[UIWindow class]]) {
+					
 					[aWindow irAdjustInterfaceBoundsWithKeyboardRect:keyboardEndFrame];
+					
+					[[NSNotificationCenter defaultCenter] postNotificationName:IRWindowInterfaceBoundsDidChangeNotification object:aWindow userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+					
+						aNotification, IRWindowInterfaceChangeUnderlyingKeyboardNotificationKey,
+						[NSValue valueWithCGRect:aWindow.irInterfaceBounds], IRWindowInterfaceChangeNewBoundsKey,
+						
+					nil]];
+					
+				}
+			
+			}
 
 		};
 	
@@ -130,13 +145,5 @@ NSString * const kIRWindowInterfaceBounds = @"kIRWindowInterfaceBounds";
 	});
 
 }
-
-//	- (void) ir_resignKeyWindow {
-//
-//		NSLog(@"%s; %@", __PRETTY_FUNCTION__, NSStringFromSelector(_cmd));
-//
-//		[self ir_resignKeyWindow];
-//		
-//	}
 
 @end

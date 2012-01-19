@@ -10,7 +10,7 @@
 #import "Foundation+IRAdditions.h"
 
 @class IRPaginatedView;
-@protocol IRPaginatedViewDelegate
+@protocol IRPaginatedViewDelegate <NSObject>
 
 - (NSUInteger) numberOfViewsInPaginatedView:(IRPaginatedView *)paginatedView;
 - (UIView *) viewForPaginatedView:(IRPaginatedView *)paginatedView atIndex:(NSUInteger)index;
@@ -41,5 +41,7 @@
 
 - (void) scrollToPageAtIndex:(NSUInteger)anIndex animated:(BOOL)animate;
 - (UIView *) existingPageAtIndex:(NSUInteger)anIndex;
+
+@property (nonatomic, readwrite, copy) BOOL (^onPointInsideWithEvent)(CGPoint aPoint, UIEvent *anEvent, BOOL superAnswer);
 
 @end

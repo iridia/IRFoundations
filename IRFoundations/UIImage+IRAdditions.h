@@ -9,11 +9,17 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
+@class IRShadow;
 @interface UIImage (IRAdditions)
 
 - (UIImage *) irStandardImage;
 - (UIImage *) irDecodedImage;
 
 - (UIImage *) irScaledImageWithSize:(CGSize)aSize;
+- (UIImage *) irSolidImageWithFillColor:(UIColor *)fillColor shadow:(IRShadow *)shadowOrNil;
+
+@property (nonatomic, readwrite, retain, getter=irRepresentedObject, setter=irSetRepresentedObject:) id irRepresentedObject;
+
+- (void) irWriteToSavedPhotosAlbumWithCompletion:(void(^)(BOOL didWrite, NSError *error))aBlock;
 
 @end

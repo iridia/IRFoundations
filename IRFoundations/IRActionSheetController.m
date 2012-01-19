@@ -81,11 +81,19 @@
 
 - (IRActionSheet *) singleUseActionSheet {
 
-	IRActionSheet *returnedActionSheet = [[IRActionSheet alloc] initWithTitle:self.title delegate:self cancelButtonTitle:self.cancellationAction.title destructiveButtonTitle:self.destructionAction.title otherButtonTitles:nil];
+	IRActionSheet *returnedActionSheet = [[IRActionSheet alloc] initWithTitle:self.title delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
 	
+  if (self.destructionAction) {
+    returnedActionSheet.destructiveButtonIndex = [returnedActionSheet addButtonWithTitle:self.destructionAction.title];
+	}
+  
 	for (IRAction *anOtherAction in self.otherActions)
 		[returnedActionSheet addButtonWithTitle:anOtherAction.title];
-	
+  
+  if (self.cancellationAction) {
+    returnedActionSheet.cancelButtonIndex = [returnedActionSheet addButtonWithTitle:self.cancellationAction.title];
+  }
+  
 	return [returnedActionSheet autorelease];
 
 }
@@ -208,7 +216,8 @@
 
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.125 * NSEC_PER_SEC), dispatch_get_main_queue(), ^ {
 	 
-		[self.managedActionSheet reshowIfAppropriate];
+		if (!self.managedActionSheet.dismissesOnOrientationChange)
+			[self.managedActionSheet reshowIfAppropriate];
 		
 		[self autorelease];
 

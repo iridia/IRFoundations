@@ -32,8 +32,9 @@
 # pragma mark UI Persistence
 
 @property (nonatomic, readwrite, assign) BOOL persistsContentOffset;
+@property (nonatomic, readwrite, assign) BOOL persistsContentInset;
 
-//	Defaults to YES.  If YES, restores the always-persisted content offset.  Works together with Core Data integration.
+//	Defaults to YES.  If YES, restores the always-persisted content offset / inset.  Works together with Core Data integration.
 
 
 - (NSString *) persistenceIdentifier;

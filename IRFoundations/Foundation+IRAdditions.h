@@ -20,14 +20,14 @@
 #ifndef __Foundation_IRAdditions__
 #define __Foundation_IRAdditions__
 
-typedef id (^IRMapCallback) (id inObject, int index, BOOL *stop);
+typedef id (^IRMapCallback) (id inObject, NSUInteger index, BOOL *stop);
 
 extern IRMapCallback irMapMakeWithKeyPath (NSString * aKeyPath);
-extern IRMapCallback irMapNullFilterMake ();
-extern IRMapCallback irMapFrameValuesFromViews ();
-extern IRMapCallback irMapBoundsValuesFromViews ();
-extern IRMapCallback irMapOriginValuesFromRectValues ();
-extern IRMapCallback irMapCenterPointValuesFromRectValues ();
+extern IRMapCallback irMapNullFilterMake (void);
+extern IRMapCallback irMapFrameValuesFromViews (void);
+extern IRMapCallback irMapBoundsValuesFromViews (void);
+extern IRMapCallback irMapOriginValuesFromRectValues (void);
+extern IRMapCallback irMapCenterPointValuesFromRectValues (void);
 
 extern NSComparator irComparatorMakeWithNodeKeyPath (NSString *aKeyPath);
 extern NSUInteger irCount (id anObject, NSUInteger placeholderValue);
@@ -44,14 +44,25 @@ typedef BOOL (^IRDictionaryPairTest) (id key, id value);
 - (void) irExecute; // typecasts object to (void)(^)(void)
 - (BOOL) irIsBlock;
 
+- (BOOL) irHasDifferentSuperClassMethodForSelector:(SEL)aSelector;
+- (BOOL) irHasDifferentSuperInstanceMethodForSelector:(SEL)aSelector;
+
+@end
+
+
+@interface NSString (IRAdditions)
+
+- (NSString *) irTailTruncatedStringWithMaxLength:(NSUInteger)maxCharacters;
+
 @end
 
 
 @interface NSArray (IRAdditions)
 
-- (NSArray *) irMap:(id(^)(id inObject, int index, BOOL *stop))block;
+- (NSArray *) irMap:(id(^)(id inObject, NSUInteger index, BOOL *stop))block;
 - (NSArray *) irFlatten;	// flattens contents of any array node, inserts them in place
 - (NSArray *) irUnique;
+- (NSArray *) irShuffle;
 
 + (NSArray *) irArrayByRepeatingObject:(id)anObject count:(NSUInteger)count;
 
@@ -65,6 +76,8 @@ typedef BOOL (^IRDictionaryPairTest) (id key, id value);
 
 - (void) irEnqueueBlock:(void(^)(void))aBlock; // makes an autoreleased copy then enqueues
 - (void) irShuffle;
+
++ (NSMutableArray *) irArrayByRepeatingObject:(id)anObject count:(NSUInteger)count;
 
 @end
 

@@ -32,9 +32,7 @@ enum IRManagedObjectOptions {
 
 @interface IRManagedObject : NSManagedObject
 
-//	Notes:
-//	Remember that you’ll have to also update your data model, so the custom class is used on your entity
-
+- (void) irAwake;	//	Called in -awakeFromInsert, and -awakeFromFetch
 
 + (NSArray *) insertOrUpdateObjectsIntoContext:(NSManagedObjectContext *)inContext withExistingProperty:(NSString *)inLocalMarkerKeyPath matchingKeyPath:(NSString *)inRemoteMarkerKeyPath ofRemoteDictionaries:(NSArray *)inRemoteDictionaries;
 
@@ -100,6 +98,12 @@ enum IRManagedObjectOptions {
 
 
 + (NSEntityDescription *) entityDescriptionForContext:(NSManagedObjectContext *)aContext;
+
+
++ (NSDictionary *) transformedRepresentationForRemoteRepresentation:(NSDictionary *)incomingRepresentation;
+//	Convert identifier fields to object prototypes containing an identifier field, for example.
+//	Default implementation returns incoming representation.
+
 
 @end
 
@@ -176,3 +180,5 @@ enum IRManagedObjectOptions {
 
 
 
+
+#import "IRManagedObject+SimulatedOrderedRelationship.h"

@@ -9,9 +9,16 @@
 #import <objc/runtime.h>
 #import <UIKit/UIKit.h>
 
+//	They are also default keys used in the standard user defaults
+extern NSString * const kIRCrashReportingEnabledKey;
+extern NSString * const kIRCrashReportRecipientsKey;
+
 @class PLCrashReport;
 
 @interface UIApplication (CrashReporting)
+
+//	Enabled / Disabled should have a pretty rigid user defaults key
+//	And it should NOT collide
 
 - (NSString *) crashReportingEnabledUserDefaultsKey;
 - (void) setCrashReportingEnabledUserDefaultsKey:(NSString *)newKey;

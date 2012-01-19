@@ -15,5 +15,13 @@
 - (void) irSetShadowColor:(UIColor *)color alpha:(CGFloat)alpha spread:(CGFloat)spread offset:(CGSize)offset;
 
 - (UIImage *) irRenderedImage;
+- (UIImage *) irRenderedImageWithEdgeInsets:(UIEdgeInsets)insets;
+
+@end
+
+
+@interface UIView (IRQuartzCoreAdditions)
+
+- (UIView *) irRenderedProxyView;
 
 @end

@@ -21,7 +21,7 @@ void irCTFrameEnumerateLines(CTFrameRef aFrame, void (^aBlock)(CTLineRef aLine, 
 	if (!lineCount)
 		return;
 	
-	CGPoint *lineOrigins = malloc(sizeof(*lineOrigins) * lineCount);
+	CGPoint *lineOrigins = malloc(sizeof(CGPoint) * lineCount);
 	CTFrameGetLineOrigins(aFrame, (CFRange) { 0, lineCount }, lineOrigins);
 	
 	[((NSArray *)lines) enumerateObjectsUsingBlock: ^ (id aLine, NSUInteger idx, BOOL *stop) {
@@ -143,4 +143,123 @@ CTRunRef irCTFrameFindRunAtPoint (CTFrameRef aFrame, CGPoint aPoint, CGFloat sea
 	
 	return introspectedRun;
 
+}
+
+
+
+
+
+NSArray * irCTFrameFindNeighborRuns (CTFrameRef aFrame, CTRunRef referencedRun, NSDictionary *testSuite) {
+
+	if (![(NSDictionary *)CTRunGetAttributes(referencedRun) irPassesTestSuite:testSuite])
+		return [NSArray array];
+
+	NSMutableArray *returnedArray = [NSMutableArray array];
+	__block BOOL hasSeenReferencedRun = NO;
+	
+	irCTFrameEnumerateLines(aFrame,  ^ (CTLineRef aLine, CGPoint lineOrigin, BOOL *stopLineEnum) {
+	
+		irCTLineEnumerateRuns(aLine, ^ (CTRunRef aRun, double runWidth, BOOL *stopRunEnum) {
+		
+			//	If the run is valid just queue it
+			if ([(NSDictionary *)CTRunGetAttributes(aRun) irPassesTestSuite:testSuite]) {
+				[returnedArray addObject:(id)aRun];
+				hasSeenReferencedRun = hasSeenReferencedRun ? hasSeenReferencedRun : (aRun == referencedRun);
+				return;
+			}
+			
+			//	If an invalid run came in after we’ve seen the referenced run, it’s time to end enumeration early
+			if (hasSeenReferencedRun) {
+				*stopLineEnum = YES;
+				*stopRunEnum = YES;
+				return;
+			}
+			
+			//	There is possibility that we just pushed a lot of valid but irrelevant runs
+			//	Remove them all, just to be safe				
+			[returnedArray removeAllObjects];
+			
+		});
+		
+	});
+		
+	return returnedArray;	
+
+}
+
+
+
+
+
+UIBezierPath * irCTFrameGetRunOutline (CTFrameRef aFrame, NSArray *runs, UIEdgeInsets edgeInsets, CGFloat radius, BOOL averageMetrics, BOOL appendsIntegralRects, BOOL shiftsAppendedRectsToCompensateLeading) {
+
+	UIBezierPath *returnedPath = [UIBezierPath bezierPath];
+	
+	if (![runs count])
+		return returnedPath;
+	
+	NSSet *queriedRuns = [NSSet setWithArray:runs];	
+	
+	irCTFrameEnumerateLines(aFrame, ^(CTLineRef aLine, CGPoint lineOrigin, BOOL *stopLineEnum) {
+		
+		CGFloat lineAscent, lineDescent, lineLeading;
+		CTLineGetTypographicBounds(aLine, &lineAscent, &lineDescent, &lineLeading);
+		
+		//	lineOrigin = (CGPoint){ lineOrigin.x, lineOrigin.y * -1 + OUITextLayoutUnlimitedSize + lineAscent + lineDescent };
+
+		__block CGFloat usedWidth = 0;
+		__block UIBezierPath *pathsInLine = [UIBezierPath bezierPath];
+		
+		irCTLineEnumerateRuns(aLine, ^(CTRunRef aRun, double runWidth, BOOL *stopRunEnum) {
+			
+			if ([queriedRuns containsObject:(id)aRun]) {
+			
+				CGFloat runAscent, runDescent, runLeading;
+				CTRunGetTypographicBounds(aRun, (CFRange){0, 0}, &runAscent, &runDescent, &runLeading);
+				
+				CGRect appendedRect = UIEdgeInsetsInsetRect((CGRect) {
+				
+					lineOrigin.x + usedWidth,
+					lineOrigin.y + (shiftsAppendedRectsToCompensateLeading ? (runLeading * -0.5) : 0) - runDescent,
+					runWidth,
+					runAscent + runDescent + runLeading
+				
+				}, edgeInsets);
+				
+				if (appendsIntegralRects)
+				appendedRect = CGRectIntegral(appendedRect);
+				
+				if ((radius == 0) || averageMetrics) {
+				
+					[pathsInLine appendPath:[UIBezierPath bezierPathWithRect:appendedRect]];
+				
+				} else {
+				
+					[pathsInLine appendPath:[UIBezierPath bezierPathWithRoundedRect:appendedRect cornerRadius:radius]];					
+				
+				}
+			
+			}
+			
+			usedWidth += runWidth;		
+					
+		});
+		
+		if (!pathsInLine || pathsInLine.empty)
+			return;
+
+		[returnedPath appendPath:(averageMetrics ? (
+		
+			(radius == 0) ? [UIBezierPath bezierPathWithRect:[pathsInLine bounds]] : [UIBezierPath bezierPathWithRoundedRect:[pathsInLine bounds] cornerRadius:radius]
+			
+		) : (
+		
+			pathsInLine
+			
+		))];
+	
+	});
+	
+	return returnedPath;
+	
 }
