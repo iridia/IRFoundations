@@ -120,3 +120,26 @@
 }
 
 @end
+
+
+@implementation UIFont (NSAttributedString_IRAdditions)
+
+- (CTParagraphStyleRef) irFixedLineHeightParagraphStyle {
+
+	float_t lineHeight = self.leading;
+
+	CTParagraphStyleSetting paragraphStyles[] = (CTParagraphStyleSetting[]){
+		(CTParagraphStyleSetting){ kCTParagraphStyleSpecifierLineHeightMultiple, sizeof(float_t), (float_t[]){ 0.01f } },
+		(CTParagraphStyleSetting){ kCTParagraphStyleSpecifierMinimumLineHeight, sizeof(float_t), (float_t[]){ lineHeight } },
+		(CTParagraphStyleSetting){ kCTParagraphStyleSpecifierMaximumLineHeight, sizeof(float_t), (float_t[]){ lineHeight } },
+		(CTParagraphStyleSetting){ kCTParagraphStyleSpecifierLineSpacing, sizeof(float_t), (float_t[]){ 0.0f } },
+		(CTParagraphStyleSetting){ kCTParagraphStyleSpecifierMinimumLineSpacing, sizeof(float_t), (float_t[]){ 0.0f } },
+		(CTParagraphStyleSetting){ kCTParagraphStyleSpecifierMaximumLineSpacing, sizeof(float_t), (float_t[]){ 0.0f } }
+	};
+
+	CTParagraphStyleRef paragraphStyleRef = CTParagraphStyleCreate(paragraphStyles, sizeof(paragraphStyles) / sizeof(CTParagraphStyleSetting));
+	return [NSMakeCollectable(paragraphStyleRef) autorelease];
+
+}
+
+@end

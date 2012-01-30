@@ -27,3 +27,10 @@
 - (NSRange) irFullRange;
 
 @end
+
+
+@interface UIFont (NSAttributedString_IRAdditions)
+
+- (CTParagraphStyleRef) irFixedLineHeightParagraphStyle;
+
+@end
