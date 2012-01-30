@@ -126,7 +126,11 @@
 
 - (CTParagraphStyleRef) irFixedLineHeightParagraphStyle {
 
-	float_t lineHeight = self.leading;
+	return [[self class] irFixedLineHeightParagraphStyleForHeight:self.leading];
+
+}
+
++ (CTParagraphStyleRef) irFixedLineHeightParagraphStyleForHeight:(float_t)lineHeight {
 
 	CTParagraphStyleSetting paragraphStyles[] = (CTParagraphStyleSetting[]){
 		(CTParagraphStyleSetting){ kCTParagraphStyleSpecifierLineHeightMultiple, sizeof(float_t), (float_t[]){ 0.01f } },
@@ -138,7 +142,7 @@
 	};
 
 	CTParagraphStyleRef paragraphStyleRef = CTParagraphStyleCreate(paragraphStyles, sizeof(paragraphStyles) / sizeof(CTParagraphStyleSetting));
-	return [NSMakeCollectable(paragraphStyleRef) autorelease];
+	return (CTParagraphStyleRef)[NSMakeCollectable(paragraphStyleRef) autorelease];
 
 }
 

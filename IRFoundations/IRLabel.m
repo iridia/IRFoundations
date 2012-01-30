@@ -282,9 +282,12 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	CGContextSetTextMatrix(context, CGAffineTransformIdentity);
 	irCTFrameEnumerateLines(usedFrame, ^(CTLineRef aLine, CGPoint lineOrigin, BOOL *stop) {
 		
-		usableHeight -= self.font.leading;
-		
-		CGContextSetTextPosition(context, lineOrigin.x, usableHeight - self.font.descender);
+		CTFontRef lineFont = [self.attributedText attribute:(id)kCTFontAttributeName atIndex:(CTLineGetStringRange(aLine)).location effectiveRange:NULL];
+		UIFont *usedFont = lineFont ? [UIFont fontWithName:(NSString *)NSMakeCollectable(CTFontCopyPostScriptName(lineFont)) size:CTFontGetSize(lineFont)] : self.font;
+
+		//	Fix: needs simple alignment stuff
+		usableHeight -= usedFont.leading;
+		CGContextSetTextPosition(context, lineOrigin.x, usableHeight - usedFont.descender);
 		
 		CFRange lineRange = CTLineGetStringRange(aLine);
 		if (needsTailTruncation && (drawnLength == (lineRange.location + lineRange.length))) {
@@ -398,7 +401,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 				
 				self.lastHighlightedRunOutline = irCTFrameGetRunOutline(self.ctFrame, irCTFrameFindNeighborRuns(self.ctFrame, hitRun, [NSDictionary dictionaryWithObjectsAndKeys:
 					[[^ (id key, id value) { return !!value; } copy] autorelease], kIRTextLinkAttribute,
-				nil]), UIEdgeInsetsZero, 4.0f, YES, YES, NO);
+				nil]), UIEdgeInsetsZero, 4.0f, NO, YES, NO);
 				
 				[self setNeedsDisplay];
 				
