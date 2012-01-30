@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+#ifndef __IRAsyncOperation__
+#define __IRAsyncOperation__
+
+typedef void(^IRAsyncOperationCallback)(id results);
+
+#endif
+
+
 @interface IRAsyncOperation : NSOperation <NSCopying>
 
 @property (nonatomic, readonly, assign, getter=isExecuting) BOOL executing;
@@ -16,6 +24,6 @@
 @property (nonatomic, readwrite, copy) void (^workerBlock)(void(^callbackBlock)(id results));
 @property (nonatomic, readwrite, copy) void (^workCompletionBlock)(id results);
 
-+ (IRAsyncOperation *) operationWithWorkerBlock:(void(^)(void(^)(id results)))aWorkerBlock completionBlock:(void(^)(id results))aCompletionBlock;
++ (IRAsyncOperation *) operationWithWorkerBlock:(void(^)(IRAsyncOperationCallback callback))aWorkerBlock completionBlock:(IRAsyncOperationCallback)aCompletionBlock;
 
 @end
