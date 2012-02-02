@@ -251,12 +251,45 @@ NSString * IRDataStoreNonce () {
 	
 }
 
+
+
+
+
+- (NSString *) persistentFileURLBasePath {
+
+	//	Here’s a fundamental assumption: app bundle won’t get moved when the app is running.
+	//	If that fails, don’t cache the path.
+
+	static NSString * path;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+
+		path = [[(NSURL *)[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] path] retain];
+	
+	});
+
+	return path;
+
+}
+
+- (NSString *) relativePathWithBasePath:(NSString *)basePath filePath:(NSString *)filePath {
+
+	if (![filePath hasPrefix:basePath])
+		return filePath;
+	
+	return [filePath substringFromIndex:[basePath length]];
+	
+}
+
+- (NSString *) absolutePathWithBasePath:(NSString *)basePath filePath:(NSString *)filePath {
+
+	return [[basePath stringByAppendingPathComponent:filePath] stringByExpandingTildeInPath];
+
+}
+
 - (NSURL *) oneUsePersistentFileURL {
 
-	NSString *documentDirectory = [(NSURL *)[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] path];
-	NSString *fileString = [documentDirectory stringByAppendingPathComponent:IRDataStoreNonce()];
-
-	return [NSURL fileURLWithPath:fileString];
+	return [NSURL fileURLWithPath:[[self persistentFileURLBasePath] stringByAppendingPathComponent:IRDataStoreNonce()]];
 
 }
 
