@@ -28,6 +28,7 @@
 - (NSManagedObjectContext *) defaultAutoUpdatedMOC;
 - (NSManagedObjectContext *) disposableMOC;
 
+
 //	Internally used Core Data stuff
 @property (nonatomic, readonly, retain) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, readonly, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -36,6 +37,14 @@
 //	Common file operations.
 //	-oneUsePersistentFileURL returns something with an UDID embedded
 //	Other methods are conveniences
+
+- (NSString *) persistentFileURLBasePath;	//	By default the documents directory
+- (NSString *) relativePathWithBasePath:(NSString *)basePath filePath:(NSString *)filePath;
+- (NSString *) absolutePathWithBasePath:(NSString *)basePath filePath:(NSString *)filePath;
+
+
+//	Note that everything here returns absolute URLs
+//	If you’re storing references to files in the app that probably gets migrated, use transformed relative paths
 
 - (NSURL *) oneUsePersistentFileURL;
 - (NSURL *) persistentFileURLForData:(NSData *)data; // no extension

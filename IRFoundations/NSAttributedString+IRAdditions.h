@@ -32,5 +32,6 @@
 @interface UIFont (NSAttributedString_IRAdditions)
 
 - (CTParagraphStyleRef) irFixedLineHeightParagraphStyle;
++ (CTParagraphStyleRef) irFixedLineHeightParagraphStyleForHeight:(float_t)lineHeight;
 
 @end

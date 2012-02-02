@@ -79,23 +79,28 @@ static void __attribute__((constructor)) initialize() {
 		return self;
 		
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGContextRef context = CGBitmapContextCreate(
-		NULL, 
-		width, 
-		height, 8, 
-		width * 4, 
-		colorSpace,
-		kCGImageAlphaNoneSkipFirst
-	);
-		
-	if (!context)
-		return self;
-		
-	//	Image is bad if can’t decode
 	
-	CGContextDrawImage(context, CGRectMake(0, 0, width, height), cgImage);
-	CGContextRelease(context);
-	CGColorSpaceRelease(colorSpace);
+	if (colorSpace) {
+		
+		CGContextRef context = CGBitmapContextCreate(
+			NULL, 
+			width, 
+			height, 8, 
+			width * 4, 
+			colorSpace,
+			kCGImageAlphaNoneSkipFirst
+		);
+			
+		if (context) {
+			
+			CGContextDrawImage(context, CGRectMake(0, 0, width, height), cgImage);
+			CGContextRelease(context);
+		
+		}
+
+		CGColorSpaceRelease(colorSpace);
+	
+	}
 
 	return self;
 
@@ -202,17 +207,13 @@ static void __attribute__((constructor)) initialize() {
 
 - (void) irWriteToSavedPhotosAlbumWithCompletion:(void(^)(BOOL didWrite, NSError *error))aBlock {
 
-	__block NSDictionary *contextInfo = nil;
-	
-	contextInfo = [[NSDictionary dictionaryWithObjectsAndKeys:
+	__block NSDictionary *contextInfo = [[NSDictionary dictionaryWithObjectsAndKeys:
 	
 		[[ ^ (NSError *error) {
 		
 			if (aBlock)
 				aBlock((BOOL)!error, error);
-			
-			[contextInfo autorelease];
-		
+					
 		} copy] autorelease], kUIImage_IRAdditions_didWriteToSavedPhotosCallback,
 	
 	nil] retain];
@@ -223,13 +224,13 @@ static void __attribute__((constructor)) initialize() {
 
 - (void) handleDidWriteImageToSavedPhotosAlbum:(UIImage *)image withError:(NSError *)error contextInfo:(NSDictionary *)contextInfo {
 
-	if (image != self)
-		return;
-	
 	void (^callback)(NSError *) = [contextInfo objectForKey:kUIImage_IRAdditions_didWriteToSavedPhotosCallback];
 	
 	if (callback)
 		callback(error);
+	
+	if ([contextInfo isKindOfClass:[NSDictionary class]])	
+		[contextInfo autorelease];
 
 }
 

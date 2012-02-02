@@ -9,16 +9,17 @@
 #import "IRNoOp.h"
 
 
-static IRNoOp *IRNoOpSharedNoOp = nil;
-
 @implementation IRNoOp
 
 + (IRNoOp *) noOp {
 
-	if (!IRNoOpSharedNoOp)
-	IRNoOpSharedNoOp = [[IRNoOp alloc] init];
-	
-	return IRNoOpSharedNoOp;
+	static IRNoOp *instance = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^ {
+			instance = [[self alloc] init];
+	});
+
+	return instance;
 
 }
 
@@ -30,7 +31,7 @@ static IRNoOp *IRNoOpSharedNoOp = nil;
 
 - (id) initWithCoder:(NSCoder *)aCoder {
 
-	return [[self class] noOp];
+	return [self init];
 
 }
 
@@ -42,7 +43,7 @@ static IRNoOp *IRNoOpSharedNoOp = nil;
 
 - (id) copyWithZone:(NSZone *)zone {
 
-	return [[self class] noOp];
+	return [[[self class] alloc] init];
 
 }
 
