@@ -95,7 +95,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 }
 
 - (void) dealloc {
-    
+	
 	[callbackBlock release];
 	[super dealloc];
 	
