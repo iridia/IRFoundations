@@ -11,6 +11,6 @@
 
 @interface IRNoOp : NSObject <NSCoding, NSCopying>
 
-+ (IRNoOp *) noOp NS_RETURNS_RETAINED;
++ (IRNoOp *) noOp NS_RETURNS_NOT_RETAINED;
 
 @end
