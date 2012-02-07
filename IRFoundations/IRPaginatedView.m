@@ -280,39 +280,43 @@
 
 	[super layoutSubviews];
 	
-	self.scrollView.delegate = nil;
+	@autoreleasepool {
 	
-	CGRect newFrame = CGRectInset(self.bounds, -1 * self.horizontalSpacing, 0);
-	if (!CGRectEqualToRect(self.scrollView.frame, newFrame)) {
-		self.scrollView.frame = newFrame;
+		self.scrollView.delegate = nil;
+		
+		CGRect newFrame = CGRectInset(self.bounds, -1 * self.horizontalSpacing, 0);
+		if (!CGRectEqualToRect(self.scrollView.frame, newFrame)) {
+			self.scrollView.frame = newFrame;
+		}
+		
+		CGSize newSize = (CGSize){
+			CGRectGetWidth(self.scrollView.frame) * self.numberOfPages,
+			CGRectGetHeight(self.scrollView.frame)
+		};
+		if (!CGSizeEqualToSize(self.scrollView.contentSize, newSize)) {
+			self.scrollView.contentSize = newSize;
+		}
+		
+		NSUInteger index = 0; for (index = 0; index < self.numberOfPages; index++) {
+		
+			if ([self requiresVisiblePageAtIndex:index])
+				[self ensureViewAtIndexVisible:index];
+		
+			UIView *existingView = [self existingViewForPageAtIndex:index];
+			
+			if (!existingView)
+				continue;
+			
+			CGRect pageRect = [self pageRectForIndex:index];
+			
+			if (!CGRectEqualToRect(existingView.frame, pageRect))
+				existingView.frame = pageRect;
+			
+		}
+		
+		self.scrollView.delegate = self;
+	
 	}
-	
-	CGSize newSize = (CGSize){
-		CGRectGetWidth(self.scrollView.frame) * self.numberOfPages,
-		CGRectGetHeight(self.scrollView.frame)
-	};
-	if (!CGSizeEqualToSize(self.scrollView.contentSize, newSize)) {
-		self.scrollView.contentSize = newSize;
-	}
-	
-	NSUInteger index = 0; for (index = 0; index < self.numberOfPages; index++) {
-	
-		if ([self requiresVisiblePageAtIndex:index])
-			[self ensureViewAtIndexVisible:index];
-	
-		UIView *existingView = [self existingViewForPageAtIndex:index];
-		
-		if (!existingView)
-			continue;
-		
-		CGRect pageRect = [self pageRectForIndex:index];
-		
-		if (!CGRectEqualToRect(existingView.frame, pageRect))
-			existingView.frame = pageRect;
-		
-	}
-	
-	self.scrollView.delegate = self;
 	
 }
 
