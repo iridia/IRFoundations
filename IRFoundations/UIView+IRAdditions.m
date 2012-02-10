@@ -161,4 +161,16 @@ void UIView_IRAdditions_drawLayerInContext (UIView *self, SEL _cmd, CALayer *aLa
 
 }
 
+- (UIView *) irAncestorInView:(UIView *)aView {
+
+	if (![self isDescendantOfView:aView])
+		return nil;
+	
+	if (self.superview == aView)
+		return self;
+	
+	return [self.superview irAncestorInView:aView];
+
+}
+
 @end
