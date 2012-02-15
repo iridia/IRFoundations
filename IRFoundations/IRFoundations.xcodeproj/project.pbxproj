@@ -135,6 +135,8 @@
 		FF59C3A41418A06400F4BF2D /* UIWindow+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF59C3A01418A06400F4BF2D /* UIWindow+IRAdditions.m */; };
 		FF61635914161868004738D3 /* IRMailComposeViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF61635714161868004738D3 /* IRMailComposeViewController.h */; };
 		FF61635A14161868004738D3 /* IRMailComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF61635814161868004738D3 /* IRMailComposeViewController.m */; };
+		FF627C2314EBBA1C00DCC8C2 /* IRParagraphStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = FF627C2114EBBA1C00DCC8C2 /* IRParagraphStyle.h */; };
+		FF627C2414EBBA1C00DCC8C2 /* IRParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = FF627C2214EBBA1C00DCC8C2 /* IRParagraphStyle.m */; };
 		FF72C1F214278ABF00B5D838 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFFDEF7214211BCC0083BEFB /* Cocoa.framework */; };
 		FF72C1F814278ABF00B5D838 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF72C1F614278ABF00B5D838 /* InfoPlist.strings */; };
 		FF72C1FC14278ABF00B5D838 /* IRFoundationsX.m in Sources */ = {isa = PBXBuildFile; fileRef = FF72C1FB14278ABF00B5D838 /* IRFoundationsX.m */; };
@@ -332,6 +334,8 @@
 		FF59C3A01418A06400F4BF2D /* UIWindow+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+IRAdditions.m"; sourceTree = "<group>"; };
 		FF61635714161868004738D3 /* IRMailComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRMailComposeViewController.h; sourceTree = "<group>"; };
 		FF61635814161868004738D3 /* IRMailComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRMailComposeViewController.m; sourceTree = "<group>"; };
+		FF627C2114EBBA1C00DCC8C2 /* IRParagraphStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRParagraphStyle.h; sourceTree = "<group>"; };
+		FF627C2214EBBA1C00DCC8C2 /* IRParagraphStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRParagraphStyle.m; sourceTree = "<group>"; };
 		FF72C1F114278ABF00B5D838 /* IRFoundationsX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IRFoundationsX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF72C1F514278ABF00B5D838 /* IRFoundationsX-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRFoundationsX-Info.plist"; sourceTree = "<group>"; };
 		FF72C1F714278ABF00B5D838 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -698,6 +702,8 @@
 		FFB6797B141E3F71006F84E3 /* CoreText+IRAdditions */ = {
 			isa = PBXGroup;
 			children = (
+				FF627C2114EBBA1C00DCC8C2 /* IRParagraphStyle.h */,
+				FF627C2214EBBA1C00DCC8C2 /* IRParagraphStyle.m */,
 				FFB6797C141E406B006F84E3 /* CoreText+IRAdditions.h */,
 				FFB6797D141E406B006F84E3 /* CoreText+IRAdditions.m */,
 				FFB67982141E415C006F84E3 /* NSAttributedString+IRAdditions.h */,
@@ -789,6 +795,7 @@
 				FF0D46BB1475885900340287 /* UIViewController+IRAdditions.h in Headers */,
 				FF0D46C014759E4A00340287 /* UIApplication+IRAdditions.h in Headers */,
 				FF7997A414909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */,
+				FF627C2314EBBA1C00DCC8C2 /* IRParagraphStyle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -990,6 +997,7 @@
 				FF0D46BC1475885900340287 /* UIViewController+IRAdditions.m in Sources */,
 				FF0D46C114759E4A00340287 /* UIApplication+IRAdditions.m in Sources */,
 				FF7997A514909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */,
+				FF627C2414EBBA1C00DCC8C2 /* IRParagraphStyle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
