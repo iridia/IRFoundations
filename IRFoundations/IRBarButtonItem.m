@@ -7,6 +7,7 @@
 //
 
 #import "IRBarButtonItem.h"
+#import "IRLifetimeHelper.h"
 
 
 @implementation IRBarButtonItem
@@ -48,7 +49,7 @@
 	
 	returnedItem.block = ^ { aBlock(returnedItem); };
 	
-	 return returnedItem; 
+	return returnedItem; 
 
 }
 
@@ -78,6 +79,55 @@
 	[returnedButton sizeToFit];
 	
 	return [self itemWithButton:returnedButton wiredAction:nil];
+
+}
+
++ (id) itemWithCustomImage:(UIImage *)aFullImage landscapePhoneImage:(UIImage *)landscapePhoneImage highlightedImage:(UIImage *)aHighlightedImage highlightedLandscapePhoneImage:(UIImage *)highlightedLandscapePhoneImage {
+
+	UIButton *returnedButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	
+	void (^update)(UIInterfaceOrientation) = [[^ (UIInterfaceOrientation anOrientation) {
+	
+		BOOL landscapePhone = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) && UIInterfaceOrientationIsLandscape(anOrientation);
+		
+		if (landscapePhone) {
+		
+			[returnedButton setImage:(landscapePhoneImage ? landscapePhoneImage : aFullImage) forState:UIControlStateNormal];
+			
+			if (aHighlightedImage || highlightedLandscapePhoneImage)
+				[returnedButton setImage:(highlightedLandscapePhoneImage ? highlightedLandscapePhoneImage : aHighlightedImage) forState:UIControlStateHighlighted];
+			
+		} else {
+		
+			[returnedButton setImage:aFullImage forState:UIControlStateNormal];
+
+			if (aHighlightedImage)
+				[returnedButton setImage:aHighlightedImage forState:UIControlStateHighlighted];
+
+		}
+	
+		[returnedButton sizeToFit];			
+		
+	} copy] autorelease];
+	
+	id notificationObject = [[[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidChangeStatusBarOrientationNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
+	
+		update([UIApplication sharedApplication].statusBarOrientation);
+		
+	}] retain];
+	
+	id returnedItem = [self itemWithButton:returnedButton wiredAction:nil];
+	
+	[returnedItem irPerformOnDeallocation:^{
+		
+		[[NSNotificationCenter defaultCenter] removeObserver:notificationObject];
+		[notificationObject release];
+		
+	}];
+	
+	update([UIApplication sharedApplication].statusBarOrientation);
+	
+	return returnedItem;
 
 }
 
