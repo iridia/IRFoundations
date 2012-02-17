@@ -130,10 +130,16 @@
 
 - (void) cancel {
 
-	dispatch_async(self.actualDispatchQueue, ^ {
+	dispatch_queue_t queue = self.actualDispatchQueue;
+	if (!queue)
+		queue = dispatch_get_global_queue(0, 0);
+
+	dispatch_async(queue, ^ {
+	
+		if (self.executing)
+			self.finished = YES;
 		
 		self.executing = NO;
-		self.finished = YES;
 		
 		if (self.workCompletionBlock)
 			self.workCompletionBlock(nil);
