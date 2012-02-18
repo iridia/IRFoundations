@@ -12,6 +12,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
+
 extern NSString * const kUIView_IRAdditions_onLayoutSubviews;
 extern NSString * const kUIView_IRAdditions_onDrawRect;
 extern NSString * const kUIView_IRAdditions_onDrawLayerInContext;
@@ -31,3 +32,12 @@ extern NSString * const kUIView_IRAdditions_onDrawLayerInContext;
 - (UIView *) irAncestorInView:(UIView *)aView;	//	Returns the enclosing subview in aView; if aView == self.superview, returns self
 
 @end
+
+
+#import "NSArray+IRAdditions.h"
+#import "CGGeometry+IRAdditions.h"
+
+extern IRMapCallback irMapFrameValuesFromViews (void);
+extern IRMapCallback irMapBoundsValuesFromViews (void);
+extern IRMapCallback irMapOriginValuesFromRectValues (void);
+extern IRMapCallback irMapCenterPointValuesFromRectValues (void);

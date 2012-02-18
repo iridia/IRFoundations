@@ -234,4 +234,33 @@ static void __attribute__((constructor)) initialize() {
 
 }
 
++ (BOOL) validateContentsOfFileAtPath:(NSString *)aFilePath error:(NSError **)error {
+
+	if (!aFilePath)
+		return YES;
+
+	error = error ? error : &(NSError *){ nil };
+	
+	if (aFilePath && ![[NSFileManager defaultManager] fileExistsAtPath:aFilePath]) {
+		
+		*error = [NSError errorWithDomain:@"com.iridia.foundations" code:0 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+			[NSString stringWithFormat:@"Image at %@ is actually nonexistant", aFilePath], NSLocalizedDescriptionKey,
+		nil]];
+		
+		return NO;
+		
+	} else if (![UIImage imageWithData:[NSData dataWithContentsOfMappedFile:aFilePath]]) {
+		
+		*error = [NSError errorWithDomain:@"com.iridia.foundations" code:0 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+			[NSString stringWithFormat:@"Image at %@ can’t be decoded", aFilePath], NSLocalizedDescriptionKey,
+		nil]];
+		
+		return NO;
+		
+	}
+
+	return YES;
+
+}
+
 @end

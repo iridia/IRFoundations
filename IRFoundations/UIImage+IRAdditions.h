@@ -22,4 +22,6 @@
 
 - (void) irWriteToSavedPhotosAlbumWithCompletion:(void(^)(BOOL didWrite, NSError *error))aBlock;
 
++ (BOOL) validateContentsOfFileAtPath:(NSString *)path error:(NSError **)error;
+
 @end
