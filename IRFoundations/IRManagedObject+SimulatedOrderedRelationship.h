@@ -16,6 +16,9 @@
 //	Call in array getter
 - (NSArray *) irBackingOrderArrayKeyed:(NSString *)aKey;
 
+//	Convenience
+- (id) irObjectAtIndex:(NSUInteger)anIndex inArrayKeyed:(NSString *)arrayKey;
+
 //	Call in -didChangeValueForKey:withSetMutation:usingObjects:
 - (void) irUpdateObjects:(NSSet *)changedObjects withRelationshipKey:(NSString *)relationshipKey usingOrderArray:(NSString *)arrayKey withSetMutation:(NSKeyValueSetMutationKind)mutationKind;
 

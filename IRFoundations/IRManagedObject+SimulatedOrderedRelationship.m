@@ -86,6 +86,15 @@
 
 }
 
+- (id) irObjectAtIndex:(NSUInteger)anIndex inArrayKeyed:(NSString *)arrayKey {
+
+	NSArray *backingArray = [self irBackingOrderArrayKeyed:arrayKey];
+	NSURL *anURL = [backingArray objectAtIndex:anIndex];
+	
+	return [self.managedObjectContext irManagedObjectForURI:anURL];
+
+}
+
 - (void) irUpdateObjects:(NSSet *)changedObjects withRelationshipKey:(NSString *)relationshipKey usingOrderArray:(NSString *)arrayKey withSetMutation:(NSKeyValueSetMutationKind)mutationKind {
 
   //  Call super, then this method in:
