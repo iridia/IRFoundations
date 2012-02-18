@@ -161,4 +161,57 @@ void UIView_IRAdditions_drawLayerInContext (UIView *self, SEL _cmd, CALayer *aLa
 
 }
 
+- (UIView *) irAncestorInView:(UIView *)aView {
+
+	if (![self isDescendantOfView:aView])
+		return nil;
+	
+	if (self.superview == aView)
+		return self;
+	
+	return [self.superview irAncestorInView:aView];
+
+}
+
 @end
+
+
+IRMapCallback irMapFrameValuesFromViews () {
+
+	return (IRMapCallback)[[ ^ (UIView *aView, NSUInteger index, BOOL *stop) {
+
+		return [NSValue valueWithCGRect:aView.frame];
+	
+	} copy] autorelease];
+
+}
+
+IRMapCallback irMapBoundsValuesFromViews () {
+
+	return (IRMapCallback)[[ ^ (UIView *aView, NSUInteger index, BOOL *stop) {
+	
+		return [NSValue valueWithCGRect:aView.bounds];
+	
+	} copy] autorelease];
+
+}
+
+IRMapCallback irMapOriginValuesFromRectValues () {
+
+	return (IRMapCallback)[[ ^ (NSValue *aRectValue, NSUInteger index, BOOL *stop) {
+
+		return [NSValue valueWithCGPoint:[aRectValue CGRectValue].origin];	
+	
+	} copy] autorelease];
+
+}
+
+IRMapCallback irMapCenterPointValuesFromRectValues () {
+
+	return (IRMapCallback)[[ ^ (NSValue *aRectValue, NSUInteger index, BOOL *stop) {
+
+		return [NSValue valueWithCGPoint:irCGRectAnchor([aRectValue CGRectValue], irCenter, YES)];	
+	
+	} copy] autorelease];
+
+}
