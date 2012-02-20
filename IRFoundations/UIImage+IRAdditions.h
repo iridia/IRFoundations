@@ -4,6 +4,9 @@
 //
 //  Created by Evadne Wu on 6/16/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
+//	  
+//	  Portions of code in this class adapted from UIImage+Resize.m
+//  Created by Trevor Harmon
 //
 
 #import <QuartzCore/QuartzCore.h>
