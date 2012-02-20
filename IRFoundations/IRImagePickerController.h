@@ -31,4 +31,9 @@ typedef void (^IRImagePickerCallback) (NSURL *selectedAssetURI, ALAsset *represe
 @property (nonatomic, readwrite, assign) BOOL usesAssetsLibrary; // Default is YES
 @property (nonatomic, readwrite, assign) BOOL savesCameraImageCapturesToSavedPhotos; // Default is NO
 
+@property (nonatomic, readwrite, copy) void (^onViewWillAppear)(BOOL animated);
+@property (nonatomic, readwrite, copy) void (^onViewDidAppear)(BOOL animated);
+@property (nonatomic, readwrite, copy) void (^onViewWillDisappear)(BOOL animated);
+@property (nonatomic, readwrite, copy) void (^onViewDidDisappear)(BOOL animated);
+
 @end
