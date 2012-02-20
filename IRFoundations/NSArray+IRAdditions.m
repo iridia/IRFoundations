@@ -149,8 +149,21 @@ IRMapCallback irMapMakeWithKeyPath (NSString * inKeyPath) {
 	
 	return (IRMapCallback)[[ ^ (id object, NSUInteger index, BOOL *stop) {
 	
-		id returnedObject = [object valueForKeyPath:inKeyPath];
-		return returnedObject ? returnedObject : [NSNull null];
+		if (![object respondsToSelector:@selector(valueForKeyPath:)])
+			return [NSNull null];
+		
+		@try {
+			
+			id returnedObject = [object valueForKeyPath:inKeyPath];
+			return returnedObject ? returnedObject : [NSNull null];
+			
+		} @catch (NSException *exception) {
+			
+			NSLog(@"%s: %@", __PRETTY_FUNCTION__, exception);
+			
+		}
+		
+		return [NSNull null];
 	
 	} copy] autorelease];
  

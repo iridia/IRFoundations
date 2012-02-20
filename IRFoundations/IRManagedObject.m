@@ -36,210 +36,223 @@
 //	The value that local or remote key paths point to will be called markers
 
 	if (!dictionaries || [dictionaries isEqual:[NSNull null]] || ([dictionaries count] == 0))
-	return nil;
+		return nil;
 	
 	if (!managedObjectKeyPath || !dictionaryKeyPath)
-	return nil;
-	
-	
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	NSError *error = nil;
-	NSArray *existingEntities = [context executeFetchRequest:(( ^ {
-
-		NSFetchRequest *returnedRequest = [[[NSFetchRequest alloc] init] autorelease];
-
-		[returnedRequest setEntity:[NSEntityDescription entityForName:[self coreDataEntityName] inManagedObjectContext:context]];
+		return nil;
 		
-		[returnedRequest setPredicate:[NSPredicate predicateWithFormat:
+	dictionaries = [dictionaries irMap:^id(id inObject, NSUInteger index, BOOL *stop) {
 		
-			@"(%K IN %@)", 
+		if ([inObject isKindOfClass:[NSDictionary class]])
+			return inObject;
 		
-			managedObjectKeyPath, 
-			[[dictionaries irMap:irMapMakeWithKeyPath(dictionaryKeyPath)] irMap:irMapNullFilterMake()]
-			
-		]];
+		NSLog(@"Warning: Object %@ at index %i is not a dictionary, skipping.", inObject, index);
+		return nil;
 		
-		[returnedRequest setSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:managedObjectKeyPath ascending:YES]]];
-		
-		[returnedRequest setReturnsObjectsAsFaults:NO];
-		
-		return returnedRequest;
-	
-	})()) error:&error];
-	
-	if (!existingEntities)
-	return nil;
-	
-	
-	IRMOLog(@"%s fetching existing entities %@", __PRETTY_FUNCTION__, existingEntities);
-	
-	NSUInteger existingEntitiesCount = [existingEntities count];
-	__block NSUInteger currentEntityIndex = -1;
-	IRManagedObject *currentEntity = (existingEntitiesCount > 0) ? [existingEntities objectAtIndex:0] : nil;
-
-	id (^nextEntity)() = ^ {
-	
-		if (!currentEntity)
-		return (id)nil;
-
-		currentEntityIndex++;
-		
-		if (currentEntityIndex == existingEntitiesCount)
-		return (id)nil;
-		
-		return (id)[existingEntities objectAtIndex:currentEntityIndex];
-		
-	};
-
-
-	NSComparisonResult (^compare) (id, id) = ^ (id inEntity, id inRemoteDictionary) {
-	
-		return [[inEntity valueForKey:managedObjectKeyPath] compare:[inRemoteDictionary valueForKeyPath:dictionaryKeyPath]];
-	
-	};
-	
-	NSMutableArray *returnedEntities = [[dictionaries mutableCopy] autorelease];
-	NSArray *sortedRemoteDictionaries = [dictionaries sortedArrayUsingComparator:irComparatorMakeWithNodeKeyPath(dictionaryKeyPath)];
-	
-	
-	NSMutableArray *updatedOrInsertedReps = [NSMutableArray array];
-	
-	
-//	The remote dictionaries are sorted by the value at a particular key path.  There may be duplicates.
-//	Duplicates get wrapped into an array containing every representation.
-
-	__block NSMutableArray *currentWrapperArray = nil;
-	
-	NSArray *uniqueValues = [[sortedRemoteDictionaries irMap:^(id inObject, NSUInteger index, BOOL *stop) {
-	
-		return [inObject valueForKeyPath:dictionaryKeyPath];
-	
-	}] irMap:irMapNullFilterMake()];
-	
-	NSMutableArray *unusedRemoteDictionaries = [[sortedRemoteDictionaries mutableCopy] autorelease];
-	
-	[uniqueValues enumerateObjectsUsingBlock: ^ (id currentUniqueValue, NSUInteger idx, BOOL *stop) {
-	
-		id currentObject = [sortedRemoteDictionaries objectAtIndex:idx];
-	
-		if (idx > 0)
-		if ([currentUniqueValue isEqual:[uniqueValues objectAtIndex:(idx - 1)]]) {
-
-			[currentWrapperArray addObject:currentObject];
-			[unusedRemoteDictionaries removeObject:currentObject];
-			return;
-		
-		}
-	
-		NSMutableArray *wrapperArray = [NSMutableArray array];
-		[updatedOrInsertedReps addObject:wrapperArray];
-		[wrapperArray addObject:currentObject];
-		[unusedRemoteDictionaries removeObject:currentObject];
-		
-		currentWrapperArray = wrapperArray;
-	
 	}];
-	
 
-	for (NSDictionary *anUnusedRemoteDictionary in unusedRemoteDictionaries)
-		[updatedOrInsertedReps addObject:[NSArray arrayWithObject:anUnusedRemoteDictionary]];
 	
-	//	There is a circumstance, where the multiple remote dictionaries can have a same value at dictionaryKeyPath
+	__block NSMutableArray *returnedEntities = nil;
 	
-	for (NSArray *currentDictionaryWrapper in updatedOrInsertedReps) {
-	
-		id currentDictionary = [currentDictionaryWrapper objectAtIndex:0];
-	
-		if ([currentDictionary isEqual:[NSNull null]])
-		continue;
-		
-	//	When the dictionary has a marker that is ahead of the entity, move on to the next entity
-		
-		if (currentEntity)
-		while (compare(currentEntity, currentDictionary) == NSOrderedAscending) {
-		
-			currentEntity = nextEntity();
+	@autoreleasepool {
+    
+		NSError *error = nil;
+		NSArray *existingEntities = [context executeFetchRequest:(( ^ {
+
+			NSFetchRequest *returnedRequest = [[[NSFetchRequest alloc] init] autorelease];
+
+			[returnedRequest setEntity:[NSEntityDescription entityForName:[self coreDataEntityName] inManagedObjectContext:context]];
 			
+			[returnedRequest setPredicate:[NSPredicate predicateWithFormat:
+			
+				@"(%K IN %@)", 
+			
+				managedObjectKeyPath, 
+				[[dictionaries irMap:irMapMakeWithKeyPath(dictionaryKeyPath)] irMap:irMapNullFilterMake()]
+				
+			]];
+			
+			[returnedRequest setSortDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:managedObjectKeyPath ascending:YES]]];
+			
+			[returnedRequest setReturnsObjectsAsFaults:NO];
+			
+			return returnedRequest;
+		
+		})()) error:&error];
+		
+		if (!existingEntities)
+			return nil;
+		
+		
+		IRMOLog(@"%s fetching existing entities %@", __PRETTY_FUNCTION__, existingEntities);
+		
+		NSUInteger existingEntitiesCount = [existingEntities count];
+		__block NSUInteger currentEntityIndex = -1;
+		IRManagedObject *currentEntity = (existingEntitiesCount > 0) ? [existingEntities objectAtIndex:0] : nil;
+
+		id (^nextEntity)() = ^ {
+		
 			if (!currentEntity)
-			break;
-					
-		}
-		
-		
-	//	The marker of the dictionary is guaranteed to match, or fall behind the current entity
-	
-		IRManagedObject *touchedEntity = nil;
-		
-		
-		NSDictionary *configurationDictionary = (( ^ {
-		
-			if ([currentDictionaryWrapper count] == 1)
-			return currentDictionary;
-		
-			NSMutableDictionary *returnedDictionary = [currentDictionary mutableCopy];
+			return (id)nil;
+
+			currentEntityIndex++;
 			
-			[currentDictionaryWrapper enumerateObjectsUsingBlock: ^ (NSDictionary *aDictionary, NSUInteger idx, BOOL *stop) {
-	
-				[returnedDictionary addEntriesFromDictionary:aDictionary];
-	
+			if (currentEntityIndex == existingEntitiesCount)
+			return (id)nil;
+			
+			return (id)[existingEntities objectAtIndex:currentEntityIndex];
+			
+		};
+
+
+		NSComparisonResult (^compare) (id, id) = ^ (id inEntity, id inRemoteDictionary) {
+		
+			return [[inEntity valueForKey:managedObjectKeyPath] compare:[inRemoteDictionary valueForKeyPath:dictionaryKeyPath]];
+		
+		};
+		
+		returnedEntities = [[dictionaries mutableCopy] autorelease];
+		NSArray *sortedRemoteDictionaries = [dictionaries sortedArrayUsingComparator:irComparatorMakeWithNodeKeyPath(dictionaryKeyPath)];
+		
+		
+		NSMutableArray *updatedOrInsertedReps = [NSMutableArray array];
+		
+		
+	//	The remote dictionaries are sorted by the value at a particular key path.  There may be duplicates.
+	//	Duplicates get wrapped into an array containing every representation.
+
+		__block NSMutableArray *currentWrapperArray = nil;
+		
+		NSArray *uniqueValues = [[sortedRemoteDictionaries irMap:^(id inObject, NSUInteger index, BOOL *stop) {
+		
+			return [inObject valueForKeyPath:dictionaryKeyPath];
+		
+		}] irMap:irMapNullFilterMake()];
+		
+		NSMutableArray *unusedRemoteDictionaries = [[sortedRemoteDictionaries mutableCopy] autorelease];
+		
+		[uniqueValues enumerateObjectsUsingBlock: ^ (id currentUniqueValue, NSUInteger idx, BOOL *stop) {
+		
+			id currentObject = [sortedRemoteDictionaries objectAtIndex:idx];
+		
+			if (idx > 0)
+			if ([currentUniqueValue isEqual:[uniqueValues objectAtIndex:(idx - 1)]]) {
+
+				[currentWrapperArray addObject:currentObject];
+				[unusedRemoteDictionaries removeObject:currentObject];
+				return;
+			
+			}
+		
+			NSMutableArray *wrapperArray = [NSMutableArray array];
+			[updatedOrInsertedReps addObject:wrapperArray];
+			[wrapperArray addObject:currentObject];
+			[unusedRemoteDictionaries removeObject:currentObject];
+			
+			currentWrapperArray = wrapperArray;
+		
+		}];
+		
+
+		for (NSDictionary *anUnusedRemoteDictionary in unusedRemoteDictionaries)
+			[updatedOrInsertedReps addObject:[NSArray arrayWithObject:anUnusedRemoteDictionary]];
+		
+		//	There is a circumstance, where the multiple remote dictionaries can have a same value at dictionaryKeyPath
+		
+		for (NSArray *currentDictionaryWrapper in updatedOrInsertedReps) {
+		
+			id currentDictionary = [currentDictionaryWrapper objectAtIndex:0];
+		
+			if ([currentDictionary isEqual:[NSNull null]])
+			continue;
+			
+		//	When the dictionary has a marker that is ahead of the entity, move on to the next entity
+			
+			if (currentEntity)
+			while (compare(currentEntity, currentDictionary) == NSOrderedAscending) {
+			
+				currentEntity = nextEntity();
+				
+				if (!currentEntity)
+				break;
+						
+			}
+			
+			
+		//	The marker of the dictionary is guaranteed to match, or fall behind the current entity
+		
+			IRManagedObject *touchedEntity = nil;
+			
+			
+			NSDictionary *configurationDictionary = (( ^ {
+			
+				if ([currentDictionaryWrapper count] == 1)
+				return currentDictionary;
+			
+				NSMutableDictionary *returnedDictionary = [currentDictionary mutableCopy];
+				
+				[currentDictionaryWrapper enumerateObjectsUsingBlock: ^ (NSDictionary *aDictionary, NSUInteger idx, BOOL *stop) {
+		
+					[returnedDictionary addEntriesFromDictionary:aDictionary];
+		
+				}];
+				
+				return returnedDictionary;
+			
+			})());
+			
+			
+		//	Compare only the master key path.  Since only the master is compared there is only need to make sure we touch the entity only ONCE per loop, hence the composited dictionary is used to avoid potentially very costly object configuration.
+			
+			if ((currentEntity != nil) && (compare(currentEntity, currentDictionary) == NSOrderedSame)) {
+			
+				touchedEntity = currentEntity;
+				[touchedEntity configureWithRemoteDictionary:configurationDictionary];
+			
+			} else {
+			
+				touchedEntity = [self objectInsertingIntoContext:context withRemoteDictionary:configurationDictionary];
+			
+			}
+			
+			
+		//	If there are multiple representations, use them up
+		
+			NSIndexSet *indexes = [returnedEntities indexesOfObjectsPassingTest: ^ (id obj, NSUInteger idx, BOOL *stop) {
+			
+				if (![obj isKindOfClass:[NSDictionary class]])
+				return NO;
+			
+				return [[obj valueForKeyPath:dictionaryKeyPath] isEqual:[currentDictionary valueForKeyPath:dictionaryKeyPath]];
+			
+			//	This will NOT work with eventually-consistent-style systems
+			//	For example, Twitter itself can change its mind about an user’s following count in the middle of a response body!
+			//	return [obj isEqual:currentDictionary];
+			
 			}];
 			
-			return returnedDictionary;
-		
-		})());
-		
-		
-	//	Compare only the master key path.  Since only the master is compared there is only need to make sure we touch the entity only ONCE per loop, hence the composited dictionary is used to avoid potentially very costly object configuration.
-		
-		if ((currentEntity != nil) && (compare(currentEntity, currentDictionary) == NSOrderedSame)) {
-		
-			touchedEntity = currentEntity;
-			[touchedEntity configureWithRemoteDictionary:configurationDictionary];
-		
-		} else {
-		
-			touchedEntity = [self objectInsertingIntoContext:context withRemoteDictionary:configurationDictionary];
-		
-		}
-		
-		
-	//	If there are multiple representations, use them up
-	
-		NSIndexSet *indexes = [returnedEntities indexesOfObjectsPassingTest: ^ (id obj, NSUInteger idx, BOOL *stop) {
-		
-			if (![obj isKindOfClass:[NSDictionary class]])
-			return NO;
-		
-			return [[obj valueForKeyPath:dictionaryKeyPath] isEqual:[currentDictionary valueForKeyPath:dictionaryKeyPath]];
-		
-		//	This will NOT work with eventually-consistent-style systems
-		//	For example, Twitter itself can change its mind about an user’s following count in the middle of a response body!
-		//	return [obj isEqual:currentDictionary];
-		
-		}];
-		
-		
-		
-		[indexes enumerateIndexesUsingBlock: ^ (NSUInteger idx, BOOL *stop) {
+			
+			
+			[indexes enumerateIndexesUsingBlock: ^ (NSUInteger idx, BOOL *stop) {
 
-			[returnedEntities replaceObjectAtIndex:idx withObject:touchedEntity];
-		
-		}];
-		
-		if (![indexes count]) {
-		
-		
-		
-			NSUInteger foundIndex = [returnedEntities indexOfObjectIdenticalTo:currentDictionary];
-			if (foundIndex != NSNotFound)
-				[returnedEntities replaceObjectAtIndex:foundIndex withObject:touchedEntity];
+				[returnedEntities replaceObjectAtIndex:idx withObject:touchedEntity];
+			
+			}];
+			
+			if (![indexes count]) {
+			
+			
+			
+				NSUInteger foundIndex = [returnedEntities indexOfObjectIdenticalTo:currentDictionary];
+				if (foundIndex != NSNotFound)
+					[returnedEntities replaceObjectAtIndex:foundIndex withObject:touchedEntity];
+			}
+			
 		}
 		
+		[returnedEntities retain];
+
 	}
-	
-	[returnedEntities retain];
-	[pool drain];
 
 #if 0	
 #ifdef DEBUG
@@ -545,8 +558,15 @@
 		
 	//	If the committed value is actually an array we assume that it’ll be taken care of by insertOrUpdateObjectsUsingContext:withRemoteResponse:usingMapping:options: instead
 		
-		if (![committedValue isKindOfClass:[NSArray class]])
-		[self setValue:[[self class] transformedValue:committedValue fromRemoteKeyPath:aRemoteKeyPath toLocalKeyPath:aLocalKeyPath] forKeyPath:aLocalKeyPath];
+		if (![committedValue isKindOfClass:[NSArray class]]) {
+			
+			@try {
+				[self setValue:[[self class] transformedValue:committedValue fromRemoteKeyPath:aRemoteKeyPath toLocalKeyPath:aLocalKeyPath] forKeyPath:aLocalKeyPath];
+			} @catch (NSException *exception) {
+				NSLog(@"Exception happened when setting value: %@", exception);
+			}
+			
+		}
 			
 	}
 	
