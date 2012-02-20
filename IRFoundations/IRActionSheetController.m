@@ -27,13 +27,27 @@
 
 @synthesize behavingProgrammatically;
 
++ (IRAction *) defaultCancelAction {
+
+  return [IRAction actionWithTitle:@"Cancel" block:^{
+    //  No op
+  }];
+
+}
+
 + (IRActionSheetController *) actionSheetControllerWithTitle:(NSString *)aTitle cancelAction:(IRAction *)cancellationAction destructiveAction:(IRAction *)destructionAction otherActions:(NSArray *)otherActionsOrNil {
 
 	IRActionSheetController *controller = [[self alloc] init];
-	if (!controller) return nil;
+	if (!controller)
+    return nil;
+  
+  IRAction *cancelAction = nil;
+  
+  if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone)
+    cancelAction = cancellationAction ? cancellationAction : [self defaultCancelAction];
 	
 	controller.title = aTitle;
-	controller.cancellationAction = cancellationAction;
+	controller.cancellationAction = cancelAction;
 	controller.destructionAction = destructionAction;
 	controller.otherActions = otherActionsOrNil;
 	
