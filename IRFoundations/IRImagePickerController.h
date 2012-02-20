@@ -36,4 +36,6 @@ typedef void (^IRImagePickerCallback) (NSURL *selectedAssetURI, ALAsset *represe
 @property (nonatomic, readwrite, copy) void (^onViewWillDisappear)(BOOL animated);
 @property (nonatomic, readwrite, copy) void (^onViewDidDisappear)(BOOL animated);
 
+@property (nonatomic, readwrite, assign) BOOL asynchronous;	//	Default is NO
+
 @end

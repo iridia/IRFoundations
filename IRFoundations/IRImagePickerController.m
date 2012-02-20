@@ -34,6 +34,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 
 @synthesize callbackBlock, takesPictureOnVolumeUpKeypress, usesAssetsLibrary, savesCameraImageCapturesToSavedPhotos;
 @synthesize onViewWillAppear, onViewDidAppear, onViewWillDisappear, onViewDidDisappear;
+@synthesize asynchronous;
 
 + (IRImagePickerController *) savedImagePickerWithCompletionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
     
@@ -127,7 +128,23 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 	
 	void (^bounceImage)(UIImage *) = ^ (UIImage *anImage) {
 	
-		dispatch_async(dispatch_get_global_queue(0, 0), ^ {
+		__typeof__(self.callbackBlock) const callbackBlock = self.callbackBlock;
+		BOOL const async = self.asynchronous;
+
+		void (^sendImage)(NSURL *) =	[[ ^ (NSURL *fileURL) {
+
+			if (callbackBlock)
+				callbackBlock(fileURL, nil);
+			
+			dispatch_async(dispatch_get_global_queue(0, 0), ^ {
+			
+				[[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
+			
+			});
+
+		} copy] autorelease];
+		
+		__block void (^copyImage)(void) = ^ {
 			
 			CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
 			CFStringRef uuidString = CFUUIDCreateString(kCFAllocatorDefault, uuidRef);
@@ -148,20 +165,31 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 			
 			};
 			
-			dispatch_async(dispatch_get_main_queue(), ^ {
-		
-				if (self.callbackBlock)
-					self.callbackBlock(fileURL, nil);
+			if (async) {
 				
-				dispatch_async(dispatch_get_global_queue(0, 0), ^ {
+				dispatch_async(dispatch_get_main_queue(), ^ {
 				
-					[[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
-				
+					sendImage(fileURL);
+					
 				});
-		
-			});
+				
+			} else {
+				
+				sendImage(fileURL);
+				
+			}
 			
-		});
+		};
+		
+		if (async) {
+
+			dispatch_async(dispatch_get_global_queue(0, 0), copyImage);
+		
+		} else {
+		
+			copyImage();
+		
+		}
 	
 	};
 	
