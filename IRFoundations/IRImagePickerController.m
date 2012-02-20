@@ -249,7 +249,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 - (void) imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
 	if (self.callbackBlock)
-        self.callbackBlock(nil, nil);
+		self.callbackBlock(nil, nil);
     
 }
 
