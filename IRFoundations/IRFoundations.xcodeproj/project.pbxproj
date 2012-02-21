@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF0527E714F398810030D099 /* UITableViewCell+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0527E514F398810030D099 /* UITableViewCell+IRAdditions.h */; };
+		FF0527E814F398810030D099 /* UITableViewCell+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0527E614F398810030D099 /* UITableViewCell+IRAdditions.m */; };
 		FF06363A14B346EA00E7AF78 /* QuartzCore+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CED1337B36A00DDA47C /* QuartzCore+IRAdditions.h */; };
 		FF06363B14B346EA00E7AF78 /* QuartzCore+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8CEE1337B36A00DDA47C /* QuartzCore+IRAdditions.m */; };
 		FF0A8C8C1337B28200DDA47C /* IRFoundations.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8C8B1337B28200DDA47C /* IRFoundations.h */; };
@@ -242,6 +244,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FF0527E514F398810030D099 /* UITableViewCell+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+IRAdditions.h"; sourceTree = "<group>"; };
+		FF0527E614F398810030D099 /* UITableViewCell+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+IRAdditions.m"; sourceTree = "<group>"; };
 		FF0A8BA91337AFB700DDA47C /* libIRFoundationsTouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIRFoundationsTouch.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF0A8C8B1337B28200DDA47C /* IRFoundations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRFoundations.h; sourceTree = "<group>"; };
 		FF0A8C931337B29F00DDA47C /* Foundation+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Foundation+IRAdditions.h"; sourceTree = "<group>"; };
@@ -595,6 +599,8 @@
 		FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */ = {
 			isa = PBXGroup;
 			children = (
+				FF0527E514F398810030D099 /* UITableViewCell+IRAdditions.h */,
+				FF0527E614F398810030D099 /* UITableViewCell+IRAdditions.m */,
 				FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */,
 				FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */,
 				FF0A8D201337B36A00DDA47C /* IRAction.h */,
@@ -850,6 +856,7 @@
 				FF35891014EE7631005B452C /* NSSet+IRAdditions.h in Headers */,
 				FF35891614EE763B005B452C /* NSDictionary+IRAdditions.h in Headers */,
 				FF35891C14EE7679005B452C /* NSString+IRAdditions.h in Headers */,
+				FF0527E714F398810030D099 /* UITableViewCell+IRAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1064,6 +1071,7 @@
 				FF35891214EE7631005B452C /* NSSet+IRAdditions.m in Sources */,
 				FF35891814EE763B005B452C /* NSDictionary+IRAdditions.m in Sources */,
 				FF35891E14EE7679005B452C /* NSString+IRAdditions.m in Sources */,
+				FF0527E814F398810030D099 /* UITableViewCell+IRAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
