@@ -342,9 +342,9 @@
 		CGContextClip(context);
 		CGContextSetStrokeColorWithColor(context, buttonBorder.color.CGColor);
 		CGContextSetLineWidth(context, buttonBorder.width * 2);
-		CGContextSetBlendMode(context, kCGBlendModeClear); // first clean underlying stuff
-		CGContextAddPath(context, bezierPath.CGPath);
-		CGContextStrokePath(context);
+		//	CGContextSetBlendMode(context, kCGBlendModeClear); // first clean underlying stuff
+		//CGContextAddPath(context, bezierPath.CGPath);
+		//CGContextStrokePath(context);
 		CGContextSetBlendMode(context, kCGBlendModeNormal); // then draw over a clear surface
 		CGContextAddPath(context, bezierPath.CGPath);
 		CGContextStrokePath(context);
