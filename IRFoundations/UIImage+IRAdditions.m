@@ -111,6 +111,10 @@ static void __attribute__((constructor)) initialize() {
 			break;
 		}
 		
+		default: {
+			break;
+		}
+		
 	}
 
 	switch (self.imageOrientation) {
@@ -126,6 +130,10 @@ static void __attribute__((constructor)) initialize() {
 		case UIImageOrientationRightMirrored: {  // EXIF = 7
 			transform = CGAffineTransformTranslate(transform, newSize.height, 0);
 			transform = CGAffineTransformScale(transform, -1, 1);
+			break;
+		}
+		
+		default: {
 			break;
 		}
 		
