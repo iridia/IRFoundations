@@ -85,6 +85,8 @@
 + (id) itemWithCustomImage:(UIImage *)aFullImage landscapePhoneImage:(UIImage *)landscapePhoneImage highlightedImage:(UIImage *)aHighlightedImage highlightedLandscapePhoneImage:(UIImage *)highlightedLandscapePhoneImage {
 
 	UIButton *returnedButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	returnedButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+	returnedButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	
 	void (^update)(UIInterfaceOrientation) = [[^ (UIInterfaceOrientation anOrientation) {
 	
@@ -106,7 +108,7 @@
 
 		}
 	
-		[returnedButton sizeToFit];			
+		[returnedButton sizeToFit];
 		
 	} copy] autorelease];
 	
