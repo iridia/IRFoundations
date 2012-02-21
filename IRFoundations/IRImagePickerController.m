@@ -128,13 +128,15 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 	
 	void (^bounceImage)(UIImage *) = ^ (UIImage *anImage) {
 	
-		__typeof__(self.callbackBlock) const callbackBlock = self.callbackBlock;
+		__typeof__(self.callbackBlock) const ownCallbackBlock = [self.callbackBlock copy];
 		BOOL const async = self.asynchronous;
 
 		void (^sendImage)(NSURL *) =	[[ ^ (NSURL *fileURL) {
 
-			if (callbackBlock)
-				callbackBlock(fileURL, nil);
+			if (ownCallbackBlock)
+				ownCallbackBlock(fileURL, nil);
+			
+			[ownCallbackBlock release];
 			
 			dispatch_async(dispatch_get_global_queue(0, 0), ^ {
 			
@@ -207,40 +209,35 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 		}
 	        
 	} else {
-        
-		if (self.usesAssetsLibrary) {
-       
-			ALAssetsLibrary *library = [[[ALAssetsLibrary alloc] init] autorelease];
-			[library assetForURL:assetURL resultBlock: ^ (ALAsset *asset) {
-                
-				objc_setAssociatedObject(asset, &kIRImagePickerControllerAssetLibrary, library, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-				
-				if (self.callbackBlock)
-					self.callbackBlock(tempMediaURL, asset);
-                
-			} failureBlock: ^ (NSError *error) {
-			
-				if (assetImage && !tempMediaURL) {
-					bounceImage(assetImage);
-					return;
-				}
-                
-				if (self.callbackBlock)
-					self.callbackBlock(tempMediaURL, nil);
-                
-			}];
-            
-		}	else {
-            
+	
+		if (!self.usesAssetsLibrary) {
+		
 			if (assetImage && !tempMediaURL) {
 				bounceImage(assetImage);
 				return;
 			}
+		
+		}
+        
+		ALAssetsLibrary *library = [[[ALAssetsLibrary alloc] init] autorelease];
+		[library assetForURL:assetURL resultBlock: ^ (ALAsset *asset) {
+							
+			objc_setAssociatedObject(asset, &kIRImagePickerControllerAssetLibrary, library, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 			
 			if (self.callbackBlock)
+				self.callbackBlock(tempMediaURL, asset);
+							
+		} failureBlock: ^ (NSError *error) {
+		
+			if (assetImage && !tempMediaURL) {
+				bounceImage(assetImage);
+				return;
+			}
+							
+			if (self.callbackBlock)
 				self.callbackBlock(tempMediaURL, nil);
-            
-		}
+							
+		}];
         
 	}
     
