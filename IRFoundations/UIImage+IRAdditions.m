@@ -243,13 +243,12 @@ static void __attribute__((constructor)) initialize() {
 			-1 * shadowOrNil.spread
 		);
 		
-		contextRect = CGRectUnion(contextRect, spillRect);
+		contextRect.size = spillRect.size;
 		imageOffset = (CGPoint){
-			spillRect.origin.x + shadowOrNil.spread,
-			spillRect.origin.y + shadowOrNil.spread
+			0 - spillRect.origin.x,
+			MAX(0, shadowOrNil.spread + shadowOrNil.offset.height)
 		};
-		contextRect.origin = CGPointZero;
-		
+
 	}
 	
 	
@@ -261,11 +260,6 @@ static void __attribute__((constructor)) initialize() {
 	
 	CGContextSaveGState(context);
 	CGContextConcatCTM(context, (CGAffineTransform){ 1, 0, 0, -1, 0, contextRect.size.height });
-
-	CGContextConcatCTM(context, CGAffineTransformMakeTranslation(
-		-1 * imageOffset.x,
-		-1 * (contextRect.size.height - imageOffset.y - self.size.height) //imageOffset.y
-	));
 	
 	CGContextBeginTransparencyLayer(context, nil);
 	CGContextClipToMask(context, (CGRect){ imageOffset, self.size }, self.CGImage);
