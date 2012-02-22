@@ -41,7 +41,7 @@
 	if (!controller)
     return nil;
   
-  IRAction *cancelAction = nil;
+  IRAction *cancelAction = cancellationAction;
   
   if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone)
     cancelAction = cancellationAction ? cancellationAction : [self defaultCancelAction];
