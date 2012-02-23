@@ -204,6 +204,8 @@
 		FFC813BC13EB8E4B007B0683 /* IRImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC813BA13EB8E4B007B0683 /* IRImagePickerController.m */; };
 		FFC813C013EB8F48007B0683 /* UIImage+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FFC813BE13EB8F48007B0683 /* UIImage+IRAdditions.h */; };
 		FFC813C113EB8F48007B0683 /* UIImage+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC813BF13EB8F48007B0683 /* UIImage+IRAdditions.m */; };
+		FFCA416414F62954005466ED /* NSBundle+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FFCA416214F62954005466ED /* NSBundle+IRAdditions.h */; };
+		FFCA416514F62954005466ED /* NSBundle+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FFCA416314F62954005466ED /* NSBundle+IRAdditions.m */; };
 		FFD295C313A40E9200EA8213 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD295C213A40E9200EA8213 /* libxml2.2.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */; };
 		FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */; };
@@ -419,6 +421,8 @@
 		FFC813BA13EB8E4B007B0683 /* IRImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRImagePickerController.m; sourceTree = "<group>"; };
 		FFC813BE13EB8F48007B0683 /* UIImage+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+IRAdditions.h"; sourceTree = "<group>"; };
 		FFC813BF13EB8F48007B0683 /* UIImage+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+IRAdditions.m"; sourceTree = "<group>"; };
+		FFCA416214F62954005466ED /* NSBundle+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+IRAdditions.h"; sourceTree = "<group>"; };
+		FFCA416314F62954005466ED /* NSBundle+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+IRAdditions.m"; sourceTree = "<group>"; };
 		FFD295C213A40E9200EA8213 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAlertView.h; sourceTree = "<group>"; };
 		FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAlertView.m; sourceTree = "<group>"; };
@@ -528,6 +532,8 @@
 		FF0A8C921337B29F00DDA47C /* Foundation+IRAdditions */ = {
 			isa = PBXGroup;
 			children = (
+				FFCA416214F62954005466ED /* NSBundle+IRAdditions.h */,
+				FFCA416314F62954005466ED /* NSBundle+IRAdditions.m */,
 				FF0A8C931337B29F00DDA47C /* Foundation+IRAdditions.h */,
 				FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */,
 				FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */,
@@ -857,6 +863,7 @@
 				FF35891614EE763B005B452C /* NSDictionary+IRAdditions.h in Headers */,
 				FF35891C14EE7679005B452C /* NSString+IRAdditions.h in Headers */,
 				FF0527E714F398810030D099 /* UITableViewCell+IRAdditions.h in Headers */,
+				FFCA416414F62954005466ED /* NSBundle+IRAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1072,6 +1079,7 @@
 				FF35891814EE763B005B452C /* NSDictionary+IRAdditions.m in Sources */,
 				FF35891E14EE7679005B452C /* NSString+IRAdditions.m in Sources */,
 				FF0527E814F398810030D099 /* UITableViewCell+IRAdditions.m in Sources */,
+				FFCA416514F62954005466ED /* NSBundle+IRAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
