@@ -11,8 +11,13 @@
 #import "IRBorder.h"
 
 enum {
+	
 	IRBarButtonItemStyleBordered = 1,
-	IRBarButtonItemStyleBack = 2
+	IRBarButtonItemStyleBack = 2,
+
+	IRBarButtonItemStyleBorderedLandscapePhone = 3,
+	IRBarButtonItemStyleBackLandscapePhone = 4
+
 }; typedef NSUInteger IRBarButtonItemStyle;
 
 @interface IRBarButtonItem : UIBarButtonItem

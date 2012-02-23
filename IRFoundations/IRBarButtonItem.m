@@ -222,7 +222,6 @@
 	
 	UIEdgeInsets insets = UIEdgeInsetsZero;
 	CGPoint titleOffset = CGPointZero;
-	static const CGFloat buttonHeight = 29.0;
 	
 	CGSize titleSize = [usingTitle sizeWithFont:usingFont];
 	CGSize finalSize = (CGSize){ 0, 0 };
@@ -231,11 +230,16 @@
 	
 	switch (aStyle) {
 	
-		case IRBarButtonItemStyleBack: {
+		case IRBarButtonItemStyleBack:
+		case IRBarButtonItemStyleBackLandscapePhone: {
 		
-			static const CGFloat cornerRadius = 6;
-			static const CGFloat slopeSize = 3;
-			insets = (UIEdgeInsets){ 0, 12, 0, 7 };
+			BOOL const isLandscapePhone = (aStyle == IRBarButtonItemStyleBackLandscapePhone);
+			
+			CGFloat const buttonHeight = isLandscapePhone ? 24.0 : 29.0;
+			CGFloat const cornerRadius = 6;
+			CGFloat const slopeSize = 3;
+			
+			insets = isLandscapePhone ? (UIEdgeInsets){ 0, 10, 0, 7 } : (UIEdgeInsets){ 0, 12, 0, 7 };
 			finalSize = (CGSize){ titleSize.width + 16 + 8, 44.0f };
 			bezierPath = [UIBezierPath bezierPath];
 			titleOffset = (CGPoint){ -2, 0 };
@@ -260,9 +264,13 @@
 			
 		};
 		
-		case IRBarButtonItemStyleBordered: {
+		case IRBarButtonItemStyleBordered:
+		case IRBarButtonItemStyleBorderedLandscapePhone: {
 		
-			static const CGFloat cornerRadius = 6;
+			BOOL const isLandscapePhone = (aStyle == IRBarButtonItemStyleBorderedLandscapePhone);
+			
+			CGFloat const buttonHeight = isLandscapePhone ? 24.0 : 29.0;
+			CGFloat const cornerRadius = 6;
 			insets = UIEdgeInsetsZero;
 			finalSize = (CGSize){ titleSize.width + 20, 44.0f };
 			bezierPath = [UIBezierPath bezierPathWithRoundedRect:(CGRect){
@@ -290,7 +298,31 @@
 	
 	if (buttonShadow) {
 	
-		CGContextSetShadowWithColor(context, buttonShadow.offset, buttonShadow.spread, buttonShadow.color.CGColor);
+		BOOL const knockoutShadow = YES;
+		
+		if (knockoutShadow) {
+	
+			CGContextSaveGState(context);
+			
+			CGContextSetShadowWithColor(context, buttonShadow.offset, buttonShadow.spread, buttonShadow.color.CGColor);
+			
+			CGContextAddPath(context, bezierPath.CGPath);
+			CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
+			CGContextFillPath(context);
+			
+			CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
+			
+			CGContextSetBlendMode(context, kCGBlendModeClear); // first clean underlying stuff
+			CGContextAddPath(context, bezierPath.CGPath);
+			CGContextFillPath(context);		
+			
+			CGContextRestoreGState(context);
+		
+		} else {
+		
+			CGContextSetShadowWithColor(context, buttonShadow.offset, buttonShadow.spread, buttonShadow.color.CGColor);
+		
+		}
 	
 	}
 	
@@ -324,13 +356,25 @@
 	if (buttonInnerShadow) {
 	
 		CGContextSaveGState(context);
+		
 		CGContextAddPath(context, bezierPath.CGPath);
 		CGContextClip(context);
-		CGContextSetStrokeColorWithColor(context, buttonInnerShadow.color.CGColor);
+		CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
 		CGContextSetLineWidth(context, buttonInnerShadow.spread);
+		
+		float_t const largeDistance = 1024.0;
+		
+		CGContextTranslateCTM(context, 0, largeDistance);
 		CGContextAddPath(context, bezierPath.CGPath);
-		CGContextSetShadowWithColor(context, buttonInnerShadow.offset, buttonInnerShadow.spread, buttonInnerShadow.color.CGColor);
+		CGContextTranslateCTM(context, 0, -largeDistance);
+		
+		CGContextSetShadowWithColor(context, (CGSize){
+			buttonInnerShadow.offset.width,
+			buttonInnerShadow.offset.height - largeDistance
+		}, buttonInnerShadow.spread, buttonInnerShadow.color.CGColor);
+		
 		CGContextStrokePath(context);
+		
 		CGContextRestoreGState(context);
 	
 	}
@@ -341,15 +385,19 @@
 		
 		CGContextSaveGState(context);
 		CGContextAddPath(context, bezierPath.CGPath);
+		
 		CGContextClip(context);
 		CGContextSetStrokeColorWithColor(context, buttonBorder.color.CGColor);
 		CGContextSetLineWidth(context, buttonBorder.width * 2);
-		//	CGContextSetBlendMode(context, kCGBlendModeClear); // first clean underlying stuff
-		//CGContextAddPath(context, bezierPath.CGPath);
-		//CGContextStrokePath(context);
+		
+//		CGContextSetBlendMode(context, kCGBlendModeClear); // first clean underlying stuff
+//		CGContextAddPath(context, bezierPath.CGPath);
+//		CGContextStrokePath(context);
+		
 		CGContextSetBlendMode(context, kCGBlendModeNormal); // then draw over a clear surface
 		CGContextAddPath(context, bezierPath.CGPath);
 		CGContextStrokePath(context);
+		
 		CGContextRestoreGState(context);
 	
 	}
