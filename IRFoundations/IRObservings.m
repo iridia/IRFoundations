@@ -78,7 +78,7 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 
 }
 
-- (id) irAddObserverBlock:(void(^)(id inOldValue, id inNewValue, NSString *changeKind))aBlock forKeyPath:(NSString *)aKeyPath options:(NSKeyValueObservingOptions)options context:(void *)context {
+- (id) irAddObserverBlock:(IRObservingsCallbackBlock)aBlock forKeyPath:(NSString *)aKeyPath options:(NSKeyValueObservingOptions)options context:(void *)context {
 
 	id returnedHelper = [[[IRObservingsHelper alloc] initWithObserverBlock:aBlock withOwner:self keyPath:aKeyPath options:options context:context] autorelease];
 	[[self irObservingsHelperBlocksForKeyPath:aKeyPath] addObject:returnedHelper];
@@ -151,10 +151,12 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 
 	id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
 	id newValue = [change objectForKey:NSKeyValueChangeNewKey];
-	NSString *changeKind = [change objectForKey:NSKeyValueChangeKindKey];
+	
+	NSKeyValueChange changeKind = NSKeyValueChangeSetting;
+	[[change objectForKey:NSKeyValueChangeKindKey] getValue:&changeKind];
 	
 	if (self.callback)
-	self.callback(oldValue, newValue, changeKind);
+		self.callback(oldValue, newValue, changeKind);
 
 }
 
