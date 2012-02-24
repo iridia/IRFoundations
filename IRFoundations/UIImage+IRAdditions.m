@@ -146,9 +146,17 @@ static void __attribute__((constructor)) initialize() {
 - (UIImage *) irStandardImage {
 
 	if (self.imageOrientation == UIImageOrientationUp)
-	return self;
+	if (self.scale == 1)
+		return self;
 
-	UIGraphicsBeginImageContext(self.size);
+	UIGraphicsBeginImageContextWithOptions((CGSize){
+		self.size.width * self.scale,
+		self.size.height * self.scale
+	}, NO, 1.0);
+	
+	CGContextRef context = UIGraphicsGetCurrentContext();
+	
+	CGContextScaleCTM(context, self.scale, self.scale);
 	[self drawAtPoint:CGPointZero];
 	
 	return UIGraphicsGetImageFromCurrentImageContext();
