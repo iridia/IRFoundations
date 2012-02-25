@@ -84,50 +84,54 @@
 
 + (id) itemWithCustomImage:(UIImage *)aFullImage landscapePhoneImage:(UIImage *)landscapePhoneImage highlightedImage:(UIImage *)aHighlightedImage highlightedLandscapePhoneImage:(UIImage *)highlightedLandscapePhoneImage {
 
-	UIButton *returnedButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	__block UIButton *returnedButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	returnedButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
 	returnedButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	
-	void (^update)(UIInterfaceOrientation) = [[^ (UIInterfaceOrientation anOrientation) {
+	IRBarButtonItem *returnedItem = [self itemWithButton:returnedButton wiredAction:nil];
 	
-		BOOL landscapePhone = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) && UIInterfaceOrientationIsLandscape(anOrientation);
+	BOOL (^isPhone)(void) = ^ {
 		
-		if (landscapePhone) {
+		return (BOOL)([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone);
 		
-			[returnedButton setImage:(landscapePhoneImage ? landscapePhoneImage : aFullImage) forState:UIControlStateNormal];
-			
-			if (aHighlightedImage || highlightedLandscapePhoneImage)
-				[returnedButton setImage:(highlightedLandscapePhoneImage ? highlightedLandscapePhoneImage : aHighlightedImage) forState:UIControlStateHighlighted];
-			
-		} else {
-		
-			[returnedButton setImage:aFullImage forState:UIControlStateNormal];
-
-			if (aHighlightedImage)
-				[returnedButton setImage:aHighlightedImage forState:UIControlStateHighlighted];
-
-		}
+	};
 	
+	void (^updateButtonImage)(UIInterfaceOrientation) = [[^ (UIInterfaceOrientation anOrientation) {
+	
+		BOOL landscapePhone = (isPhone()) && UIInterfaceOrientationIsLandscape(anOrientation);
+		
+		UIImage *image = landscapePhone ? (landscapePhoneImage ? landscapePhoneImage : aFullImage) : aFullImage;
+		UIImage *highlightedImage = landscapePhone ? (highlightedLandscapePhoneImage ? highlightedLandscapePhoneImage : aHighlightedImage) : aHighlightedImage;
+		
+		NSLog(@"%@ landscape phone %x, using image %@ high %@, while, img %@ high %@, land img %@ high land img %@", returnedItem, landscapePhone, image, highlightedImage, aFullImage, highlightedImage, landscapePhoneImage, highlightedLandscapePhoneImage);
+		
+		[returnedButton setImage:image forState:UIControlStateNormal];
+		
+		if (highlightedImage)
+			[returnedButton setImage:highlightedImage forState:UIControlStateHighlighted];
+		
 		[returnedButton sizeToFit];
 		
 	} copy] autorelease];
 	
-	id notificationObject = [[[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidChangeStatusBarOrientationNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
+	if (isPhone()) {
 	
-		update([UIApplication sharedApplication].statusBarOrientation);
+		__block id notificationObject = [[[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidChangeStatusBarOrientationNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
 		
-	}] retain];
-	
-	id returnedItem = [self itemWithButton:returnedButton wiredAction:nil];
-	
-	[returnedItem irPerformOnDeallocation:^{
+			updateButtonImage([UIApplication sharedApplication].statusBarOrientation);
+			
+		}] retain];
 		
-		[[NSNotificationCenter defaultCenter] removeObserver:notificationObject];
-		[notificationObject release];
-		
-	}];
+		[returnedItem irPerformOnDeallocation:^{
+			
+			[[NSNotificationCenter defaultCenter] removeObserver:notificationObject];
+			[notificationObject release];
+			
+		}];
 	
-	update([UIApplication sharedApplication].statusBarOrientation);
+	}
+	
+	updateButtonImage([UIApplication sharedApplication].statusBarOrientation);
 	
 	return returnedItem;
 
@@ -203,6 +207,12 @@
 
 + (UIImage *) buttonImageForStyle:(IRBarButtonItemStyle)aStyle withTitle:(NSString *)aTitle font:(UIFont *)fontOrNil color:(UIColor *)titleColor shadow:(IRShadow *)titleShadow backgroundColor:(UIColor *)backgroundColorOrNil gradientColors:(NSArray *)backgroundGradientColorsOrNil innerShadow:(IRShadow *)innerShadowOrNil border:(IRBorder *)borderOrNil shadow:(IRShadow *)shadowOrNil {
 
+	return [self buttonImageForStyle:aStyle withImage:nil title:aTitle font:fontOrNil color:titleColor shadow:titleShadow backgroundColor:backgroundColorOrNil gradientColors:backgroundGradientColorsOrNil innerShadow:innerShadowOrNil border:borderOrNil shadow:shadowOrNil];
+
+}
+
++ (UIImage *) buttonImageForStyle:(IRBarButtonItemStyle)aStyle withImage:(UIImage *)anImage title:(NSString *)aTitle font:(UIFont *)fontOrNil color:(UIColor *)titleColor shadow:(IRShadow *)titleShadow backgroundColor:(UIColor *)backgroundColorOrNil gradientColors:(NSArray *)backgroundGradientColorsOrNil innerShadow:(IRShadow *)innerShadowOrNil border:(IRBorder *)borderOrNil shadow:(IRShadow *)shadowOrNil {
+
 	NSString *usingTitle = aTitle ? aTitle : @"";
 	UIFont *usingFont = fontOrNil ? fontOrNil : [UIFont boldSystemFontOfSize:12.0f];
 	UIColor *buttonBackgroundColor = backgroundColorOrNil ? backgroundColorOrNil : [UIColor colorWithWhite:0.35f alpha:1];
@@ -221,9 +231,9 @@
 	IRBorder *buttonBorder = borderOrNil ? borderOrNil : [IRBorder borderForEdge:IREdgeNone withType:IRBorderTypeInset width:1.0 color:[UIColor colorWithWhite:0.35 alpha:1]];
 	
 	UIEdgeInsets insets = UIEdgeInsetsZero;
-	CGPoint titleOffset = CGPointZero;
+	CGPoint contentOffset = CGPointZero;
 	
-	CGSize titleSize = [usingTitle sizeWithFont:usingFont];
+	CGSize contentSize = [usingTitle sizeWithFont:usingFont];
 	CGSize finalSize = (CGSize){ 0, 0 };
 	
 	UIBezierPath *bezierPath = nil;
@@ -240,9 +250,9 @@
 			CGFloat const slopeSize = 3;
 			
 			insets = isLandscapePhone ? (UIEdgeInsets){ 0, 10, 0, 7 } : (UIEdgeInsets){ 0, 12, 0, 7 };
-			finalSize = (CGSize){ titleSize.width + 16 + 8, 44.0f };
+			finalSize = (CGSize){ contentSize.width + 16 + 8, 44.0f };
 			bezierPath = [UIBezierPath bezierPath];
-			titleOffset = (CGPoint){ -2, 0 };
+			contentOffset = (CGPoint){ -2, 0 };
 			
 			[bezierPath moveToPoint:CGPointZero];		
 			[bezierPath addLineToPoint:(CGPoint){ insets.left - slopeSize, -1 * (0.5 * buttonHeight - slopeSize) }];		
@@ -272,7 +282,7 @@
 			CGFloat const buttonHeight = isLandscapePhone ? 24.0 : 29.0;
 			CGFloat const cornerRadius = 6;
 			insets = UIEdgeInsetsZero;
-			finalSize = (CGSize){ titleSize.width + 20, 44.0f };
+			finalSize = (CGSize){ contentSize.width + 20, 44.0f };
 			bezierPath = [UIBezierPath bezierPathWithRoundedRect:(CGRect){
 				(CGPoint){
 					insets.left,
@@ -412,8 +422,8 @@
 	
 		CGRect titleRect = (CGRect){
 			(CGPoint){
-				titleOffset.x + insets.left + floorf(0.5 * (finalSize.width - insets.left - insets.right - titleSize.width)), 
-				titleOffset.y + floorf(0.5 * (finalSize.height - titleSize.height))
+				contentOffset.x + insets.left + floorf(0.5 * (finalSize.width - insets.left - insets.right - contentSize.width)), 
+				contentOffset.y + floorf(0.5 * (finalSize.height - contentSize.height))
 			}, finalSize
 		};
 	
