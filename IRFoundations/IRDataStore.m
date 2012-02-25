@@ -340,4 +340,80 @@ NSString * IRDataStoreNonce () {
 	return [self persistentFileURLForFileAtURL:[NSURL fileURLWithPath:aPath]];
 }
 
+- (NSManagedObject *) updateObjectAtURI:(NSURL *)anObjectURI inContext:(NSManagedObjectContext *)aContext takingBlobFromTemporaryFile:(NSString *)aPath usingResourceType:(NSString *)utiType forKeyPath:(NSString *)fileKeyPath matchingURL:(NSURL *)anURL forKeyPath:(NSString *)urlKeyPath {
+
+	NSCParameterAssert(anObjectURI);
+	NSCParameterAssert(aPath);
+	NSCParameterAssert(fileKeyPath);
+	NSCParameterAssert(anURL);
+	NSCParameterAssert(urlKeyPath);
+		
+	NSManagedObjectContext * const context = ((^ {
+	
+		if (aContext)
+			return aContext;
+		
+		IRManagedObjectContext * const returnedContext = [self disposableMOC];
+		returnedContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
+		return returnedContext;
+	
+	})());
+
+	NSCParameterAssert(context);
+	
+	@try {
+	
+		NSManagedObject * const object = [context irManagedObjectForURI:anObjectURI];
+		if ([self updateObject:object inContext:context takingBlobFromTemporaryFile:aPath usingResourceType:utiType forKeyPath:fileKeyPath matchingURL:anURL forKeyPath:urlKeyPath])
+			return object;
+		
+	} @catch (NSException *e) {
+	
+		NSLog(@"%s: %@", __PRETTY_FUNCTION__, e);
+	
+	};
+	
+	return nil;
+
+}
+
+- (BOOL) updateObject:(NSManagedObject *)anObject inContext:(NSManagedObjectContext *)aContext takingBlobFromTemporaryFile:(NSString *)aPath usingResourceType:(NSString *)utiType forKeyPath:(NSString *)fileKeyPath matchingURL:(NSURL *)anURL forKeyPath:(NSString *)urlKeyPath {
+
+	@try {
+		[anObject primitiveValueForKey:[(NSPropertyDescription *)[[anObject.entity properties] lastObject] name]];
+	} @catch (NSException *exception) {
+		NSLog(@"Got access exception: %@", exception);
+	}
+
+	NSString *currentFilePath = [anObject valueForKey:fileKeyPath];
+	if (currentFilePath || ![[anObject valueForKey:urlKeyPath] isEqualToString:[anURL absoluteString]]) {
+		//	NSLog(@"Skipping double-writing");
+		return NO;
+	}
+	
+	NSURL *fileURL = [self persistentFileURLForFileAtURL:[NSURL fileURLWithPath:aPath]];
+	
+	NSString *preferredExtension = utiType ? [NSMakeCollectable(UTTypeCopyPreferredTagWithClass((CFStringRef)utiType, kUTTagClassFilenameExtension)) autorelease] : nil;
+	
+	if (preferredExtension) {
+		
+		NSURL *newFileURL = [NSURL fileURLWithPath:[[[fileURL path] stringByDeletingPathExtension] stringByAppendingPathExtension:preferredExtension]];
+		
+		NSError *movingError = nil;
+		BOOL didMove = [[NSFileManager defaultManager] moveItemAtURL:fileURL toURL:newFileURL error:&movingError];
+		if (!didMove) {
+			NSLog(@"Error moving: %@", movingError);
+			return NO;
+		}
+			
+		fileURL = newFileURL;
+		
+	}
+	
+	[anObject setValue:[fileURL path] forKey:fileKeyPath];
+	
+	return YES;
+
+}
+
 @end

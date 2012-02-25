@@ -7,9 +7,14 @@
 //
 
 #import <TargetConditionals.h>
+
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-#import <UIKit/UIKit.h>
+	#import <UIKit/UIKit.h>
+	#import <MobileCoreServices/MobileCoreServices.h>
+#else
+	#import <CoreServices/CoreServices.h>
 #endif
+
 #import <CoreData/CoreData.h>
 
 //	This class is the initial implementation for the application’s data store.
@@ -51,6 +56,20 @@
 - (NSURL *) persistentFileURLForData:(NSData *)data extension:(NSString *)fileExtension;
 - (NSURL *) persistentFileURLForFileAtURL:(NSURL *)aURL;
 - (NSURL *) persistentFileURLForFileAtPath:(NSString *)aPath;
+
+
+//	Convenience for updating objects, though they don’t save
+
+- (NSManagedObject *) updateObjectAtURI:(NSURL *)anObjectURI inContext:(NSManagedObjectContext *)aContext takingBlobFromTemporaryFile:(NSString *)aPath usingResourceType:(NSString *)utiType forKeyPath:(NSString *)fileKeyPath matchingURL:(NSURL *)anURL forKeyPath:(NSString *)urlKeyPath;
+
+- (BOOL) updateObject:(NSManagedObject *)anObject inContext:(NSManagedObjectContext *)aContext takingBlobFromTemporaryFile:(NSString *)aPath usingResourceType:(NSString *)utiType forKeyPath:(NSString *)fileKeyPath matchingURL:(NSURL *)anURL forKeyPath:(NSString *)urlKeyPath;
+
+@end
+
+
+@interface IRDataStore (Deprecated)
+
+- (BOOL) updateObject:(NSManagedObject *)anObject takingBlobFromTemporaryFile:(NSString *)aPath usingResourceType:(NSString *)utiType forKeyPath:(NSString *)fileKeyPath matchingURL:(NSURL *)anURL forKeyPath:(NSString *)urlKeyPath DEPRECATED_ATTRIBUTE;
 
 @end
 

@@ -13,6 +13,7 @@
 #import "NSDictionary+IRAdditions.h"
 #import "NSSet+IRAdditions.h"
 #import "NSThread+IRAdditions.h"
+#import "NSBundle+IRAdditions.h"
 
 #import "IRNoOp.h"
 #import "IRBindings.h"

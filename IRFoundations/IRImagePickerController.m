@@ -33,6 +33,8 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 @implementation IRImagePickerController
 
 @synthesize callbackBlock, takesPictureOnVolumeUpKeypress, usesAssetsLibrary, savesCameraImageCapturesToSavedPhotos;
+@synthesize onViewWillAppear, onViewDidAppear, onViewWillDisappear, onViewDidDisappear;
+@synthesize asynchronous;
 
 + (IRImagePickerController *) savedImagePickerWithCompletionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
     
@@ -126,7 +128,25 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 	
 	void (^bounceImage)(UIImage *) = ^ (UIImage *anImage) {
 	
-		dispatch_async(dispatch_get_global_queue(0, 0), ^ {
+		__typeof__(self.callbackBlock) const ownCallbackBlock = [self.callbackBlock copy];
+		BOOL const async = self.asynchronous;
+
+		void (^sendImage)(NSURL *) =	[[ ^ (NSURL *fileURL) {
+
+			if (ownCallbackBlock)
+				ownCallbackBlock(fileURL, nil);
+			
+			[ownCallbackBlock release];
+			
+			dispatch_async(dispatch_get_global_queue(0, 0), ^ {
+			
+				[[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
+			
+			});
+
+		} copy] autorelease];
+		
+		__block void (^copyImage)(void) = ^ {
 			
 			CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
 			CFStringRef uuidString = CFUUIDCreateString(kCFAllocatorDefault, uuidRef);
@@ -140,78 +160,84 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 			NSURL *fileURL = [NSURL fileURLWithPath:filePath];
 			NSError *fileWritingError = nil;
 			
-			if (![UIImageJPEGRepresentation([anImage irStandardImage], 1.0f) writeToURL:fileURL options:NSDataWritingAtomic error:&fileWritingError]) {
+			if (![UIImageJPEGRepresentation(anImage, 1.0f) writeToURL:fileURL options:NSDataWritingAtomic error:&fileWritingError]) {
 			
 				NSLog(@"Error writing file to temporary path %@: %@", fileURL, fileWritingError);
 				fileURL = nil;
 			
 			};
 			
-			dispatch_async(dispatch_get_main_queue(), ^ {
-		
-				if (self.callbackBlock)
-					self.callbackBlock(fileURL, nil);
+			if (async) {
 				
-				dispatch_async(dispatch_get_global_queue(0, 0), ^ {
+				dispatch_async(dispatch_get_main_queue(), ^ {
 				
-					[[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
-				
+					sendImage(fileURL);
+					
 				});
-		
-			});
+				
+			} else {
+				
+				sendImage(fileURL);
+				
+			}
 			
-		});
+		};
+		
+		if (async) {
+
+			dispatch_async(dispatch_get_global_queue(0, 0), copyImage);
+		
+		} else {
+		
+			copyImage();
+		
+		}
 	
 	};
 	
 	if (!assetURL) {
 	
-		if (assetImage) {
+		if (assetImage && !tempMediaURL) {
 		
 			bounceImage(assetImage);
 								
 		} else {
 
 			if (self.callbackBlock)
-				self.callbackBlock(nil, nil);
+				self.callbackBlock(tempMediaURL, nil);
 		
 		}
 	        
 	} else {
-        
-		if (self.usesAssetsLibrary) {
-       
-			ALAssetsLibrary *library = [[[ALAssetsLibrary alloc] init] autorelease];
-			[library assetForURL:assetURL resultBlock: ^ (ALAsset *asset) {
-                
-				objc_setAssociatedObject(asset, &kIRImagePickerControllerAssetLibrary, library, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-				
-				if (self.callbackBlock)
-					self.callbackBlock(tempMediaURL, asset);
-                
-			} failureBlock: ^ (NSError *error) {
-			
-				if (assetImage) {
-					bounceImage(assetImage);
-					return;
-				}
-                
-				if (self.callbackBlock)
-					self.callbackBlock(tempMediaURL, nil);
-                
-			}];
-            
-		}	else {
-            
-			if (assetImage) {
+	
+		if (!self.usesAssetsLibrary) {
+		
+			if (assetImage && !tempMediaURL) {
 				bounceImage(assetImage);
 				return;
 			}
+		
+		}
+        
+		ALAssetsLibrary *library = [[[ALAssetsLibrary alloc] init] autorelease];
+		[library assetForURL:assetURL resultBlock: ^ (ALAsset *asset) {
+							
+			objc_setAssociatedObject(asset, &kIRImagePickerControllerAssetLibrary, library, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 			
 			if (self.callbackBlock)
+				self.callbackBlock(tempMediaURL, asset);
+							
+		} failureBlock: ^ (NSError *error) {
+		
+			if (assetImage && !tempMediaURL) {
+				bounceImage(assetImage);
+				return;
+			}
+							
+			if (self.callbackBlock)
 				self.callbackBlock(tempMediaURL, nil);
-            
-		}
+							
+		}];
         
 	}
     
@@ -220,7 +246,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 - (void) imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
 	if (self.callbackBlock)
-        self.callbackBlock(nil, nil);
+		self.callbackBlock(nil, nil);
     
 }
 
@@ -232,6 +258,9 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 
 	[super viewWillAppear:animated];
 		
+	if (self.onViewWillAppear)
+		self.onViewWillAppear(animated);
+
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		
@@ -239,35 +268,36 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 	});
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleVolumeChanged:) name:kIRImagePickerControllerVolumeDidChangeNotification object:nil];
-
+	
 }
 
 - (void) viewDidAppear:(BOOL)animated {
 
+	if (self.onViewDidAppear)
+		self.onViewDidAppear(animated);
+	
 	[super viewDidAppear:animated];
+
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+
+	[super viewWillDisappear:animated];
 	
-	if (self.sourceType == UIImagePickerControllerSourceTypeCamera) {
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:kIRImagePickerControllerVolumeDidChangeNotification object:nil];
 	
-		//	CGRect rectInWindow = [self.view.window convertRect:[self.view.window.screen applicationFrame] fromWindow:nil];
-		
-		#if 0
-		self.view.layer.borderColor = [UIColor redColor].CGColor;
-		self.view.layer.borderWidth = 1.0f;
-		#endif
-		
-		self.showsCameraControls = NO;
-		//	self.view.frame = rectInWindow;
-		
-		double delayInSeconds = 2.0;
-		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-			CGRect rectInWindow = [self.view.window convertRect:[self.view.window.screen applicationFrame] fromWindow:nil];
-			self.showsCameraControls = YES;
-			self.view.frame = rectInWindow;
-		});
-	
-	}
-	
+	if (self.onViewWillDisappear)
+		self.onViewWillDisappear(animated);
+
+}
+
+- (void) viewDidDisappear:(BOOL)animated {
+
+	if (self.onViewDidDisappear)
+		self.onViewDidDisappear(animated);
+
+	[super viewDidDisappear:animated];
+
 }
 
 - (void) handleVolumeChanged:(NSNotification *)aNotification {
@@ -281,29 +311,5 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 	}
 
 }
-
-- (void) viewWillDisappear:(BOOL)animated {
-
-	[super viewWillDisappear:animated];
-	
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:kIRImagePickerControllerVolumeDidChangeNotification object:nil];
-
-}
-
-
-
-
-
-//- (BOOL) wantsFullScreenLayout {
-//
-//	return NO;
-//
-//}
-//
-//- (void) setWantsFullScreenLayout:(BOOL)wantsFullScreenLayout {
-//	
-//	[super setWantsFullScreenLayout:NO];
-//
-//}
 
 @end

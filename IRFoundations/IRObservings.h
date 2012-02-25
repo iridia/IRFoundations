@@ -14,11 +14,11 @@
 #import <Foundation/Foundation.h>
 
 
-typedef void (^IRObservingsCallbackBlock) (id inOldValue, id inNewValue, NSString *changeKind);
+typedef void (^IRObservingsCallbackBlock) (id inOldValue, id inNewValue, NSKeyValueChange changeKind);
 
 @interface NSObject (IRObservings)
 
-- (id) irAddObserverBlock:(void(^)(id inOldValue, id inNewValue, NSString *changeKind))aBlock forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
+- (id) irAddObserverBlock:(IRObservingsCallbackBlock)aBlock forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
 
 - (void) irRemoveObservingsHelper:(id)aHelper;
 

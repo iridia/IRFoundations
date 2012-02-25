@@ -49,20 +49,114 @@ static void __attribute__((constructor)) initialize() {
 @implementation UIImage (IRAdditions)
 
 - (id) _irInitWithCoder:(NSCoder *)decoder {
+	
 	NSLog(@"%s: shouldn’t have been called, swizzling anyway.", __FUNCTION__);
 	return nil;
+	
 }
 
 - (void) _irEncodeWithCoder:(NSCoder *)aCoder {
+	
 	NSLog(@"%s: shouldn’t have been called, swizzling anyway.", __FUNCTION__);
+	
+}
+
+- (CGRect) irTransposedRectForSize:(CGSize)newSize {
+
+	switch (self.imageOrientation) {
+		
+		case UIImageOrientationLeft:
+		case UIImageOrientationLeftMirrored:
+		case UIImageOrientationRight:
+		case UIImageOrientationRightMirrored:
+			return (CGRect){
+				CGPointZero,
+				(CGSize){
+					newSize.height,
+					newSize.width
+				}
+			};
+
+		default:
+			return (CGRect){ CGPointZero, newSize };
+		
+	}
+	
+}
+
+- (CGAffineTransform) irTransformForSize:(CGSize)newSize {
+		
+	CGAffineTransform transform = CGAffineTransformIdentity;
+
+	switch (self.imageOrientation) {
+		
+		case UIImageOrientationDown:             // EXIF = 3
+		case UIImageOrientationDownMirrored: {   // EXIF = 4
+			transform = CGAffineTransformTranslate(transform, newSize.width, newSize.height);
+			transform = CGAffineTransformRotate(transform, M_PI);
+			break;
+		}
+
+		case UIImageOrientationLeft:             // EXIF = 6
+		case UIImageOrientationLeftMirrored: {   // EXIF = 5
+			transform = CGAffineTransformTranslate(transform, newSize.width, 0);
+			transform = CGAffineTransformRotate(transform, M_PI_2);
+			break;
+		}
+
+		case UIImageOrientationRight:           // EXIF = 8
+		case UIImageOrientationRightMirrored: {  // EXIF = 7
+			transform = CGAffineTransformTranslate(transform, 0, newSize.height);
+			transform = CGAffineTransformRotate(transform, -M_PI_2);
+			break;
+		}
+		
+		default: {
+			break;
+		}
+		
+	}
+
+	switch (self.imageOrientation) {
+	
+		case UIImageOrientationUpMirrored:      // EXIF = 2
+		case UIImageOrientationDownMirrored: {  // EXIF = 4
+			transform = CGAffineTransformTranslate(transform, newSize.width, 0);
+			transform = CGAffineTransformScale(transform, -1, 1);
+			break;
+		}
+
+		case UIImageOrientationLeftMirrored:    // EXIF = 5
+		case UIImageOrientationRightMirrored: {  // EXIF = 7
+			transform = CGAffineTransformTranslate(transform, newSize.height, 0);
+			transform = CGAffineTransformScale(transform, -1, 1);
+			break;
+		}
+		
+		default: {
+			break;
+		}
+		
+	}
+
+	return transform;
+	
 }
 
 - (UIImage *) irStandardImage {
 
 	if (self.imageOrientation == UIImageOrientationUp)
-	return self;
+	if (self.scale == 1)
+		return self;
 
-	UIGraphicsBeginImageContext(self.size);
+	UIGraphicsBeginImageContextWithOptions((CGSize){
+		self.size.width * self.scale,
+		self.size.height * self.scale
+	}, NO, 1.0);
+	
+	CGContextRef context = UIGraphicsGetCurrentContext();
+	
+	CGContextScaleCTM(context, self.scale, self.scale);
 	[self drawAtPoint:CGPointZero];
 	
 	return UIGraphicsGetImageFromCurrentImageContext();
@@ -110,17 +204,28 @@ static void __attribute__((constructor)) initialize() {
 
 	if (CGSizeEqualToSize(aSize, CGSizeZero))
 		return self;
-
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGContextRef context = CGBitmapContextCreate(NULL, aSize.width, aSize.height, 8, 0, colorSpace, kCGImageAlphaPremultipliedLast);
 	
-	CGContextClearRect(context, (CGRect){ CGPointZero, aSize });
-	CGContextDrawImage(context, (CGRect){ CGPointZero, aSize }, self.CGImage);
+	CGImageRef const ownImage = self.CGImage;
+	UIImageOrientation const ownOrientation = self.imageOrientation;
+	CGSize const drawnPixelSize = (CGSize){ aSize.width * self.scale, aSize.height * self.scale };
+	
+	CGAffineTransform const drawnTransform = [self irTransformForSize:drawnPixelSize];
+	CGRect const drawnRect = [self irTransposedRectForSize:drawnPixelSize];
+	
+	CGColorSpaceRef const colorSpace = CGColorSpaceCreateDeviceRGB();
+	CGContextRef const context = CGBitmapContextCreate(NULL, drawnPixelSize.width, drawnPixelSize.height, 8, 0, colorSpace, kCGImageAlphaPremultipliedLast);
+	
+	CGContextConcatCTM(context, drawnTransform);
+	CGContextClearRect(context, drawnRect);
+	CGContextDrawImage(context, drawnRect, self.CGImage);
+	
 	CGImageRef scaledImage = CGBitmapContextCreateImage(context);
 	
 	CGColorSpaceRelease(colorSpace);
 	CGContextRelease(context);
-	UIImage *image = [UIImage imageWithCGImage: scaledImage];
+	
+	UIImage *image = [UIImage imageWithCGImage:scaledImage scale:self.scale orientation:UIImageOrientationUp];
+	
 	CGImageRelease(scaledImage);
 	
 	return image;
@@ -146,13 +251,12 @@ static void __attribute__((constructor)) initialize() {
 			-1 * shadowOrNil.spread
 		);
 		
-		contextRect = CGRectUnion(contextRect, spillRect);
+		contextRect.size = spillRect.size;
 		imageOffset = (CGPoint){
-			spillRect.origin.x + shadowOrNil.spread,
-			spillRect.origin.y + shadowOrNil.spread
+			0 - spillRect.origin.x,
+			MAX(0, shadowOrNil.spread + shadowOrNil.offset.height)
 		};
-		contextRect.origin = CGPointZero;
-		
+
 	}
 	
 	
@@ -164,11 +268,6 @@ static void __attribute__((constructor)) initialize() {
 	
 	CGContextSaveGState(context);
 	CGContextConcatCTM(context, (CGAffineTransform){ 1, 0, 0, -1, 0, contextRect.size.height });
-
-	CGContextConcatCTM(context, CGAffineTransformMakeTranslation(
-		-1 * imageOffset.x,
-		-1 * (contextRect.size.height - imageOffset.y - self.size.height) //imageOffset.y
-	));
 	
 	CGContextBeginTransparencyLayer(context, nil);
 	CGContextClipToMask(context, (CGRect){ imageOffset, self.size }, self.CGImage);

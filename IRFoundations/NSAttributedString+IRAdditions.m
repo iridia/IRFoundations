@@ -13,6 +13,9 @@
 
 + (NSDictionary *) irAttributesForFont:(UIFont *)aFont color:(UIColor *)aColor {
 
+	if (!aFont || !aColor)
+		return nil;
+
 	CTFontRef fontRef = CTFontCreateWithName((CFStringRef)(aFont.fontName), aFont.pointSize, NULL);
 	
 	NSMutableDictionary *returnedDictionary = [NSMutableDictionary dictionary];

@@ -13,6 +13,8 @@
 @class IRActionSheet;
 @interface IRActionSheetController : NSObject <UIActionSheetDelegate>
 
++ (IRAction *) defaultCancelAction; // Override for localized title in category (bah)
+
 + (IRActionSheetController *) actionSheetControllerWithTitle:(NSString *)aTitle cancelAction:(IRAction *)cancellationAction destructiveAction:(IRAction *)destructionAction otherActions:(NSArray *)otherActionsOrNil;
 
 - (IRActionSheet *) singleUseActionSheet;
