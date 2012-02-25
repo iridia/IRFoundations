@@ -340,7 +340,44 @@ NSString * IRDataStoreNonce () {
 	return [self persistentFileURLForFileAtURL:[NSURL fileURLWithPath:aPath]];
 }
 
-- (BOOL) updateObject:(NSManagedObject *)anObject takingBlobFromTemporaryFile:(NSString *)aPath usingResourceType:(NSString *)utiType forKeyPath:(NSString *)fileKeyPath matchingURL:(NSURL *)anURL forKeyPath:(NSString *)urlKeyPath {
+- (NSManagedObject *) updateObjectAtURI:(NSURL *)anObjectURI inContext:(NSManagedObjectContext *)aContext takingBlobFromTemporaryFile:(NSString *)aPath usingResourceType:(NSString *)utiType forKeyPath:(NSString *)fileKeyPath matchingURL:(NSURL *)anURL forKeyPath:(NSString *)urlKeyPath {
+
+	NSCParameterAssert(anObjectURI);
+	NSCParameterAssert(aPath);
+	NSCParameterAssert(fileKeyPath);
+	NSCParameterAssert(anURL);
+	NSCParameterAssert(urlKeyPath);
+		
+	NSManagedObjectContext * const context = ((^ {
+	
+		if (aContext)
+			return aContext;
+		
+		IRManagedObjectContext * const returnedContext = [self disposableMOC];
+		returnedContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
+		return returnedContext;
+	
+	})());
+
+	NSCParameterAssert(context);
+	
+	@try {
+	
+		NSManagedObject * const object = [context irManagedObjectForURI:anObjectURI];
+		if ([self updateObject:object inContext:context takingBlobFromTemporaryFile:aPath usingResourceType:utiType forKeyPath:fileKeyPath matchingURL:anURL forKeyPath:urlKeyPath])
+			return object;
+		
+	} @catch (NSException *e) {
+	
+		NSLog(@"%s: %@", __PRETTY_FUNCTION__, e);
+	
+	};
+	
+	return nil;
+
+}
+
+- (BOOL) updateObject:(NSManagedObject *)anObject inContext:(NSManagedObjectContext *)aContext takingBlobFromTemporaryFile:(NSString *)aPath usingResourceType:(NSString *)utiType forKeyPath:(NSString *)fileKeyPath matchingURL:(NSURL *)anURL forKeyPath:(NSString *)urlKeyPath {
 
 	@try {
 		[anObject primitiveValueForKey:[(NSPropertyDescription *)[[anObject.entity properties] lastObject] name]];
