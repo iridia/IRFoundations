@@ -38,8 +38,15 @@
 	if (!dictionaries || [dictionaries isEqual:[NSNull null]] || ([dictionaries count] == 0))
 		return nil;
 	
-	if (!managedObjectKeyPath || !dictionaryKeyPath)
-		return nil;
+	if (!managedObjectKeyPath || !dictionaryKeyPath) {
+		
+		return [dictionaries irMap: ^ (NSDictionary *configurationDictionary, NSUInteger index, BOOL *stop) {
+			
+			return [self objectInsertingIntoContext:context withRemoteDictionary:configurationDictionary];
+			
+		}];
+		
+	}
 		
 	dictionaries = [dictionaries irMap:^id(id inObject, NSUInteger index, BOOL *stop) {
 		
@@ -290,10 +297,10 @@
 		return [self transformedRepresentationForRemoteRepresentation:aRepresentation];
 	}];
 
-	NSString *localKeyPath = [self keyPathHoldingUniqueValue];
-	NSString *remoteKeyPath = [[[self remoteDictionaryConfigurationMapping] allKeysForObject:localKeyPath] objectAtIndex:0];
+	NSString * const localKeyPath = [self keyPathHoldingUniqueValue];
+	NSString * const remoteKeyPath = localKeyPath ? [[[self remoteDictionaryConfigurationMapping] allKeysForObject:localKeyPath] objectAtIndex:0] : nil;
 	
-	NSArray *baseEntities = [self insertOrUpdateObjectsIntoContext:context withExistingProperty:localKeyPath matchingKeyPath:remoteKeyPath ofRemoteDictionaries:usedRemoteDictionaries];
+	NSArray * const baseEntities = [self insertOrUpdateObjectsIntoContext:context withExistingProperty:localKeyPath matchingKeyPath:remoteKeyPath ofRemoteDictionaries:usedRemoteDictionaries];
 	NSParameterAssert(baseEntities);
 	
 	NSDictionary *baseEntityRelationships = [[[[[context persistentStoreCoordinator] managedObjectModel] entitiesByName] objectForKey:[self coreDataEntityName]] relationshipsByName];
@@ -302,11 +309,8 @@
 	for (NSString *rootRemoteKeyPath in remoteKeyPathsToClassNames) {
 	
 		Class nodeEntityClass = NSClassFromString([remoteKeyPathsToClassNames objectForKey:rootRemoteKeyPath]);
+		NSString * const rootLocalKeyPath = [[self remoteDictionaryConfigurationMapping] objectForKey:rootRemoteKeyPath];
 		
-		NSString *rootLocalKeyPath = [[self remoteDictionaryConfigurationMapping] objectForKey:rootRemoteKeyPath];
-		NSString *nodeLocalKeyPath = [nodeEntityClass keyPathHoldingUniqueValue];
-		NSString *nodeRemoteKeyPath = [[[nodeEntityClass remoteDictionaryConfigurationMapping] allKeysForObject:nodeLocalKeyPath] objectAtIndex:0];
-	
 		//	Skip if the local key path is not mappable
 		if (!rootLocalKeyPath) {
 		
@@ -320,17 +324,16 @@
 			
 		}
 		
-		NSParameterAssert(nodeLocalKeyPath);
-		NSParameterAssert(nodeRemoteKeyPath);
+		NSString * const nodeLocalKeyPath = [nodeEntityClass keyPathHoldingUniqueValue];
+		NSString * const nodeRemoteKeyPath = nodeLocalKeyPath ? [[[nodeEntityClass remoteDictionaryConfigurationMapping] allKeysForObject:nodeLocalKeyPath] objectAtIndex:0] : nil;
+		
+		BOOL const relationIsToMany = [[baseEntityRelationships objectForKey:rootLocalKeyPath] isToMany];
+		BOOL const usesIndividualAdd = (options & IRManagedObjectOptionIndividualOperations);
 		
 		NSArray *nodeRepresentations = [usedRemoteDictionaries irMap:irMapMakeWithKeyPath(rootRemoteKeyPath)];
 		NSArray *entityRepresentations = [nodeRepresentations irFlatten];
 		
 		NSArray *nodeEntities = [nodeEntityClass insertOrUpdateObjectsUsingContext:context withRemoteResponse:entityRepresentations usingMapping:[nodeEntityClass defaultHierarchicalEntityMapping] options:options];
-		
-		BOOL relationIsToMany = [[baseEntityRelationships objectForKey:rootLocalKeyPath] isToMany];
-		BOOL usesIndividualAdd = (options & IRManagedObjectOptionIndividualOperations);
-		
 		
 		__block NSInteger consumedNodeEntities = 0;
 		
