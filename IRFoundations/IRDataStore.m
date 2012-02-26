@@ -353,7 +353,7 @@ NSString * IRDataStoreNonce () {
 		if (aContext)
 			return aContext;
 		
-		IRManagedObjectContext * const returnedContext = [self disposableMOC];
+		NSManagedObjectContext * const returnedContext = [self disposableMOC];
 		returnedContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
 		return returnedContext;
 	
