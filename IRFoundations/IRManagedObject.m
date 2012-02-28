@@ -40,7 +40,12 @@
 	
 	if (!managedObjectKeyPath || !dictionaryKeyPath) {
 		
-		return [dictionaries irMap: ^ (NSDictionary *configurationDictionary, NSUInteger index, BOOL *stop) {
+		return [dictionaries irMap:(IRMapCallback) ^ (NSDictionary *configurationDictionary, NSUInteger index, BOOL *stop) {
+		
+			//	Bad things always happen
+		
+			if (![configurationDictionary isKindOfClass:[NSDictionary class]])
+				return nil;
 			
 			return [self objectInsertingIntoContext:context withRemoteDictionary:configurationDictionary];
 			
@@ -425,6 +430,8 @@
 
 + (id) objectInsertingIntoContext:(NSManagedObjectContext *)inContext withRemoteDictionary:(NSDictionary *)inDictionary {
 
+	NSCParameterAssert([inDictionary isKindOfClass:[NSDictionary class]]);
+
 	IRManagedObject *returnedStatus = nil;
 
 	@try {
@@ -438,7 +445,7 @@
 	}
 	
 	if (!returnedStatus)
-	return nil;
+		return nil;
 	
 	[returnedStatus configureWithRemoteDictionary:inDictionary];
 	
@@ -531,7 +538,7 @@
 	
 		//	A remote dictionary at the end means that it is a composite representation, not to be assigned as a property value
 		if ([aRemoteValueOrNil isKindOfClass:[NSDictionary class]])
-		continue;
+			continue;
 		
 		id aLocalKeyPathOrNSNull = [configurationMapping objectForKey:aRemoteKeyPath];
 		
