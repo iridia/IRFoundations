@@ -233,7 +233,22 @@
 	UIEdgeInsets insets = UIEdgeInsetsZero;
 	CGPoint contentOffset = CGPointZero;
 	
-	CGSize contentSize = [usingTitle sizeWithFont:usingFont];
+	CGSize titleSize = [usingTitle sizeWithFont:usingFont];
+	CGSize imageSize = [anImage size];
+	CGSize contentSize = (CGSize){
+		(imageSize.width ? (imageSize.width + 4) : 0) + titleSize.width,
+		MAX(imageSize.height, titleSize.height)
+	};
+	
+	CGPoint imageOffset = (CGPoint){
+		0,
+		roundf(0.5f * (contentSize.height - imageSize.height))
+	};
+	CGPoint titleOffset = (CGPoint){
+		(imageSize.width ? (imageSize.width + 4) : 0),
+		roundf(0.5f * (contentSize.height - titleSize.height))
+	};
+	
 	CGSize finalSize = (CGSize){ 0, 0 };
 	
 	UIBezierPath *bezierPath = nil;
@@ -412,7 +427,7 @@
 	
 	}
 	
-	if (usingTitle) {
+	if (usingTitle || anImage) {
 	
 		CGContextSetAllowsAntialiasing(context, YES);
 		CGContextSetShouldAntialias(context, YES);
@@ -420,17 +435,44 @@
 		CGContextSetAllowsFontSmoothing(context, YES);
 		CGContextSetShouldSmoothFonts(context, YES);
 	
-		CGRect titleRect = (CGRect){
+		CGRect contentRect = (CGRect){
 			(CGPoint){
 				contentOffset.x + insets.left + floorf(0.5 * (finalSize.width - insets.left - insets.right - contentSize.width)), 
 				contentOffset.y + floorf(0.5 * (finalSize.height - contentSize.height))
 			}, finalSize
 		};
+		
+		CGRect titleRect = (CGRect){
+			(CGPoint){
+				contentRect.origin.x + titleOffset.x,
+				contentRect.origin.y + titleOffset.y
+			},
+			titleSize
+		};
+		
+		CGRect imageRect = (CGRect){
+			(CGPoint){
+				contentRect.origin.x + imageOffset.x,
+				contentRect.origin.y + imageOffset.y
+			},
+			imageSize
+		};
 	
 		CGContextSaveGState(context);
 		CGContextSetShadowWithColor(context, usingTitleShadow.offset, usingTitleShadow.spread, usingTitleShadow.color.CGColor);
 		CGContextSetFillColorWithColor(context, usingTitleColor.CGColor);
+		
+		CGContextBeginTransparencyLayer(context, NULL);
+		
 		[usingTitle drawInRect:titleRect withFont:usingFont];
+
+		if (anImage) {
+			CGContextClipToMask(context, imageRect, anImage.CGImage);
+			CGContextFillRect(context, imageRect);
+		}
+		
+		CGContextEndTransparencyLayer(context);
+		
 		CGContextRestoreGState(context);
 	
 	}
