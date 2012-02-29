@@ -235,8 +235,11 @@
 	
 	CGSize titleSize = [usingTitle sizeWithFont:usingFont];
 	CGSize imageSize = [anImage size];
+	
+	CGFloat itemSpacing = (titleSize.width && imageSize.width) ? 4 : 0;
+	
 	CGSize contentSize = (CGSize){
-		(imageSize.width ? (imageSize.width + 4) : 0) + titleSize.width,
+		imageSize.width + itemSpacing + titleSize.width,
 		MAX(imageSize.height, titleSize.height)
 	};
 	
@@ -245,7 +248,7 @@
 		roundf(0.5f * (contentSize.height - imageSize.height))
 	};
 	CGPoint titleOffset = (CGPoint){
-		(imageSize.width ? (imageSize.width + 4) : 0),
+		imageSize.width + itemSpacing,
 		roundf(0.5f * (contentSize.height - titleSize.height))
 	};
 	
@@ -467,8 +470,12 @@
 		[usingTitle drawInRect:titleRect withFont:usingFont];
 
 		if (anImage) {
+			
+			CGContextConcatCTM(context, CGAffineTransformScale(CGAffineTransformTranslate(CGAffineTransformIdentity, 0, CGRectGetHeight(contentRect)), 1, -1));
+			
 			CGContextClipToMask(context, imageRect, anImage.CGImage);
 			CGContextFillRect(context, imageRect);
+			
 		}
 		
 		CGContextEndTransparencyLayer(context);
