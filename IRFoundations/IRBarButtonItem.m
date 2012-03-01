@@ -102,9 +102,7 @@
 		
 		UIImage *image = landscapePhone ? (landscapePhoneImage ? landscapePhoneImage : aFullImage) : aFullImage;
 		UIImage *highlightedImage = landscapePhone ? (highlightedLandscapePhoneImage ? highlightedLandscapePhoneImage : aHighlightedImage) : aHighlightedImage;
-		
-		NSLog(@"%@ landscape phone %x, using image %@ high %@, while, img %@ high %@, land img %@ high land img %@", returnedItem, landscapePhone, image, highlightedImage, aFullImage, highlightedImage, landscapePhoneImage, highlightedLandscapePhoneImage);
-		
+				
 		[returnedButton setImage:image forState:UIControlStateNormal];
 		
 		if (highlightedImage)
