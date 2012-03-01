@@ -261,11 +261,11 @@
 		
 			BOOL const isLandscapePhone = (aStyle == IRBarButtonItemStyleBackLandscapePhone);
 			
-			CGFloat const buttonHeight = isLandscapePhone ? 24.0 : 29.0;
+			CGFloat const buttonHeight = isLandscapePhone ? 25.0 : 29.0;
 			CGFloat const cornerRadius = 6;
 			CGFloat const slopeSize = 3;
 			
-			insets = isLandscapePhone ? (UIEdgeInsets){ 0, 10, 0, 7 } : (UIEdgeInsets){ 0, 12, 0, 7 };
+			insets = isLandscapePhone ? (UIEdgeInsets){ 0, 10, 0, 2 } : (UIEdgeInsets){ 0, 12, 0, 2 };
 			finalSize = (CGSize){ contentSize.width + 16 + 8, 44.0f };
 			bezierPath = [UIBezierPath bezierPath];
 			contentOffset = (CGPoint){ -2, 0 };
