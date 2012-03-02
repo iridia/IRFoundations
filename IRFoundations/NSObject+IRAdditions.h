@@ -14,6 +14,7 @@
 - (void) irExecute; // typecasts object to (void)(^)(void)
 - (BOOL) irIsBlock;
 
++ (BOOL) irHasDifferentSuperClassMethodForSelector:(SEL)aSelector;
 - (BOOL) irHasDifferentSuperClassMethodForSelector:(SEL)aSelector;
 - (BOOL) irHasDifferentSuperInstanceMethodForSelector:(SEL)aSelector;
 

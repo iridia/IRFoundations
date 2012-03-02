@@ -40,6 +40,15 @@
 
 }
 
++ (BOOL) irHasDifferentSuperClassMethodForSelector:(SEL)aSelector {
+
+	Method ownMethod = class_getClassMethod([self class], aSelector);
+	Method superMethod = class_getClassMethod([self superclass], aSelector);
+	
+	return (superMethod && (superMethod != ownMethod));
+
+}
+
 - (BOOL) irHasDifferentSuperClassMethodForSelector:(SEL)aSelector {
 
 	Method ownMethod = class_getClassMethod([self class], aSelector);
