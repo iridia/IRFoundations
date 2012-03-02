@@ -249,7 +249,7 @@
 	NSUInteger oldCurrentPage = currentPage;
 	self.currentPage = MAX(0, MIN(self.numberOfPages - 1, [self indexOfPageAtCurrentContentOffset]));
 	
-	if (![self.scrollView isTracking] && ![self.scrollView isZooming])
+//	if (![self.scrollView isTracking] && ![self.scrollView isZooming])
 	if (oldCurrentPage != currentPage)
 		[self setNeedsLayout];
 	
