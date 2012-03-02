@@ -7,7 +7,7 @@
 //
 
 #import "IRWebView.h"
-
+#import "Foundation+IRAdditions.h"
 
 @interface IRWebView ()
 
@@ -21,7 +21,7 @@
 
 @implementation IRWebView
 
-@synthesize overlayView, backgroundView;
+@synthesize overlayView, backgroundView, onScrollViewDidScroll;
 
 - (id) initWithCoder:(NSCoder *)aDecoder {
 
@@ -49,7 +49,6 @@
 
 	self.overlayView = [[[UIView alloc] initWithFrame:self.bounds] autorelease];
 	self.overlayView.userInteractionEnabled = NO;
-//	self.overlayView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.25];
 	self.overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	[self addSubview:self.overlayView];
 	
@@ -64,9 +63,21 @@
 
 }
 
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView {
+
+	if ([self irHasDifferentSuperInstanceMethodForSelector:_cmd])
+		[super scrollViewDidScroll:scrollView];
+	
+	if (self.onScrollViewDidScroll)
+		self.onScrollViewDidScroll(scrollView);
+
+}
+
 - (void) dealloc {
 
-	self.overlayView = nil;
+	[overlayView release];
+	[backgroundView release];
+	[onScrollViewDidScroll release];
 	[super dealloc];
 
 }
