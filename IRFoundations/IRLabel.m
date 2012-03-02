@@ -23,12 +23,14 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 @property (nonatomic, readwrite, retain) UIBezierPath *lastHighlightedRunOutline;
 - (CTRunRef) linkRunAtPoint:(CGPoint)touchPoint;
 
+@property (nonatomic, readwrite, assign) BOOL lastDrawnRectRequiredTailTruncation;
+
 @end
 
 
 @implementation IRLabel
 
-@synthesize attributedText, ctFramesetter, ctFrame, lastHighlightedRunOutline;
+@synthesize attributedText, ctFramesetter, ctFrame, lastHighlightedRunOutline, trailingWhitespaceWidth, lastDrawnRectRequiredTailTruncation;
 
 + (IRLabel *) labelWithFont:(UIFont *)aFont color:(UIColor *)aColor {
 
@@ -241,7 +243,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	CTFramesetterRef currentFramesetter = self.ctFramesetter;
 	
 	CFRange actualRange = (CFRange){ 0, 0 };
-	//	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(currentFramesetter, (CFRange){ 0, 0 }, nil, frameRect.size, &actualRange);
+	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(currentFramesetter, (CFRange){ 0, 0 }, nil, frameRect.size, &actualRange);
 
 	ctFrame = CTFramesetterCreateFrame(currentFramesetter, actualRange, [UIBezierPath bezierPathWithRect:frameRect].CGPath, nil);
 	return ctFrame;
@@ -259,7 +261,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	CTFrameRef usedFrame = self.ctFrame;
 	if (!usedFrame || !usedFramesetter)
 		return;
-	
+		
 	CFRetain(usedFrame);
 	CFRetain(usedFramesetter);
 	CGContextRef context = UIGraphicsGetCurrentContext();	
@@ -292,7 +294,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 		CFRange lineRange = CTLineGetStringRange(aLine);
 		if (needsTailTruncation && (drawnLength == (lineRange.location + lineRange.length))) {
 		
-			CGFloat ownWidth = CGRectGetWidth(self.bounds);
+			CGFloat ownWidth = CGRectGetWidth(self.bounds) - self.trailingWhitespaceWidth;
 			CTLineRef realLastLine, truncationToken, truncatedLine;
 			realLastLine = CTTypesetterCreateLine(CTFramesetterGetTypesetter(usedFramesetter), (CFRange){ lineRange.location, 0 });
 			truncationToken = CTLineCreateWithAttributedString((CFAttributedStringRef)[[[NSAttributedString alloc] initWithString:[NSString stringWithCharacters:(UniChar[]){ 0x2026 } length:1] attributes:(NSDictionary *)CTRunGetAttributes((CTRunRef)[(NSArray *)CTLineGetGlyphRuns(aLine) lastObject])] autorelease]);
@@ -323,6 +325,8 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 #endif
 	
 	CFRelease(usedFrame);
+	
+	self.lastDrawnRectRequiredTailTruncation = needsTailTruncation;
 
 }
 
@@ -446,7 +450,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	
 	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(currentFramesetter, (CFRange){ 0, 0 }, nil, (CGSize){
 		size.width, //CGRectGetWidth(self.bounds),
-		MAX(size.height, 1024)
+		MAX(size.height, 4096)
 	}, NULL);
 	
 	CFRelease(currentFramesetter);
