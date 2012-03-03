@@ -62,7 +62,6 @@
 	
 	self.behavingProgrammatically = NO;
 	
-	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationWillChangeStatusBarOrientationNotification:) name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationDidChangeStatusBarOrientationNotification:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
@@ -121,6 +120,48 @@
 	}
 	
 	return managedActionSheet;
+
+}
+
+- (void) setCancellationAction:(IRAction *)newCancellationAction {
+
+	if (newCancellationAction == cancellationAction)
+		return;
+	
+	NSAssert1(![managedActionSheet isVisible], @"%s should not be called when a managed action sheet is visible", __PRETTY_FUNCTION__);
+	
+	self.managedActionSheet = nil;
+	
+	[cancellationAction release];
+	cancellationAction = [newCancellationAction retain];
+
+}
+
+- (void) setDestructionAction:(IRAction *)newDestructionAction {
+
+	if (newDestructionAction == destructionAction)
+		return;
+	
+	NSAssert1(![managedActionSheet isVisible], @"%s should not be called when a managed action sheet is visible", __PRETTY_FUNCTION__);
+	
+	self.managedActionSheet = nil;
+	
+	[destructionAction release];
+	destructionAction = [newDestructionAction retain];
+
+}
+
+- (void) setOtherActions:(NSArray *)newOtherActions {
+
+	if (newOtherActions == otherActions)
+		return;
+	
+	NSAssert1(![managedActionSheet isVisible], @"%s should not be called when a managed action sheet is visible", __PRETTY_FUNCTION__);
+	
+	self.managedActionSheet = nil;
+	
+	[otherActions release];
+	otherActions = [newOtherActions retain];
 
 }
 

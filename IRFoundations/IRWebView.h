@@ -19,4 +19,6 @@
 @property (nonatomic, readonly, retain) UIView *overlayView;
 @property (nonatomic, readonly, retain) UIView *backgroundView;
 
+@property (nonatomic, readonly, copy) void (^onScrollViewDidScroll)(UIScrollView *aSV);
+
 @end

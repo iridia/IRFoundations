@@ -106,6 +106,8 @@
 		FF0F654214C2E22A0037787A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF0F653F14C2E22A0037787A /* AudioToolbox.framework */; };
 		FF0F654414C2E22A0037787A /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF0F654114C2E22A0037787A /* CoreAudio.framework */; };
 		FF0F654814C2E2970037787A /* IRCoreDataTestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF0F654514C2E2930037787A /* IRCoreDataTestModel.xcdatamodeld */; };
+		FF0FF916150112BB00D6FE18 /* UIResponder+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0FF914150112BB00D6FE18 /* UIResponder+IRAdditions.h */; };
+		FF0FF917150112BB00D6FE18 /* UIResponder+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0FF915150112BB00D6FE18 /* UIResponder+IRAdditions.m */; };
 		FF12AA8E143F2F11002346BD /* IRLifetimeHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FF12AA8C143F2F11002346BD /* IRLifetimeHelper.h */; };
 		FF12AA8F143F2F11002346BD /* IRLifetimeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FF12AA8D143F2F11002346BD /* IRLifetimeHelper.m */; };
 		FF27A6AB133E2C16008C8DDA /* IRBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6A9133E2C16008C8DDA /* IRBarButtonItem.h */; };
@@ -345,6 +347,8 @@
 		FF0F654014C2E22A0037787A /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		FF0F654114C2E22A0037787A /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		FF0F654614C2E2930037787A /* IRCoreDataTestModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IRCoreDataTestModel.xcdatamodel; sourceTree = "<group>"; };
+		FF0FF914150112BB00D6FE18 /* UIResponder+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+IRAdditions.h"; sourceTree = "<group>"; };
+		FF0FF915150112BB00D6FE18 /* UIResponder+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+IRAdditions.m"; sourceTree = "<group>"; };
 		FF12AA8C143F2F11002346BD /* IRLifetimeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRLifetimeHelper.h; sourceTree = "<group>"; };
 		FF12AA8D143F2F11002346BD /* IRLifetimeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRLifetimeHelper.m; sourceTree = "<group>"; };
 		FF27A6A9133E2C16008C8DDA /* IRBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBarButtonItem.h; sourceTree = "<group>"; };
@@ -605,6 +609,8 @@
 		FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */ = {
 			isa = PBXGroup;
 			children = (
+				FF0FF914150112BB00D6FE18 /* UIResponder+IRAdditions.h */,
+				FF0FF915150112BB00D6FE18 /* UIResponder+IRAdditions.m */,
 				FF0527E514F398810030D099 /* UITableViewCell+IRAdditions.h */,
 				FF0527E614F398810030D099 /* UITableViewCell+IRAdditions.m */,
 				FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */,
@@ -864,6 +870,7 @@
 				FF35891C14EE7679005B452C /* NSString+IRAdditions.h in Headers */,
 				FF0527E714F398810030D099 /* UITableViewCell+IRAdditions.h in Headers */,
 				FFCA416414F62954005466ED /* NSBundle+IRAdditions.h in Headers */,
+				FF0FF916150112BB00D6FE18 /* UIResponder+IRAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1080,6 +1087,7 @@
 				FF35891E14EE7679005B452C /* NSString+IRAdditions.m in Sources */,
 				FF0527E814F398810030D099 /* UITableViewCell+IRAdditions.m in Sources */,
 				FFCA416514F62954005466ED /* NSBundle+IRAdditions.m in Sources */,
+				FF0FF917150112BB00D6FE18 /* UIResponder+IRAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

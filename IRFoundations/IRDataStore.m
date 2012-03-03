@@ -353,7 +353,7 @@ NSString * IRDataStoreNonce () {
 		if (aContext)
 			return aContext;
 		
-		IRManagedObjectContext * const returnedContext = [self disposableMOC];
+		NSManagedObjectContext * const returnedContext = [self disposableMOC];
 		returnedContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
 		return returnedContext;
 	
@@ -392,6 +392,10 @@ NSString * IRDataStoreNonce () {
 	}
 	
 	NSURL *fileURL = [self persistentFileURLForFileAtURL:[NSURL fileURLWithPath:aPath]];
+	if (!fileURL) {
+		NSLog(@"%s: nil file URL", __PRETTY_FUNCTION__);
+		return NO;
+	}
 	
 	NSString *preferredExtension = utiType ? [NSMakeCollectable(UTTypeCopyPreferredTagWithClass((CFStringRef)utiType, kUTTagClassFilenameExtension)) autorelease] : nil;
 	

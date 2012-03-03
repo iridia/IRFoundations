@@ -17,6 +17,8 @@ extern NSString * const kIRTextActiveBackgroundColorAttribute;
 @interface IRLabel : UILabel
 
 @property (nonatomic, readwrite, copy) NSAttributedString *attributedText;
+@property (nonatomic, readwrite, assign) CGFloat trailingWhitespaceWidth;	//	Default is 0; if any, leaves a block of whitespace at the last line and attempts to truncate if appropriate
+@property (nonatomic, readonly, assign) BOOL lastDrawnRectRequiredTailTruncation;
 
 + (IRLabel *) labelWithFont:(UIFont *)aFont color:(UIColor *)aColor;
 
