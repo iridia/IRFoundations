@@ -102,10 +102,11 @@
 	dispatch_async(self.actualDispatchQueue, ^ {
 		
 		self.executing = NO;
-		self.finished = YES;
+		self.finished = YES;		
+		self.results = incomingResults;
 		
 		if (self.workCompletionBlock)
-			self.workCompletionBlock(incomingResults);
+			self.workCompletionBlock(self.results);
 		
 	});
 	
