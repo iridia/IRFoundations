@@ -609,10 +609,6 @@
 		FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */ = {
 			isa = PBXGroup;
 			children = (
-				FF0FF914150112BB00D6FE18 /* UIResponder+IRAdditions.h */,
-				FF0FF915150112BB00D6FE18 /* UIResponder+IRAdditions.m */,
-				FF0527E514F398810030D099 /* UITableViewCell+IRAdditions.h */,
-				FF0527E614F398810030D099 /* UITableViewCell+IRAdditions.m */,
 				FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */,
 				FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */,
 				FF0A8D201337B36A00DDA47C /* IRAction.h */,
@@ -665,10 +661,14 @@
 				FFC813BE13EB8F48007B0683 /* UIImage+IRAdditions.h */,
 				FFC813BF13EB8F48007B0683 /* UIImage+IRAdditions.m */,
 				FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */,
+				FF0FF914150112BB00D6FE18 /* UIResponder+IRAdditions.h */,
+				FF0FF915150112BB00D6FE18 /* UIResponder+IRAdditions.m */,
 				FF50B4E014E557C3005B3B6A /* UIScrollView+IRAdditions.h */,
 				FF50B4E114E557C3005B3B6A /* UIScrollView+IRAdditions.m */,
 				FF0A8D051337B36A00DDA47C /* UITableView+IRAdditions.h */,
 				FFB67980141E40D2006F84E3 /* UITableView+IRAdditions.m */,
+				FF0527E514F398810030D099 /* UITableViewCell+IRAdditions.h */,
+				FF0527E614F398810030D099 /* UITableViewCell+IRAdditions.m */,
 				FF59C39D1418A06400F4BF2D /* UIView+IRAdditions.h */,
 				FF59C39E1418A06400F4BF2D /* UIView+IRAdditions.m */,
 				FF0D46B91475885900340287 /* UIViewController+IRAdditions.h */,
