@@ -22,6 +22,7 @@
 #import "IRXPathQuery.h"
 #import "IRHTMLStringFormatter.h"
 #import "IRRelativeDateFormatter.h"
+#import "IRLifetimeHelper.h"
 
 #import "IRAsyncOperation.h"
 
