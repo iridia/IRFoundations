@@ -40,6 +40,9 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 @property (nonatomic, readwrite, copy) NSString *observedKeyPath;
 @property (nonatomic, readwrite, assign) void *context;
 
+@property (nonatomic, readwrite, assign) void *lastOldValue;
+@property (nonatomic, readwrite, assign) void *lastNewValue;
+
 - (void) kill;
 
 @end
@@ -130,6 +133,7 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 @implementation IRObservingsHelper
 
 @synthesize owner, callback, observedKeyPath, context;
+@synthesize lastOldValue, lastNewValue;
 
 - (id) initWithObserverBlock:(IRObservingsCallbackBlock)block withOwner:(id)inOwner keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)inContext {
 
@@ -152,11 +156,18 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 	id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
 	id newValue = [change objectForKey:NSKeyValueChangeNewKey];
 	
-	NSKeyValueChange changeKind = NSKeyValueChangeSetting;
-	[[change objectForKey:NSKeyValueChangeKindKey] getValue:&changeKind];
+	if ((self.lastOldValue != oldValue) && (self.lastNewValue != newValue)) {
 	
-	if (self.callback)
-		self.callback(oldValue, newValue, changeKind);
+		NSKeyValueChange changeKind = NSKeyValueChangeSetting;
+		[[change objectForKey:NSKeyValueChangeKindKey] getValue:&changeKind];
+		
+		if (self.callback)
+			self.callback(oldValue, newValue, changeKind);
+		
+		self.lastOldValue = oldValue;
+		self.lastNewValue = newValue;
+	
+	}
 
 }
 
