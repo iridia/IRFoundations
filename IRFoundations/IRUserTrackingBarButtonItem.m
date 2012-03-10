@@ -162,46 +162,48 @@
 - (void) updateTrackingButton {
 
 	BOOL isDefault = (self.barStyle == UIBarStyleDefault);
-	BOOL isBlack = (self.barStyle == UIBarStyleBlack) && !self.translucent;
-	BOOL isBlackTranslucent = (self.barStyle == UIBarStyleBlack) && self.translucent;
+	BOOL isBlack = (self.barStyle == UIBarStyleBlackOpaque) || ((self.barStyle == UIBarStyleBlack) && !self.translucent);
+	BOOL isBlackTranslucent = (self.barStyle == UIBarStyleBlackTranslucent) || ((self.barStyle == UIBarStyleBlack) && self.translucent);
 	BOOL isLandscapePhone = UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) && ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone);
-	
-	UIImage *normalImage, *highlightedImage, *selectedImage, *selectedHighlightedImage;
 	
 	UIEdgeInsets const landscapePhoneImageInsets = (UIEdgeInsets){ 12, 4, 12, 4 };
 	UIEdgeInsets const imageInsets = (UIEdgeInsets){ 15, 5, 15, 5 };
 	
+	UIImage * (^image)(NSString *, UIEdgeInsets) = ^ (NSString *name, UIEdgeInsets insets) {
+		return [IRUIKitImage(name) resizableImageWithCapInsets:insets];
+	};
 	
-	[self.trackingButton setBackgroundImage:normalImage forState:UIControlStateNormal];
-	[self.trackingButton setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
-	[self.trackingButton setBackgroundImage:selectedImage forState:UIControlStateSelected];
-	[self.trackingButton setBackgroundImage:selectedHighlightedImage forState:UIControlStateSelected|UIControlStateHighlighted];
+	void (^setImage)(UIImage *, UIControlState) = ^ (UIImage *image, UIControlState state) {
+		[self.trackingButton setBackgroundImage:image forState:state];
+	};
 	
-	if (!isLandscapePhone) {
+	setImage(
+		isDefault ? isLandscapePhone ?
+			image(@"UINavigationBarMiniDefaultButton", landscapePhoneImageInsets) :
+			image(@"UINavigationBarDefaultButton", imageInsets) :
+		isBlack ? isLandscapePhone ?
+			image(@"UINavigationBarMiniBlackOpaqueButton", landscapePhoneImageInsets) :
+			image(@"UINavigationBarBlackOpaqueButton", imageInsets) :
+		isBlackTranslucent ? isLandscapePhone ?
+			image(@"UINavigationBarMiniBlackTranslucentButtonPressed", landscapePhoneImageInsets) :
+			image(@"UINavigationBarBlackTranslucentButtonPressed", imageInsets) :
+		nil,
+		UIControlStateNormal
+	);
 	
-		UIEdgeInsets insets = (UIEdgeInsets){ 15, 5, 15, 5 };
-		
-		[self.trackingButton setBackgroundImage:[IRUIKitImage(@"UINavigationBarDefaultButton") resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
-		
-		[self.trackingButton setBackgroundImage:[IRUIKitImage(@"UINavigationBarDefaultButtonPressed") resizableImageWithCapInsets:insets] forState:UIControlStateHighlighted];
-	
-		[self.trackingButton setBackgroundImage:[IRUIKitImage(@"UINavigationBarDoneButton") resizableImageWithCapInsets:insets] forState:UIControlStateSelected];
-		
-		[self.trackingButton setBackgroundImage:[IRUIKitImage(@"UINavigationBarDoneButtonPressed") resizableImageWithCapInsets:insets] forState:UIControlStateSelected|UIControlStateHighlighted];
-	
-	} else {
-	
-		UIEdgeInsets insets = (UIEdgeInsets){ 12, 4, 12, 4 };
-		
-		[self.trackingButton setBackgroundImage:[IRUIKitImage(@"UINavigationBarMiniDefaultButton") resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
-		
-		[self.trackingButton setBackgroundImage:[IRUIKitImage(@"UINavigationBarMiniDefaultButtonPressed") resizableImageWithCapInsets:insets] forState:UIControlStateHighlighted];
-		
-		[self.trackingButton setBackgroundImage:[IRUIKitImage(@"UINavigationBarMiniDoneButton") resizableImageWithCapInsets:insets] forState:UIControlStateSelected];
-		
-		[self.trackingButton setBackgroundImage:[IRUIKitImage(@"UINavigationBarMiniDefaultButtonPressed") resizableImageWithCapInsets:insets] forState:UIControlStateSelected|UIControlStateHighlighted];
-	
-	}
+	setImage(
+		isDefault ? isLandscapePhone ?
+			image(@"UINavigationBarMiniDoneButton", landscapePhoneImageInsets) :
+			image(@"UINavigationBarDoneButtonPressed", imageInsets) :
+		isBlack ? isLandscapePhone ?
+			image(@"UINavigationBarMiniBlackOpaqueButtonPressed", landscapePhoneImageInsets) :
+			image(@"UINavigationBarBlackOpaqueButtonPressed", imageInsets) :
+		isBlackTranslucent ? isLandscapePhone ?
+			image(@"UINavigationBarMiniBlackTranslucentButton", landscapePhoneImageInsets) :
+			image(@"UINavigationBarBlackTranslucentButton", imageInsets) :
+		nil,
+		UIControlStateSelected
+	);
 	
 	[self.trackingButton sizeToFit];
 	self.trackingButton.frame = (CGRect){
@@ -227,10 +229,13 @@
 		}
 		
 		case MKUserTrackingModeFollowWithHeading: {
+
+			//	TBD: animation
 			
 			[self.trackingButton setImage:IRMapKitImage(@"TrackingHeading") forState:UIControlStateNormal];
 			self.trackingButton.selected = YES;
 			break;
+			
 		}
 		
 		case MKUserTrackingModeNone: {
