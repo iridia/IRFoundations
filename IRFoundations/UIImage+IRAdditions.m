@@ -61,6 +61,46 @@ static void __attribute__((constructor)) initialize() {
 	
 }
 
++ (UIImage *) irImageNamed:(NSString *)name inBundle:(NSBundle *)bundle {
+
+	NSString *baseName = [name stringByDeletingPathExtension];
+	
+	NSString *type = [[name pathExtension] length] ? [name pathExtension] : @"png";
+	NSString *scaleSuffix = [NSString stringWithFormat:@"@%0.0fx", [UIScreen mainScreen].scale];
+	NSString *deviceSuffix = ((NSString * []){
+		[UIUserInterfaceIdiomPad] = @"~ipad",
+		[UIUserInterfaceIdiomPhone] = @"~iphone"
+	})[[UIDevice currentDevice].userInterfaceIdiom];	
+	
+	__block NSString *foundPath = nil;
+	
+	[[NSArray arrayWithObjects:
+		
+		[[baseName stringByAppendingString:deviceSuffix] stringByAppendingString:scaleSuffix],	
+		[baseName stringByAppendingString:deviceSuffix],
+		baseName,
+	
+	nil] enumerateObjectsUsingBlock: ^ (NSString *fileName, NSUInteger idx, BOOL *stop) {
+	
+		NSString *prospectivePath = [bundle pathForResource:fileName ofType:type];
+		if (prospectivePath) {
+		
+			foundPath = [prospectivePath retain];
+			*stop = YES;
+		
+		}
+		
+	}];
+	
+	if (!foundPath)
+		return nil;
+	
+	NSData *imageData = [NSData dataWithContentsOfMappedFile:[foundPath autorelease]];
+	
+	return [UIImage imageWithData:imageData];
+
+}
+
 - (CGRect) irTransposedRectForSize:(CGSize)newSize {
 
 	switch (self.imageOrientation) {

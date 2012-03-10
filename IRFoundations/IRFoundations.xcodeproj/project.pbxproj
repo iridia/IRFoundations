@@ -159,6 +159,8 @@
 		FF61635A14161868004738D3 /* IRMailComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF61635814161868004738D3 /* IRMailComposeViewController.m */; };
 		FF627C2314EBBA1C00DCC8C2 /* IRParagraphStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = FF627C2114EBBA1C00DCC8C2 /* IRParagraphStyle.h */; };
 		FF627C2414EBBA1C00DCC8C2 /* IRParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = FF627C2214EBBA1C00DCC8C2 /* IRParagraphStyle.m */; };
+		FF6322C2150B55FD00170342 /* MapKit+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6322C1150B55FD00170342 /* MapKit+IRAdditions.m */; };
+		FF6322C4150B594B00170342 /* UIKit+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6322C3150B594B00170342 /* UIKit+IRAdditions.m */; };
 		FF72C1F214278ABF00B5D838 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFFDEF7214211BCC0083BEFB /* Cocoa.framework */; };
 		FF72C1F814278ABF00B5D838 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF72C1F614278ABF00B5D838 /* InfoPlist.strings */; };
 		FF789D2F1442FDE00080F210 /* IRAsyncOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */; };
@@ -182,6 +184,10 @@
 		FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */; };
 		FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */; };
 		FFA65DD8150AFC8700E8668C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB6795F141E384A006F84E3 /* CoreData.framework */; };
+		FFA65DDF150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA65DDD150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h */; };
+		FFA65DE0150AFE9A00E8668C /* IRUserTrackingBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA65DDE150AFE9A00E8668C /* IRUserTrackingBarButtonItem.m */; };
+		FFA65DE3150AFEA800E8668C /* MapKit+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA65DE1150AFEA800E8668C /* MapKit+IRAdditions.h */; };
+		FFA65DE6150AFF0000E8668C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFA65DE5150AFF0000E8668C /* MapKit.framework */; };
 		FFA8EB4F13B9ABB80082D789 /* IRRelativeDateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */; };
 		FFA8EB5013B9ABB80082D789 /* IRRelativeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */; };
 		FFB67959141E383D006F84E3 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB67958141E383D006F84E3 /* CoreText.framework */; };
@@ -244,7 +250,6 @@
 /* Begin PBXFileReference section */
 		FF0527E514F398810030D099 /* UITableViewCell+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+IRAdditions.h"; sourceTree = "<group>"; };
 		FF0527E614F398810030D099 /* UITableViewCell+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+IRAdditions.m"; sourceTree = "<group>"; };
-		FF0A8BA91337AFB700DDA47C /* libIRFoundationsTouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libIRFoundationsTouch.a; path = "/Users/Shared/evadne/Products/Release-iphoneos/libIRFoundationsTouch.a"; sourceTree = "<absolute>"; };
 		FF0A8C8B1337B28200DDA47C /* IRFoundations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRFoundations.h; sourceTree = "<group>"; };
 		FF0A8C931337B29F00DDA47C /* Foundation+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Foundation+IRAdditions.h"; sourceTree = "<group>"; };
 		FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+IRAdditions.m"; sourceTree = "<group>"; };
@@ -323,7 +328,6 @@
 		FF0D46BA1475885900340287 /* UIViewController+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+IRAdditions.m"; sourceTree = "<group>"; };
 		FF0D46BE14759E4A00340287 /* UIApplication+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+IRAdditions.h"; sourceTree = "<group>"; };
 		FF0D46BF14759E4A00340287 /* UIApplication+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+IRAdditions.m"; sourceTree = "<group>"; };
-		FF0F650E14C2DDAA0037787A /* IRFoundationsTest.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = IRFoundationsTest.octest; path = "/Users/Shared/evadne/Products/Release-iphoneos/IRFoundationsTest.octest"; sourceTree = "<absolute>"; };
 		FF0F651014C2DDAA0037787A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		FF0F651214C2DDAA0037787A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		FF0F651414C2DDAA0037787A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -370,7 +374,10 @@
 		FF61635814161868004738D3 /* IRMailComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRMailComposeViewController.m; sourceTree = "<group>"; };
 		FF627C2114EBBA1C00DCC8C2 /* IRParagraphStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRParagraphStyle.h; sourceTree = "<group>"; };
 		FF627C2214EBBA1C00DCC8C2 /* IRParagraphStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRParagraphStyle.m; sourceTree = "<group>"; };
-		FF72C1F114278ABF00B5D838 /* IRFoundationsX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = IRFoundationsX.framework; path = /Users/Shared/evadne/Products/Release/IRFoundationsX.framework; sourceTree = "<absolute>"; };
+		FF6322BA150B4D8500170342 /* MapKit+IRAdditions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "MapKit+IRAdditions.bundle"; path = "Resources/MapKit+IRAdditions.bundle"; sourceTree = "<group>"; };
+		FF6322BD150B4EA800170342 /* UIKit+IRAdditions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "UIKit+IRAdditions.bundle"; path = "Resources/UIKit+IRAdditions.bundle"; sourceTree = "<group>"; };
+		FF6322C1150B55FD00170342 /* MapKit+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MapKit+IRAdditions.m"; sourceTree = "<group>"; };
+		FF6322C3150B594B00170342 /* UIKit+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIKit+IRAdditions.m"; sourceTree = "<group>"; };
 		FF72C1F514278ABF00B5D838 /* IRFoundationsX-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRFoundationsX-Info.plist"; sourceTree = "<group>"; };
 		FF72C1F714278ABF00B5D838 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF72C1F914278ABF00B5D838 /* IRFoundationsX-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IRFoundationsX-Prefix.pch"; sourceTree = "<group>"; };
@@ -393,6 +400,10 @@
 		FF97382713D82496003D1722 /* IRDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRDataStore.m; sourceTree = "<group>"; };
 		FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRPaginatedView.h; sourceTree = "<group>"; };
 		FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPaginatedView.m; sourceTree = "<group>"; };
+		FFA65DDD150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRUserTrackingBarButtonItem.h; sourceTree = "<group>"; };
+		FFA65DDE150AFE9A00E8668C /* IRUserTrackingBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRUserTrackingBarButtonItem.m; sourceTree = "<group>"; };
+		FFA65DE1150AFEA800E8668C /* MapKit+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MapKit+IRAdditions.h"; sourceTree = "<group>"; };
+		FFA65DE5150AFF0000E8668C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FFA8EB4D13B9ABB80082D789 /* IRRelativeDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRRelativeDateFormatter.h; sourceTree = "<group>"; };
 		FFA8EB4E13B9ABB80082D789 /* IRRelativeDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRRelativeDateFormatter.m; sourceTree = "<group>"; };
 		FFB67958141E383D006F84E3 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -415,6 +426,9 @@
 		FFCA416214F62954005466ED /* NSBundle+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+IRAdditions.h"; sourceTree = "<group>"; };
 		FFCA416314F62954005466ED /* NSBundle+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+IRAdditions.m"; sourceTree = "<group>"; };
 		FFD295C213A40E9200EA8213 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		FFD6F972150AFF76007173EA /* libIRFoundationsTouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIRFoundationsTouch.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFD6F973150AFF76007173EA /* IRFoundationsX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IRFoundationsX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFD6F974150AFF76007173EA /* IRFoundationsTest.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IRFoundationsTest.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAlertView.h; sourceTree = "<group>"; };
 		FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAlertView.m; sourceTree = "<group>"; };
 		FFFDEF7214211BCC0083BEFB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = ../../../../../Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -427,6 +441,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFA65DE6150AFF0000E8668C /* MapKit.framework in Frameworks */,
 				FFB67968141E384F006F84E3 /* Security.framework in Frameworks */,
 				FFB67961141E384A006F84E3 /* AddressBook.framework in Frameworks */,
 				FFB67962141E384A006F84E3 /* AddressBookUI.framework in Frameworks */,
@@ -484,6 +499,7 @@
 				FF0A8CEC1337B36A00DDA47C /* QuartzCore+IRAdditions */,
 				FF0A8CFB1337B36A00DDA47C /* CGGeometry+IRAdditions */,
 				FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */,
+				FFA65DDC150AFE7A00E8668C /* MapKit+IRAdditions */,
 				FF915A22145406EB005F63FC /* AssetsLibrary+IRAdditions */,
 				FF0A8D221337B36A00DDA47C /* CoreData+IRAdditions */,
 				FFB6797B141E3F71006F84E3 /* CoreText+IRAdditions */,
@@ -505,8 +521,12 @@
 				FFB67960141E384A006F84E3 /* CoreGraphics.framework */,
 				FFB67958141E383D006F84E3 /* CoreText.framework */,
 				FFFDEF7714211BCC0083BEFB /* Foundation.framework */,
+				FFA65DE5150AFF0000E8668C /* MapKit.framework */,
 				FFB67967141E384F006F84E3 /* Security.framework */,
 				FF0F651214C2DDAA0037787A /* UIKit.framework */,
+				FFD6F972150AFF76007173EA /* libIRFoundationsTouch.a */,
+				FFD6F973150AFF76007173EA /* IRFoundationsX.framework */,
+				FFD6F974150AFF76007173EA /* IRFoundationsTest.octest */,
 			);
 			name = IRFoundationsTouch;
 			sourceTree = "<group>";
@@ -637,6 +657,8 @@
 				FF0D46BF14759E4A00340287 /* UIApplication+IRAdditions.m */,
 				FFC813BE13EB8F48007B0683 /* UIImage+IRAdditions.h */,
 				FFC813BF13EB8F48007B0683 /* UIImage+IRAdditions.m */,
+				FF6322BD150B4EA800170342 /* UIKit+IRAdditions.bundle */,
+				FF6322C3150B594B00170342 /* UIKit+IRAdditions.m */,
 				FF0FF914150112BB00D6FE18 /* UIResponder+IRAdditions.h */,
 				FF0FF915150112BB00D6FE18 /* UIResponder+IRAdditions.m */,
 				FF50B4E014E557C3005B3B6A /* UIScrollView+IRAdditions.h */,
@@ -723,6 +745,18 @@
 			);
 			name = Tests;
 			path = IRFoundationsTest;
+			sourceTree = "<group>";
+		};
+		FFA65DDC150AFE7A00E8668C /* MapKit+IRAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				FFA65DE1150AFEA800E8668C /* MapKit+IRAdditions.h */,
+				FF6322C1150B55FD00170342 /* MapKit+IRAdditions.m */,
+				FFA65DDD150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h */,
+				FFA65DDE150AFE9A00E8668C /* IRUserTrackingBarButtonItem.m */,
+				FF6322BA150B4D8500170342 /* MapKit+IRAdditions.bundle */,
+			);
+			name = "MapKit+IRAdditions";
 			sourceTree = "<group>";
 		};
 		FFB6797B141E3F71006F84E3 /* CoreText+IRAdditions */ = {
@@ -816,6 +850,8 @@
 				FFCA416414F62954005466ED /* NSBundle+IRAdditions.h in Headers */,
 				FF0FF916150112BB00D6FE18 /* UIResponder+IRAdditions.h in Headers */,
 				FF59002F1504ABA7000D6406 /* NSError+IRAdditions.h in Headers */,
+				FFA65DDF150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h in Headers */,
+				FFA65DE3150AFEA800E8668C /* MapKit+IRAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -854,7 +890,7 @@
 			);
 			name = IRFoundationsTouch;
 			productName = IRFoundationsTouch;
-			productReference = FF0A8BA91337AFB700DDA47C /* libIRFoundationsTouch.a */;
+			productReference = FFD6F972150AFF76007173EA /* libIRFoundationsTouch.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		FF0F650D14C2DDAA0037787A /* IRFoundationsTest */ = {
@@ -873,7 +909,7 @@
 			);
 			name = IRFoundationsTest;
 			productName = IRFoundationsTest;
-			productReference = FF0F650E14C2DDAA0037787A /* IRFoundationsTest.octest */;
+			productReference = FFD6F974150AFF76007173EA /* IRFoundationsTest.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 		FF72C1F014278ABF00B5D838 /* IRFoundationsX */ = {
@@ -891,7 +927,7 @@
 			);
 			name = IRFoundationsX;
 			productName = IRFoundationsX;
-			productReference = FF72C1F114278ABF00B5D838 /* IRFoundationsX.framework */;
+			productReference = FFD6F973150AFF76007173EA /* IRFoundationsX.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -1034,6 +1070,9 @@
 				FFCA416514F62954005466ED /* NSBundle+IRAdditions.m in Sources */,
 				FF0FF917150112BB00D6FE18 /* UIResponder+IRAdditions.m in Sources */,
 				FF5900301504ABA7000D6406 /* NSError+IRAdditions.m in Sources */,
+				FFA65DE0150AFE9A00E8668C /* IRUserTrackingBarButtonItem.m in Sources */,
+				FF6322C2150B55FD00170342 /* MapKit+IRAdditions.m in Sources */,
+				FF6322C4150B594B00170342 /* UIKit+IRAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

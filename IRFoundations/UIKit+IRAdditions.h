@@ -38,3 +38,6 @@
 #import "UIView+IRAdditions.h"
 #import "UIViewController+IRAdditions.h"
 #import "UIWindow+IRAdditions.h"
+
+extern NSBundle * IRUIKitBundle (void);
+extern UIImage * IRUIKitImage (NSString *name);

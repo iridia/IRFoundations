@@ -15,6 +15,8 @@
 @class IRShadow;
 @interface UIImage (IRAdditions)
 
++ (UIImage *) irImageNamed:(NSString *)name inBundle:(NSBundle *)bundle;
+
 - (UIImage *) irStandardImage;
 - (UIImage *) irDecodedImage;
 
