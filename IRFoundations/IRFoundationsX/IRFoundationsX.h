@@ -6,8 +6,9 @@
 //  Copyright (c) 2011 Iridia Productions. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
-@interface IRFoundationsX : NSObject
-
-@end
+#import "Foundation+IRAdditions.h"
+#import "QuartzCore+IRAdditions.h"
+#import "CGGeometry+IRAdditions.h"
+#import "UIKit+IRAdditions.h"
+#import "CoreData+IRAdditions.h"
+#import "CoreText+IRAdditions.h"
