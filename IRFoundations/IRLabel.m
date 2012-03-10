@@ -282,13 +282,25 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 		needsTailTruncation = YES;
 	
 	CGContextSetTextMatrix(context, CGAffineTransformIdentity);
+	
 	irCTFrameEnumerateLines(usedFrame, ^(CTLineRef aLine, CGPoint lineOrigin, BOOL *stop) {
 		
 		CTFontRef lineFont = (CTFontRef)[self.attributedText attribute:(id)kCTFontAttributeName atIndex:(CTLineGetStringRange(aLine)).location effectiveRange:NULL];
 		UIFont *usedFont = lineFont ? [UIFont fontWithName:(NSString *)[NSMakeCollectable(CTFontCopyPostScriptName(lineFont)) autorelease] size:CTFontGetSize(lineFont)] : self.font;
+		
+		CGFloat lineHeight = usedFont.leading;
+		
+		NSArray *allRuns = (NSArray *)CTLineGetGlyphRuns(aLine);
+		if ([allRuns count]) {
+		
+			CTParagraphStyleRef paragraphStyle = [(NSDictionary *)CTRunGetAttributes((CTRunRef)[allRuns objectAtIndex:0]) objectForKey:(id)kCTParagraphStyleAttributeName];
+		
+			if (paragraphStyle)
+				CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierMaximumLineHeight, sizeof(lineHeight), &lineHeight);
+		
+		}
 
-		//	Fix: needs simple alignment stuff
-		usableHeight -= usedFont.leading;
+		usableHeight -= lineHeight;
 		CGContextSetTextPosition(context, lineOrigin.x, usableHeight - usedFont.descender);
 		
 		CFRange lineRange = CTLineGetStringRange(aLine);

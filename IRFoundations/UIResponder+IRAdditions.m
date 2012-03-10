@@ -29,7 +29,7 @@
 			
 			return [siblingObjects lastObject];
 		
-		} @catch (NSException *exception) {
+		} @catch (NSException *exception) { 
 
 			if (aClass == [UIResponder class])
 				return nil;

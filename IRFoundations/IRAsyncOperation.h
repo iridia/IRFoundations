@@ -24,6 +24,8 @@ typedef void(^IRAsyncOperationCallback)(id results);
 @property (nonatomic, readwrite, copy) void (^workerBlock)(void(^callbackBlock)(id results));
 @property (nonatomic, readwrite, copy) void (^workCompletionBlock)(id results);
 
+@property (nonatomic, readonly, retain) id results;
+
 + (IRAsyncOperation *) operationWithWorkerBlock:(void(^)(IRAsyncOperationCallback callback))aWorkerBlock completionBlock:(IRAsyncOperationCallback)aCompletionBlock;
 
 @end

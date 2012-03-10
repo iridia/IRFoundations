@@ -14,6 +14,7 @@
 #import "NSSet+IRAdditions.h"
 #import "NSThread+IRAdditions.h"
 #import "NSBundle+IRAdditions.h"
+#import "NSError+IRAdditions.h"
 
 #import "IRNoOp.h"
 #import "IRBindings.h"
@@ -21,6 +22,7 @@
 #import "IRXPathQuery.h"
 #import "IRHTMLStringFormatter.h"
 #import "IRRelativeDateFormatter.h"
+#import "IRLifetimeHelper.h"
 
 #import "IRAsyncOperation.h"
 
