@@ -211,6 +211,8 @@
 		FFCA416414F62954005466ED /* NSBundle+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FFCA416214F62954005466ED /* NSBundle+IRAdditions.h */; };
 		FFCA416514F62954005466ED /* NSBundle+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FFCA416314F62954005466ED /* NSBundle+IRAdditions.m */; };
 		FFD295C313A40E9200EA8213 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD295C213A40E9200EA8213 /* libxml2.2.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		FFD5E6E8150BA88E00A472E6 /* IRViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FFD5E6E6150BA88E00A472E6 /* IRViewController.h */; };
+		FFD5E6E9150BA88E00A472E6 /* IRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFD5E6E7150BA88E00A472E6 /* IRViewController.m */; };
 		FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */; };
 		FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */; };
 /* End PBXBuildFile section */
@@ -430,6 +432,8 @@
 		FFCA416214F62954005466ED /* NSBundle+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+IRAdditions.h"; sourceTree = "<group>"; };
 		FFCA416314F62954005466ED /* NSBundle+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+IRAdditions.m"; sourceTree = "<group>"; };
 		FFD295C213A40E9200EA8213 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		FFD5E6E6150BA88E00A472E6 /* IRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRViewController.h; sourceTree = "<group>"; };
+		FFD5E6E7150BA88E00A472E6 /* IRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRViewController.m; sourceTree = "<group>"; };
 		FFD6F972150AFF76007173EA /* libIRFoundationsTouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIRFoundationsTouch.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFD6F973150AFF76007173EA /* IRFoundationsX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IRFoundationsX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFD6F974150AFF76007173EA /* IRFoundationsTest.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IRFoundationsTest.octest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -610,6 +614,8 @@
 		FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */ = {
 			isa = PBXGroup;
 			children = (
+				FFD5E6E6150BA88E00A472E6 /* IRViewController.h */,
+				FFD5E6E7150BA88E00A472E6 /* IRViewController.m */,
 				FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */,
 				FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */,
 				FF0A8D201337B36A00DDA47C /* IRAction.h */,
@@ -859,6 +865,7 @@
 				FFA65DDF150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h in Headers */,
 				FFA65DE3150AFEA800E8668C /* MapKit+IRAdditions.h in Headers */,
 				FF9FBC1D150B8C62004A23FB /* IRPageCurlBarButtonItem.h in Headers */,
+				FFD5E6E8150BA88E00A472E6 /* IRViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1081,6 +1088,7 @@
 				FF6322C2150B55FD00170342 /* MapKit+IRAdditions.m in Sources */,
 				FF6322C4150B594B00170342 /* UIKit+IRAdditions.m in Sources */,
 				FF9FBC1E150B8C62004A23FB /* IRPageCurlBarButtonItem.m in Sources */,
+				FFD5E6E9150BA88E00A472E6 /* IRViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
