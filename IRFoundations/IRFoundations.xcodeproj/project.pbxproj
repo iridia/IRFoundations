@@ -181,6 +181,8 @@
 		FF9737E413D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9737E213D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m */; };
 		FF97382813D82496003D1722 /* IRDataStore.h in Headers */ = {isa = PBXBuildFile; fileRef = FF97382613D82496003D1722 /* IRDataStore.h */; };
 		FF97382913D82496003D1722 /* IRDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FF97382713D82496003D1722 /* IRDataStore.m */; };
+		FF9FBC1D150B8C62004A23FB /* IRPageCurlBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FF9FBC1B150B8C62004A23FB /* IRPageCurlBarButtonItem.h */; };
+		FF9FBC1E150B8C62004A23FB /* IRPageCurlBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */; };
 		FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */; };
 		FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */; };
 		FFA65DD8150AFC8700E8668C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB6795F141E384A006F84E3 /* CoreData.framework */; };
@@ -398,6 +400,8 @@
 		FF9737E213D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRImageUnarchiveFromDataTransformer.m; sourceTree = "<group>"; };
 		FF97382613D82496003D1722 /* IRDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRDataStore.h; sourceTree = "<group>"; };
 		FF97382713D82496003D1722 /* IRDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRDataStore.m; sourceTree = "<group>"; };
+		FF9FBC1B150B8C62004A23FB /* IRPageCurlBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRPageCurlBarButtonItem.h; sourceTree = "<group>"; };
+		FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPageCurlBarButtonItem.m; sourceTree = "<group>"; };
 		FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRPaginatedView.h; sourceTree = "<group>"; };
 		FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPaginatedView.m; sourceTree = "<group>"; };
 		FFA65DDD150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRUserTrackingBarButtonItem.h; sourceTree = "<group>"; };
@@ -630,6 +634,8 @@
 				FF0A8D081337B36A00DDA47C /* IRLabel.m */,
 				FF61635714161868004738D3 /* IRMailComposeViewController.h */,
 				FF61635814161868004738D3 /* IRMailComposeViewController.m */,
+				FF9FBC1B150B8C62004A23FB /* IRPageCurlBarButtonItem.h */,
+				FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */,
 				FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */,
 				FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */,
 				FF0A8D091337B36A00DDA47C /* IRSegmentedControl.h */,
@@ -852,6 +858,7 @@
 				FF59002F1504ABA7000D6406 /* NSError+IRAdditions.h in Headers */,
 				FFA65DDF150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h in Headers */,
 				FFA65DE3150AFEA800E8668C /* MapKit+IRAdditions.h in Headers */,
+				FF9FBC1D150B8C62004A23FB /* IRPageCurlBarButtonItem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1073,6 +1080,7 @@
 				FFA65DE0150AFE9A00E8668C /* IRUserTrackingBarButtonItem.m in Sources */,
 				FF6322C2150B55FD00170342 /* MapKit+IRAdditions.m in Sources */,
 				FF6322C4150B594B00170342 /* UIKit+IRAdditions.m in Sources */,
+				FF9FBC1E150B8C62004A23FB /* IRPageCurlBarButtonItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

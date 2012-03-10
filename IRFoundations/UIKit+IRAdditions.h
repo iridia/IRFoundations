@@ -38,6 +38,7 @@
 #import "UIView+IRAdditions.h"
 #import "UIViewController+IRAdditions.h"
 #import "UIWindow+IRAdditions.h"
+#import "IRPageCurlBarButtonItem.h"
 
 extern NSBundle * IRUIKitBundle (void);
 extern UIImage * IRUIKitImage (NSString *name);
