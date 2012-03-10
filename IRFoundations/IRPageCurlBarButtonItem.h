@@ -10,4 +10,8 @@
 
 @interface IRPageCurlBarButtonItem : UIBarButtonItem
 
+@property (nonatomic, readwrite, assign) UIBarStyle barStyle;
+@property (nonatomic, readwrite, assign) BOOL translucent;
+@property (nonatomic, readwrite, assign) BOOL selected;
+
 @end

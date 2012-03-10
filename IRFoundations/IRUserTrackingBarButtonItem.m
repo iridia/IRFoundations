@@ -74,7 +74,8 @@
 
 	[super awakeFromNib];
 	
-	self.customView = self.trackingButton;
+	self.customView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+	[self.customView addSubview:self.trackingButton];
 	self.barStyle = UIBarStyleDefault;
 	
 	__block __typeof__(self) nrSelf = self;
@@ -101,6 +102,8 @@
 		return trackingButton;
 	
 	trackingButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+	trackingButton.adjustsImageWhenHighlighted = NO;
+	trackingButton.adjustsImageWhenDisabled = NO;
 	
 	[trackingButton addTarget:self action:@selector(handleTrackingButtonTap:) forControlEvents:UIControlEventTouchUpInside];
 	
@@ -194,7 +197,7 @@
 	setImage(
 		isDefault ? isLandscapePhone ?
 			image(@"UINavigationBarMiniDoneButton", landscapePhoneImageInsets) :
-			image(@"UINavigationBarDoneButtonPressed", imageInsets) :
+			image(@"UINavigationBarDoneButton", imageInsets) :
 		isBlack ? isLandscapePhone ?
 			image(@"UINavigationBarMiniBlackOpaqueButtonPressed", landscapePhoneImageInsets) :
 			image(@"UINavigationBarBlackOpaqueButtonPressed", imageInsets) :
@@ -213,6 +216,9 @@
 			CGRectGetHeight(self.trackingButton.bounds)
 		}
 	};
+	
+	self.trackingButton.superview.frame = self.trackingButton.frame;
+	self.trackingButton.frame = CGRectOffset(self.trackingButton.frame, 0, 1);
 	
 }
 
