@@ -78,6 +78,7 @@ static void __attribute__((constructor)) initialize() {
 		
 		[[baseName stringByAppendingString:deviceSuffix] stringByAppendingString:scaleSuffix],	
 		[baseName stringByAppendingString:deviceSuffix],
+		[baseName stringByAppendingString:scaleSuffix],
 		baseName,
 	
 	nil] enumerateObjectsUsingBlock: ^ (NSString *fileName, NSUInteger idx, BOOL *stop) {
@@ -97,7 +98,14 @@ static void __attribute__((constructor)) initialize() {
 	
 	NSData *imageData = [NSData dataWithContentsOfMappedFile:[foundPath autorelease]];
 	
-	return [UIImage imageWithData:imageData];
+	if (![[[foundPath lastPathComponent] stringByDeletingPathExtension] hasSuffix:scaleSuffix])
+		return [UIImage imageWithData:imageData];
+	
+	CGDataProviderRef providerRef = (CGDataProviderRef)[NSMakeCollectable(CGDataProviderCreateWithCFData((CFDataRef)imageData)) autorelease];
+	
+	CGImageRef imageRef = (CGImageRef)[NSMakeCollectable(CGImageCreateWithPNGDataProvider(providerRef, NULL, NO, kCGRenderingIntentDefault)) autorelease];
+	
+	return [UIImage imageWithCGImage:imageRef scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
 
 }
 

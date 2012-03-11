@@ -219,11 +219,18 @@
 	
 	self.trackingButton.superview.frame = self.trackingButton.frame;
 	self.trackingButton.frame = CGRectOffset(self.trackingButton.frame, 0, 1);
+		
+	//	Superview of the button is wrapper view
+	//	Trigger toolbar relayout
+	
+	[self.trackingButton.superview.superview setNeedsLayout];	//	?
 	
 }
 
 - (void) handleTrackingModeChangedFrom:(MKUserTrackingMode)fromMode to:(MKUserTrackingMode)toMode {
 
+	[self updateTrackingButton];
+	
 	switch (toMode) {
 		
 		case MKUserTrackingModeFollow: {
