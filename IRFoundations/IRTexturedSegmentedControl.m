@@ -17,39 +17,71 @@
 	
 	[self setBackgroundImage:[IRUIKitImage(@"UITexturedButton") resizableImageWithCapInsets:(UIEdgeInsets){ 0, 16, 1, 16 }] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 	
-//	[self setBackgroundImage:[IRUIKitImage(@"UITexturedPressedButton") resizableImageWithCapInsets:(UIEdgeInsets){ 0, 16, 1, 16 }] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-//
-//	[self setBackgroundImage:[IRUIKitImage(@"UITexturedPressedButton") resizableImageWithCapInsets:(UIEdgeInsets){ 0, 16, 1, 16 }] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-
-	UIImage *selectedLeftCap = IRUIKitImage(@"UISegmentTexturedButtonSelectedLeftCap");
-	UIImage *selectedCenter = IRUIKitImage(@"UISegmentTexturedButtonSelectedCenter");	
-	UIImage *selectedRightCap = IRUIKitImage(@"UISegmentTexturedButtonSelectedRightCap");	
+	UIImage * (^stitchX)(NSArray *) = ^ (NSArray *images) {
 		
-	UIGraphicsBeginImageContextWithOptions((CGSize){
-		selectedLeftCap.size.width + selectedCenter.size.width + selectedRightCap.size.width,
-		selectedCenter.size.width
-	}, NO, selectedCenter.scale);
+		CGSize imageSize = CGSizeZero;
+		CGFloat offsetX = 0;
+		
+		for (UIImage *image in images) {
+			imageSize.width += image.size.width;
+			imageSize.height = image.size.height;
+		}
+		
+		UIGraphicsBeginImageContextWithOptions(imageSize, NO, [UIScreen mainScreen].scale);
+		
+		for (UIImage *image in images) {
+			[image drawAtPoint:(CGPoint){ offsetX, 0 }];
+			offsetX += image.size.width;
+		}
+		
+		UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+		UIGraphicsEndImageContext();
+		
+		return image;
+		
+	};
 	
-	[selectedLeftCap drawAtPoint:CGPointZero];
-	[selectedCenter drawAtPoint:(CGPoint){ selectedLeftCap.size.width, 0 }];
-	[selectedRightCap drawAtPoint:(CGPoint){ selectedLeftCap.size.width + selectedCenter.size.width, 0 }];
-	
-	UIImage *selectedImage = UIGraphicsGetImageFromCurrentImageContext();
-	UIGraphicsEndImageContext();
-	
-	//	Probably cache them
-	
-	//	UIImage *highlightedLeftCap = IRUIKitImage(@"UISegmentTexturedButtonHighlightedLeftCap");
-	//	UIImage *highlightedCenter = IRUIKitImage(@"UISegmentTexturedButtonHighlightedCenter");	
-	//	UIImage *highlightedRightCap = IRUIKitImage(@"UISegmentTexturedButtonHighlightedRightCap");	
-	//	
-	//	UIImage *selectedHighlightedLeftCap = IRUIKitImage(@"UISegmentTexturedButtonSelectedHighlightedLeftCap");
-	//	UIImage *selectedHighlightedCenter = IRUIKitImage(@"UISegmentTexturedButtonSelectedHighlightedCenter");	
-	//	UIImage *selectedHighlightedRightCap = IRUIKitImage(@"UISegmentTexturedButtonSelectedHighlightedRightCap");	
-	
-	[self setBackgroundImage:selectedImage forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
+	NSArray * (^repeatMid)(NSArray *) = ^ (NSArray *originalArray){
+		
+		NSMutableArray *returnedArray = [NSMutableArray array];
+		
+		[originalArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+			
+			[returnedArray addObject:obj];
+			
+			if ((idx != 0) && (idx != ([originalArray count] - 1))) {
+			
+				for (int i = 0; i < 8; i++)
+					[returnedArray addObject:obj];
+			
+			}
+			
+		}];
+		
+		return returnedArray;
+		
+	};
 
+	//	TBD: Cache this stuff.
+
+	[self setBackgroundImage:[stitchX(repeatMid([NSArray arrayWithObjects:
+		IRUIKitImage(@"UISegmentTexturedButtonSelectedLeftCap"),
+		IRUIKitImage(@"UISegmentTexturedButtonSelectedCenter"),
+		IRUIKitImage(@"UISegmentTexturedButtonSelectedRightCap"),
+	nil])) resizableImageWithCapInsets:(UIEdgeInsets){ 0, 16, 1, 16 }] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
 	
+	[self setBackgroundImage:[stitchX(repeatMid([NSArray arrayWithObjects:
+		IRUIKitImage(@"UISegmentTexturedButtonHighlightedLeftCap"),
+		IRUIKitImage(@"UISegmentTexturedButtonHighlightedCenter"),
+		IRUIKitImage(@"UISegmentTexturedButtonHighlightedRightCap"),
+	nil])) resizableImageWithCapInsets:(UIEdgeInsets){ 0, 16, 1, 16 }] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+	
+	[self setBackgroundImage:[stitchX(repeatMid([NSArray arrayWithObjects:
+		IRUIKitImage(@"UISegmentTexturedButtonSelectedHighlightedLeftCap"),
+		IRUIKitImage(@"UISegmentTexturedButtonSelectedHighlightedCenter"),
+		IRUIKitImage(@"UISegmentTexturedButtonSelectedHighlightedRightCap"),
+	nil])) resizableImageWithCapInsets:(UIEdgeInsets){ 0, 16, 1, 16 }] forState:UIControlStateSelected|UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+		
 	self.bounds = (CGRect){
 		CGPointZero,
 		(CGSize){
