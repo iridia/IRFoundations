@@ -36,3 +36,15 @@ UIImage * IRMapKitImage (NSString *name) {
 	return returnedImage;
 	
 }
+
+BOOL IRMKCoordinateRegionEqualToRegion (MKCoordinateRegion lhs, MKCoordinateRegion rhs) {
+
+	if (lhs.center.latitude == rhs.center.latitude)
+	if (lhs.center.longitude == rhs.center.longitude)
+	if (lhs.span.latitudeDelta == rhs.span.latitudeDelta)
+	if (lhs.span.longitudeDelta == rhs.span.longitudeDelta)
+		return YES;
+	
+	return NO;
+
+}
