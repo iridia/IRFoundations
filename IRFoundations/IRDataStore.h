@@ -44,6 +44,7 @@
 //	Other methods are conveniences
 
 - (NSString *) persistentFileURLBasePath;	//	By default the documents directory
+- (NSString *) temporaryFileURLBasePath;	//	By default NSTemporaryDirectory()
 - (NSString *) relativePathWithBasePath:(NSString *)basePath filePath:(NSString *)filePath;
 - (NSString *) absolutePathWithBasePath:(NSString *)basePath filePath:(NSString *)filePath;
 
@@ -56,6 +57,8 @@
 - (NSURL *) persistentFileURLForData:(NSData *)data extension:(NSString *)fileExtension;
 - (NSURL *) persistentFileURLForFileAtURL:(NSURL *)aURL;
 - (NSURL *) persistentFileURLForFileAtPath:(NSString *)aPath;
+
+- (NSURL *) oneUseTemporaryFileURL;
 
 
 //	Convenience for updating objects, though they don’t save

@@ -272,6 +272,24 @@ NSString * IRDataStoreNonce () {
 
 }
 
+- (NSString *) temporaryFileURLBasePath {
+
+//	Here’s a fundamental assumption: app bundle won’t get moved when the app is running.
+	//	If that fails, don’t cache the path.
+
+	static NSString * path;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+
+		path = [NSTemporaryDirectory() retain];
+		
+	});
+
+	return path;
+
+
+}
+
 - (NSString *) relativePathWithBasePath:(NSString *)basePath filePath:(NSString *)filePath {
 
 	if (![filePath hasPrefix:basePath])
@@ -290,6 +308,12 @@ NSString * IRDataStoreNonce () {
 - (NSURL *) oneUsePersistentFileURL {
 
 	return [NSURL fileURLWithPath:[[self persistentFileURLBasePath] stringByAppendingPathComponent:IRDataStoreNonce()]];
+
+}
+
+- (NSURL *) oneUseTemporaryFileURL {
+
+	return [NSURL fileURLWithPath:[[self temporaryFileURLBasePath] stringByAppendingPathComponent:IRDataStoreNonce()]];
 
 }
 
