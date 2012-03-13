@@ -403,6 +403,12 @@ NSString * IRDataStoreNonce () {
 
 - (BOOL) updateObject:(NSManagedObject *)anObject inContext:(NSManagedObjectContext *)aContext takingBlobFromTemporaryFile:(NSString *)aPath usingResourceType:(NSString *)utiType forKeyPath:(NSString *)fileKeyPath matchingURL:(NSURL *)anURL forKeyPath:(NSString *)urlKeyPath {
 
+	return [self updateObject:anObject inContext:aContext takingBlobFromTemporaryFile:aPath usingResourceType:utiType forKeyPath:fileKeyPath matchingURL:anURL forKeyPath:urlKeyPath error:nil];
+
+}
+
+- (BOOL) updateObject:(NSManagedObject *)anObject inContext:(NSManagedObjectContext *)aContext takingBlobFromTemporaryFile:(NSString *)aPath usingResourceType:(NSString *)utiType forKeyPath:(NSString *)fileKeyPath matchingURL:(NSURL *)anURL forKeyPath:(NSString *)urlKeyPath error:(NSError **)outError {
+
 	@try {
 		[anObject primitiveValueForKey:[(NSPropertyDescription *)[[anObject.entity properties] lastObject] name]];
 	} @catch (NSException *exception) {
@@ -410,17 +416,29 @@ NSString * IRDataStoreNonce () {
 	}
 
 	NSString *currentFilePath = [anObject valueForKey:fileKeyPath];
-	if (currentFilePath || ![[anObject valueForKey:urlKeyPath] isEqualToString:[anURL absoluteString]]) {
-		//	NSLog(@"Skipping double-writing");
-		return NO;
+	if (![[anObject valueForKey:urlKeyPath] isEqualToString:[anURL absoluteString]]) {
+		
+		if (outError)
+			*outError = [NSError errorWithDomain:@"com.iridia.dataStore" code:0 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+				@"Underlying object has changed URL value, unsafe to assign blob", NSLocalizedDescriptionKey,
+			nil]];
+		
+		return NO;	//	URL empty
+		
 	}
 	
 	NSURL *fileURL = [self persistentFileURLForFileAtURL:[NSURL fileURLWithPath:aPath]];
 	if (!fileURL) {
-		NSLog(@"%s: nil file URL", __PRETTY_FUNCTION__);
+		
+		if (outError)
+			*outError = [NSError errorWithDomain:@"com.iridia.dataStore" code:0 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+				@"Incoming persistent file URL is ultimately transformed to nil", NSLocalizedDescriptionKey,
+			nil]];
+		
 		return NO;
+		
 	}
-	
+
 	NSString *preferredExtension = utiType ? [NSMakeCollectable(UTTypeCopyPreferredTagWithClass((CFStringRef)utiType, kUTTagClassFilenameExtension)) autorelease] : nil;
 	
 	if (preferredExtension) {
@@ -430,8 +448,14 @@ NSString * IRDataStoreNonce () {
 		NSError *movingError = nil;
 		BOOL didMove = [[NSFileManager defaultManager] moveItemAtURL:fileURL toURL:newFileURL error:&movingError];
 		if (!didMove) {
-			NSLog(@"Error moving: %@", movingError);
+			
+			if (outError)
+				*outError = [NSError errorWithDomain:@"com.iridia.dataStore" code:0 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+					@"Could not rename the underlying persistent file", NSLocalizedDescriptionKey,
+				nil]];
+			
 			return NO;
+			
 		}
 			
 		fileURL = newFileURL;
