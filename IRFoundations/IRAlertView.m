@@ -56,4 +56,16 @@
 
 }
 
+- (void) willPresentAlertView:(UIAlertView *)alertView {
+
+	[alertView retain];
+
+}
+
+- (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+
+	[alertView autorelease];
+
+}
+
 @end
