@@ -10,6 +10,9 @@
 
 @interface NSBundle (IRAdditions)
 
++ (NSBundle *) irFrameworkBundleWithName:(NSString *)name;
++ (NSBundle *) irFrameworkBundleWithIdentifier:(NSString *)identifier;
+
 - (NSString *) debugVersionString;
 
 @end
