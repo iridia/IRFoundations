@@ -175,7 +175,7 @@
 		NSDictionary *configurationDictionary = (( ^ {
 		
 			if ([currentDictionaryWrapper count] == 1)
-			return currentDictionary;
+				return (id)currentDictionary;
 		
 			NSMutableDictionary *returnedDictionary = [currentDictionary mutableCopy];
 			
@@ -185,7 +185,7 @@
 	
 			}];
 			
-			return returnedDictionary;
+			return (id)returnedDictionary;
 		
 		})());
 		
