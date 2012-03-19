@@ -293,7 +293,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 		NSArray *allRuns = (NSArray *)CTLineGetGlyphRuns(aLine);
 		if ([allRuns count]) {
 		
-			CTParagraphStyleRef paragraphStyle = [(NSDictionary *)CTRunGetAttributes((CTRunRef)[allRuns objectAtIndex:0]) objectForKey:(id)kCTParagraphStyleAttributeName];
+			CTParagraphStyleRef paragraphStyle = (CTParagraphStyleRef)[(NSDictionary *)CTRunGetAttributes((CTRunRef)[allRuns objectAtIndex:0]) objectForKey:(id)kCTParagraphStyleAttributeName];
 		
 			if (paragraphStyle)
 				CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierMaximumLineHeight, sizeof(lineHeight), &lineHeight);

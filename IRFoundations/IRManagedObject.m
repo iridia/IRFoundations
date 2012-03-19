@@ -45,9 +45,9 @@
 			//	Bad things always happen
 		
 			if (![configurationDictionary isKindOfClass:[NSDictionary class]])
-				return nil;
+				return (id)nil;
 			
-			return [self objectInsertingIntoContext:context withRemoteDictionary:configurationDictionary];
+			return (id)[self objectInsertingIntoContext:context withRemoteDictionary:configurationDictionary];
 			
 		}];
 		
@@ -209,7 +209,7 @@
 		
 				}];
 				
-				return returnedDictionary;
+				return (id)returnedDictionary;
 			
 			})());
 			

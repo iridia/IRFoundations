@@ -232,7 +232,7 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 
 NSString * IRDataStoreTimestamp () {
 
-	return [NSString stringWithFormat:@"%d", time(NULL)];
+	return [NSString stringWithFormat:@"%lu", time(NULL)];
 
 }
 
