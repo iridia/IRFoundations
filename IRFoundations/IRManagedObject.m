@@ -430,7 +430,8 @@
 
 + (id) objectInsertingIntoContext:(NSManagedObjectContext *)inContext withRemoteDictionary:(NSDictionary *)inDictionary {
 
-	NSCParameterAssert([inDictionary isKindOfClass:[NSDictionary class]]);
+	if (inDictionary)
+		NSCParameterAssert([inDictionary isKindOfClass:[NSDictionary class]]);
 
 	IRManagedObject *returnedStatus = nil;
 
@@ -447,7 +448,8 @@
 	if (!returnedStatus)
 		return nil;
 	
-	[returnedStatus configureWithRemoteDictionary:inDictionary];
+	if (inDictionary)
+		[returnedStatus configureWithRemoteDictionary:inDictionary];
 	
 	return returnedStatus;
 
