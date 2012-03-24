@@ -44,6 +44,7 @@
 //	Other methods are conveniences
 
 - (NSString *) persistentFileURLBasePath;	//	By default the documents directory
+- (NSString *) temporaryFileURLBasePath;	//	By default NSTemporaryDirectory()
 - (NSString *) relativePathWithBasePath:(NSString *)basePath filePath:(NSString *)filePath;
 - (NSString *) absolutePathWithBasePath:(NSString *)basePath filePath:(NSString *)filePath;
 
@@ -57,12 +58,16 @@
 - (NSURL *) persistentFileURLForFileAtURL:(NSURL *)aURL;
 - (NSURL *) persistentFileURLForFileAtPath:(NSString *)aPath;
 
+- (NSURL *) oneUseTemporaryFileURL;
+
 
 //	Convenience for updating objects, though they don’t save
 
 - (NSManagedObject *) updateObjectAtURI:(NSURL *)anObjectURI inContext:(NSManagedObjectContext *)aContext takingBlobFromTemporaryFile:(NSString *)aPath usingResourceType:(NSString *)utiType forKeyPath:(NSString *)fileKeyPath matchingURL:(NSURL *)anURL forKeyPath:(NSString *)urlKeyPath;
 
 - (BOOL) updateObject:(NSManagedObject *)anObject inContext:(NSManagedObjectContext *)aContext takingBlobFromTemporaryFile:(NSString *)aPath usingResourceType:(NSString *)utiType forKeyPath:(NSString *)fileKeyPath matchingURL:(NSURL *)anURL forKeyPath:(NSString *)urlKeyPath;
+
+- (BOOL) updateObject:(NSManagedObject *)anObject inContext:(NSManagedObjectContext *)aContext takingBlobFromTemporaryFile:(NSString *)aPath usingResourceType:(NSString *)utiType forKeyPath:(NSString *)fileKeyPath matchingURL:(NSURL *)anURL forKeyPath:(NSString *)urlKeyPath error:(NSError **)outError;
 
 @end
 

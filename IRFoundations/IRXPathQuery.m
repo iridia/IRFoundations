@@ -71,7 +71,7 @@
 	xmlNodeSetPtr xmlNodes = xPathObject->nodesetval;
 	if (!xmlNodes) {
 
-		[NSException raise:NSInternalInconsistencyException format:@"XML nodes are NULL.", aXPath];
+		[NSException raise:NSInternalInconsistencyException format:@"XML nodes are NULL."];
 		return nil;
 	
 	}
