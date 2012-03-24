@@ -7,8 +7,32 @@
 //
 
 #import "NSBundle+IRAdditions.h"
+#import "Foundation+IRAdditions.h"
 
 @implementation NSBundle (IRAdditions)
+
++ (NSBundle *) irFrameworkBundleWithName:(NSString *)identifier {
+
+	return [[[NSBundle allFrameworks] irMap: ^ (NSBundle *bundle, NSUInteger index, BOOL *stop) {
+	
+		if ([[[[bundle bundlePath] lastPathComponent] stringByDeletingPathExtension] isEqual:identifier])
+			return bundle;
+
+		return nil;
+	
+	}] lastObject];
+
+}
+
++ (NSBundle *) irFrameworkBundleWithIdentifier:(NSString *)identifier {
+
+	return [[[NSBundle allFrameworks] irMap: ^ (NSBundle *bundle, NSUInteger index, BOOL *stop) {
+	
+		return [[bundle bundleIdentifier] isEqualToString:identifier] ? bundle : nil;
+		
+	}] lastObject];
+
+}
 
 - (NSString *) debugVersionString {
 

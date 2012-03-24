@@ -10,18 +10,67 @@
 
 
 @implementation IRView
-@synthesize onDrawRect;
+@synthesize onHitTestWithEvent, onPointInsideWithEvent, onLayoutSubviews, onSizeThatFits, onDrawRect;
+
+- (UIView *) hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+
+	UIView *superAnswer = [super hitTest:point withEvent:event];
+
+	if (self.onHitTestWithEvent) {
+		UIView *ownAnswer = self.onHitTestWithEvent(point, event, superAnswer);
+		if (ownAnswer)
+			return ownAnswer;
+	}
+	
+	return superAnswer;
+
+}
+
+- (BOOL) pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+
+	BOOL superAnswer = [super pointInside:point withEvent:event];
+
+	if (self.onPointInsideWithEvent)
+		return onPointInsideWithEvent(point, event, superAnswer);
+	
+	return superAnswer;
+	
+}
+
+- (void) layoutSubviews {
+
+	[super layoutSubviews];
+
+	if (self.onLayoutSubviews)
+		self.onLayoutSubviews();
+
+}
+
+- (CGSize) sizeThatFits:(CGSize)size {
+
+	CGSize superSize = [super sizeThatFits:size];
+	if (self.onSizeThatFits)
+		return self.onSizeThatFits(size, superSize);
+	
+	return superSize;
+
+}
 
 - (void) drawRect:(CGRect)rect {
 
 	if (self.onDrawRect)
-	self.onDrawRect(rect, UIGraphicsGetCurrentContext());
+		self.onDrawRect(rect, UIGraphicsGetCurrentContext());
 
 }
 
 - (void) dealloc {
 
 	[onDrawRect release];
+	[onHitTestWithEvent release];
+	[onPointInsideWithEvent release];
+	[onLayoutSubviews release];
+	[onSizeThatFits release];
+	
 	[super dealloc];
 
 }
