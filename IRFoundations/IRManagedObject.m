@@ -45,9 +45,9 @@
 			//	Bad things always happen
 		
 			if (![configurationDictionary isKindOfClass:[NSDictionary class]])
-				return nil;
+				return (id)nil;
 			
-			return [self objectInsertingIntoContext:context withRemoteDictionary:configurationDictionary];
+			return (id)[self objectInsertingIntoContext:context withRemoteDictionary:configurationDictionary];
 			
 		}];
 		
@@ -209,7 +209,7 @@
 		
 				}];
 				
-				return returnedDictionary;
+				return (id)returnedDictionary;
 			
 			})());
 			
@@ -430,7 +430,8 @@
 
 + (id) objectInsertingIntoContext:(NSManagedObjectContext *)inContext withRemoteDictionary:(NSDictionary *)inDictionary {
 
-	NSCParameterAssert([inDictionary isKindOfClass:[NSDictionary class]]);
+	if (inDictionary)
+		NSCParameterAssert([inDictionary isKindOfClass:[NSDictionary class]]);
 
 	IRManagedObject *returnedStatus = nil;
 
@@ -447,7 +448,8 @@
 	if (!returnedStatus)
 		return nil;
 	
-	[returnedStatus configureWithRemoteDictionary:inDictionary];
+	if (inDictionary)
+		[returnedStatus configureWithRemoteDictionary:inDictionary];
 	
 	return returnedStatus;
 

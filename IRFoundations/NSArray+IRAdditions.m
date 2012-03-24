@@ -150,12 +150,15 @@ IRMapCallback irMapMakeWithKeyPath (NSString * inKeyPath) {
 	return (IRMapCallback)[[ ^ (id object, NSUInteger index, BOOL *stop) {
 	
 		if (![object respondsToSelector:@selector(valueForKeyPath:)])
-			return [NSNull null];
+			return (id)[NSNull null];
 		
 		@try {
 			
 			id returnedObject = [object valueForKeyPath:inKeyPath];
-			return returnedObject ? returnedObject : [NSNull null];
+			if (returnedObject)
+				return (id)returnedObject;
+			
+			return (id)[NSNull null];
 			
 		} @catch (NSException *exception) {
 			
@@ -163,7 +166,7 @@ IRMapCallback irMapMakeWithKeyPath (NSString * inKeyPath) {
 			
 		}
 		
-		return [NSNull null];
+		return (id)[NSNull null];
 	
 	} copy] autorelease];
  
