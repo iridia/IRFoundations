@@ -32,7 +32,7 @@
 		} @catch (NSException *exception) { 
 
 			if (aClass == [UIResponder class])
-				return nil;
+				return (id)nil;
 
 			return objectForClass([aClass superclass]);
 		

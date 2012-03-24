@@ -36,5 +36,12 @@
 #import "UIScrollView+IRAdditions.h"
 #import "UITableView+IRAdditions.h"
 #import "UIView+IRAdditions.h"
+#import "IRView.h"
+#import "IRViewController.h"
 #import "UIViewController+IRAdditions.h"
 #import "UIWindow+IRAdditions.h"
+#import "IRPageCurlBarButtonItem.h"
+#import "IRTexturedSegmentedControl.h"
+
+extern NSBundle * IRUIKitBundle (void);
+extern UIImage * IRUIKitImage (NSString *name);

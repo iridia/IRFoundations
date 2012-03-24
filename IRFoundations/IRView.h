@@ -14,6 +14,10 @@
 
 @interface IRView : UIView
 
+@property (nonatomic, readwrite, copy) UIView * (^onHitTestWithEvent)(CGPoint aPoint, UIEvent *anEvent, UIView *superAnswer);
+@property (nonatomic, readwrite, copy) BOOL (^onPointInsideWithEvent)(CGPoint aPoint, UIEvent *anEvent, BOOL superAnswer);
+@property (nonatomic, readwrite, copy) void (^onLayoutSubviews)();
+@property (nonatomic, readwrite, copy) CGSize (^onSizeThatFits)(CGSize proposedSize, CGSize superAnswer);
 @property (nonatomic, readwrite, copy) void(^onDrawRect) (CGRect rect, CGContextRef context);
 
 @end

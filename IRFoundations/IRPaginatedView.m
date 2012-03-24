@@ -315,6 +315,8 @@
 		}
 		
 		self.scrollView.delegate = self;
+		
+		[self.delegate paginatedView:self didShowView:[self existingPageAtIndex:self.currentPage] atIndex:self.currentPage];
 	
 	}
 	
