@@ -151,7 +151,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 			CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
 			CFStringRef uuidString = CFUUIDCreateString(kCFAllocatorDefault, uuidRef);
 			
-			NSString *fileName = [NSString stringWithFormat:@"%d-%@", time(NULL), (NSString *)uuidString];
+			NSString *fileName = [NSString stringWithFormat:@"%lu-%@", time(NULL), (NSString *)uuidString];
 			
 			CFRelease(uuidRef);
 			CFRelease(uuidString);
