@@ -213,6 +213,8 @@
 		FFD295C313A40E9200EA8213 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD295C213A40E9200EA8213 /* libxml2.2.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		FFD5E6E8150BA88E00A472E6 /* IRViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FFD5E6E6150BA88E00A472E6 /* IRViewController.h */; };
 		FFD5E6E9150BA88E00A472E6 /* IRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFD5E6E7150BA88E00A472E6 /* IRViewController.m */; };
+		FFD90732150D12D600712D62 /* IRTexturedSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = FFD90730150D12D600712D62 /* IRTexturedSegmentedControl.h */; };
+		FFD90733150D12D600712D62 /* IRTexturedSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = FFD90731150D12D600712D62 /* IRTexturedSegmentedControl.m */; };
 		FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */; };
 		FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */; };
 /* End PBXBuildFile section */
@@ -437,6 +439,8 @@
 		FFD6F972150AFF76007173EA /* libIRFoundationsTouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIRFoundationsTouch.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFD6F973150AFF76007173EA /* IRFoundationsX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IRFoundationsX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFD6F974150AFF76007173EA /* IRFoundationsTest.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IRFoundationsTest.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFD90730150D12D600712D62 /* IRTexturedSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRTexturedSegmentedControl.h; sourceTree = "<group>"; };
+		FFD90731150D12D600712D62 /* IRTexturedSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRTexturedSegmentedControl.m; sourceTree = "<group>"; };
 		FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAlertView.h; sourceTree = "<group>"; };
 		FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAlertView.m; sourceTree = "<group>"; };
 		FFFDEF7214211BCC0083BEFB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = ../../../../../Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -614,6 +618,8 @@
 		FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */ = {
 			isa = PBXGroup;
 			children = (
+				FFD90730150D12D600712D62 /* IRTexturedSegmentedControl.h */,
+				FFD90731150D12D600712D62 /* IRTexturedSegmentedControl.m */,
 				FFD5E6E6150BA88E00A472E6 /* IRViewController.h */,
 				FFD5E6E7150BA88E00A472E6 /* IRViewController.m */,
 				FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */,
@@ -866,6 +872,7 @@
 				FFA65DE3150AFEA800E8668C /* MapKit+IRAdditions.h in Headers */,
 				FF9FBC1D150B8C62004A23FB /* IRPageCurlBarButtonItem.h in Headers */,
 				FFD5E6E8150BA88E00A472E6 /* IRViewController.h in Headers */,
+				FFD90732150D12D600712D62 /* IRTexturedSegmentedControl.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1089,6 +1096,7 @@
 				FF6322C4150B594B00170342 /* UIKit+IRAdditions.m in Sources */,
 				FF9FBC1E150B8C62004A23FB /* IRPageCurlBarButtonItem.m in Sources */,
 				FFD5E6E9150BA88E00A472E6 /* IRViewController.m in Sources */,
+				FFD90733150D12D600712D62 /* IRTexturedSegmentedControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

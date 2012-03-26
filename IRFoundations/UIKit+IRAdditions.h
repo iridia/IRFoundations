@@ -41,6 +41,7 @@
 #import "UIViewController+IRAdditions.h"
 #import "UIWindow+IRAdditions.h"
 #import "IRPageCurlBarButtonItem.h"
+#import "IRTexturedSegmentedControl.h"
 
 extern NSBundle * IRUIKitBundle (void);
 extern UIImage * IRUIKitImage (NSString *name);
