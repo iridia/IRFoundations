@@ -31,6 +31,8 @@ extern NSString * const kUIView_IRAdditions_onDrawLayerInContext;
 
 - (UIView *) irAncestorInView:(UIView *)aView;	//	Returns the enclosing subview in aView; if aView == self.superview, returns self
 
+- (BOOL) irRemoveAnimationsRecusively:(BOOL)recursive;
+
 @end
 
 

@@ -173,6 +173,16 @@ void UIView_IRAdditions_drawLayerInContext (UIView *self, SEL _cmd, CALayer *aLa
 
 }
 
+- (BOOL) irRemoveAnimationsRecusively:(BOOL)recursive {
+
+	[self.layer removeAllAnimations];
+	
+	if (recursive)
+	for (UIView *aSubview in self.subviews)
+		[aSubview irRemoveAnimationsRecusively:YES];
+
+}
+
 @end
 
 
