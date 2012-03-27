@@ -186,9 +186,9 @@ void UIView_IRAdditions_drawLayerInContext (UIView *self, SEL _cmd, CALayer *aLa
 @end
 
 
-IRMapCallback irMapFrameValuesFromViews () {
+IRArrayMapCallback irMapFrameValuesFromViews () {
 
-	return (IRMapCallback)[[ ^ (UIView *aView, NSUInteger index, BOOL *stop) {
+	return [[ ^ (UIView *aView, NSUInteger index, BOOL *stop) {
 
 		return [NSValue valueWithCGRect:aView.frame];
 	
@@ -196,9 +196,9 @@ IRMapCallback irMapFrameValuesFromViews () {
 
 }
 
-IRMapCallback irMapBoundsValuesFromViews () {
+IRArrayMapCallback irMapBoundsValuesFromViews () {
 
-	return (IRMapCallback)[[ ^ (UIView *aView, NSUInteger index, BOOL *stop) {
+	return [[ ^ (UIView *aView, NSUInteger index, BOOL *stop) {
 	
 		return [NSValue valueWithCGRect:aView.bounds];
 	
@@ -206,9 +206,9 @@ IRMapCallback irMapBoundsValuesFromViews () {
 
 }
 
-IRMapCallback irMapOriginValuesFromRectValues () {
+IRArrayMapCallback irMapOriginValuesFromRectValues () {
 
-	return (IRMapCallback)[[ ^ (NSValue *aRectValue, NSUInteger index, BOOL *stop) {
+	return [[ ^ (NSValue *aRectValue, NSUInteger index, BOOL *stop) {
 
 		return [NSValue valueWithCGPoint:[aRectValue CGRectValue].origin];	
 	
@@ -216,9 +216,9 @@ IRMapCallback irMapOriginValuesFromRectValues () {
 
 }
 
-IRMapCallback irMapCenterPointValuesFromRectValues () {
+IRArrayMapCallback irMapCenterPointValuesFromRectValues () {
 
-	return (IRMapCallback)[[ ^ (NSValue *aRectValue, NSUInteger index, BOOL *stop) {
+	return [[ ^ (NSValue *aRectValue, NSUInteger index, BOOL *stop) {
 
 		return [NSValue valueWithCGPoint:irCGRectAnchor([aRectValue CGRectValue], irCenter, YES)];	
 	

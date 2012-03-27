@@ -133,6 +133,8 @@
 		FF460D36149CFA2E00DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */ = {isa = PBXBuildFile; fileRef = FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */; };
 		FF460D42149CFB7400DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */; };
 		FF543EED14C2E63C005D3F7D /* IRCoreDataTestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF543EEC14C2E63C005D3F7D /* IRCoreDataTestObject.m */; };
+		FF54C51915209FE200301887 /* IRManagedObject+WebAPIImporting.h in Headers */ = {isa = PBXBuildFile; fileRef = FF54C51715209FE100301887 /* IRManagedObject+WebAPIImporting.h */; };
+		FF54C51A15209FE200301887 /* IRManagedObject+WebAPIImporting.m in Sources */ = {isa = PBXBuildFile; fileRef = FF54C51815209FE100301887 /* IRManagedObject+WebAPIImporting.m */; };
 		FF59002F1504ABA7000D6406 /* NSError+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF59002D1504ABA7000D6406 /* NSError+IRAdditions.h */; };
 		FF5900301504ABA7000D6406 /* NSError+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF59002E1504ABA7000D6406 /* NSError+IRAdditions.m */; };
 		FF59A3C91441CB8400BB1FDC /* Foundation+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */; };
@@ -367,6 +369,8 @@
 		FF50B4E114E557C3005B3B6A /* UIScrollView+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+IRAdditions.m"; sourceTree = "<group>"; };
 		FF543EEB14C2E63C005D3F7D /* IRCoreDataTestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCoreDataTestObject.h; sourceTree = "<group>"; };
 		FF543EEC14C2E63C005D3F7D /* IRCoreDataTestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCoreDataTestObject.m; sourceTree = "<group>"; };
+		FF54C51715209FE100301887 /* IRManagedObject+WebAPIImporting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRManagedObject+WebAPIImporting.h"; sourceTree = "<group>"; };
+		FF54C51815209FE100301887 /* IRManagedObject+WebAPIImporting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IRManagedObject+WebAPIImporting.m"; sourceTree = "<group>"; };
 		FF59002D1504ABA7000D6406 /* NSError+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+IRAdditions.h"; sourceTree = "<group>"; };
 		FF59002E1504ABA7000D6406 /* NSError+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+IRAdditions.m"; sourceTree = "<group>"; };
 		FF59A3D11441CC7100BB1FDC /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = ../../../../../SDKs/MacOSX10.7.sdk/usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -702,6 +706,8 @@
 				FF97382713D82496003D1722 /* IRDataStore.m */,
 				FF0A8D241337B36A00DDA47C /* IRManagedObject.h */,
 				FF0A8D251337B36A00DDA47C /* IRManagedObject.m */,
+				FF54C51715209FE100301887 /* IRManagedObject+WebAPIImporting.h */,
+				FF54C51815209FE100301887 /* IRManagedObject+WebAPIImporting.m */,
 				FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */,
 				FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */,
 				FF0A8D261337B36A00DDA47C /* IRFetchedResultsController.h */,
@@ -873,6 +879,7 @@
 				FF9FBC1D150B8C62004A23FB /* IRPageCurlBarButtonItem.h in Headers */,
 				FFD5E6E8150BA88E00A472E6 /* IRViewController.h in Headers */,
 				FFD90732150D12D600712D62 /* IRTexturedSegmentedControl.h in Headers */,
+				FF54C51915209FE200301887 /* IRManagedObject+WebAPIImporting.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1097,6 +1104,7 @@
 				FF9FBC1E150B8C62004A23FB /* IRPageCurlBarButtonItem.m in Sources */,
 				FFD5E6E9150BA88E00A472E6 /* IRViewController.m in Sources */,
 				FFD90733150D12D600712D62 /* IRTexturedSegmentedControl.m in Sources */,
+				FF54C51A15209FE200301887 /* IRManagedObject+WebAPIImporting.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
