@@ -54,13 +54,13 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 
 - (void) setHasConfiguredObserving:(BOOL)flag {
 
-	objc_setAssociatedObject(self, &kObservingSetUp, (flag ? kCFBooleanTrue : kCFBooleanFalse), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+	objc_setAssociatedObject(self, &kObservingSetUp, (id)(flag ? kCFBooleanTrue : kCFBooleanFalse), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
 }
 
 - (BOOL) hasConfiguredObserving {
 
-	return [objc_getAssociatedObject(self, &kObservingSetUp) isEqual:kCFBooleanTrue];
+	return [objc_getAssociatedObject(self, &kObservingSetUp) isEqual:(id)kCFBooleanTrue];
 
 }
 
@@ -168,9 +168,15 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 		
 		if (!self.hasConfiguredObserving) {
 		
+			[self.managedObjectContext lock];
+		
 			[self addObserver:self forKeyPath:setKey options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:self];
 			[self addObserver:self forKeyPath:arrayKey options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:self];
+			
+			self.hasConfiguredObserving = YES;
 		
+			[self.managedObjectContext unlock];
+			
 		}
 
 	}];
