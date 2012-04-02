@@ -291,8 +291,6 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 
 - (id) valueForKey:(NSString *)key {
 
-//	NSLog(@"%s %@ %x", __PRETTY_FUNCTION__, key, (unsigned int)[NSThread currentThread]);
-
 	NSParameterAssert(key);
 
 	if ([[[[self class] orderedRelationships] allValues] containsObject:key])
