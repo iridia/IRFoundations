@@ -362,42 +362,42 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 			
 				NSString *setKey = keyPath;
 				NSString *arrayKey = [relationships objectForKey:setKey];
-				NSMutableArray *mutableArray = [self mutableArrayValueForKey:arrayKey];
-				NSParameterAssert(mutableArray);
+				
+				NSMutableArray *mutableArray = [[[self valueForKey:arrayKey] mutableCopy] autorelease];
+				if (!mutableArray)
+					mutableArray = [NSMutableArray array];
+				
+				NSParameterAssert([mutableArray isKindOfClass:[NSMutableArray class]]);
 				
 				[self.managedObjectContext obtainPermanentIDsForObjects:[newSet allObjects] error:nil];
-
-				NSArray *newObjectURIs = [[newSet allObjects] irMap: ^ (NSManagedObject *anObject, NSUInteger index, BOOL *stop) {
-					return [[anObject objectID] URIRepresentation];
+				
+				NSSet *insertedObjects = [newSet irMap:^(id obj, BOOL *stop) {
+					return [oldSet containsObject:obj] ? (id)nil : obj;
 				}];
 				
-				//	Update the order array to reflect the change
-				
-				NSArray *removedURIs = [mutableArray irMap: ^ (NSURL *objectURI, NSUInteger index, BOOL *stop) {
-				
-					if ([newObjectURIs containsObject:objectURI])
-						return (NSURL *)nil;
-					
-					return objectURI;
-					
+				NSSet *removedObjects = [newSet irMap:^(id obj, BOOL *stop) {
+					return [oldSet containsObject:obj] ? (id)nil : obj;
 				}];
 				
-				if ([removedURIs count])
-					[mutableArray removeObjectsInArray:removedURIs];
-				
-				NSArray *insertedURIs = [newObjectURIs irMap: ^ (NSURL *objectURI, NSUInteger index, BOOL *stop) {
-				
-					if ([mutableArray containsObject:objectURI])
-						return (NSURL *)nil;
-					
-					return objectURI;
-					
+				NSSet *insertedObjectURIs = [insertedObjects irMap:^(NSManagedObject *obj, BOOL *stop) {
+					return [[obj objectID] URIRepresentation];
 				}];
 				
-				if ([insertedURIs count])
-					[mutableArray addObjectsFromArray:insertedURIs];
+				NSSet *removedObjectURIs = [removedObjects irMap:^(id obj, BOOL *stop) {
+					return [[obj objectID] URIRepresentation];
+				}];
+				
+				NSLog(@"inserted %@, removed %@", insertedObjects, removedObjects);
+				
+				if ([removedObjectURIs count])
+					[mutableArray removeObjectsInArray:[removedObjectURIs allObjects]];
+				
+				if ([insertedObjectURIs count])
+					[mutableArray addObjectsFromArray:[insertedObjectURIs allObjects]];
 				
 				NSLog(@"mutableArray -> %@", mutableArray);
+				
+				[self setValue:mutableArray forKey:arrayKey];
 			
 			}
 						
@@ -420,26 +420,26 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 				if (!mutableSet)
 					mutableSet = [NSMutableSet set];
 				
-				NSSet *newObjects = [(NSSet *)[NSSet setWithArray:newArray] irMap: ^ (NSURL *anObjectURI, BOOL *stop) {
-				
-					return [self.managedObjectContext irManagedObjectForURI:anObjectURI];
-					
+				NSArray *removedObjectURIs = [oldArray irMap:^(id obj, NSUInteger index, BOOL *stop) {
+					return [newArray containsObject:obj] ? (id)nil : obj;
 				}];
 				
-				[mutableSet minusSet:[mutableSet irMap: ^ (NSManagedObject *object, BOOL *stop) {
+				NSArray *insertedObjectURIs = [newArray irMap:^(id obj, NSUInteger index, BOOL *stop) {
+					return [oldArray containsObject:obj] ? (id)nil : obj;
+				}];
 				
-					if ([newArray containsObject:[[object objectID] URIRepresentation]])
-						return (NSManagedObject *)nil;
+				NSArray *removedObjects = [removedObjectURIs irMap:^(NSURL *obj, NSUInteger index, BOOL *stop) {
+					return [self.managedObjectContext irManagedObjectForURI:obj];
+				}];
 				
-					return object;
-					
-				}]];
+				NSArray *insertedObjects = [insertedObjectURIs irMap:^(NSURL *obj, NSUInteger index, BOOL *stop) {
+					return [self.managedObjectContext irManagedObjectForURI:obj];
+				}];
 				
-				[mutableSet unionSet:newObjects];
-				
+				[mutableSet minusSet:[NSSet setWithArray:removedObjects]];
+				[mutableSet addObjectsFromArray:insertedObjects];
+
 				[self setValue:mutableSet forKey:setKey];
-				
-				NSLog(@"%@: -> %@", setKey, mutableSet);
 			
 			}
 		
