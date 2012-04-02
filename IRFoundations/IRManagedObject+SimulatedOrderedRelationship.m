@@ -352,11 +352,11 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 			NSSet *oldSet = [change objectForKey:NSKeyValueChangeOldKey];
 			NSSet *newSet = [change objectForKey:NSKeyValueChangeNewKey];
 			
-			if ([oldSet isEqual:[NSNull null]])
-				oldSet = nil;
+			if (!oldSet || [oldSet isEqual:[NSNull null]])
+				oldSet = [NSSet set];
 			
-			if ([newSet isEqual:[NSNull null]])
-				newSet = nil;
+			if (!newSet || [newSet isEqual:[NSNull null]])
+				newSet = [NSSet set];
 			
 			if (![oldSet isEqualToSet:newSet]) {
 			
@@ -375,8 +375,8 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 					return [oldSet containsObject:obj] ? (id)nil : obj;
 				}];
 				
-				NSSet *removedObjects = [newSet irMap:^(id obj, BOOL *stop) {
-					return [oldSet containsObject:obj] ? (id)nil : obj;
+				NSSet *removedObjects = [oldSet irMap:^(id obj, BOOL *stop) {
+					return [newSet containsObject:obj] ? (id)nil : obj;
 				}];
 				
 				NSSet *insertedObjectURIs = [insertedObjects irMap:^(NSManagedObject *obj, BOOL *stop) {
@@ -387,15 +387,11 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 					return [[obj objectID] URIRepresentation];
 				}];
 				
-				NSLog(@"inserted %@, removed %@", insertedObjects, removedObjects);
-				
 				if ([removedObjectURIs count])
 					[mutableArray removeObjectsInArray:[removedObjectURIs allObjects]];
 				
 				if ([insertedObjectURIs count])
 					[mutableArray addObjectsFromArray:[insertedObjectURIs allObjects]];
-				
-				NSLog(@"mutableArray -> %@", mutableArray);
 				
 				[self setValue:mutableArray forKey:arrayKey];
 			
@@ -406,11 +402,11 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 			NSArray *oldArray = [change objectForKey:NSKeyValueChangeOldKey];
 			NSArray *newArray = [change objectForKey:NSKeyValueChangeNewKey];
 			
-			if ([oldArray isEqual:[NSNull null]])
-				oldArray = nil;
+			if (!oldArray || [oldArray isEqual:[NSNull null]])
+				oldArray = [NSArray array];
 			
-			if ([newArray isEqual:[NSNull null]])
-				newArray = nil;
+			if (!newArray || [newArray isEqual:[NSNull null]])
+				newArray = [NSArray array];
 			
 			if (![oldArray isEqualToArray:newArray]) {
 			
