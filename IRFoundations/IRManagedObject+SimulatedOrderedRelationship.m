@@ -378,11 +378,13 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 				}];
 				
 				NSSet *insertedObjectURIs = [insertedObjects irMap:^(NSManagedObject *obj, BOOL *stop) {
-					return [[obj objectID] URIRepresentation];
+					NSURL *answer = [[obj objectID] URIRepresentation];
+					return [mutableArray containsObject:answer] ? (id)nil : answer;
 				}];
 				
 				NSSet *removedObjectURIs = [removedObjects irMap:^(id obj, BOOL *stop) {
-					return [[obj objectID] URIRepresentation];
+					NSURL *answer = [[obj objectID] URIRepresentation];
+					return ![mutableArray containsObject:answer] ? (id)nil : answer;
 				}];
 				
 				if ([removedObjectURIs count])
