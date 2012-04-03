@@ -16,10 +16,8 @@
 #import "IRAlertView.h"
 #import "IRBarButtonItem.h"
 #import "IRBusyView.h"
-#import "IRImagePickerController.h"
 #import "IRImageUnarchiveFromDataTransformer.h"
 #import "IRLabel.h"
-#import "IRMailComposeViewController.h"
 #import "IRPaginatedView.h"
 #import "IRSegmentedControl.h"
 #import "IRSegmentedControlSegment.h"
@@ -42,6 +40,11 @@
 #import "UIWindow+IRAdditions.h"
 #import "IRPageCurlBarButtonItem.h"
 #import "IRTexturedSegmentedControl.h"
+
+#if TARGET_OS_IPHONE
+#import "IRImagePickerController.h"
+#import "IRMailComposeViewController.h"
+#endif
 
 extern NSBundle * IRUIKitBundle (void);
 extern UIImage * IRUIKitImage (NSString *name);
