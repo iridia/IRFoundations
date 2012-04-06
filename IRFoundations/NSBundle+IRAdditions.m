@@ -18,7 +18,7 @@
 		if ([[[[bundle bundlePath] lastPathComponent] stringByDeletingPathExtension] isEqual:identifier])
 			return bundle;
 
-		return nil;
+		return (NSBundle *)nil;
 	
 	}] lastObject];
 

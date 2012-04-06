@@ -145,9 +145,9 @@
 @end
 
 
-IRMapCallback irMapMakeWithKeyPath (NSString * inKeyPath) {
+IRArrayMapCallback IRArrayMapCallbackMakeWithKeyPath (NSString * inKeyPath) {
 	
-	return (IRMapCallback)[[ ^ (id object, NSUInteger index, BOOL *stop) {
+	return [[ ^ (id object, NSUInteger index, BOOL *stop) {
 	
 		if (![object respondsToSelector:@selector(valueForKeyPath:)])
 			return (id)[NSNull null];
@@ -172,12 +172,24 @@ IRMapCallback irMapMakeWithKeyPath (NSString * inKeyPath) {
  
 };
 
-IRMapCallback irMapNullFilterMake () {
+IRArrayMapCallback IRArrayMapCallbackMakeNullFilter () {
 
-	return (IRMapCallback)[[ ^ (id object, NSUInteger index, BOOL *stop) {
+	return [[ ^ (id object, NSUInteger index, BOOL *stop) {
 
 		return (!object || [object isEqual:[NSNull null]]) ? nil : object;
 	
 	} copy] autorelease];
+
+}
+
+IRArrayMapCallback irMapMakeWithKeyPath (NSString *keyPath) {
+
+	return IRArrayMapCallbackMakeWithKeyPath(keyPath);
+
+}
+
+IRArrayMapCallback irMapNullFilterMake () {
+
+	return IRArrayMapCallbackMakeNullFilter();
 
 }

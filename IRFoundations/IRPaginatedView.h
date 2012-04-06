@@ -41,6 +41,7 @@
 
 - (void) scrollToPageAtIndex:(NSUInteger)anIndex animated:(BOOL)animate;
 - (UIView *) existingPageAtIndex:(NSUInteger)anIndex;
+- (CGRect) pageRectForIndex:(NSInteger)anIndex;
 
 @property (nonatomic, readwrite, copy) BOOL (^onPointInsideWithEvent)(CGPoint aPoint, UIEvent *anEvent, BOOL superAnswer);
 

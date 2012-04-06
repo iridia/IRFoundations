@@ -31,13 +31,15 @@ extern NSString * const kUIView_IRAdditions_onDrawLayerInContext;
 
 - (UIView *) irAncestorInView:(UIView *)aView;	//	Returns the enclosing subview in aView; if aView == self.superview, returns self
 
+- (BOOL) irRemoveAnimationsRecusively:(BOOL)recursive;
+
 @end
 
 
 #import "NSArray+IRAdditions.h"
 #import "CGGeometry+IRAdditions.h"
 
-extern IRMapCallback irMapFrameValuesFromViews (void);
-extern IRMapCallback irMapBoundsValuesFromViews (void);
-extern IRMapCallback irMapOriginValuesFromRectValues (void);
-extern IRMapCallback irMapCenterPointValuesFromRectValues (void);
+extern IRArrayMapCallback irMapFrameValuesFromViews (void);
+extern IRArrayMapCallback irMapBoundsValuesFromViews (void);
+extern IRArrayMapCallback irMapOriginValuesFromRectValues (void);
+extern IRArrayMapCallback irMapCenterPointValuesFromRectValues (void);
