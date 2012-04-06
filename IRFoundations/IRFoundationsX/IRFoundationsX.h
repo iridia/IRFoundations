@@ -9,6 +9,7 @@
 #import "Foundation+IRAdditions.h"
 #import "QuartzCore+IRAdditions.h"
 #import "CGGeometry+IRAdditions.h"
+#import "AppKit+IRAdditions.h"
 #import "UIKit+IRAdditions.h"
 #import "CoreData+IRAdditions.h"
 #import "CoreText+IRAdditions.h"
