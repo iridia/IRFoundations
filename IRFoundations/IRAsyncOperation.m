@@ -7,16 +7,7 @@
 //
 
 #import "IRAsyncOperation.h"
-
-@interface IRAsyncOperation ()
-
-@property (nonatomic, readwrite, assign) dispatch_queue_t actualDispatchQueue;
-@property (nonatomic, readwrite, retain) id results;
-
-- (void) onMainQueue:(void(^)(void))aBlock;
-- (void) concludeWithResults:(id)incomingResults;
-
-@end
+#import "IRAsyncOperation+ForSubclassEyesOnly.h"
 
 
 @implementation IRAsyncOperation

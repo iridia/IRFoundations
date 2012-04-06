@@ -190,6 +190,10 @@
 		FF70E53B152EDD0E008BFB00 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF70E53A152EDD0E008BFB00 /* MobileCoreServices.framework */; };
 		FF70E53D152EDD19008BFB00 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FF70E53C152EDD19008BFB00 /* libxml2.dylib */; };
 		FF70E540152EDE64008BFB00 /* IRAsyncOperationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FF70E53F152EDE64008BFB00 /* IRAsyncOperationTest.m */; };
+		FF70E543152EE411008BFB00 /* IRAsyncBarrierOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = FF70E541152EE410008BFB00 /* IRAsyncBarrierOperation.h */; };
+		FF70E544152EE411008BFB00 /* IRAsyncBarrierOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF70E542152EE411008BFB00 /* IRAsyncBarrierOperation.m */; };
+		FF70E545152EE411008BFB00 /* IRAsyncBarrierOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF70E542152EE411008BFB00 /* IRAsyncBarrierOperation.m */; };
+		FF70E548152EE51C008BFB00 /* IRAsyncOperation+ForSubclassEyesOnly.h in Headers */ = {isa = PBXBuildFile; fileRef = FF70E546152EE51C008BFB00 /* IRAsyncOperation+ForSubclassEyesOnly.h */; };
 		FF72C1F214278ABF00B5D838 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFFDEF7214211BCC0083BEFB /* Cocoa.framework */; };
 		FF72C1F814278ABF00B5D838 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF72C1F614278ABF00B5D838 /* InfoPlist.strings */; };
 		FF789D2F1442FDE00080F210 /* IRAsyncOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */; };
@@ -419,6 +423,9 @@
 		FF70E53C152EDD19008BFB00 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		FF70E53E152EDE64008BFB00 /* IRAsyncOperationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAsyncOperationTest.h; sourceTree = "<group>"; };
 		FF70E53F152EDE64008BFB00 /* IRAsyncOperationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAsyncOperationTest.m; sourceTree = "<group>"; };
+		FF70E541152EE410008BFB00 /* IRAsyncBarrierOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAsyncBarrierOperation.h; sourceTree = "<group>"; };
+		FF70E542152EE411008BFB00 /* IRAsyncBarrierOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAsyncBarrierOperation.m; sourceTree = "<group>"; };
+		FF70E546152EE51C008BFB00 /* IRAsyncOperation+ForSubclassEyesOnly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRAsyncOperation+ForSubclassEyesOnly.h"; sourceTree = "<group>"; };
 		FF72C1F514278ABF00B5D838 /* IRFoundationsX-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRFoundationsX-Info.plist"; sourceTree = "<group>"; };
 		FF72C1F714278ABF00B5D838 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF72C1F914278ABF00B5D838 /* IRFoundationsX-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IRFoundationsX-Prefix.pch"; sourceTree = "<group>"; };
@@ -588,8 +595,11 @@
 				FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */,
 				FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */,
 				FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */,
+				FF70E546152EE51C008BFB00 /* IRAsyncOperation+ForSubclassEyesOnly.h */,
 				FF70E53E152EDE64008BFB00 /* IRAsyncOperationTest.h */,
 				FF70E53F152EDE64008BFB00 /* IRAsyncOperationTest.m */,
+				FF70E541152EE410008BFB00 /* IRAsyncBarrierOperation.h */,
+				FF70E542152EE411008BFB00 /* IRAsyncBarrierOperation.m */,
 				FF0A8C971337B29F00DDA47C /* IRBindings.h */,
 				FF0A8C981337B29F00DDA47C /* IRBindings.m */,
 				FF0A8C9D1337B29F00DDA47C /* IRHTMLStringFormatter.h */,
@@ -917,6 +927,8 @@
 				FFD5E6E8150BA88E00A472E6 /* IRViewController.h in Headers */,
 				FFD90732150D12D600712D62 /* IRTexturedSegmentedControl.h in Headers */,
 				FF54C51915209FE200301887 /* IRManagedObject+WebAPIImporting.h in Headers */,
+				FF70E543152EE411008BFB00 /* IRAsyncBarrierOperation.h in Headers */,
+				FF70E548152EE51C008BFB00 /* IRAsyncOperation+ForSubclassEyesOnly.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1142,6 +1154,7 @@
 				FFD5E6E9150BA88E00A472E6 /* IRViewController.m in Sources */,
 				FFD90733150D12D600712D62 /* IRTexturedSegmentedControl.m in Sources */,
 				FF54C51A15209FE200301887 /* IRManagedObject+WebAPIImporting.m in Sources */,
+				FF70E544152EE411008BFB00 /* IRAsyncBarrierOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1177,6 +1190,7 @@
 				FF70E538152EDD04008BFB00 /* NSString+IRAdditions.m in Sources */,
 				FF70E539152EDD04008BFB00 /* NSThread+IRAdditions.m in Sources */,
 				FF70E540152EDE64008BFB00 /* IRAsyncOperationTest.m in Sources */,
+				FF70E545152EE411008BFB00 /* IRAsyncBarrierOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

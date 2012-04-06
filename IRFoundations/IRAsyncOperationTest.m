@@ -6,16 +6,15 @@
 //  Copyright (c) 2012 Iridia Productions. All rights reserved.
 //
 
-#import "IRAsyncOperation.h"
 #import "IRAsyncOperationTest.h"
+#import "IRAsyncOperation.h"
+#import "IRAsyncBarrierOperation.h"
 
 #import <objc/runtime.h>
 
 @implementation IRAsyncOperationTest
 
-- (void) testOperationQueueing {
-
-	//	This will mostly die because the Async Operation currently works on the main thread, and to 
+- (void) testOperationSerialQueueing {
 
 	NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];
 	[queue setMaxConcurrentOperationCount:1];
@@ -107,6 +106,12 @@
 
 	while (queue.operationCount)
 		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:5]];
+
+}
+
+- (void) testBarrierOperation {
+
+	STFail(@"Not implemented");
 
 }
 
