@@ -10,16 +10,14 @@
 
 @interface IRManagedObject (SimulatedOrderedRelationship)
 
-//	Call in -awakeFromFetch
-- (void) irReconcileObjectOrderWithKey:(NSString *)aKey usingArrayKeyed:(NSString *)arrayKey;
++ (void) configureSimulatedOrderedRelationship;	//	Call in your subclass’s +load to support array mutation methods
 
-//	Call in array getter
-- (NSArray *) irBackingOrderArrayKeyed:(NSString *)aKey;
+- (void) simulatedOrderedRelationshipInit;	//	Called by base class
+- (void) simulatedOrderedRelationshipAwake;	//	Called by base class
+- (void) simulatedOrderedRelationshipWillTurnIntoFault;	//	Called by base class
+- (void) simulatedOrderedRelationshipDealloc;	//	Called by base class
 
-//	Convenience
++ (NSDictionary *) orderedRelationships;
 - (id) irObjectAtIndex:(NSUInteger)anIndex inArrayKeyed:(NSString *)arrayKey;
-
-//	Call in -didChangeValueForKey:withSetMutation:usingObjects:
-- (void) irUpdateObjects:(NSSet *)changedObjects withRelationshipKey:(NSString *)relationshipKey usingOrderArray:(NSString *)arrayKey withSetMutation:(NSKeyValueSetMutationKind)mutationKind;
 
 @end

@@ -19,9 +19,24 @@
 
 	__block id (^objectForClass)(Class) = ^ (Class aClass) {
 	
+		NSBundle *bundle = [NSBundle bundleForClass:aClass];
+		NSString *nibName = NSStringFromClass(aClass);
+		
+		id (^bail)(void) = ^ {
+		
+			if (aClass == [UIResponder class])
+				return (id)nil;
+
+			return objectForClass([aClass superclass]);
+
+		};
+		
+		if (![bundle pathForResource:nibName ofType:@"nib"] && ![bundle pathForResource:nibName ofType:@"xib"])
+			return bail();
+
 		@try {
 		
-			UINib *ownNib = [UINib nibWithNibName:NSStringFromClass(aClass) bundle:[NSBundle bundleForClass:aClass]];
+			UINib *ownNib = [UINib nibWithNibName:nibName bundle:bundle];
 			NSArray *nibObjects = [ownNib instantiateWithOwner:nil options:nil];
 			NSArray *siblingObjects = [nibObjects irMap: ^ (id inObject, NSUInteger index, BOOL *stop) {
 				return [inObject isKindOfClass:aClass] ? inObject : nil;
@@ -31,10 +46,7 @@
 		
 		} @catch (NSException *exception) { 
 
-			if (aClass == [UIResponder class])
-				return (id)nil;
-
-			return objectForClass([aClass superclass]);
+			return bail();
 		
 		}
 

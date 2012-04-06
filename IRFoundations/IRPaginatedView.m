@@ -15,7 +15,6 @@
 - (void) ensureViewAtIndexVisible:(NSUInteger)anIndex;
 - (void) removeOffscreenViews;
 
-- (CGRect) pageRectForIndex:(NSInteger)anIndex;
 - (UIView *) existingViewForPageAtIndex:(NSUInteger)anIndex; // may return nil if page is not there
 
 - (void) insertPageView:(UIView *)aView atIndex:(NSUInteger)anIndex; // swaps out existing object, calls methods if necessary

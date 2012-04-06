@@ -9,12 +9,14 @@
 #import <Foundation/Foundation.h>
 
 
-typedef id (^IRMapCallback) (id inObject, NSUInteger index, BOOL *stop);
+typedef id (^IRArrayMapCallback) (id inObject, NSUInteger index, BOOL *stop);
+extern IRArrayMapCallback IRArrayMapCallbackMakeWithKeyPath (NSString * aKeyPath);
+extern IRArrayMapCallback IRArrayMapCallbackMakeNullFilter (void);
 
 
 @interface NSArray (IRAdditions)
 
-- (NSArray *) irMap:(IRMapCallback)block;
+- (NSArray *) irMap:(IRArrayMapCallback)block;
 - (NSArray *) irFlatten;	// flattens contents of any array node, inserts them in place
 - (NSArray *) irUnique;
 - (NSArray *) irShuffle;
@@ -38,5 +40,6 @@ typedef id (^IRMapCallback) (id inObject, NSUInteger index, BOOL *stop);
 @end
 
 
-extern IRMapCallback irMapMakeWithKeyPath (NSString * aKeyPath);
-extern IRMapCallback irMapNullFilterMake (void);
+typedef IRArrayMapCallback IRMapCallback __attribute__((deprecated("Use IRArrayMapCallback.")));
+extern IRArrayMapCallback irMapMakeWithKeyPath (NSString * aKeyPath) __attribute__((deprecated("Use IRArrayMapCallbackMakeWithKeyPath().")));
+extern IRArrayMapCallback irMapNullFilterMake (void) __attribute__((deprecated("Use IRArrayMapCallbackMakeNullFilter().")));

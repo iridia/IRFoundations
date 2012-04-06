@@ -37,6 +37,9 @@
 			return nil;
 		
 		}
+		
+		NSParameterAssert(![objectID isTemporaryID]);
+		
 		returnedObject = [self objectWithID:objectID];
 	
 	} @catch (NSException *exception) {
