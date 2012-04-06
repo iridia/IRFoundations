@@ -16,7 +16,7 @@
 @synthesize workerBlock, workCompletionBlock;
 @synthesize actualDispatchQueue, results;
 
-+ (IRAsyncOperation *) operationWithWorkerBlock:(void (^)(IRAsyncOperationCallback callback))aWorkerBlock completionBlock:(IRAsyncOperationCallback)aCompletionBlock {
++ (id) operationWithWorkerBlock:(void (^)(IRAsyncOperationCallback callback))aWorkerBlock completionBlock:(IRAsyncOperationCallback)aCompletionBlock {
 
 	IRAsyncOperation *returnedOperation = [[[self alloc] init] autorelease];
 	returnedOperation.workerBlock = aWorkerBlock;
