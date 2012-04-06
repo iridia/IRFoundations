@@ -7,16 +7,7 @@
 //
 
 #import "IRAsyncOperation.h"
-
-@interface IRAsyncOperation ()
-
-@property (nonatomic, readwrite, assign) dispatch_queue_t actualDispatchQueue;
-@property (nonatomic, readwrite, retain) id results;
-
-- (void) onMainQueue:(void(^)(void))aBlock;
-- (void) concludeWithResults:(id)incomingResults;
-
-@end
+#import "IRAsyncOperation+ForSubclassEyesOnly.h"
 
 
 @implementation IRAsyncOperation
@@ -25,7 +16,7 @@
 @synthesize workerBlock, workCompletionBlock;
 @synthesize actualDispatchQueue, results;
 
-+ (IRAsyncOperation *) operationWithWorkerBlock:(void (^)(IRAsyncOperationCallback callback))aWorkerBlock completionBlock:(IRAsyncOperationCallback)aCompletionBlock {
++ (id) operationWithWorkerBlock:(void (^)(IRAsyncOperationCallback callback))aWorkerBlock completionBlock:(IRAsyncOperationCallback)aCompletionBlock {
 
 	IRAsyncOperation *returnedOperation = [[[self alloc] init] autorelease];
 	returnedOperation.workerBlock = aWorkerBlock;
