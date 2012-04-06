@@ -25,6 +25,4 @@
 #import "IRLifetimeHelper.h"
 
 #import "IRAsyncOperation.h"
-
-
-
+#import "IRAsyncBarrierOperation.h"
