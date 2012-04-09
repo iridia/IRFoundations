@@ -106,12 +106,12 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 
 + (NSMutableDictionary *) accessorSelectorsToArrayKeys {
 
-	static NSString *key = @"IRManagedObject_SimulatedOrderedRelationship_accessorSelectorsToArrayKeys";
+	static NSString * const key = @"IRManagedObject_SimulatedOrderedRelationship_accessorSelectorsToArrayKeys";
 	
-	NSMutableDictionary *dictionary = objc_getAssociatedObject(self, &key);
+	NSMutableDictionary *dictionary = objc_getAssociatedObject([self class], &key);
 	if (!dictionary) {
 		dictionary = [NSMutableDictionary dictionary];
-		objc_setAssociatedObject(self, &key, dictionary, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+		objc_setAssociatedObject([self class], &key, dictionary, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 	}
 	
 	return dictionary;
@@ -143,7 +143,7 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 
 	if ([super automaticallyNotifiesObserversForKey:key])
 		return YES;
-	
+		
 	if ([[[self accessorSelectorsToArrayKeys] allKeys] containsObject:key])
 		return YES;
 	
