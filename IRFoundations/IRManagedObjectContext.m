@@ -185,6 +185,8 @@
 	
 	NSParameterAssert(self.irAutoMergeListener);
 	[[NSNotificationCenter defaultCenter] removeObserver:self.irAutoMergeListener];
+	
+	self.irAutoMergeListener = nil;
 
 }
 
