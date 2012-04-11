@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "IRAccordionViewController.h"
 #import "IRAction.h"
 #import "IRActionSheet.h"
 #import "IRActionSheetController.h"
@@ -40,6 +39,8 @@
 #import "UIWindow+IRAdditions.h"
 #import "IRPageCurlBarButtonItem.h"
 #import "IRTexturedSegmentedControl.h"
+#import "IRTableViewCell.h"
+#import "IRStackView.h"
 
 #if TARGET_OS_IPHONE
 #import "IRImagePickerController.h"

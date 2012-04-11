@@ -8,18 +8,14 @@
 
 #import "IRViewController.h"
 
-@interface IRViewController ()
-
-@end
-
 @implementation IRViewController
 
-@synthesize onShouldAutorotateToInterfaceOrientation, onLoadview, onViewWillAppear, onViewDidAppear, onViewWillDisappear, onViewDidDisappear;
+@synthesize onShouldAutorotateToInterfaceOrientation, onLoadView, onViewWillAppear, onViewDidAppear, onViewWillDisappear, onViewDidDisappear;
 
 - (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 
 	if (self.onShouldAutorotateToInterfaceOrientation)
-		return self.onShouldAutorotateToInterfaceOrientation(self, interfaceOrientation);
+		return self.onShouldAutorotateToInterfaceOrientation(interfaceOrientation);
 
 	return (interfaceOrientation == UIInterfaceOrientationPortrait);
 	
@@ -27,8 +23,8 @@
 
 - (void) loadView {
 
-	if (self.onLoadview)
-		self.onLoadview(self);
+	if (self.onLoadView)
+		self.onLoadView();
 	else
 		[super loadView];
 
@@ -39,7 +35,7 @@
   [super viewWillAppear:animated];
   
   if (self.onViewWillAppear)
-    self.onViewWillAppear(self);
+    self.onViewWillAppear();
     
 }
 
@@ -48,7 +44,7 @@
   [super viewDidAppear:animated];
   
   if (self.onViewDidAppear)
-    self.onViewDidAppear(self);
+    self.onViewDidAppear();
 
 }
 
@@ -57,7 +53,7 @@
   [super viewWillDisappear:animated];
   
   if (self.onViewWillDisappear)
-    self.onViewWillDisappear(self);
+    self.onViewWillDisappear();
 
 }
 
@@ -66,7 +62,7 @@
   [super viewDidDisappear:animated];
   
   if (self.onViewDidDisappear)
-    self.onViewDidDisappear(self);
+    self.onViewDidDisappear();
 
 }
 

@@ -43,8 +43,6 @@
 		FF0A8D3C1337B36A00DDA47C /* UIKit+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */; };
 		FF0A8D3D1337B36A00DDA47C /* IRWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D001337B36A00DDA47C /* IRWebView.h */; };
 		FF0A8D3E1337B36A00DDA47C /* IRWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D011337B36A00DDA47C /* IRWebView.m */; };
-		FF0A8D401337B36A00DDA47C /* IRAccordionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */; };
-		FF0A8D411337B36A00DDA47C /* IRAccordionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */; };
 		FF0A8D421337B36A00DDA47C /* UITableView+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D051337B36A00DDA47C /* UITableView+IRAdditions.h */; };
 		FF0A8D431337B36A00DDA47C /* UITableView+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D061337B36A00DDA47C /* UITableView+IRAdditions.m */; };
 		FF0A8D441337B36A00DDA47C /* IRLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D071337B36A00DDA47C /* IRLabel.h */; };
@@ -100,6 +98,10 @@
 		FF0FF917150112BB00D6FE18 /* UIResponder+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0FF915150112BB00D6FE18 /* UIResponder+IRAdditions.m */; };
 		FF12AA8E143F2F11002346BD /* IRLifetimeHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FF12AA8C143F2F11002346BD /* IRLifetimeHelper.h */; };
 		FF12AA8F143F2F11002346BD /* IRLifetimeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FF12AA8D143F2F11002346BD /* IRLifetimeHelper.m */; };
+		FF197A841535FC1100ADC4E6 /* IRStackView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF197A821535FC1100ADC4E6 /* IRStackView.h */; };
+		FF197A851535FC1100ADC4E6 /* IRStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF197A831535FC1100ADC4E6 /* IRStackView.m */; };
+		FF197A891535FC8E00ADC4E6 /* IRScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF197A871535FC8E00ADC4E6 /* IRScrollView.h */; };
+		FF197A8A1535FC8E00ADC4E6 /* IRScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF197A881535FC8E00ADC4E6 /* IRScrollView.m */; };
 		FF27A6AB133E2C16008C8DDA /* IRBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6A9133E2C16008C8DDA /* IRBarButtonItem.h */; };
 		FF27A6AC133E2C16008C8DDA /* IRBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */; };
 		FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6E1133E3526008C8DDA /* IRBusyView.h */; };
@@ -328,8 +330,6 @@
 		FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIKit+IRAdditions.h"; sourceTree = "<group>"; };
 		FF0A8D001337B36A00DDA47C /* IRWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRWebView.h; sourceTree = "<group>"; };
 		FF0A8D011337B36A00DDA47C /* IRWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRWebView.m; sourceTree = "<group>"; };
-		FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAccordionViewController.h; sourceTree = "<group>"; };
-		FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAccordionViewController.m; sourceTree = "<group>"; };
 		FF0A8D051337B36A00DDA47C /* UITableView+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+IRAdditions.h"; sourceTree = "<group>"; };
 		FF0A8D061337B36A00DDA47C /* UITableView+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+IRAdditions.m"; sourceTree = "<group>"; };
 		FF0A8D071337B36A00DDA47C /* IRLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRLabel.h; sourceTree = "<group>"; };
@@ -385,6 +385,10 @@
 		FF0FF915150112BB00D6FE18 /* UIResponder+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+IRAdditions.m"; sourceTree = "<group>"; };
 		FF12AA8C143F2F11002346BD /* IRLifetimeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRLifetimeHelper.h; sourceTree = "<group>"; };
 		FF12AA8D143F2F11002346BD /* IRLifetimeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRLifetimeHelper.m; sourceTree = "<group>"; };
+		FF197A821535FC1100ADC4E6 /* IRStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRStackView.h; sourceTree = "<group>"; };
+		FF197A831535FC1100ADC4E6 /* IRStackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRStackView.m; sourceTree = "<group>"; };
+		FF197A871535FC8E00ADC4E6 /* IRScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRScrollView.h; sourceTree = "<group>"; };
+		FF197A881535FC8E00ADC4E6 /* IRScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRScrollView.m; sourceTree = "<group>"; };
 		FF27A6A9133E2C16008C8DDA /* IRBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBarButtonItem.h; sourceTree = "<group>"; };
 		FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBarButtonItem.m; sourceTree = "<group>"; };
 		FF27A6E1133E3526008C8DDA /* IRBusyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBusyView.h; sourceTree = "<group>"; };
@@ -678,12 +682,6 @@
 		FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */ = {
 			isa = PBXGroup;
 			children = (
-				FFD90730150D12D600712D62 /* IRTexturedSegmentedControl.h */,
-				FFD90731150D12D600712D62 /* IRTexturedSegmentedControl.m */,
-				FFD5E6E6150BA88E00A472E6 /* IRViewController.h */,
-				FFD5E6E7150BA88E00A472E6 /* IRViewController.m */,
-				FF0A8D031337B36A00DDA47C /* IRAccordionViewController.h */,
-				FF0A8D041337B36A00DDA47C /* IRAccordionViewController.m */,
 				FF0A8D201337B36A00DDA47C /* IRAction.h */,
 				FF0A8D211337B36A00DDA47C /* IRAction.m */,
 				FF0A8D1E1337B36A00DDA47C /* IRActionSheet.h */,
@@ -710,12 +708,16 @@
 				FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */,
 				FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */,
 				FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */,
+				FF197A871535FC8E00ADC4E6 /* IRScrollView.h */,
+				FF197A881535FC8E00ADC4E6 /* IRScrollView.m */,
 				FF0A8D091337B36A00DDA47C /* IRSegmentedControl.h */,
 				FF0A8D0A1337B36A00DDA47C /* IRSegmentedControl.m */,
 				FF0A8D0B1337B36A00DDA47C /* IRSegmentedControlSegment.h */,
 				FF0A8D0C1337B36A00DDA47C /* IRSegmentedControlSegment.m */,
 				FF0A8D0D1337B36A00DDA47C /* IRSemiTransparentBarButton.h */,
 				FF0A8D0E1337B36A00DDA47C /* IRSemiTransparentBarButton.m */,
+				FF197A821535FC1100ADC4E6 /* IRStackView.h */,
+				FF197A831535FC1100ADC4E6 /* IRStackView.m */,
 				FF0A8D191337B36A00DDA47C /* IRSubtitledTableViewCell.h */,
 				FF0A8D1A1337B36A00DDA47C /* IRSubtitledTableViewCell.m */,
 				FF0A8D131337B36A00DDA47C /* IRTableView.h */,
@@ -726,10 +728,14 @@
 				FF0A8D161337B36A00DDA47C /* IRTableViewController.m */,
 				FF0A8D171337B36A00DDA47C /* IRTableViewHeaderView.h */,
 				FF0A8D181337B36A00DDA47C /* IRTableViewHeaderView.m */,
+				FFD90730150D12D600712D62 /* IRTexturedSegmentedControl.h */,
+				FFD90731150D12D600712D62 /* IRTexturedSegmentedControl.m */,
 				FF0A8E7C1337B8CF00DDA47C /* IRTintedBarButtonItem.h */,
 				FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */,
 				FF0A8D111337B36A00DDA47C /* IRTransparentToolbar.h */,
 				FF0A8D121337B36A00DDA47C /* IRTransparentToolbar.m */,
+				FFD5E6E6150BA88E00A472E6 /* IRViewController.h */,
+				FFD5E6E7150BA88E00A472E6 /* IRViewController.m */,
 				FF0A8D001337B36A00DDA47C /* IRWebView.h */,
 				FF0A8D011337B36A00DDA47C /* IRWebView.m */,
 				FF0A8D1B1337B36A00DDA47C /* Resources */,
@@ -885,7 +891,6 @@
 				FF0A8D3A1337B36A00DDA47C /* CGGeometry+IRAdditions.h in Headers */,
 				FF0A8D3C1337B36A00DDA47C /* UIKit+IRAdditions.h in Headers */,
 				FF0A8D3D1337B36A00DDA47C /* IRWebView.h in Headers */,
-				FF0A8D401337B36A00DDA47C /* IRAccordionViewController.h in Headers */,
 				FF0A8D421337B36A00DDA47C /* UITableView+IRAdditions.h in Headers */,
 				FF0A8D441337B36A00DDA47C /* IRLabel.h in Headers */,
 				FF0A8D461337B36A00DDA47C /* IRSegmentedControl.h in Headers */,
@@ -948,6 +953,8 @@
 				FF70E543152EE411008BFB00 /* IRAsyncBarrierOperation.h in Headers */,
 				FF70E548152EE51C008BFB00 /* IRAsyncOperation+ForSubclassEyesOnly.h in Headers */,
 				FFD3484F15359C22007B7D2E /* IRTableViewCell.h in Headers */,
+				FF197A841535FC1100ADC4E6 /* IRStackView.h in Headers */,
+				FF197A891535FC8E00ADC4E6 /* IRScrollView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1120,7 +1127,6 @@
 				FF0A8D391337B36A00DDA47C /* IRConcaveView.m in Sources */,
 				FF0A8D3B1337B36A00DDA47C /* CGGeometry+IRAdditions.m in Sources */,
 				FF0A8D3E1337B36A00DDA47C /* IRWebView.m in Sources */,
-				FF0A8D411337B36A00DDA47C /* IRAccordionViewController.m in Sources */,
 				FF0A8D431337B36A00DDA47C /* UITableView+IRAdditions.m in Sources */,
 				FF0A8D451337B36A00DDA47C /* IRLabel.m in Sources */,
 				FF0A8D471337B36A00DDA47C /* IRSegmentedControl.m in Sources */,
@@ -1182,6 +1188,8 @@
 				FF54C51A15209FE200301887 /* IRManagedObject+WebAPIImporting.m in Sources */,
 				FF70E544152EE411008BFB00 /* IRAsyncBarrierOperation.m in Sources */,
 				FFD3485015359C22007B7D2E /* IRTableViewCell.m in Sources */,
+				FF197A851535FC1100ADC4E6 /* IRStackView.m in Sources */,
+				FF197A8A1535FC8E00ADC4E6 /* IRScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
