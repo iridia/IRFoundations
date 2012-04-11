@@ -11,7 +11,7 @@
 
 @interface IRStackView () <UIGestureRecognizerDelegate>
 
-- (void) waInit;
+- (void) irInit;
 
 @property (nonatomic, readonly, retain) NSArray *stackElements;
 - (NSMutableArray *) mutableStackElements; 
@@ -34,7 +34,7 @@
 	if (!self)
 		return nil;
 	
-	[self waInit];
+	[self irInit];
 	
 	return self;
 
@@ -44,7 +44,7 @@
 
 	[super awakeFromNib];
 	
-	[self waInit];
+	[self irInit];
 
 }
 
@@ -75,7 +75,7 @@
 
 }
 
-- (void) waInit {
+- (void) irInit {
 
 	stackElements = [NSArray array];
 	

@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WAScrollView.h"
+#import "IRScrollView.h"
 
 @class IRStackView;
-@protocol WAStackViewDelegate <NSObject>
+@protocol IRStackViewDelegate <NSObject>
 
 - (BOOL) stackView:(IRStackView *)aStackView shouldStretchElement:(UIView *)anElement;
 - (CGSize) sizeThatFitsElement:(UIView *)anElement inStackView:(IRStackView *)aStackView;
@@ -18,9 +18,9 @@
 @end
 
 
-@interface IRStackView : WAScrollView
+@interface IRStackView : IRScrollView
 
-@property (nonatomic, readwrite, assign) id <UIScrollViewDelegate, WAStackViewDelegate> delegate;	//	the aptly-named `delegate` is used by the scrollview
+@property (nonatomic, readwrite, assign) id <UIScrollViewDelegate, IRStackViewDelegate> delegate;	//	the aptly-named `delegate` is used by the scrollview
 
 @property (nonatomic, readwrite, copy) void (^onDidLayoutSubviews)(void);
 

@@ -100,6 +100,8 @@
 		FF12AA8F143F2F11002346BD /* IRLifetimeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FF12AA8D143F2F11002346BD /* IRLifetimeHelper.m */; };
 		FF197A841535FC1100ADC4E6 /* IRStackView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF197A821535FC1100ADC4E6 /* IRStackView.h */; };
 		FF197A851535FC1100ADC4E6 /* IRStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF197A831535FC1100ADC4E6 /* IRStackView.m */; };
+		FF197A891535FC8E00ADC4E6 /* IRScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF197A871535FC8E00ADC4E6 /* IRScrollView.h */; };
+		FF197A8A1535FC8E00ADC4E6 /* IRScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF197A881535FC8E00ADC4E6 /* IRScrollView.m */; };
 		FF27A6AB133E2C16008C8DDA /* IRBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6A9133E2C16008C8DDA /* IRBarButtonItem.h */; };
 		FF27A6AC133E2C16008C8DDA /* IRBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */; };
 		FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6E1133E3526008C8DDA /* IRBusyView.h */; };
@@ -385,6 +387,8 @@
 		FF12AA8D143F2F11002346BD /* IRLifetimeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRLifetimeHelper.m; sourceTree = "<group>"; };
 		FF197A821535FC1100ADC4E6 /* IRStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRStackView.h; sourceTree = "<group>"; };
 		FF197A831535FC1100ADC4E6 /* IRStackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRStackView.m; sourceTree = "<group>"; };
+		FF197A871535FC8E00ADC4E6 /* IRScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRScrollView.h; sourceTree = "<group>"; };
+		FF197A881535FC8E00ADC4E6 /* IRScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRScrollView.m; sourceTree = "<group>"; };
 		FF27A6A9133E2C16008C8DDA /* IRBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBarButtonItem.h; sourceTree = "<group>"; };
 		FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBarButtonItem.m; sourceTree = "<group>"; };
 		FF27A6E1133E3526008C8DDA /* IRBusyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBusyView.h; sourceTree = "<group>"; };
@@ -704,6 +708,8 @@
 				FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */,
 				FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */,
 				FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */,
+				FF197A871535FC8E00ADC4E6 /* IRScrollView.h */,
+				FF197A881535FC8E00ADC4E6 /* IRScrollView.m */,
 				FF0A8D091337B36A00DDA47C /* IRSegmentedControl.h */,
 				FF0A8D0A1337B36A00DDA47C /* IRSegmentedControl.m */,
 				FF0A8D0B1337B36A00DDA47C /* IRSegmentedControlSegment.h */,
@@ -948,6 +954,7 @@
 				FF70E548152EE51C008BFB00 /* IRAsyncOperation+ForSubclassEyesOnly.h in Headers */,
 				FFD3484F15359C22007B7D2E /* IRTableViewCell.h in Headers */,
 				FF197A841535FC1100ADC4E6 /* IRStackView.h in Headers */,
+				FF197A891535FC8E00ADC4E6 /* IRScrollView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1182,6 +1189,7 @@
 				FF70E544152EE411008BFB00 /* IRAsyncBarrierOperation.m in Sources */,
 				FFD3485015359C22007B7D2E /* IRTableViewCell.m in Sources */,
 				FF197A851535FC1100ADC4E6 /* IRStackView.m in Sources */,
+				FF197A8A1535FC8E00ADC4E6 /* IRScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
