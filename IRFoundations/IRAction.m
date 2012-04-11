@@ -17,19 +17,20 @@
 
 	IRAction *returnedAction = [[self alloc] init];
 	if (!returnedAction)
-	return nil;
+		return nil;
 	
 	returnedAction.title = title;
 	returnedAction.action = action;
 	
-	return [returnedAction autorelease];
+	return action;
 
 }
 
 - (id) init {
 
-	self = [super init]; 
-	if (!self) return nil;
+	self = [super init];
+	if (!self)
+		return nil;
 	
 	self.title = nil;
 	self.action = nil;
@@ -43,15 +44,6 @@
 
 	if (self.action)
 	self.action();
-
-}
-
-- (void) dealloc {
-
-	[title release];
-	[action release];
-
-	[super dealloc];
 
 }
 

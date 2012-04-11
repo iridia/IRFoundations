@@ -48,13 +48,6 @@
 
 }
 
-- (void) dealloc {
-
-	[innerShadow release];
-	[super dealloc];
-
-}
-
 - (void) drawRect:(CGRect)rect {
 
 	CGContextRef context = UIGraphicsGetCurrentContext();

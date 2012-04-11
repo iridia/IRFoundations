@@ -94,7 +94,7 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 	if (!persistentStoreName)
 		persistentStoreName = [@"PersistentStore" copy];
 	
-	managedObjectModel = [model retain];
+	managedObjectModel = model;
 
 	return self;
 
@@ -105,7 +105,7 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 	if (managedObjectModel)
 		return managedObjectModel;
 
-	managedObjectModel = [[self defaultManagedObjectModel] retain];
+	managedObjectModel = [self defaultManagedObjectModel];
 	return managedObjectModel;
 
 }
@@ -170,8 +170,7 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 	if (persistentStoreName == newPersistentStoreName)
 		return;
 	
-	[persistentStoreName release];
-	persistentStoreName = [newPersistentStoreName retain];
+	persistentStoreName = [newPersistentStoreName copy];
 
 	self.persistentStoreCoordinator = nil;
 	objc_setAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC, nil, OBJC_ASSOCIATION_ASSIGN);
@@ -200,35 +199,13 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 
 - (IRManagedObjectContext *) disposableMOC {
 
-	IRManagedObjectContext *returnedContext = [[[IRManagedObjectContext alloc] init] autorelease];
+	IRManagedObjectContext *returnedContext = [[IRManagedObjectContext alloc] init];
 	[returnedContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
 	[returnedContext setUndoManager:nil];
 	
 	return returnedContext;
 
 }
-
-- (void) dealloc {
-
-	__block NSManagedObjectContext *autoUpdatedMOC = objc_getAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC);
-	if (autoUpdatedMOC) {
-		@autoreleasepool {
-			[[autoUpdatedMOC retain] autorelease];
-			objc_setAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC, nil, OBJC_ASSOCIATION_ASSIGN);
-		}
-	}
-	
-	[persistentStoreName release];
-	[managedObjectModel release];
-	[persistentStoreCoordinator release];
-
-	[super dealloc];
-
-}
-
-
-
-
 
 NSString * IRDataStoreTimestamp () {
 
@@ -244,16 +221,12 @@ NSString * IRDataStoreNonce () {
 	if (!theUUID)
 		return nil;
 	
-	uuid = [(NSString *)CFUUIDCreateString(kCFAllocatorDefault, theUUID) autorelease];
+	uuid = (__bridge_transfer NSString *)CFUUIDCreateString(kCFAllocatorDefault, theUUID);
 	CFRelease(theUUID);
 	
 	return [NSString stringWithFormat:@"%@-%@", IRDataStoreTimestamp(), uuid];
 	
 }
-
-
-
-
 
 - (NSString *) persistentFileURLBasePath {
 
@@ -264,7 +237,7 @@ NSString * IRDataStoreNonce () {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 
-		path = [[(NSURL *)[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] path] retain];
+		path = [(NSURL *)[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] path];
 	
 	});
 
@@ -281,7 +254,7 @@ NSString * IRDataStoreNonce () {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 
-		path = [NSTemporaryDirectory() retain];
+		path = NSTemporaryDirectory();
 		
 	});
 
@@ -438,8 +411,10 @@ NSString * IRDataStoreNonce () {
 		return NO;
 		
 	}
-
-	NSString *preferredExtension = utiType ? [NSMakeCollectable(UTTypeCopyPreferredTagWithClass((CFStringRef)utiType, kUTTagClassFilenameExtension)) autorelease] : nil;
+	
+	NSString *preferredExtension = nil;
+	if (utiType)
+		preferredExtension = (__bridge_transfer NSString *)(UTTypeCopyPreferredTagWithClass((__bridge CFStringRef)utiType, kUTTagClassFilenameExtension));
 	
 	if (preferredExtension) {
 		

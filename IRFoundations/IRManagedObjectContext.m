@@ -10,7 +10,6 @@
 
 #import "IRLifetimeHelper.h"
 #import "IRManagedObjectContext.h"
-#import "NSFetchRequest+IRAdditions.h"
 
 
 @implementation NSManagedObjectContext (IRAdditions)
@@ -69,26 +68,10 @@
 @implementation IRManagedObjectContext
 @synthesize irAutoMergeStackCount, irAutoMergeListener;
 
-- (NSArray *) executeFetchRequest:(NSFetchRequest *)request error:(NSError **)error {
-
-	for (NSString *aPrefetchedRelationshipKeyPath in [[request.irRelationshipKeyPathsForObjectsPrefetching copy] autorelease]) {
-	
-		NSLog(@"Prefetch %@", aPrefetchedRelationshipKeyPath);
-	
-	}
-
-	return [super executeFetchRequest:request error:error];
-
-}
-
 - (void) dealloc {
 
-	if (irAutoMergeListener) {
+	if (irAutoMergeListener)
 		[[NSNotificationCenter defaultCenter] removeObserver:irAutoMergeListener];
-		[irAutoMergeListener release];
-	}
-	
-	[super dealloc];
 
 }
 
@@ -188,15 +171,6 @@
 	
 	self.irAutoMergeListener = nil;
 
-}
-
-- (void) irHandleManagedObjectContextDidSaveNotification:(NSNotification *)note {
-	
-	NSParameterAssert([self irIsMergingFromSavesAutomatically]);
-	
-	__block __typeof__(self) nrSelf = self;
-	
-	
 }
 
 @end

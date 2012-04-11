@@ -24,23 +24,15 @@
 	if (!self)
 		return nil;
 	
-	specifiers = [inSpecifiers retain];
+	specifiers = inSpecifiers;
 	
 	return self;
 
 }
 
-- (void) dealloc {
-
-	[specifiers release];
-
-	[super dealloc];
-
-}
-
 - (CTParagraphStyleRef) copyCTParagraphStyle {
 
-	NSArray *usedSpecifiers = [[self.specifiers copy] autorelease];
+	NSArray *usedSpecifiers = [self.specifiers copy];
 	NSUInteger count = [usedSpecifiers count];
 	if (!count)
 		return CTParagraphStyleCreate(NULL, 0);

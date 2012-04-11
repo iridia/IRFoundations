@@ -15,39 +15,27 @@
 @synthesize block;
 @synthesize flashesMomentarily;
 
-+ (IRTintedBarButtonItem *) itemWithImage:(UIImage *)image title:(NSString *)title block:(void(^)(void))block {
++ (id) itemWithImage:(UIImage *)image title:(NSString *)title block:(void(^)(void))block {
 
 	if (!image && !title)
 	return nil;
 	
-	UISegmentedControl *control = [[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:(
+	UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:(
 	
 		image ? title ? [self contentImageWithImage:image title:title font:[UIFont boldSystemFontOfSize:12.0] textColor:[UIColor whiteColor] spacing:4.0] : image : title ? title : @" "
 	
-	)]] autorelease];
+	)]];
 	
 	control.segmentedControlStyle = UISegmentedControlStyleBar;
 	control.momentary = YES;
 	
-	IRTintedBarButtonItem *returnedItem = [[[self alloc] initWithCustomView:control] autorelease];
+	IRTintedBarButtonItem *returnedItem = [[self alloc] initWithCustomView:control];
 	
 	[control addTarget:returnedItem action:@selector(irHandleSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
 	
 	returnedItem.block = block;
 	
 	return returnedItem;
-
-}
-
-
-
-
-
-- (void) dealloc {
-
-	[block release];
-
-	[super dealloc];
 
 }
 
@@ -84,7 +72,7 @@
 	self.block();
 	
 	if (self.target && self.action)
-	[self.target performSelector:self.action];
+		[self.target performSelector:self.action];
 
 }
 

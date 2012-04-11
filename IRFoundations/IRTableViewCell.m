@@ -68,10 +68,4 @@ static NSString * const kCellPrototypes = @"+[IRTableViewCell cellPrototypes]";
 
 }
 
-- (void) dealloc {
-
-	[super dealloc];
-
-}
-
 @end

@@ -32,14 +32,4 @@
 
 }
 
-- (void) dealloc {
-
-	self.subtitleLabel = nil;
-	self.inputField = nil;
-	self.userInfo = nil;
-
-	[super dealloc];
-
-}
-
 @end

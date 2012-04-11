@@ -46,7 +46,6 @@
 - (void) dealloc {
 
 	[self simulatedOrderedRelationshipDealloc];
-	[super dealloc];
 
 }
 
@@ -97,7 +96,7 @@
 		NSError *error = nil;
 		NSArray *existingEntities = [context executeFetchRequest:(( ^ {
 
-			NSFetchRequest *returnedRequest = [[[NSFetchRequest alloc] init] autorelease];
+			NSFetchRequest *returnedRequest = [[NSFetchRequest alloc] init];
 
 			[returnedRequest setEntity:[NSEntityDescription entityForName:[self coreDataEntityName] inManagedObjectContext:context]];
 			
@@ -146,7 +145,7 @@
 		
 		};
 		
-		returnedEntities = [[dictionaries mutableCopy] autorelease];
+		returnedEntities = [dictionaries mutableCopy];
 		NSArray *sortedRemoteDictionaries = [dictionaries sortedArrayUsingComparator:irComparatorMakeWithNodeKeyPath(dictionaryKeyPath)];
 		
 		
@@ -164,7 +163,7 @@
 		
 		}] irMap:IRArrayMapCallbackMakeNullFilter()];
 		
-		NSMutableArray *unusedRemoteDictionaries = [[sortedRemoteDictionaries mutableCopy] autorelease];
+		NSMutableArray *unusedRemoteDictionaries = [sortedRemoteDictionaries mutableCopy];
 		
 		[uniqueValues enumerateObjectsUsingBlock: ^ (id currentUniqueValue, NSUInteger idx, BOOL *stop) {
 		
@@ -272,8 +271,6 @@
 			
 			if (![indexes count]) {
 			
-			
-			
 				NSUInteger foundIndex = [returnedEntities indexOfObjectIdenticalTo:currentDictionary];
 				if (foundIndex != NSNotFound)
 					[returnedEntities replaceObjectAtIndex:foundIndex withObject:touchedEntity];
@@ -281,11 +278,9 @@
 			
 		}
 		
-		[returnedEntities retain];
+		return returnedEntities;
 
 	}
-
-	return [returnedEntities autorelease];
 
 }
 
@@ -298,116 +293,110 @@
 	if (![inRemoteDictionaries count])
 		return [NSArray array];
 	
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
-	[[context retain] autorelease];
-	[[inRemoteDictionaries retain] autorelease];
-	[[remoteKeyPathsToClassNames retain] autorelease];
-	
-	if (!remoteKeyPathsToClassNames)
-		remoteKeyPathsToClassNames = [self defaultHierarchicalEntityMapping];
-	
-	NSArray *usedRemoteDictionaries = [inRemoteDictionaries irMap: ^ (NSDictionary *aRepresentation, NSUInteger index, BOOL *stop) {
-		return [self transformedRepresentationForRemoteRepresentation:aRepresentation];
-	}];
+		if (!remoteKeyPathsToClassNames)
+			remoteKeyPathsToClassNames = [self defaultHierarchicalEntityMapping];
+		
+		NSArray *usedRemoteDictionaries = [inRemoteDictionaries irMap: ^ (NSDictionary *aRepresentation, NSUInteger index, BOOL *stop) {
+			return [self transformedRepresentationForRemoteRepresentation:aRepresentation];
+		}];
 
-	NSString * const localKeyPath = [self keyPathHoldingUniqueValue];
-	NSString * const remoteKeyPath = localKeyPath ? [[[self remoteDictionaryConfigurationMapping] allKeysForObject:localKeyPath] objectAtIndex:0] : nil;
-	
-	NSArray * const baseEntities = [self insertOrUpdateObjectsIntoContext:context withExistingProperty:localKeyPath matchingKeyPath:remoteKeyPath ofRemoteDictionaries:usedRemoteDictionaries];
-	NSParameterAssert(baseEntities);
-	
-	NSDictionary *baseEntityRelationships = [[[[[context persistentStoreCoordinator] managedObjectModel] entitiesByName] objectForKey:[self coreDataEntityName]] relationshipsByName];
-	
-	
-	for (NSString *rootRemoteKeyPath in remoteKeyPathsToClassNames) {
-	
-		Class nodeEntityClass = NSClassFromString([remoteKeyPathsToClassNames objectForKey:rootRemoteKeyPath]);
-		NSString * const rootLocalKeyPath = [[self remoteDictionaryConfigurationMapping] objectForKey:rootRemoteKeyPath];
+		NSString * const localKeyPath = [self keyPathHoldingUniqueValue];
+		NSString * const remoteKeyPath = localKeyPath ? [[[self remoteDictionaryConfigurationMapping] allKeysForObject:localKeyPath] objectAtIndex:0] : nil;
 		
-		//	Skip if the local key path is not mappable
-		if (!rootLocalKeyPath) {
+		NSArray * const baseEntities = [self insertOrUpdateObjectsIntoContext:context withExistingProperty:localKeyPath matchingKeyPath:remoteKeyPath ofRemoteDictionaries:usedRemoteDictionaries];
+		NSParameterAssert(baseEntities);
 		
-			if (![self skipsNonexistantRemoteKey]) {
-			
-				[NSException raise:NSInternalInconsistencyException format:@"A remote mapping %@ -> %@ is not found, using mapping %@", rootRemoteKeyPath, NSStringFromClass(nodeEntityClass), [self remoteDictionaryConfigurationMapping]];
-			
-			}
-			
-			continue;
-			
-		}
+		NSDictionary *baseEntityRelationships = [[[[[context persistentStoreCoordinator] managedObjectModel] entitiesByName] objectForKey:[self coreDataEntityName]] relationshipsByName];
 		
-		NSString * const nodeLocalKeyPath = [nodeEntityClass keyPathHoldingUniqueValue];
-		NSString * const nodeRemoteKeyPath = nodeLocalKeyPath ? [[[nodeEntityClass remoteDictionaryConfigurationMapping] allKeysForObject:nodeLocalKeyPath] objectAtIndex:0] : nil;
 		
-		BOOL const relationIsToMany = [[baseEntityRelationships objectForKey:rootLocalKeyPath] isToMany];
-		BOOL const usesIndividualAdd = (options & IRManagedObjectOptionIndividualOperations);
+		for (NSString *rootRemoteKeyPath in remoteKeyPathsToClassNames) {
 		
-		NSArray *nodeRepresentations = [usedRemoteDictionaries irMap:IRArrayMapCallbackMakeWithKeyPath(rootRemoteKeyPath)];
-		NSArray *entityRepresentations = [nodeRepresentations irFlatten];
-		
-		NSArray *nodeEntities = [nodeEntityClass insertOrUpdateObjectsUsingContext:context withRemoteResponse:entityRepresentations usingMapping:[nodeEntityClass defaultHierarchicalEntityMapping] options:options];
-		
-		__block NSInteger consumedNodeEntities = 0;
-		
-		[baseEntities enumerateObjectsUsingBlock: ^ (IRManagedObject *baseObject, NSUInteger index, BOOL *stop) {
-		
-			NSParameterAssert([baseObject isKindOfClass:[IRManagedObject class]]);
-			[[baseObject retain] autorelease];
-		
-			NSUInteger relatedNodesCount = irCount([nodeRepresentations objectAtIndex:index], 0);
+			Class nodeEntityClass = NSClassFromString([remoteKeyPathsToClassNames objectForKey:rootRemoteKeyPath]);
+			NSString * const rootLocalKeyPath = [[self remoteDictionaryConfigurationMapping] objectForKey:rootRemoteKeyPath];
 			
-			if ((relatedNodesCount == 0) || (relatedNodesCount == NSNotFound))
-				return;
+			//	Skip if the local key path is not mappable
+			if (!rootLocalKeyPath) {
 			
-			if ([rootLocalKeyPath isEqual:[NSNull null]] || !rootLocalKeyPath)
-				[NSException raise:NSInternalInconsistencyException format:@"Local key path for remote key path %@ can’t be null or nil.", rootRemoteKeyPath];
-			
-			NSArray *relatedEntities = [nodeEntities subarrayWithRange:NSMakeRange(consumedNodeEntities, relatedNodesCount)];
-			
-			NSParameterAssert(rootLocalKeyPath);
-			
-			[baseObject willChangeValueForKey:rootLocalKeyPath];
-			
-			if (relationIsToMany) {
-			
-				if (usesIndividualAdd) {
-			
-					for (id anObject in relatedEntities)
-						[[baseObject mutableSetValueForKeyPath:rootLocalKeyPath] addObject:anObject];
-					
-				} else {
+				if (![self skipsNonexistantRemoteKey]) {
 				
-					[[baseObject mutableSetValueForKeyPath:rootLocalKeyPath] addObjectsFromArray:relatedEntities];
+					[NSException raise:NSInternalInconsistencyException format:@"A remote mapping %@ -> %@ is not found, using mapping %@", rootRemoteKeyPath, NSStringFromClass(nodeEntityClass), [self remoteDictionaryConfigurationMapping]];
 				
 				}
 				
-			} else {
-			
-				[baseObject setValue:[relatedEntities objectAtIndex:0] forKeyPath:rootLocalKeyPath];
-			
+				continue;
+				
 			}
 			
-			[baseObject didChangeValueForKey:rootLocalKeyPath];
+			NSString * const nodeLocalKeyPath = [nodeEntityClass keyPathHoldingUniqueValue];
+			//	NSString * const nodeRemoteKeyPath = nodeLocalKeyPath ? [[[nodeEntityClass remoteDictionaryConfigurationMapping] allKeysForObject:nodeLocalKeyPath] objectAtIndex:0] : nil;
 			
-			consumedNodeEntities += relatedNodesCount;
+			BOOL const relationIsToMany = [[baseEntityRelationships objectForKey:rootLocalKeyPath] isToMany];
+			BOOL const usesIndividualAdd = (options & IRManagedObjectOptionIndividualOperations);
 			
-			if (!(relationIsToMany || (!relationIsToMany && (relatedNodesCount == 1))))
-			if ([[NSSet setWithArray:nodeEntities] count] > 1)
-				[NSException raise:NSInternalInconsistencyException format:@"A to-one relationship can’t have multiple related entities."];
-		
-		}];
-		
-		if (consumedNodeEntities != [nodeEntities count])
-			[NSException raise:NSInternalInconsistencyException format:@"%s expects to exhaust all entities.", __PRETTY_FUNCTION__];
-		
+			NSArray *nodeRepresentations = [usedRemoteDictionaries irMap:IRArrayMapCallbackMakeWithKeyPath(rootRemoteKeyPath)];
+			NSArray *entityRepresentations = [nodeRepresentations irFlatten];
+			
+			NSArray *nodeEntities = [nodeEntityClass insertOrUpdateObjectsUsingContext:context withRemoteResponse:entityRepresentations usingMapping:[nodeEntityClass defaultHierarchicalEntityMapping] options:options];
+			
+			__block NSInteger consumedNodeEntities = 0;
+			
+			[baseEntities enumerateObjectsUsingBlock: ^ (IRManagedObject *baseObject, NSUInteger index, BOOL *stop) {
+			
+				NSParameterAssert([baseObject isKindOfClass:[IRManagedObject class]]);
+			
+				NSUInteger relatedNodesCount = irCount([nodeRepresentations objectAtIndex:index], 0);
+				
+				if ((relatedNodesCount == 0) || (relatedNodesCount == NSNotFound))
+					return;
+				
+				if ([rootLocalKeyPath isEqual:[NSNull null]] || !rootLocalKeyPath)
+					[NSException raise:NSInternalInconsistencyException format:@"Local key path for remote key path %@ can’t be null or nil.", rootRemoteKeyPath];
+				
+				NSArray *relatedEntities = [nodeEntities subarrayWithRange:NSMakeRange(consumedNodeEntities, relatedNodesCount)];
+				
+				NSParameterAssert(rootLocalKeyPath);
+				
+				[baseObject willChangeValueForKey:rootLocalKeyPath];
+				
+				if (relationIsToMany) {
+				
+					if (usesIndividualAdd) {
+				
+						for (id anObject in relatedEntities)
+							[[baseObject mutableSetValueForKeyPath:rootLocalKeyPath] addObject:anObject];
+						
+					} else {
+					
+						[[baseObject mutableSetValueForKeyPath:rootLocalKeyPath] addObjectsFromArray:relatedEntities];
+					
+					}
+					
+				} else {
+				
+					[baseObject setValue:[relatedEntities objectAtIndex:0] forKeyPath:rootLocalKeyPath];
+				
+				}
+				
+				[baseObject didChangeValueForKey:rootLocalKeyPath];
+				
+				consumedNodeEntities += relatedNodesCount;
+				
+				if (!(relationIsToMany || (!relationIsToMany && (relatedNodesCount == 1))))
+				if ([[NSSet setWithArray:nodeEntities] count] > 1)
+					[NSException raise:NSInternalInconsistencyException format:@"A to-one relationship can’t have multiple related entities."];
+			
+			}];
+			
+			if (consumedNodeEntities != [nodeEntities count])
+				[NSException raise:NSInternalInconsistencyException format:@"%s expects to exhaust all entities.", __PRETTY_FUNCTION__];
+			
+		}
+	
+		return baseEntities;
+	
 	}
-	
-	[baseEntities retain];
-	[pool drain];
-	
-	return [baseEntities autorelease];
 
 }
 
@@ -442,25 +431,15 @@
 	if (inDictionary)
 		NSCParameterAssert([inDictionary isKindOfClass:[NSDictionary class]]);
 
-	IRManagedObject *returnedStatus = nil;
-
-	@try {
-
-		returnedStatus = [[[self alloc] initWithEntity:[NSEntityDescription entityForName:[self coreDataEntityName] inManagedObjectContext:inContext] insertIntoManagedObjectContext:inContext] autorelease];
+	IRManagedObject *object = [[self alloc] initWithEntity:[NSEntityDescription entityForName:[self coreDataEntityName] inManagedObjectContext:inContext] insertIntoManagedObjectContext:inContext];
 		
-	} @catch (NSException *e) {
-	
-		NSLog(@"Exception: %@", e);
-	
-	}
-	
-	if (!returnedStatus)
+	if (!object)
 		return nil;
 	
 	if (inDictionary)
-		[returnedStatus configureWithRemoteDictionary:inDictionary];
+		[object configureWithRemoteDictionary:inDictionary];
 	
-	return returnedStatus;
+	return object;
 
 }
 

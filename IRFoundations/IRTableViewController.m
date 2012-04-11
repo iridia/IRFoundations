@@ -60,15 +60,6 @@
 
 }
 
-- (void) dealloc {
-
-	self.tableView = nil;
-	self.onLoadView = nil;
-
-	[super dealloc];
-
-}
-
 - (void) irConfigure {
 
 	self.tableViewStyle = UITableViewStylePlain;
@@ -90,14 +81,12 @@
 		
 	} else {
 	
-		self.tableView = [[[IRTableView alloc] initWithFrame:self.view.frame style:self.tableViewStyle] autorelease];
+		self.tableView = [[IRTableView alloc] initWithFrame:self.view.frame style:self.tableViewStyle];
 	
 	}
 	
-//	self.view = self.tableView;
-
 	if (self.onLoadView)
-	self.onLoadView();
+		self.onLoadView();
 
 }
 

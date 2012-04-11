@@ -37,10 +37,10 @@
 
 - (NSSet *) irSetByRemovingObjectsInSet:(NSSet *)subtractedSet {
 
-	NSMutableSet *returnedSet = [[self mutableCopy] autorelease];
+	NSMutableSet *returnedSet = [self mutableCopy];
 	[returnedSet minusSet:subtractedSet];
 	
-	return [[returnedSet copy] autorelease];
+	return returnedSet;
 
 }
 

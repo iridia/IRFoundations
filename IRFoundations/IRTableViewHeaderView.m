@@ -73,7 +73,7 @@
 	
 	[auxiliaryView removeFromSuperview];
 	
-	auxiliaryView = [inView retain];
+	auxiliaryView = inView;
 	auxiliaryView.alpha = 0.0f;
 	[self.auxiliaryViewContainer addSubview:auxiliaryView];
 	
@@ -114,16 +114,5 @@
 	);
 	
 }
-
-- (void) dealloc {
-
-	self.titleLabel = nil;
-	self.auxiliaryView = nil;
-	self.auxiliaryViewContainer = nil;
-
-	[super dealloc];
-
-}
-
 
 @end

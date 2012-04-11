@@ -70,18 +70,4 @@
 
 }
 
-- (void) dealloc {
-
-	[onShouldAutorotateToInterfaceOrientation release];
-	[onLoadview release];
-
-	[onViewWillAppear release];
-	[onViewDidAppear release];
-	[onViewWillDisappear release];
-	[onViewDidDisappear release];
-
-	[super dealloc];
-
-}
-
 @end

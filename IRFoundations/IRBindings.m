@@ -42,18 +42,12 @@ NSString * const kAssociatedIRBindingsHelper = @"kAssociatedIRBindingsHelper";
 
 - (IRBindingsHelper *) irBindingsHelper {
 
-	IRBindingsHelper *associatedHelper = objc_getAssociatedObject(self, kAssociatedIRBindingsHelper);
+	IRBindingsHelper *associatedHelper = objc_getAssociatedObject(self, &kAssociatedIRBindingsHelper);
 	
 	if (!associatedHelper) {
-	
 		associatedHelper = [[IRBindingsHelper alloc] init];
-		
 		associatedHelper.owner = self;
-		
-		objc_setAssociatedObject(self, kAssociatedIRBindingsHelper, associatedHelper, OBJC_ASSOCIATION_RETAIN);
-		
-		[associatedHelper release];
-	
+		objc_setAssociatedObject(self, &kAssociatedIRBindingsHelper, associatedHelper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 	}
 	
 	associatedHelper.owner = self;
@@ -126,7 +120,7 @@ NSString * const kAssociatedIRBindingsHelper = @"kAssociatedIRBindingsHelper";
 	
 	id context = [self.boundLocalKeyPathsToRemoteObjectContexts objectForKey:inLocalKeyPath];
 	
-	[inRemoteObject addObserver:self forKeyPath:inRemoteKeyPath options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:context];
+	[inRemoteObject addObserver:self forKeyPath:inRemoteKeyPath options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:(__bridge void *)(context)];
 
 }
 
@@ -148,7 +142,7 @@ NSString * const kAssociatedIRBindingsHelper = @"kAssociatedIRBindingsHelper";
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 
-	NSArray *allKeysForObject = [self.boundLocalKeyPathsToRemoteObjectContexts allKeysForObject:context];
+	NSArray *allKeysForObject = [self.boundLocalKeyPathsToRemoteObjectContexts allKeysForObject:(__bridge id)(context)];
 	
 	if (!allKeysForObject || ([allKeysForObject count] == 0)) {
 		NSLog(@"%s: No keys for context object.  Unbinding.", __PRETTY_FUNCTION__);
@@ -163,7 +157,7 @@ NSString * const kAssociatedIRBindingsHelper = @"kAssociatedIRBindingsHelper";
 	NSString *changeKind = [change objectForKey:NSKeyValueChangeKindKey];
 	id setValue = newValue;
 		
-	NSDictionary *optionsDictionary = [(id)context objectForKey:@"options"];
+	NSDictionary *optionsDictionary = [(__bridge id)context objectForKey:@"options"];
 	optionsDictionary = ([optionsDictionary isEqual:[NSNull null]]) ? nil : optionsDictionary;
 	
 	IRBindingsValueTransformer valueTransformerOrNil;
@@ -190,12 +184,10 @@ NSString * const kAssociatedIRBindingsHelper = @"kAssociatedIRBindingsHelper";
 
 - (void) dealloc {
 
-	for (id aLocalKeyPath in [[self.boundLocalKeyPathsToRemoteObjectContexts copy] autorelease])
-	[self irUnbind:aLocalKeyPath];
+	for (id aLocalKeyPath in [self.boundLocalKeyPathsToRemoteObjectContexts copy])
+		[self irUnbind:aLocalKeyPath];
 	
 	self.boundLocalKeyPathsToRemoteObjectContexts = nil;
-
-	[super dealloc];
 
 }
 
