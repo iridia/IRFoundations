@@ -29,11 +29,11 @@
 	control.segmentedControlStyle = UISegmentedControlStyleBar;
 	control.momentary = YES;
 	
-	IRTintedBarButtonItem *returnedItem = [[self alloc] initWithCustomView:control];
+	id returnedItem = [[self alloc] initWithCustomView:control];
 	
 	[control addTarget:returnedItem action:@selector(irHandleSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
 	
-	returnedItem.block = block;
+	[returnedItem setBlock:block];
 	
 	return returnedItem;
 

@@ -17,7 +17,7 @@
 		return self;
 	
 	for (UIView *aSubview in self.subviews) {
-		UIView *foundFirstResponder = [aSubview performSelector:_cmd];
+		UIView *foundFirstResponder = [aSubview irFirstResponderInView];
 		if (foundFirstResponder)
 			return foundFirstResponder;
 	}
