@@ -22,7 +22,7 @@
 	returnedAction.title = title;
 	returnedAction.action = action;
 	
-	return action;
+	return returnedAction;
 
 }
 
