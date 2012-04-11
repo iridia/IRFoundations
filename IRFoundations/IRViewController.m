@@ -8,10 +8,6 @@
 
 #import "IRViewController.h"
 
-@interface IRViewController ()
-
-@end
-
 @implementation IRViewController
 
 @synthesize onShouldAutorotateToInterfaceOrientation, onLoadView, onViewWillAppear, onViewDidAppear, onViewWillDisappear, onViewDidDisappear;
