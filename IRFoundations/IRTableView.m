@@ -1,6 +1,6 @@
 //
 //  MLTableView.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 1/4/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -77,17 +77,13 @@
 + (id) tableViewWithEncodedDataOfObject:(UITableView *)inTableView ofClass:(Class)inClass {
 
 	NSMutableData *tableViewData = [NSMutableData data];
-	NSKeyedArchiver *tableViewArchiver = [[[NSKeyedArchiver alloc] initForWritingWithMutableData:tableViewData] autorelease]; 
+	NSKeyedArchiver *tableViewArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:tableViewData];
 
 	[tableViewArchiver encodeObject:inTableView];
 	[tableViewArchiver finishEncoding];
 	
-	NSKeyedUnarchiver *tableViewUnarchiver = [[[NSKeyedUnarchiver alloc] initForReadingWithData:tableViewData] autorelease];
-
-	IRTableView *returnedTableView = [[[inClass alloc] initWithCoder:tableViewUnarchiver] autorelease];
-	if (!returnedTableView) return nil;
-
-	return returnedTableView;
+	NSKeyedUnarchiver *tableViewUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:tableViewData];
+	return [[inClass alloc] initWithCoder:tableViewUnarchiver];
 
 }
 
@@ -175,30 +171,6 @@
 	
 	[self clearDelayedPerformQueue];
 	
-	self.dataSource = nil;
-	self.delegate = nil;
-
-	self.onTouchesShouldBeginWithEventInContentView = nil;
-	self.onTouchesShouldCancelInContentView = nil;
-	
-	self.pullDownHeaderView = nil;
-	self.onPullDownBegin = nil;
-	self.onPullDownMove = nil;
-	self.onPullDownEnd = nil;
-	self.onPullDownReset = nil;
-	
-	self.onScroll = nil;
-	self.onZoom = nil;
-	self.onDragBegin = nil;
-	self.onDragEnd = nil;
-	self.onDecelerationBegin = nil;
-	self.onDecelerationEnd = nil;
-	self.onScrollAnimationEnd = nil;
-	
-	self.onLayoutSubviews = nil;
-	
-	[super dealloc];
-
 }
 
 
@@ -349,31 +321,25 @@
 	
 	self.pullDownToRefreshState = IRTableViewPullDownRefreshStateInactive;
 	
-	[self retain];
-	
-	__block IRTableView *nonretainedSelf = self;
+	__weak IRTableView *wSelf = self;
 
 	void (^animationBlock)() = ^ {
 	
 		[UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations: ^ {
 		
-			self.pullDownToRefreshState = IRTableViewPullDownRefreshStateInactive;
-			[self setContentInset:self.originalEdgeInsets];
-			[self layoutSubviews];
+			wSelf.pullDownToRefreshState = IRTableViewPullDownRefreshStateInactive;
+			[wSelf setContentInset:wSelf.originalEdgeInsets];
+			[wSelf layoutSubviews];
 
 		} completion: ^ (BOOL finished) {
 					
-			if (!nonretainedSelf.window)
-			return;
+			if (!wSelf.window)
+				return;
 		
-		//	self.pullDownHeaderView.hidden = YES;
+			if (wSelf.onPullDownReset)
+				wSelf.onPullDownReset();
 			
-			if (nonretainedSelf.onPullDownReset)
-			nonretainedSelf.onPullDownReset();
-			
-			[nonretainedSelf refreshPullDownToRefreshState];			
-			
-			[nonretainedSelf autorelease];
+			[wSelf refreshPullDownToRefreshState];
 		
 		}];
 	
@@ -396,9 +362,7 @@
 	if (inView == pullDownHeaderView) return;
 	
 	[pullDownHeaderView removeFromSuperview];
-	
-	[pullDownHeaderView release];
-	pullDownHeaderView = [inView retain];
+	pullDownHeaderView = inView;
 	
 	[self addSubview:inView];
 	[self layoutPullDownHeaderView];
@@ -415,7 +379,6 @@
 	if (inBlock == onPullDownBegin)
 	return;
 	
-	[onPullDownBegin release];
 	onPullDownBegin = [inBlock copy];
 	
 	[self refreshPullDownToRefreshEligibility];
@@ -425,9 +388,8 @@
 - (void) setOnPullDownMove:(void (^)(CGFloat progressRatio))inBlock {
 
 	if (inBlock == onPullDownMove)
-	return;
+		return;
 	
-	[onPullDownMove release];
 	onPullDownMove = [inBlock copy];
 	
 	[self refreshPullDownToRefreshEligibility];
@@ -437,9 +399,8 @@
 - (void) setOnPullDownEnd:(void (^)(BOOL requestDidFinish))inBlock {
 
 	if (inBlock == onPullDownEnd)
-	return;
+		return;
 	
-	[onPullDownEnd release];
 	onPullDownEnd = [inBlock copy];
 	
 	[self refreshPullDownToRefreshEligibility];
@@ -685,28 +646,21 @@ NSString * const IRTableViewWillResumePerformingBlocksNotification = @"IRTableVi
 
 - (void) performBlockOnInteractionEventsEnd:(void(^)(void))block {
 
-	__block IRTableView *nonretainedSelf = self;
-
-	dispatch_retain(self.delayedPerformQueue);
-	[nonretainedSelf retain];
+	__weak IRTableView *wSelf = self;
 
 	dispatch_async(self.delayedPerformQueue, ^ {
 	
-		if (nonretainedSelf.delayedPerformQueueFinalizing)
-		return;
+		if (wSelf.delayedPerformQueueFinalizing)
+			return;
 		
 		dispatch_async(dispatch_get_main_queue(), ^ {
 		
 			if (block)
-			block();
+				block();
 			
-			[nonretainedSelf autorelease];
-		
 		});
 	
 	});
-	
-	dispatch_release(self.delayedPerformQueue);
 
 }
 

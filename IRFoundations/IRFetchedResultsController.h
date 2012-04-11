@@ -1,6 +1,6 @@
 //
 //  IRFetchedResultsController.h
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 3/10/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.

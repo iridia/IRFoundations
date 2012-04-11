@@ -1,6 +1,6 @@
 //
 //  IRBindings.h
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 1/15/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.

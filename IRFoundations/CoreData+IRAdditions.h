@@ -1,6 +1,6 @@
 //
 //  CoreData-IRAdditions.h
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 3/12/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -12,7 +12,6 @@
 
 #import "IRManagedObject.h"
 #import "IRManagedObjectContext.h"
-#import "NSFetchRequest+IRAdditions.h"
 
 #import "IRDataStore.h"
 

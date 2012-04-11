@@ -170,8 +170,8 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 		
 			[self.managedObjectContext lock];
 		
-			[self addObserver:self forKeyPath:setKey options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:self];
-			[self addObserver:self forKeyPath:arrayKey options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:self];
+			[self addObserver:self forKeyPath:setKey options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:(__bridge void *)(self)];
+			[self addObserver:self forKeyPath:arrayKey options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:(__bridge void *)(self)];
 			
 			self.hasConfiguredObserving = YES;
 		
@@ -189,8 +189,8 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 	
 		if (self.hasConfiguredObserving) {
 		
-			[self removeObserver:self forKeyPath:setKey context:self];
-			[self removeObserver:self forKeyPath:arrayKey context:self];
+			[self removeObserver:self forKeyPath:setKey context:(__bridge void *)(self)];
+			[self removeObserver:self forKeyPath:arrayKey context:(__bridge void *)(self)];
 			
 			self.hasConfiguredObserving = NO;
 		
@@ -206,8 +206,8 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 	
 		if (self.hasConfiguredObserving) {
 		
-			[self removeObserver:self forKeyPath:setKey context:self];
-			[self removeObserver:self forKeyPath:arrayKey context:self];
+			[self removeObserver:self forKeyPath:setKey context:(__bridge void *)(self)];
+			[self removeObserver:self forKeyPath:arrayKey context:(__bridge void *)(self)];
 			
 			self.hasConfiguredObserving = NO;
 		
@@ -252,7 +252,7 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 		
 	if (![orderedObjectURIs isEqual:existingObjectURIs]) {
 	
-		NSMutableArray *newPrimitiveOrder = [[primitiveOrder mutableCopy] autorelease];
+		NSMutableArray *newPrimitiveOrder = [primitiveOrder mutableCopy];
 		
 		[newPrimitiveOrder removeObjectsAtIndexes:[newPrimitiveOrder indexesOfObjectsPassingTest:^(id obj, NSUInteger idx, BOOL *stop) {
 			return (BOOL)(![existingObjectURIs containsObject:obj]);
@@ -308,7 +308,7 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 	NSParameterAssert(arrayKey);
 	
 	NSArray *backingArray = [self valueForKey:arrayKey];
-	NSMutableArray *mutatedArray = [[backingArray mutableCopy] autorelease];
+	NSMutableArray *mutatedArray = [backingArray mutableCopy];
 	[mutatedArray insertObject:object atIndex:index];
 	[self baseSetValue:mutatedArray forKey:arrayKey];
 
@@ -320,7 +320,7 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 	NSParameterAssert(arrayKey);
 	
 	NSArray *backingArray = [self valueForKey:arrayKey];
-	NSMutableArray *mutatedArray = [[backingArray mutableCopy] autorelease];
+	NSMutableArray *mutatedArray = [backingArray mutableCopy];
 	[mutatedArray removeObjectAtIndex:index];
 	[self baseSetValue:mutatedArray forKey:arrayKey];
 
@@ -361,7 +361,7 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 				NSString *setKey = keyPath;
 				NSString *arrayKey = [relationships objectForKey:setKey];
 				
-				NSMutableArray *mutableArray = [[[self valueForKey:arrayKey] mutableCopy] autorelease];
+				NSMutableArray *mutableArray = [[self valueForKey:arrayKey] mutableCopy];
 				if (!mutableArray)
 					mutableArray = [NSMutableArray array];
 				
@@ -412,7 +412,7 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 			
 				NSString *setKey = [[relationships allKeysForObject:keyPath] lastObject];
 				NSString *arrayKey = keyPath;
-				NSMutableSet *mutableSet = [[[self valueForKey:setKey] mutableCopy] autorelease];
+				NSMutableSet *mutableSet = [[self valueForKey:setKey] mutableCopy];
 				if (!mutableSet)
 					mutableSet = [NSMutableSet set];
 				

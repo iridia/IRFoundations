@@ -16,16 +16,16 @@
 
 - (void) testOperationSerialQueueing {
 
-	NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];
+	NSOperationQueue *queue = [[NSOperationQueue alloc] init];
 	[queue setMaxConcurrentOperationCount:1];
 	
 	NSMutableArray *operations = [NSMutableArray array];
 	
 	IRAsyncOperation * (^operation)(void) = ^ {
 	
-		NSString * const kGeneratedResultTag = @"generatedResult";
+		NSString *result = (__bridge NSString *)(CFUUIDCreateString(NULL, CFUUIDCreate(NULL)));
 	
-		__block IRAsyncOperation *operation = [[IRAsyncOperation operationWithWorkerBlock:^(IRAsyncOperationCallback callback) {
+		__block IRAsyncOperation *operation = [IRAsyncOperation operationWithWorkerBlock:^(IRAsyncOperationCallback callback) {
 		
 			STAssertTrue([NSThread isMainThread], @"Operation %@ must be running its worker block on the main thread", self);
 			NSUInteger ownIndex = [operations indexOfObject:operation];
@@ -53,17 +53,11 @@
 				
 			}];
 			
-			NSLog(@"Running as operation %lu", (long)ownIndex);
-			
-			NSString *result = [NSMakeCollectable(CFUUIDCreateString(NULL, (CFUUIDRef)[NSMakeCollectable(CFUUIDCreate(NULL)) autorelease])) autorelease];
-			
-			objc_setAssociatedObject(operation, kGeneratedResultTag, result, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-
 			callback(result);
 			
 		} completionBlock: ^ (id results) {
 		
-			STAssertEqualObjects(results, objc_getAssociatedObject(operation, kGeneratedResultTag), @"Result must be passed correctly, as exactly the same object");
+			STAssertEqualObjects(results, result, @"Result must be passed correctly, as exactly the same object");
 			
 			STAssertTrue([NSThread isMainThread], @"Operation %@ must be running its completion block on the main thread", self);
 			NSUInteger ownIndex = [operations indexOfObject:operation];
@@ -91,9 +85,9 @@
 				
 			}];
 			
-			[operation autorelease];
+			operation = nil;
 			
-		}] retain];
+		}];
 		
 		return operation;
 
@@ -111,13 +105,13 @@
 
 - (void) testBarrierOperation {
 
-	NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];
+	NSOperationQueue *queue = [[NSOperationQueue alloc] init];
 	[queue setMaxConcurrentOperationCount:1];
 	
 	NSMutableArray *operations = [NSMutableArray array];
 	IRAsyncBarrierOperation * (^operation)(BOOL, BOOL, BOOL, BOOL) = ^ (BOOL assertWorkerNotReached, BOOL throwFailure, BOOL assertFailure, BOOL assertSuccess) {
 	
-		__block IRAsyncBarrierOperation *operation = [[IRAsyncBarrierOperation operationWithWorkerBlock:^(IRAsyncOperationCallback callback) {
+		__block IRAsyncBarrierOperation *operation = [IRAsyncBarrierOperation operationWithWorkerBlock:^(IRAsyncOperationCallback callback) {
 		
 			NSUInteger ownIndex = [operations indexOfObject:operation];
 			STAssertFalse(ownIndex == NSNotFound, @"Operation %@ must be tracked by the test case");
@@ -134,8 +128,10 @@
 
 			if (assertSuccess)
 				STAssertFalse([results isKindOfClass:[NSError class]], @"Operation should not get an error");
+			
+			operation = nil;
 		
-		}] retain];
+		}];
 		
 		IRAsyncOperation *lastOp = [operations lastObject];
 		if (lastOp)

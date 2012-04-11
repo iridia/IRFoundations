@@ -1,6 +1,6 @@
 //
 //  IRLabel.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 2/14/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -40,7 +40,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	returnedLabel.minimumFontSize = aFont.pointSize;
 	returnedLabel.adjustsFontSizeToFitWidth = NO;
 	
-	return [returnedLabel autorelease];
+	return returnedLabel;
 
 }
 
@@ -65,10 +65,10 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 - (void) irCommonInit {
 
-	UITapGestureRecognizer *tapRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)] autorelease];
+	UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
 	tapRecognizer.delegate = self;
 	
-	UILongPressGestureRecognizer *longPressRecognizer = [[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)] autorelease];
+	UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
 	longPressRecognizer.delegate = self;
 	longPressRecognizer.minimumPressDuration = 0.01f;
 	
@@ -90,11 +90,6 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	
 	if (ctFrame)
 		CFRelease(ctFrame);
-	
-	[attributedText release];
-	[lastHighlightedRunOutline release];
-	
-	[super dealloc];
 
 }
 
@@ -159,7 +154,6 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 		CFRelease(oldFramesetter);
 	}
 	
-	[attributedText release];
 	attributedText = [newAttributedText copy];
 	
 	[self didChangeValueForKey:@"attributedText"];
@@ -180,7 +174,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	
 	float_t lineHeight = aFont.leading;
 	
-	id fontAttr = [NSMakeCollectable(CTFontCreateWithName((CFStringRef)aFont.fontName, aFont.pointSize, NULL)) autorelease];
+	id fontAttr = (__bridge_transfer id)CTFontCreateWithName((__bridge CFStringRef)aFont.fontName, aFont.pointSize, NULL);
 	id foregroundColorAttr = (id)(aColor ? aColor.CGColor : [UIColor blackColor].CGColor);
 	id paragraphStyleAttr = ((^ {
 		
@@ -194,15 +188,15 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 		};
 	
 		CTParagraphStyleRef paragraphStyleRef = CTParagraphStyleCreate(paragraphStyles, sizeof(paragraphStyles) / sizeof(CTParagraphStyleSetting));
-		return [NSMakeCollectable(paragraphStyleRef) autorelease];
+		return (__bridge_transfer id)paragraphStyleRef;
 		
 	})());
 	
-	NSAttributedString *returnedString = [[[NSAttributedString alloc] initWithString:aString attributes:[NSDictionary dictionaryWithObjectsAndKeys:
+	NSAttributedString *returnedString = [[NSAttributedString alloc] initWithString:aString attributes:[NSDictionary dictionaryWithObjectsAndKeys:
 		fontAttr, kCTFontAttributeName,
 		foregroundColorAttr, kCTForegroundColorAttributeName,
 		paragraphStyleAttr, kCTParagraphStyleAttributeName,
-	nil]] autorelease];
+	nil]];
 	
 	return returnedString;
 
@@ -217,7 +211,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	
 	@synchronized (self) {
 		if (attributedText)
-			ctFramesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attributedText);
+			ctFramesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attributedText);
 	}
 	
 	return ctFramesetter;
@@ -285,15 +279,16 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	
 	irCTFrameEnumerateLines(usedFrame, ^(CTLineRef aLine, CGPoint lineOrigin, BOOL *stop) {
 		
-		CTFontRef lineFont = (CTFontRef)[self.attributedText attribute:(id)kCTFontAttributeName atIndex:(CTLineGetStringRange(aLine)).location effectiveRange:NULL];
-		UIFont *usedFont = lineFont ? [UIFont fontWithName:(NSString *)[NSMakeCollectable(CTFontCopyPostScriptName(lineFont)) autorelease] size:CTFontGetSize(lineFont)] : self.font;
+		CTFontRef lineFont = (__bridge CTFontRef)[self.attributedText attribute:(id)kCTFontAttributeName atIndex:(CTLineGetStringRange(aLine)).location effectiveRange:NULL];
+		
+		UIFont *usedFont = lineFont ? [UIFont fontWithName:(__bridge_transfer NSString *)(CTFontCopyPostScriptName(lineFont)) size:CTFontGetSize(lineFont)] : self.font;
 		
 		CGFloat lineHeight = usedFont.leading;
 		
-		NSArray *allRuns = (NSArray *)CTLineGetGlyphRuns(aLine);
+		NSArray *allRuns = (__bridge NSArray *)CTLineGetGlyphRuns(aLine);
 		if ([allRuns count]) {
 		
-			CTParagraphStyleRef paragraphStyle = (CTParagraphStyleRef)[(NSDictionary *)CTRunGetAttributes((CTRunRef)[allRuns objectAtIndex:0]) objectForKey:(id)kCTParagraphStyleAttributeName];
+			CTParagraphStyleRef paragraphStyle = (__bridge CTParagraphStyleRef)[(__bridge NSDictionary *)CTRunGetAttributes((__bridge CTRunRef)[allRuns objectAtIndex:0]) objectForKey:(id)kCTParagraphStyleAttributeName];
 		
 			if (paragraphStyle)
 				CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierMaximumLineHeight, sizeof(lineHeight), &lineHeight);
@@ -309,7 +304,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 			CGFloat ownWidth = CGRectGetWidth(self.bounds) - self.trailingWhitespaceWidth;
 			CTLineRef realLastLine, truncationToken, truncatedLine;
 			realLastLine = CTTypesetterCreateLine(CTFramesetterGetTypesetter(usedFramesetter), (CFRange){ lineRange.location, 0 });
-			truncationToken = CTLineCreateWithAttributedString((CFAttributedStringRef)[[[NSAttributedString alloc] initWithString:[NSString stringWithCharacters:(UniChar[]){ 0x2026 } length:1] attributes:(NSDictionary *)CTRunGetAttributes((CTRunRef)[(NSArray *)CTLineGetGlyphRuns(aLine) lastObject])] autorelease]);
+			truncationToken = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)[[NSAttributedString alloc] initWithString:[NSString stringWithCharacters:(UniChar[]){ 0x2026 } length:1] attributes:(__bridge NSDictionary *)CTRunGetAttributes((__bridge CTRunRef)[(__bridge NSArray *)CTLineGetGlyphRuns(aLine) lastObject])]);
 			truncatedLine = CTLineCreateTruncatedLine(realLastLine, ownWidth, kCTLineTruncationEnd, truncationToken);
 			
 			if (truncatedLine) {
@@ -382,9 +377,9 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	touchPoint.y = CGRectGetHeight(self.bounds) - touchPoint.y;
 	
 	CTRunRef hitRun = irCTFrameFindRunAtPoint(self.ctFrame, touchPoint, 2.0, nil, [NSDictionary dictionaryWithObjectsAndKeys:
-		[[^ (id key, id value) {
+		[^ (id key, id value) {
 			return !!value;
-		} copy] autorelease], kIRTextLinkAttribute,
+		} copy], kIRTextLinkAttribute,
 	nil]);
 	
 	return hitRun;
@@ -395,7 +390,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 
 	CTRunRef hitRun = [self linkRunAtPoint:[aTapRecognizer locationInView:self]];
 	
-	NSURL *link = [(NSDictionary *)CTRunGetAttributes(hitRun) objectForKey:kIRTextLinkAttribute];
+	NSURL *link = [(__bridge NSDictionary *)CTRunGetAttributes(hitRun) objectForKey:kIRTextLinkAttribute];
 	
 	if ([link isKindOfClass:[NSURL class]])
 		[[UIApplication sharedApplication] openURL:link];
@@ -416,7 +411,7 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 			if (hitRun) {
 				
 				self.lastHighlightedRunOutline = irCTFrameGetRunOutline(self.ctFrame, irCTFrameFindNeighborRuns(self.ctFrame, hitRun, [NSDictionary dictionaryWithObjectsAndKeys:
-					[[^ (id key, id value) { return !!value; } copy] autorelease], kIRTextLinkAttribute,
+					[^ (id key, id value) { return !!value; } copy], kIRTextLinkAttribute,
 				nil]), UIEdgeInsetsZero, 4.0f, NO, YES, NO);
 				
 				[self setNeedsDisplay];

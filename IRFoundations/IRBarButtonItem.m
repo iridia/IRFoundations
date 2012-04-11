@@ -14,23 +14,15 @@
 
 @synthesize block;
 
-- (void) dealloc {
-
-	[block release];
-	
-	[super dealloc];
-
-}
-
 + (id) itemWithCustomView:(UIView *)aView {
 
-	return [[[self alloc] initWithCustomView:aView] autorelease];
+	return [[self alloc] initWithCustomView:aView];
 
 }
 
 + (id) itemWithTitle:(NSString *)aTitle action:(void(^)(void))aBlock {
 
-	IRBarButtonItem *returnedItem = [[[self alloc] initWithTitle:aTitle style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
+	IRBarButtonItem *returnedItem = [[self alloc] initWithTitle:aTitle style:UIBarButtonItemStyleBordered target:nil action:nil];
 	returnedItem.target = returnedItem;
 	returnedItem.action = @selector(handleCustomButtonAction:);
 	returnedItem.block = aBlock;
@@ -47,7 +39,8 @@
 	returnedItem.target = returnedItem;
 	returnedItem.action = @selector(handleCustomButtonAction:);
 	
-	returnedItem.block = ^ { aBlock(returnedItem); };
+	__weak id wItem = returnedItem;
+	returnedItem.block = ^ { aBlock(wItem); };
 	
 	return returnedItem; 
 
@@ -55,11 +48,24 @@
 
 + (id) itemWithButton:(UIButton *)aButton wiredAction:(void(^)(UIButton *senderButton, IRBarButtonItem *senderItem))aBlock {
 
-	__block IRBarButtonItem *returnedItem = [self itemWithCustomView:aButton];
-	if (!returnedItem) return nil;
+	IRBarButtonItem *returnedItem = [self itemWithCustomView:aButton];
+	if (!returnedItem)
+		return nil;
 	
 	if (aBlock) {
-		returnedItem.block = ^ { aBlock(aButton, returnedItem); };
+		
+		__weak IRBarButtonItem *wItem = returnedItem;
+		__weak UIButton *wButton = aButton;
+		
+		returnedItem.block = ^ {
+			
+			if (wItem.customView != wButton)
+				NSLog(@"Warning: Item %@ no longer holds button %@ as its custom view.", wItem, wButton);
+			
+			aBlock(wButton, wItem);
+			
+		};
+		
 	}
 	
 	[aButton addTarget:returnedItem action:@selector(handleCustomButtonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -96,7 +102,7 @@
 		
 	};
 	
-	void (^updateButtonImage)(UIInterfaceOrientation) = [[^ (UIInterfaceOrientation anOrientation) {
+	void (^updateButtonImage)(UIInterfaceOrientation) = [^ (UIInterfaceOrientation anOrientation) {
 	
 		BOOL landscapePhone = (isPhone()) && UIInterfaceOrientationIsLandscape(anOrientation);
 		
@@ -110,20 +116,20 @@
 		
 		[returnedButton sizeToFit];
 		
-	} copy] autorelease];
+	} copy];
 	
 	if (isPhone()) {
 	
-		__block id notificationObject = [[[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidChangeStatusBarOrientationNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
+		__block id notificationObject = [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidChangeStatusBarOrientationNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
 		
 			updateButtonImage([UIApplication sharedApplication].statusBarOrientation);
 			
-		}] retain];
+		}];
 		
 		[returnedItem irPerformOnDeallocation:^{
 			
 			[[NSNotificationCenter defaultCenter] removeObserver:notificationObject];
-			[notificationObject release];
+			notificationObject = nil;
 			
 		}];
 	
@@ -173,13 +179,7 @@
 	if (newBlock == self.block)
 	return;
 	
-	[self willChangeValueForKey:@"block"];
-	
-	[block release];
 	block = [newBlock copy];
-	
-	[self didChangeValueForKey:@"block"];
-	
 	if (newBlock) {
 		self.target = self;
 		self.action = @selector(handleCustomButtonAction:);
@@ -370,7 +370,7 @@
 		CGContextAddPath(context, bezierPath.CGPath);
 		CGContextClip(context);
 		CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-		CGGradientRef topGradient = CGGradientCreateWithColors(colorSpace, (CFArrayRef)buttonGradientColors, NULL);
+		CGGradientRef topGradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)buttonGradientColors, NULL);
 		CGColorSpaceRelease(colorSpace);
 		CGContextDrawLinearGradient(context, topGradient, CGPointZero, (CGPoint){ 0, floorf(1 * finalSize.height) }, 0);
 		CGGradientRelease(topGradient);

@@ -15,39 +15,37 @@
 @synthesize block;
 @synthesize flashesMomentarily;
 
-+ (IRTintedBarButtonItem *) itemWithImage:(UIImage *)image title:(NSString *)title block:(void(^)(void))block {
++ (id) itemWithImage:(UIImage *)image title:(NSString *)title block:(void(^)(void))block {
 
 	if (!image && !title)
 	return nil;
 	
-	UISegmentedControl *control = [[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:(
+	UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:(
 	
 		image ? title ? [self contentImageWithImage:image title:title font:[UIFont boldSystemFontOfSize:12.0] textColor:[UIColor whiteColor] spacing:4.0] : image : title ? title : @" "
 	
-	)]] autorelease];
+	)]];
 	
 	control.segmentedControlStyle = UISegmentedControlStyleBar;
 	control.momentary = YES;
 	
-	IRTintedBarButtonItem *returnedItem = [[[self alloc] initWithCustomView:control] autorelease];
+	id returnedItem = [[self alloc] initWithCustomView:control];
 	
 	[control addTarget:returnedItem action:@selector(irHandleSegmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
 	
-	returnedItem.block = block;
+	[returnedItem setBlock:block];
 	
 	return returnedItem;
 
 }
 
++ (NSSet *) keyPathsForValuesAffectingTintColor {
 
-
-
-
-- (void) dealloc {
-
-	[block release];
-
-	[super dealloc];
+	return [NSSet setWithObjects:
+	
+		@"customView.tintColor",
+	
+	nil];
 
 }
 
@@ -63,29 +61,17 @@
 
 }
 
-- (BOOL) flashesMomentarily {
-
-	return flashesMomentarily;
-
-}
-
-- (void) setFlashesMomentarily:(BOOL)flag {
-
-	flashesMomentarily = flag;
-
-//	FIXME: when the shading is undesirable, try using a custom invisible button?
-//	self.blockingButton.userInteractionEnabled = 
-
-}
-
 - (void) irHandleSegmentedControlValueChanged:(id)sender {
 
-	if (self.block)
-	self.block();
+	if (self.block) {
+		self.block();
+		return;
+	}
 	
-	if (self.target && self.action)
-	[self.target performSelector:self.action];
-
+	if (self.target && self.action) {
+		[[UIApplication sharedApplication] sendAction:self.action to:self.target from:self forEvent:nil];
+	}
+	
 }
 
 

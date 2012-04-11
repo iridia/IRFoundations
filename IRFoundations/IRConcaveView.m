@@ -1,6 +1,6 @@
 //
 //  IRConcaveView.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 1/29/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -45,13 +45,6 @@
 
 	self.opaque = NO;
 	self.innerShadow = [IRShadow shadowWithColor:[UIColor colorWithWhite:0 alpha:1] offset:CGSizeMake(0, 1) spread:6 edgeInsets:UIEdgeInsetsMake(-1, -1, -1, -1)];
-
-}
-
-- (void) dealloc {
-
-	[innerShadow release];
-	[super dealloc];
 
 }
 

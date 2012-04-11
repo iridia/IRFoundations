@@ -1,6 +1,6 @@
 //
 //  IRActionSheetController.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 2/15/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -51,14 +51,15 @@
 	controller.destructionAction = destructionAction;
 	controller.otherActions = otherActionsOrNil;
 	
-	return [controller autorelease];
+	return controller;
 
 }
 
 - (id) init {
 	
 	self = [super init];
-	if (!self) return nil;
+	if (!self)
+		return nil;
 	
 	self.behavingProgrammatically = NO;
 	
@@ -73,23 +74,9 @@
 - (void) dealloc {
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
-	[title release];
-	[cancellationAction release];
-	[destructionAction release];
-	[otherActions release];
 	
 	[managedActionSheet setDelegate:nil];
-	[managedActionSheet release];
 	
-	[onActionSheetCancel release];
-	[onActionSheetWillPresent release];
-	[onActionSheetDidPresent release];
-	[onActionSheetWillDismiss release];
-	[onActionSheetDidDismiss release];
-	
-	[super dealloc];
-
 }
 
 - (IRActionSheet *) singleUseActionSheet {
@@ -107,7 +94,7 @@
     returnedActionSheet.cancelButtonIndex = [returnedActionSheet addButtonWithTitle:self.cancellationAction.title];
   }
   
-	return [returnedActionSheet autorelease];
+	return returnedActionSheet;
 
 }
 
@@ -115,7 +102,7 @@
 
 	if (!managedActionSheet) {
 	
-		managedActionSheet = [[self singleUseActionSheet] retain];
+		managedActionSheet = [self singleUseActionSheet];
 	
 	}
 	
@@ -132,8 +119,7 @@
 	
 	self.managedActionSheet = nil;
 	
-	[cancellationAction release];
-	cancellationAction = [newCancellationAction retain];
+	cancellationAction = newCancellationAction;
 
 }
 
@@ -146,8 +132,7 @@
 	
 	self.managedActionSheet = nil;
 	
-	[destructionAction release];
-	destructionAction = [newDestructionAction retain];
+	destructionAction = newDestructionAction;
 
 }
 
@@ -160,8 +145,7 @@
 	
 	self.managedActionSheet = nil;
 	
-	[otherActions release];
-	otherActions = [newOtherActions retain];
+	otherActions = newOtherActions;
 
 }
 
@@ -218,51 +202,37 @@
 
 - (void) willPresentActionSheet:(UIActionSheet *)actionSheet {
 
-//	Retain self.  This is to combat a situation where the controller is used on its own as an autoreleased object
-//	In that sense it might be autoreleased before the action sheet is dismissed
-	[self retain];
-
 	if (self.onActionSheetWillPresent)
-	self.onActionSheetWillPresent();
+		self.onActionSheetWillPresent();
 
 }
 
 - (void) didPresentActionSheet:(UIActionSheet *)actionSheet {
 
 	if (self.onActionSheetDidPresent)
-	self.onActionSheetDidPresent();
+		self.onActionSheetDidPresent();
 
 }
 
 - (void) actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex {
 
 	if (self.onActionSheetWillDismiss)
-	self.onActionSheetWillDismiss([self actionAtIndex:buttonIndex usingActionSheet:actionSheet]);	
+		self.onActionSheetWillDismiss([self actionAtIndex:buttonIndex usingActionSheet:actionSheet]);	
 
 }
 
 - (void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
 
 	if (actionSheet == managedActionSheet)
-	self.managedActionSheet = nil;
+		self.managedActionSheet = nil;
 	
 	if (self.onActionSheetDidDismiss)
-	self.onActionSheetDidDismiss([self actionAtIndex:buttonIndex usingActionSheet:actionSheet]);
-
-//	Release self.  This is to combat a situation where the controller is used on its own as an autoreleased object
-//	In that sense it might be autoreleased before the action sheet is dismissed
-	[self autorelease];
+		self.onActionSheetDidDismiss([self actionAtIndex:buttonIndex usingActionSheet:actionSheet]);
 
 }
 
-
-
-
-
 - (void) handleApplicationWillChangeStatusBarOrientationNotification:(NSNotification *)notification {
 
-	[self retain];
-	
 	[self.managedActionSheet prepareForReshowingIfAppropriate];
 	
 }
@@ -273,8 +243,6 @@
 	 
 		if (!self.managedActionSheet.dismissesOnOrientationChange)
 			[self.managedActionSheet reshowIfAppropriate];
-		
-		[self autorelease];
 
 	});
 	

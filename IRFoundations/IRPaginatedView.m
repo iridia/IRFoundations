@@ -56,7 +56,7 @@
 
 - (void) irInitialize {
 
-	self.scrollView = [[[UIScrollView alloc] initWithFrame:self.bounds] autorelease];
+	self.scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
 	self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	self.scrollView.pagingEnabled = YES;
 	self.scrollView.bounces = YES;
@@ -75,10 +75,10 @@
 
 	for (UIView *aView in self.allViews)
 	if ([aView isKindOfClass:[UIView class]])
-	[aView removeFromSuperview];
+		[aView removeFromSuperview];
 
 	self.numberOfPages = [self.delegate numberOfViewsInPaginatedView:self];
-	self.allViews = [[[NSArray irArrayByRepeatingObject:[NSNull null] count:self.numberOfPages] mutableCopy] autorelease];
+	self.allViews = [[NSArray irArrayByRepeatingObject:[NSNull null] count:self.numberOfPages] mutableCopy];
 	
 	if ((self.currentPage + 1) <= numberOfPages)
 	[self ensureViewAtIndexVisible:self.currentPage];
@@ -157,7 +157,7 @@
 
 - (void) removeOffscreenViews {
 
-	[[[self.allViews copy] autorelease] enumerateObjectsUsingBlock: ^ (id viewOrNull, NSUInteger idx, BOOL *stop) {
+	[[self.allViews copy] enumerateObjectsUsingBlock: ^ (id viewOrNull, NSUInteger idx, BOOL *stop) {
 		
 		if ([self existingViewForPageAtIndex:idx])
 		if (![self requiresVisiblePageAtIndex:idx]) {
@@ -345,17 +345,5 @@
 	return answer;
 
 }
-
-- (void) dealloc {
-
-	[scrollView release];
-	[allViews release];
-	
-	[onPointInsideWithEvent release];
-
-	[super dealloc];
-
-}
-
 
 @end

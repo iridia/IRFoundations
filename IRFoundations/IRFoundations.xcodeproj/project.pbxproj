@@ -80,8 +80,6 @@
 		FF0A8D621337B36A00DDA47C /* IRFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D271337B36A00DDA47C /* IRFetchedResultsController.m */; };
 		FF0A8D631337B36A00DDA47C /* IRManagedObjectContext.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D281337B36A00DDA47C /* IRManagedObjectContext.h */; };
 		FF0A8D641337B36A00DDA47C /* IRManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */; };
-		FF0A8D651337B36A00DDA47C /* NSFetchRequest+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8D2A1337B36A00DDA47C /* NSFetchRequest+IRAdditions.h */; };
-		FF0A8D661337B36A00DDA47C /* NSFetchRequest+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */; };
 		FF0A8E7E1337B8CF00DDA47C /* IRTintedBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0A8E7C1337B8CF00DDA47C /* IRTintedBarButtonItem.h */; };
 		FF0A8E7F1337B8CF00DDA47C /* IRTintedBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */; };
 		FF0D46BB1475885900340287 /* UIViewController+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0D46B91475885900340287 /* UIViewController+IRAdditions.h */; };
@@ -152,7 +150,6 @@
 		FF59A3D81441CDD300BB1FDC /* IRDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FF97382713D82496003D1722 /* IRDataStore.m */; };
 		FF59A3D91441CDD300BB1FDC /* IRManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D251337B36A00DDA47C /* IRManagedObject.m */; };
 		FF59A3DB1441CDD300BB1FDC /* IRManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */; };
-		FF59A3DC1441CDD300BB1FDC /* NSFetchRequest+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */; };
 		FF59C3A11418A06400F4BF2D /* UIView+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF59C39D1418A06400F4BF2D /* UIView+IRAdditions.h */; };
 		FF59C3A21418A06400F4BF2D /* UIView+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF59C39E1418A06400F4BF2D /* UIView+IRAdditions.m */; };
 		FF59C3A31418A06400F4BF2D /* UIWindow+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF59C39F1418A06400F4BF2D /* UIWindow+IRAdditions.h */; };
@@ -169,7 +166,6 @@
 		FF70E524152EDCE3008BFB00 /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */; };
 		FF70E525152EDCE3008BFB00 /* IRFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D271337B36A00DDA47C /* IRFetchedResultsController.m */; };
 		FF70E526152EDCE3008BFB00 /* IRManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */; };
-		FF70E527152EDCE3008BFB00 /* NSFetchRequest+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */; };
 		FF70E529152EDD04008BFB00 /* Foundation+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */; };
 		FF70E52A152EDD04008BFB00 /* IRAsyncOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */; };
 		FF70E52B152EDD04008BFB00 /* IRBindings.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C981337B29F00DDA47C /* IRBindings.m */; };
@@ -370,8 +366,6 @@
 		FF0A8D271337B36A00DDA47C /* IRFetchedResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRFetchedResultsController.m; sourceTree = "<group>"; };
 		FF0A8D281337B36A00DDA47C /* IRManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRManagedObjectContext.h; sourceTree = "<group>"; };
 		FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRManagedObjectContext.m; sourceTree = "<group>"; };
-		FF0A8D2A1337B36A00DDA47C /* NSFetchRequest+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchRequest+IRAdditions.h"; sourceTree = "<group>"; };
-		FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchRequest+IRAdditions.m"; sourceTree = "<group>"; };
 		FF0A8E7C1337B8CF00DDA47C /* IRTintedBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRTintedBarButtonItem.h; sourceTree = "<group>"; };
 		FF0A8E7D1337B8CF00DDA47C /* IRTintedBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRTintedBarButtonItem.m; sourceTree = "<group>"; };
 		FF0D46B91475885900340287 /* UIViewController+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+IRAdditions.h"; sourceTree = "<group>"; };
@@ -557,28 +551,28 @@
 		FF0A8B991337AFA800DDA47C = {
 			isa = PBXGroup;
 			children = (
-				FF0A8C8B1337B28200DDA47C /* IRFoundations.h */,
-				FF72C1FA14278ABF00B5D838 /* IRFoundationsX.h */,
-				FF0A8C931337B29F00DDA47C /* Foundation+IRAdditions.h */,
-				FF0A8CED1337B36A00DDA47C /* QuartzCore+IRAdditions.h */,
-				FF0A8CFC1337B36A00DDA47C /* CGGeometry+IRAdditions.h */,
-				FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */,
 				FFF85769152B8381001B3E92 /* AppKit+IRAdditions.h */,
 				FF915A2414540703005F63FC /* AssetsLibrary+IRAdditions.h */,
+				FF0A8CFC1337B36A00DDA47C /* CGGeometry+IRAdditions.h */,
 				FF0A8D231337B36A00DDA47C /* CoreData+IRAdditions.h */,
 				FFB6797C141E406B006F84E3 /* CoreText+IRAdditions.h */,
-				FF0A8C921337B29F00DDA47C /* Foundation+IRAdditions */,
+				FF0A8C931337B29F00DDA47C /* Foundation+IRAdditions.h */,
+				FF0A8C8B1337B28200DDA47C /* IRFoundations.h */,
+				FF72C1FA14278ABF00B5D838 /* IRFoundationsX.h */,
+				FF0A8CED1337B36A00DDA47C /* QuartzCore+IRAdditions.h */,
+				FF0A8CFF1337B36A00DDA47C /* UIKit+IRAdditions.h */,
 				FFF85767152B835C001B3E92 /* AppKit+IRAdditions */,
-				FF0A8CEC1337B36A00DDA47C /* QuartzCore+IRAdditions */,
-				FF0A8CFB1337B36A00DDA47C /* CGGeometry+IRAdditions */,
-				FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */,
-				FFA65DDC150AFE7A00E8668C /* MapKit+IRAdditions */,
 				FF915A22145406EB005F63FC /* AssetsLibrary+IRAdditions */,
+				FF0A8CFB1337B36A00DDA47C /* CGGeometry+IRAdditions */,
 				FF0A8D221337B36A00DDA47C /* CoreData+IRAdditions */,
 				FFB6797B141E3F71006F84E3 /* CoreText+IRAdditions */,
+				FF0A8C921337B29F00DDA47C /* Foundation+IRAdditions */,
+				FFA65DDC150AFE7A00E8668C /* MapKit+IRAdditions */,
+				FF0A8CEC1337B36A00DDA47C /* QuartzCore+IRAdditions */,
+				FF0A8CFE1337B36A00DDA47C /* UIKit+IRAdditions */,
+				FF0F651614C2DDAA0037787A /* IRFoundationsTest */,
 				FF0A8BAA1337AFB700DDA47C /* IRFoundationsTouch */,
 				FF72C1F314278ABF00B5D838 /* IRFoundationsX */,
-				FF0F651614C2DDAA0037787A /* IRFoundationsTest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -778,8 +772,6 @@
 				FF0A8D271337B36A00DDA47C /* IRFetchedResultsController.m */,
 				FF0A8D281337B36A00DDA47C /* IRManagedObjectContext.h */,
 				FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */,
-				FF0A8D2A1337B36A00DDA47C /* NSFetchRequest+IRAdditions.h */,
-				FF0A8D2B1337B36A00DDA47C /* NSFetchRequest+IRAdditions.m */,
 				FFA65DDA150AFD6A00E8668C /* Tests */,
 			);
 			name = "CoreData+IRAdditions";
@@ -912,7 +904,6 @@
 				FF0A8D5F1337B36A00DDA47C /* IRManagedObject.h in Headers */,
 				FF0A8D611337B36A00DDA47C /* IRFetchedResultsController.h in Headers */,
 				FF0A8D631337B36A00DDA47C /* IRManagedObjectContext.h in Headers */,
-				FF0A8D651337B36A00DDA47C /* NSFetchRequest+IRAdditions.h in Headers */,
 				FF0A8E7E1337B8CF00DDA47C /* IRTintedBarButtonItem.h in Headers */,
 				FF27A6AB133E2C16008C8DDA /* IRBarButtonItem.h in Headers */,
 				FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */,
@@ -1147,7 +1138,6 @@
 				FF0A8D601337B36A00DDA47C /* IRManagedObject.m in Sources */,
 				FF0A8D621337B36A00DDA47C /* IRFetchedResultsController.m in Sources */,
 				FF0A8D641337B36A00DDA47C /* IRManagedObjectContext.m in Sources */,
-				FF0A8D661337B36A00DDA47C /* NSFetchRequest+IRAdditions.m in Sources */,
 				FF0A8E7F1337B8CF00DDA47C /* IRTintedBarButtonItem.m in Sources */,
 				FF27A6AC133E2C16008C8DDA /* IRBarButtonItem.m in Sources */,
 				FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */,
@@ -1208,7 +1198,6 @@
 				FF70E524152EDCE3008BFB00 /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */,
 				FF70E525152EDCE3008BFB00 /* IRFetchedResultsController.m in Sources */,
 				FF70E526152EDCE3008BFB00 /* IRManagedObjectContext.m in Sources */,
-				FF70E527152EDCE3008BFB00 /* NSFetchRequest+IRAdditions.m in Sources */,
 				FF70E529152EDD04008BFB00 /* Foundation+IRAdditions.m in Sources */,
 				FF70E52A152EDD04008BFB00 /* IRAsyncOperation.m in Sources */,
 				FF70E52B152EDD04008BFB00 /* IRBindings.m in Sources */,
@@ -1247,7 +1236,6 @@
 				FF59A3D81441CDD300BB1FDC /* IRDataStore.m in Sources */,
 				FF59A3D91441CDD300BB1FDC /* IRManagedObject.m in Sources */,
 				FF59A3DB1441CDD300BB1FDC /* IRManagedObjectContext.m in Sources */,
-				FF59A3DC1441CDD300BB1FDC /* NSFetchRequest+IRAdditions.m in Sources */,
 				FF789D321442FDE00080F210 /* IRAsyncOperation.m in Sources */,
 				FF460D42149CFB7400DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */,
 				FF06363B14B346EA00E7AF78 /* QuartzCore+IRAdditions.m in Sources */,
@@ -1295,6 +1283,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				OTHER_LDFLAGS = (
@@ -1311,6 +1301,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				OTHER_LDFLAGS = (

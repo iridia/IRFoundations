@@ -13,9 +13,9 @@
 + (NSMutableDictionary *) irDefaultNoActionsDictionary {
 
 	static NSMutableDictionary *returnedDictionary = nil;
-	
-	if (!returnedDictionary) {
-	
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+
 		returnedDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 		
 			[NSNull null], @"onOrderIn",
@@ -32,10 +32,8 @@
 			[NSNull null], @"transform",
 
 		nil];
-		
-		[returnedDictionary retain];
-	
-	}
+			
+	});
 	
 	return returnedDictionary;
 
@@ -79,7 +77,7 @@
 
 - (UIView *) irRenderedProxyView {
 
-	UIView *returnedView = [[[[self class] alloc] initWithFrame:self.bounds] autorelease];
+	UIView *returnedView = [[[self class] alloc] initWithFrame:self.bounds];
 	returnedView.layer.contents = (id)[self.layer irRenderedImage].CGImage;
 	
 	return returnedView;

@@ -15,8 +15,7 @@ NSBundle * IRUIKitBundle (void) {
 	dispatch_once(&onceToken, ^{
 	
 		NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"UIKit+IRAdditions" ofType:@"bundle"];
-	
-		bundle = [[NSBundle bundleWithPath:bundlePath] retain];
+		bundle = [NSBundle bundleWithPath:bundlePath];
 		[bundle load];
 		
 	});

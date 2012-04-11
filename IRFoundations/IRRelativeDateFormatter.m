@@ -49,24 +49,12 @@ static IRRelativeDateFormatter* IRRelativeDateFormatterSharedFormatter;
 	self = [super init]; if (!self) return nil;
 		
 	approximationCalendarUnits = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
-	tokenSeparatorComponent = [@" " retain];
+	tokenSeparatorComponent = @" ";
 	approximationMaxTokenCount = NSUIntegerMax;
 	
 	return self;
 
 }
-
-- (void) dealloc {
-
-	[tokenSeparatorComponent release];
-	
-	[super dealloc];
-
-}
-
-
-
-
 
 + (NSInteger) valueForUnit:(NSCalendarUnit)inCalendarUnit inDateComponents:(NSDateComponents *)inDateComponents {
 		
@@ -171,14 +159,11 @@ static IRRelativeDateFormatter* IRRelativeDateFormatterSharedFormatter;
 	NSTimeInterval dateDelta = ceilf([currentDate timeIntervalSinceDate:incomingDate]);
 	
 	if (dateDelta <= 5)
-	return [[self class] wrappedStringRepresentationForString:@"Just Now" representedDateTimepoint:IRDateTimepointNow];
+		return [[self class] wrappedStringRepresentationForString:@"Just Now" representedDateTimepoint:IRDateTimepointNow];
 
-	static NSCalendar *currentCalendar = nil;
-	
-	if (!currentCalendar)
-	currentCalendar = [[NSCalendar currentCalendar] retain];
-	
+	NSCalendar *currentCalendar = [NSCalendar autoupdatingCurrentCalendar];
 	NSDateComponents *components = [currentCalendar components:self.approximationCalendarUnits fromDate:incomingDate toDate:currentDate options:0];
+	
 	BOOL dateIsInThePast = (dateDelta > 0);
 	
 	NSMutableString *returnedString = [NSMutableString string];

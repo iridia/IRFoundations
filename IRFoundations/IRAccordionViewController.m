@@ -1,6 +1,6 @@
 //
 //  MLAccordionViewController.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 12/11/10.
 //  Copyright 2010 Iridia Productions. All rights reserved.
@@ -91,12 +91,10 @@
 
 - (void) setAccordionViews:(NSArray *)inArray {
 
-	if (accordionViews == inArray) return;
+	if (accordionViews == inArray)
+		return;
 	
-	[accordionViews release];
-	accordionViews = nil;
-
-	accordionViews = [inArray retain];
+	accordionViews = inArray;
 	
 	[self.tableView reloadData];
 
@@ -115,7 +113,7 @@
 	id containerCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
 	if (!containerCell || ![containerCell isKindOfClass:[MLAccordionViewControllerPrivateCell class]])
-	containerCell = [[[MLAccordionViewControllerPrivateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
+	containerCell = [[MLAccordionViewControllerPrivateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 	
 	((MLAccordionViewControllerPrivateCell *)containerCell).containedAccordionView = [self.accordionViews objectAtIndex:[self internalIndexForIndexPath:indexPath]];
 	

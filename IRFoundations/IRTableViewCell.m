@@ -12,21 +12,62 @@
 
 static NSString * const kCellPrototypes = @"+[IRTableViewCell cellPrototypes]";
 
-@interface IRTableViewCell ()
+@interface IRTableViewCell () <IRTableViewCellPrototype>
 
 + (NSMutableDictionary *) cellPrototypes;
 
-@property (nonatomic, readwrite, assign) IRTableViewCell *prototype;
+@property (nonatomic, readwrite, weak) id representedObject;
 
 @end
 
 
 @implementation IRTableViewCell
-@synthesize prototype, representedObject;
+@synthesize representedObject;
 
-+ (UITableViewCellStyle) defaultCellStyle {
++ (UITableViewCellStyle) cellStyle {
 
 	return UITableViewCellStyleDefault;
+
+}
+
++ (IRTableViewCell<IRTableViewCellPrototype> *) prototypeForIdentifier:(NSString *)identifier {
+
+	NSMutableDictionary *prototypes = [self cellPrototypes];
+	IRTableViewCell *cell = [prototypes objectForKey:identifier];
+	
+	if (!cell) {
+		cell = [self newPrototypeForIdentifier:identifier];
+		[self setPrototype:cell forIdentifier:identifier];
+	}
+	
+	return cell;
+
+}
+
++ (NSString *) identifierRepresentingObject:(id)object {
+
+	return @"Cell";
+
+}
+
++ (id) cellRepresentingObject:(id)object inTableView:(UITableView *)tableView {
+
+	NSString *identifier = [self identifierRepresentingObject:object];
+	IRTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+	
+	if (![cell isKindOfClass:[self class]])
+		cell = [[self prototypeForIdentifier:identifier] copy];
+	
+	cell.representedObject = object;
+	
+	return cell;
+
+}
+
++ (CGFloat) heightForRowRepresentingObject:(id)object inTableView:(UITableView *)tableView {
+
+	NSString *identifier = [self identifierRepresentingObject:object];
+	return [[self prototypeForIdentifier:identifier] heightForRowRepresentingObject:object inTableView:tableView];
 
 }
 
@@ -42,23 +83,43 @@ static NSString * const kCellPrototypes = @"+[IRTableViewCell cellPrototypes]";
 
 }
 
-+ (id) prototypeForIdentifier:(NSString *)identifier {
+
++ (void) setPrototype:(IRTableViewCell<IRTableViewCellPrototype> *)cell forIdentifier:(NSString *)identifier {
 
 	NSMutableDictionary *prototypes = [self cellPrototypes];
-	IRTableViewCell *cell = [prototypes objectForKey:identifier];
-	
-	if (!cell) {
-		cell = [[self alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-		[prototypes setObject:cell forKey:identifier];
-	}
-	
-	return cell;
+	[prototypes setObject:cell forKey:identifier];
 
 }
 
-+ (CGFloat) heightForRowRepresentingObject:(id)object withCellIdentifier:(NSString *)identifier inTableView:(UITableView *)tableView {
++ (IRTableViewCell *) newPrototypeForIdentifier:(NSString *)identifier {
 
-	return [[self prototypeForIdentifier:identifier] heightForRowRepresentingObject:object inTableView:tableView];
+	return [[self alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+
+}
+
++ (NSSet *) encodedObjectKeyPaths {
+
+	return nil;
+
+}
+
+- (void) encodeWithCoder:(NSCoder *)aCoder {
+
+	[super encodeWithCoder:aCoder];
+	
+	for (NSString *keyPath in [[self class] encodedObjectKeyPaths])
+		[aCoder encodeObject:[self valueForKeyPath:keyPath] forKey:keyPath];
+
+}
+
+- (id) initWithCoder:(NSCoder *)aDecoder {
+
+	self = [super initWithCoder:aDecoder];
+
+	for (NSString *keyPath in [[self class] encodedObjectKeyPaths])
+		[self setValue:[aDecoder decodeObjectForKey:keyPath] forKeyPath:keyPath];
+	
+	return self;
 
 }
 
@@ -68,9 +129,11 @@ static NSString * const kCellPrototypes = @"+[IRTableViewCell cellPrototypes]";
 
 }
 
-- (void) dealloc {
+- (id) copyWithZone:(NSZone *)zone {
 
-	[super dealloc];
+	id cell = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self]];
+	
+	return cell;
 
 }
 

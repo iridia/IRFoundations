@@ -12,7 +12,7 @@
 
 + (void) initialize {
 
-	[NSValueTransformer setValueTransformer:[[[self alloc] init] autorelease] forName:NSStringFromClass([self class])];
+	[NSValueTransformer setValueTransformer:[[self alloc] init] forName:NSStringFromClass([self class])];
 
 }
 
