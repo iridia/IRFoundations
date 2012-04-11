@@ -188,7 +188,6 @@
 		FF70E538152EDD04008BFB00 /* NSString+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF35891B14EE7679005B452C /* NSString+IRAdditions.m */; };
 		FF70E539152EDD04008BFB00 /* NSThread+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF35890914EE7624005B452C /* NSThread+IRAdditions.m */; };
 		FF70E53B152EDD0E008BFB00 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF70E53A152EDD0E008BFB00 /* MobileCoreServices.framework */; };
-		FF70E53D152EDD19008BFB00 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FF70E53C152EDD19008BFB00 /* libxml2.dylib */; };
 		FF70E540152EDE64008BFB00 /* IRAsyncOperationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FF70E53F152EDE64008BFB00 /* IRAsyncOperationTest.m */; };
 		FF70E543152EE411008BFB00 /* IRAsyncBarrierOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = FF70E541152EE410008BFB00 /* IRAsyncBarrierOperation.h */; };
 		FF70E544152EE411008BFB00 /* IRAsyncBarrierOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF70E542152EE411008BFB00 /* IRAsyncBarrierOperation.m */; };
@@ -202,6 +201,7 @@
 		FF789D321442FDE00080F210 /* IRAsyncOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */; };
 		FF7997A414909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */ = {isa = PBXBuildFile; fileRef = FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */; };
 		FF7997A514909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */; };
+		FF83175A15359F1A005FF958 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD295C213A40E9200EA8213 /* libxml2.2.dylib */; };
 		FF890D1D14163AC700CD7D1F /* CALayer+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */; };
 		FF890D1E14163AC700CD7D1F /* CALayer+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */; };
 		FF915A2614540703005F63FC /* AssetsLibrary+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF915A2414540703005F63FC /* AssetsLibrary+IRAdditions.h */; };
@@ -244,6 +244,8 @@
 		FFCA416414F62954005466ED /* NSBundle+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FFCA416214F62954005466ED /* NSBundle+IRAdditions.h */; };
 		FFCA416514F62954005466ED /* NSBundle+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FFCA416314F62954005466ED /* NSBundle+IRAdditions.m */; };
 		FFD295C313A40E9200EA8213 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD295C213A40E9200EA8213 /* libxml2.2.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		FFD3484F15359C22007B7D2E /* IRTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = FFD3484D15359C22007B7D2E /* IRTableViewCell.h */; };
+		FFD3485015359C22007B7D2E /* IRTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FFD3484E15359C22007B7D2E /* IRTableViewCell.m */; };
 		FFD5E6E8150BA88E00A472E6 /* IRViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = FFD5E6E6150BA88E00A472E6 /* IRViewController.h */; };
 		FFD5E6E9150BA88E00A472E6 /* IRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFD5E6E7150BA88E00A472E6 /* IRViewController.m */; };
 		FFD90732150D12D600712D62 /* IRTexturedSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = FFD90730150D12D600712D62 /* IRTexturedSegmentedControl.h */; };
@@ -429,7 +431,6 @@
 		FF6322C1150B55FD00170342 /* MapKit+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MapKit+IRAdditions.m"; sourceTree = "<group>"; };
 		FF6322C3150B594B00170342 /* UIKit+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIKit+IRAdditions.m"; sourceTree = "<group>"; };
 		FF70E53A152EDD0E008BFB00 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		FF70E53C152EDD19008BFB00 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		FF70E53E152EDE64008BFB00 /* IRAsyncOperationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAsyncOperationTest.h; sourceTree = "<group>"; };
 		FF70E53F152EDE64008BFB00 /* IRAsyncOperationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAsyncOperationTest.m; sourceTree = "<group>"; };
 		FF70E541152EE410008BFB00 /* IRAsyncBarrierOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAsyncBarrierOperation.h; sourceTree = "<group>"; };
@@ -485,6 +486,8 @@
 		FFCA416214F62954005466ED /* NSBundle+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+IRAdditions.h"; sourceTree = "<group>"; };
 		FFCA416314F62954005466ED /* NSBundle+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+IRAdditions.m"; sourceTree = "<group>"; };
 		FFD295C213A40E9200EA8213 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		FFD3484D15359C22007B7D2E /* IRTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRTableViewCell.h; sourceTree = "<group>"; };
+		FFD3484E15359C22007B7D2E /* IRTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRTableViewCell.m; sourceTree = "<group>"; };
 		FFD5E6E6150BA88E00A472E6 /* IRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRViewController.h; sourceTree = "<group>"; };
 		FFD5E6E7150BA88E00A472E6 /* IRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRViewController.m; sourceTree = "<group>"; };
 		FFD6F972150AFF76007173EA /* libIRFoundationsTouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIRFoundationsTouch.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -524,7 +527,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF70E53D152EDD19008BFB00 /* libxml2.dylib in Frameworks */,
 				FF70E53B152EDD0E008BFB00 /* MobileCoreServices.framework in Frameworks */,
 				FF0F653A14C2E2140037787A /* AVFoundation.framework in Frameworks */,
 				FF0F653914C2E20E0037787A /* CoreData.framework in Frameworks */,
@@ -533,6 +535,7 @@
 				FF0F651114C2DDAA0037787A /* SenTestingKit.framework in Frameworks */,
 				FF0F651314C2DDAA0037787A /* UIKit.framework in Frameworks */,
 				FF0F651514C2DDAA0037787A /* Foundation.framework in Frameworks */,
+				FF83175A15359F1A005FF958 /* libxml2.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,8 +557,6 @@
 		FF0A8B991337AFA800DDA47C = {
 			isa = PBXGroup;
 			children = (
-				FF70E53C152EDD19008BFB00 /* libxml2.dylib */,
-				FF70E53A152EDD0E008BFB00 /* MobileCoreServices.framework */,
 				FF0A8C8B1337B28200DDA47C /* IRFoundations.h */,
 				FF72C1FA14278ABF00B5D838 /* IRFoundationsX.h */,
 				FF0A8C931337B29F00DDA47C /* Foundation+IRAdditions.h */,
@@ -584,6 +585,7 @@
 		FF0A8BAA1337AFB700DDA47C /* IRFoundationsTouch */ = {
 			isa = PBXGroup;
 			children = (
+				FFD6F972150AFF76007173EA /* libIRFoundationsTouch.a */,
 				FFD295C213A40E9200EA8213 /* libxml2.2.dylib */,
 				FFB6795B141E384A006F84E3 /* AddressBook.framework */,
 				FFB6795C141E384A006F84E3 /* AddressBookUI.framework */,
@@ -593,12 +595,11 @@
 				FFB67960141E384A006F84E3 /* CoreGraphics.framework */,
 				FFB67958141E383D006F84E3 /* CoreText.framework */,
 				FFFDEF7714211BCC0083BEFB /* Foundation.framework */,
+				FFD6F973150AFF76007173EA /* IRFoundationsX.framework */,
 				FFA65DE5150AFF0000E8668C /* MapKit.framework */,
+				FF70E53A152EDD0E008BFB00 /* MobileCoreServices.framework */,
 				FFB67967141E384F006F84E3 /* Security.framework */,
 				FF0F651214C2DDAA0037787A /* UIKit.framework */,
-				FFD6F972150AFF76007173EA /* libIRFoundationsTouch.a */,
-				FFD6F973150AFF76007173EA /* IRFoundationsX.framework */,
-				FFD6F974150AFF76007173EA /* IRFoundationsTest.octest */,
 			);
 			name = IRFoundationsTouch;
 			sourceTree = "<group>";
@@ -725,6 +726,8 @@
 				FF0A8D1A1337B36A00DDA47C /* IRSubtitledTableViewCell.m */,
 				FF0A8D131337B36A00DDA47C /* IRTableView.h */,
 				FF0A8D141337B36A00DDA47C /* IRTableView.m */,
+				FFD3484D15359C22007B7D2E /* IRTableViewCell.h */,
+				FFD3484E15359C22007B7D2E /* IRTableViewCell.m */,
 				FF0A8D151337B36A00DDA47C /* IRTableViewController.h */,
 				FF0A8D161337B36A00DDA47C /* IRTableViewController.m */,
 				FF0A8D171337B36A00DDA47C /* IRTableViewHeaderView.h */,
@@ -786,6 +789,7 @@
 			isa = PBXGroup;
 			children = (
 				FF0F651014C2DDAA0037787A /* SenTestingKit.framework */,
+				FFD6F974150AFF76007173EA /* IRFoundationsTest.octest */,
 				FF0F651F14C2DDAA0037787A /* IRFoundationsTest-Prefix.pch */,
 				FF0F651814C2DDAA0037787A /* IRFoundationsTest-Info.plist */,
 				FF0F651914C2DDAA0037787A /* InfoPlist.strings */,
@@ -952,6 +956,7 @@
 				FF54C51915209FE200301887 /* IRManagedObject+WebAPIImporting.h in Headers */,
 				FF70E543152EE411008BFB00 /* IRAsyncBarrierOperation.h in Headers */,
 				FF70E548152EE51C008BFB00 /* IRAsyncOperation+ForSubclassEyesOnly.h in Headers */,
+				FFD3484F15359C22007B7D2E /* IRTableViewCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1186,6 +1191,7 @@
 				FFD90733150D12D600712D62 /* IRTexturedSegmentedControl.m in Sources */,
 				FF54C51A15209FE200301887 /* IRManagedObject+WebAPIImporting.m in Sources */,
 				FF70E544152EE411008BFB00 /* IRAsyncBarrierOperation.m in Sources */,
+				FFD3485015359C22007B7D2E /* IRTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
