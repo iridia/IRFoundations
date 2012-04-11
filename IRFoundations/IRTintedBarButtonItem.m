@@ -39,6 +39,16 @@
 
 }
 
++ (NSSet *) keyPathsForValuesAffectingTintColor {
+
+	return [NSSet setWithObjects:
+	
+		@"customView.tintColor",
+	
+	nil];
+
+}
+
 - (UIColor *) tintColor {
 
 	return self.customView.tintColor;
@@ -51,29 +61,17 @@
 
 }
 
-- (BOOL) flashesMomentarily {
-
-	return flashesMomentarily;
-
-}
-
-- (void) setFlashesMomentarily:(BOOL)flag {
-
-	flashesMomentarily = flag;
-
-//	FIXME: when the shading is undesirable, try using a custom invisible button?
-//	self.blockingButton.userInteractionEnabled = 
-
-}
-
 - (void) irHandleSegmentedControlValueChanged:(id)sender {
 
-	if (self.block)
-	self.block();
+	if (self.block) {
+		self.block();
+		return;
+	}
 	
-	if (self.target && self.action)
-		[self.target performSelector:self.action];
-
+	if (self.target && self.action) {
+		[[UIApplication sharedApplication] sendAction:self.action to:self.target from:self forEvent:nil];
+	}
+	
 }
 
 
