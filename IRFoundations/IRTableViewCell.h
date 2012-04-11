@@ -8,14 +8,33 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IRTableViewCell : UITableViewCell
+@protocol IRTableViewCellPrototype <NSObject>
 
-+ (UITableViewCellStyle) defaultCellStyle;
-
-+ (id) prototypeForIdentifier:(NSString *)identifier;
-+ (CGFloat) heightForRowRepresentingObject:(id)object withCellIdentifier:(NSString *)identifier inTableView:(UITableView *)tableView;
 - (CGFloat) heightForRowRepresentingObject:(id)object inTableView:(UITableView *)tableView;
 
-@property (nonatomic, readwrite, assign) id representedObject;
+@end
+
+
+@interface IRTableViewCell : UITableViewCell <NSCopying>
+
++ (id) cellRepresentingObject:(id)object inTableView:(UITableView *)tableView;
++ (CGFloat) heightForRowRepresentingObject:(id)object inTableView:(UITableView *)tableView;
+
+@property (nonatomic, readonly, weak) id representedObject;
+
+@end
+
+
+@interface IRTableViewCell (ForSubclassEyesOnly)
+
++ (UITableViewCellStyle) cellStyle;	//	Returns UITableVieWCellStyleDefault by default
++ (IRTableViewCell<IRTableViewCellPrototype> *) prototypeForIdentifier:(NSString *)identifier;	//	Returns generated prototypes
++ (NSString *) identifierRepresentingObject:(id)object;	//	Returns @"Cell" by default
+
++ (IRTableViewCell *) newPrototypeForIdentifier:(NSString *)identifier;	//	Override this method to generate new cells
+
++ (NSSet *) encodedObjectKeyPaths;	//	Cell decoding (prototype -> data -> instance during cell copying) will not work correctly if subviews, for example, in properties are not encoded too 
+
+@property (nonatomic, readwrite, weak) id representedObject;
 
 @end
