@@ -106,7 +106,7 @@
 				@"(%K IN %@)", 
 			
 				managedObjectKeyPath, 
-				[[dictionaries irMap:irMapMakeWithKeyPath(dictionaryKeyPath)] irMap:irMapNullFilterMake()]
+				[[dictionaries irMap:IRArrayMapCallbackMakeWithKeyPath(dictionaryKeyPath)] irMap:IRArrayMapCallbackMakeNullFilter()]
 				
 			]];
 			
@@ -162,7 +162,7 @@
 		
 			return [inObject valueForKeyPath:dictionaryKeyPath];
 		
-		}] irMap:irMapNullFilterMake()];
+		}] irMap:IRArrayMapCallbackMakeNullFilter()];
 		
 		NSMutableArray *unusedRemoteDictionaries = [[sortedRemoteDictionaries mutableCopy] autorelease];
 		
@@ -344,7 +344,7 @@
 		BOOL const relationIsToMany = [[baseEntityRelationships objectForKey:rootLocalKeyPath] isToMany];
 		BOOL const usesIndividualAdd = (options & IRManagedObjectOptionIndividualOperations);
 		
-		NSArray *nodeRepresentations = [usedRemoteDictionaries irMap:irMapMakeWithKeyPath(rootRemoteKeyPath)];
+		NSArray *nodeRepresentations = [usedRemoteDictionaries irMap:IRArrayMapCallbackMakeWithKeyPath(rootRemoteKeyPath)];
 		NSArray *entityRepresentations = [nodeRepresentations irFlatten];
 		
 		NSArray *nodeEntities = [nodeEntityClass insertOrUpdateObjectsUsingContext:context withRemoteResponse:entityRepresentations usingMapping:[nodeEntityClass defaultHierarchicalEntityMapping] options:options];
