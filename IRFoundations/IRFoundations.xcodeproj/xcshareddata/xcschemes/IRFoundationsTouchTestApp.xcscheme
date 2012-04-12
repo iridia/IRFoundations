@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FF3BE06615375564004C5244"
-               BuildableName = "IRFoundationsTouchTestApp.app"
+               BuildableName = "IRFoundationsTouchTestHost.app"
                BlueprintName = "IRFoundationsTouchTestHost"
                ReferencedContainer = "container:IRFoundations.xcodeproj">
             </BuildableReference>
@@ -42,7 +42,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FF3BE06615375564004C5244"
-            BuildableName = "IRFoundationsTouchTestApp.app"
+            BuildableName = "IRFoundationsTouchTestHost.app"
             BlueprintName = "IRFoundationsTouchTestHost"
             ReferencedContainer = "container:IRFoundations.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FF3BE06615375564004C5244"
-            BuildableName = "IRFoundationsTouchTestApp.app"
+            BuildableName = "IRFoundationsTouchTestHost.app"
             BlueprintName = "IRFoundationsTouchTestHost"
             ReferencedContainer = "container:IRFoundations.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FF3BE06615375564004C5244"
-            BuildableName = "IRFoundationsTouchTestApp.app"
+            BuildableName = "IRFoundationsTouchTestHost.app"
             BlueprintName = "IRFoundationsTouchTestHost"
             ReferencedContainer = "container:IRFoundations.xcodeproj">
          </BuildableReference>
