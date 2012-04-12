@@ -98,14 +98,12 @@ static void __attribute__((constructor)) initialize() {
 	NSData *imageData = [NSData dataWithContentsOfMappedFile:foundPath];
 	foundPath = nil;
 	
-	if (![[[foundPath lastPathComponent] stringByDeletingPathExtension] hasSuffix:scaleSuffix])
-		return [UIImage imageWithData:imageData];
-	
 	CGDataProviderRef providerRef = CGDataProviderCreateWithCFData((__bridge CFDataRef)imageData);
 	CGImageRef imageRef = CGImageCreateWithPNGDataProvider(providerRef, NULL, NO, kCGRenderingIntentDefault);
 	
-	UIImage *image = [UIImage imageWithCGImage:imageRef scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
-	
+	CGFloat scale = [UIScreen mainScreen].scale;
+	UIImage *image = [UIImage imageWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
+		
 	CGDataProviderRelease(providerRef);
 	CGImageRelease(imageRef);
 	
