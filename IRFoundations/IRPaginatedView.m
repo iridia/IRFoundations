@@ -89,10 +89,10 @@
 
 - (void) setHorizontalSpacing:(CGFloat)newSpacing {
 
-	NSParameterAssert(newSpacing > 0);
+	NSParameterAssert(newSpacing >= 0);
 
 	if (horizontalSpacing == newSpacing)
-	return;
+		return;
 	
 	[self willChangeValueForKey:@"horizontalSpacing"];
 	horizontalSpacing = newSpacing;
