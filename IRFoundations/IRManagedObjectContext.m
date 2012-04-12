@@ -123,24 +123,24 @@
 		return [NSThread isMainThread] ? dispatch_get_main_queue() : dispatch_get_current_queue();
 	};
 
-	__block __typeof__(self) nrSelf = self;
+	__weak IRManagedObjectContext *wSelf = self;
 	__block dispatch_queue_t ownQueue = currentQueue();
 	dispatch_retain(ownQueue);
 	
-	__block id listenerObject = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
+	id listenerObject = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
 		
 		NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
 		
-		if (savedContext == nrSelf)
+		if (savedContext == wSelf)
 			return;
 		
-		if (savedContext.persistentStoreCoordinator != nrSelf.persistentStoreCoordinator)
+		if (savedContext.persistentStoreCoordinator != wSelf.persistentStoreCoordinator)
 			return;
 			
 		void (^merge)(void) = ^ {
 			
 			@try {
-				[nrSelf mergeChangesFromContextDidSaveNotification:note];
+				[wSelf mergeChangesFromContextDidSaveNotification:note];
 			} @catch (NSException *e) {
 				NSLog(@"%@", e);
 			}
@@ -157,6 +157,7 @@
 	[listenerObject irPerformOnDeallocation:^{
 	
 		dispatch_release(ownQueue);
+		ownQueue = nil;
 		
 	}];
 
