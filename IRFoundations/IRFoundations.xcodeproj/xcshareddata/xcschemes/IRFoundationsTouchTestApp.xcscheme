@@ -13,9 +13,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FF0A8BA81337AFB700DDA47C"
-               BuildableName = "libIRFoundationsTouch.a"
-               BlueprintName = "IRFoundationsTouch"
+               BlueprintIdentifier = "FF3BE06615375564004C5244"
+               BuildableName = "IRFoundationsTouchTestApp.app"
+               BlueprintName = "IRFoundationsTouchTestHost"
                ReferencedContainer = "container:IRFoundations.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -31,16 +31,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FF0F650D14C2DDAA0037787A"
-               BuildableName = "IRFoundationsTest.octest"
-               BlueprintName = "IRFoundationsTest"
-               ReferencedContainer = "container:IRFoundations.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "FF6380D7153754430023C7AB"
                BuildableName = "IRFoundationsTouchTest.octest"
                BlueprintName = "IRFoundationsTouchTest"
@@ -48,6 +38,15 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FF3BE06615375564004C5244"
+            BuildableName = "IRFoundationsTouchTestApp.app"
+            BlueprintName = "IRFoundationsTouchTestHost"
+            ReferencedContainer = "container:IRFoundations.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -59,6 +58,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FF3BE06615375564004C5244"
+            BuildableName = "IRFoundationsTouchTestApp.app"
+            BlueprintName = "IRFoundationsTouchTestHost"
+            ReferencedContainer = "container:IRFoundations.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -68,6 +76,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FF3BE06615375564004C5244"
+            BuildableName = "IRFoundationsTouchTestApp.app"
+            BlueprintName = "IRFoundationsTouchTestHost"
+            ReferencedContainer = "container:IRFoundations.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
