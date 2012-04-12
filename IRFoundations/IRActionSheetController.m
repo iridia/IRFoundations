@@ -18,6 +18,8 @@
 
 - (IRAction *) actionAtIndex:(NSUInteger)index usingActionSheet:(UIActionSheet *)anActionSheet;
 
++ (NSMutableSet *) presentedActionSheetControllers;
+
 @end
 
 
@@ -200,7 +202,23 @@
 
 }
 
++ (NSMutableSet *) presentedActionSheetControllers {
+
+	static NSMutableSet *set = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+	
+		set = [NSMutableSet set];
+							
+	});
+	
+	return set;
+
+}
+
 - (void) willPresentActionSheet:(UIActionSheet *)actionSheet {
+
+	[[[self class] presentedActionSheetControllers] addObject:self];
 
 	if (self.onActionSheetWillPresent)
 		self.onActionSheetWillPresent();
@@ -228,12 +246,14 @@
 	
 	if (self.onActionSheetDidDismiss)
 		self.onActionSheetDidDismiss([self actionAtIndex:buttonIndex usingActionSheet:actionSheet]);
+	
+	[[[self class] presentedActionSheetControllers] removeObject:self];
 
 }
 
 - (void) handleApplicationWillChangeStatusBarOrientationNotification:(NSNotification *)notification {
 
-	[self.managedActionSheet prepareForReshowingIfAppropriate];
+	[managedActionSheet prepareForReshowingIfAppropriate];
 	
 }
 
@@ -241,8 +261,19 @@
 
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.125 * NSEC_PER_SEC), dispatch_get_main_queue(), ^ {
 	 
-		if (!self.managedActionSheet.dismissesOnOrientationChange)
-			[self.managedActionSheet reshowIfAppropriate];
+		if (managedActionSheet.dismissesOnOrientationChange) {
+		
+			[managedActionSheet dismissWithClickedButtonIndex:[self.managedActionSheet cancelButtonIndex] animated:NO];
+			managedActionSheet.delegate = nil;
+			managedActionSheet = nil;
+			
+			[[[self class] presentedActionSheetControllers] removeObject:self];
+			
+		} else {
+			
+			[managedActionSheet reshowIfAppropriate];
+			
+		}
 
 	});
 	
