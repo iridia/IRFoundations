@@ -380,10 +380,10 @@ static void __attribute__((constructor)) initialize() {
 
 - (void) handleDidWriteImageToSavedPhotosAlbum:(UIImage *)image withError:(NSError *)error contextInfo:(NSDictionary *)contextInfo {
 
-	void (^callback)(NSError *) = [contextInfo objectForKey:kUIImage_IRAdditions_didWriteToSavedPhotosCallback];
+	IRImageWritingCallback callback = [contextInfo objectForKey:kUIImage_IRAdditions_didWriteToSavedPhotosCallback];
 	
 	if (callback)
-		callback(error);
+		callback(!error, error);
 	
 	[[[self class] contextInfoToImageWritingCallbacks] removeObject:contextInfo];
 
