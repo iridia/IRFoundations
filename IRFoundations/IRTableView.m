@@ -494,40 +494,46 @@
 
 - (void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
 
-	if (!decelerate)
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC), dispatch_get_current_queue(), ^ {
+	__weak IRTableView *wSelf = self;
 
-		[self resumeDelayedPerformQueue];
+	if (decelerate) {
 	
-	});
+		if (self.pullDownToRefreshState != IRTableViewPullDownRefreshStateActive)
+		if ([self isShowingContentsAboveTheFold])
+		if ([self contentOffsetAllowsFullPullToRefreshHeader]) {
+		
+			self.pullDownToRefreshState = IRTableViewPullDownRefreshStateActive;
+			
+			[UIView animateWithDuration:0.25 animations: ^ {
+			
+				[wSelf setContentInset:wSelf.originalEdgeInsets];
+				[wSelf layoutSubviews];
+			
+			}];
 
-	if (decelerate)
-	if (self.pullDownToRefreshState != IRTableViewPullDownRefreshStateActive)
-	if ([self isShowingContentsAboveTheFold])
-	if ([self contentOffsetAllowsFullPullToRefreshHeader]) {
+			dispatch_async(dispatch_get_main_queue(), ^ {
+
+				if (wSelf.onPullDownEnd)
+					wSelf.onPullDownEnd(YES);
+
+			});				
+		
+		}
 	
-		self.pullDownToRefreshState = IRTableViewPullDownRefreshStateActive;
-		
-		[UIView animateWithDuration:0.25 animations: ^ {
-		
-			[self setContentInset:self.originalEdgeInsets];
-			[self layoutSubviews];			
-		
-		}];
+	} else {
 
-		dispatch_async(dispatch_get_main_queue(), ^ {
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC), dispatch_get_current_queue(), ^ {
 
-			if (self.onPullDownEnd)
-			self.onPullDownEnd(YES);
-
-		});				
+			[wSelf resumeDelayedPerformQueue];
+		
+		});
 	
 	}
 	
 	dispatch_async(dispatch_get_main_queue(), ^ {
 
 		if ([self.intendedDelegate respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)])
-		[self.intendedDelegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];	
+			[self.intendedDelegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];	
 		
 	});
 
