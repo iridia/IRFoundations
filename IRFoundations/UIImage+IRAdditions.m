@@ -215,7 +215,7 @@ static void __attribute__((constructor)) initialize() {
 
 - (UIImage *) irDecodedImage {
 
-	CGImageRef cgImage = [self CGImage]; 
+	CGImageRef cgImage = self.CGImage;
 	size_t width = CGImageGetWidth(cgImage);
 	size_t height = CGImageGetHeight(cgImage);
 	
@@ -223,26 +223,28 @@ static void __attribute__((constructor)) initialize() {
 		return self;
 		
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	
 	if (colorSpace) {
 		
-		CGContextRef context = CGBitmapContextCreate(
-			NULL, 
-			width, 
-			height, 8, 
-			width * 4, 
-			colorSpace,
-			kCGImageAlphaNoneSkipFirst
-		);
-			
+		CGBitmapInfo const bitmapInfo = kCGImageAlphaPremultipliedFirst|kCGBitmapByteOrder32Little;
+		CGContextRef context = CGBitmapContextCreate(NULL, width, height, 8, width * 4, colorSpace, bitmapInfo);
+		
+		CGColorSpaceRelease(colorSpace);
+		
 		if (context) {
 			
 			CGContextDrawImage(context, CGRectMake(0, 0, width, height), cgImage);
+			CGImageRef outputImage = CGBitmapContextCreateImage(context);
+			
 			CGContextRelease(context);
+			
+			if (outputImage) {
+				
+				return [UIImage imageWithCGImage:outputImage];	//	TBD: Scale, orientation, etc.
+				
+			}
 		
 		}
 
-		CGColorSpaceRelease(colorSpace);
 	
 	}
 
