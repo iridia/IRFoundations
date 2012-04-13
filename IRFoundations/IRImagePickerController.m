@@ -104,9 +104,14 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 	
 	if (self.sourceType == UIImagePickerControllerSourceTypeCamera)
 	if (self.savesCameraImageCapturesToSavedPhotos) {
+		
 		[assetImage irWriteToSavedPhotosAlbumWithCompletion:^(BOOL didWrite, NSError *error) {
-			//	NSLog(@"Written.");
+		
+			if (!didWrite)
+				NSLog(@"%s: %@", __PRETTY_FUNCTION__, error);
+		
 		}];
+		
 	}
 	
 	NSURL *tempMediaURL = [info valueForKey:UIImagePickerControllerMediaURL];

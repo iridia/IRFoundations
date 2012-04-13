@@ -98,14 +98,12 @@ static void __attribute__((constructor)) initialize() {
 	NSData *imageData = [NSData dataWithContentsOfMappedFile:foundPath];
 	foundPath = nil;
 	
-	if (![[[foundPath lastPathComponent] stringByDeletingPathExtension] hasSuffix:scaleSuffix])
-		return [UIImage imageWithData:imageData];
-	
 	CGDataProviderRef providerRef = CGDataProviderCreateWithCFData((__bridge CFDataRef)imageData);
 	CGImageRef imageRef = CGImageCreateWithPNGDataProvider(providerRef, NULL, NO, kCGRenderingIntentDefault);
 	
-	UIImage *image = [UIImage imageWithCGImage:imageRef scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
-	
+	CGFloat scale = [UIScreen mainScreen].scale;
+	UIImage *image = [UIImage imageWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
+		
 	CGDataProviderRelease(providerRef);
 	CGImageRelease(imageRef);
 	
@@ -217,7 +215,7 @@ static void __attribute__((constructor)) initialize() {
 
 - (UIImage *) irDecodedImage {
 
-	CGImageRef cgImage = [self CGImage]; 
+	CGImageRef cgImage = self.CGImage;
 	size_t width = CGImageGetWidth(cgImage);
 	size_t height = CGImageGetHeight(cgImage);
 	
@@ -225,26 +223,28 @@ static void __attribute__((constructor)) initialize() {
 		return self;
 		
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	
 	if (colorSpace) {
 		
-		CGContextRef context = CGBitmapContextCreate(
-			NULL, 
-			width, 
-			height, 8, 
-			width * 4, 
-			colorSpace,
-			kCGImageAlphaNoneSkipFirst
-		);
-			
+		CGBitmapInfo const bitmapInfo = kCGImageAlphaPremultipliedFirst|kCGBitmapByteOrder32Little;
+		CGContextRef context = CGBitmapContextCreate(NULL, width, height, 8, width * 4, colorSpace, bitmapInfo);
+		
+		CGColorSpaceRelease(colorSpace);
+		
 		if (context) {
 			
 			CGContextDrawImage(context, CGRectMake(0, 0, width, height), cgImage);
+			CGImageRef outputImage = CGBitmapContextCreateImage(context);
+			
 			CGContextRelease(context);
+			
+			if (outputImage) {
+				
+				return [UIImage imageWithCGImage:outputImage];	//	TBD: Scale, orientation, etc.
+				
+			}
 		
 		}
 
-		CGColorSpaceRelease(colorSpace);
 	
 	}
 
@@ -382,10 +382,10 @@ static void __attribute__((constructor)) initialize() {
 
 - (void) handleDidWriteImageToSavedPhotosAlbum:(UIImage *)image withError:(NSError *)error contextInfo:(NSDictionary *)contextInfo {
 
-	void (^callback)(NSError *) = [contextInfo objectForKey:kUIImage_IRAdditions_didWriteToSavedPhotosCallback];
+	IRImageWritingCallback callback = [contextInfo objectForKey:kUIImage_IRAdditions_didWriteToSavedPhotosCallback];
 	
 	if (callback)
-		callback(error);
+		callback(!error, error);
 	
 	[[[self class] contextInfoToImageWritingCallbacks] removeObject:contextInfo];
 
