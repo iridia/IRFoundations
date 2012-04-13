@@ -74,11 +74,11 @@
 
 	[super awakeFromNib];
 	
-	self.customView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+	self.customView = [[UIView alloc] initWithFrame:CGRectZero];
 	[self.customView addSubview:self.trackingButton];
 	self.barStyle = UIBarStyleDefault;
 	
-	__block __typeof__(self) nrSelf = self;
+	__weak IRUserTrackingBarButtonItem *wSelf = self;
 	
 	[self irAddObserverBlock: ^ (id inOldValue, id inNewValue, NSKeyValueChange changeKind) {
 	
@@ -86,7 +86,7 @@
 		[inOldValue getValue:&fromMode];
 		[inNewValue getValue:&toMode];
 		
-		[nrSelf handleTrackingModeChangedFrom:fromMode to:toMode];
+		[wSelf handleTrackingModeChangedFrom:fromMode to:toMode];
 		
 	} forKeyPath:@"trackingMode" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
 
@@ -101,7 +101,7 @@
 	if (trackingButton)
 		return trackingButton;
 	
-	trackingButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+	trackingButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	trackingButton.adjustsImageWhenHighlighted = NO;
 	trackingButton.adjustsImageWhenDisabled = NO;
 	

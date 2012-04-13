@@ -17,31 +17,31 @@ static NSString * const kUIImage_IRAdditions_didWriteToSavedPhotosCallback = @"U
 
 static void __attribute__((constructor)) initialize() {
 
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
+    
+		if ([[[UIDevice currentDevice] systemVersion] localizedCompare:@"5.0"] == NSOrderedAscending) {
+			Class class = [UIImage class];
 
-	if ([[[UIDevice currentDevice] systemVersion] localizedCompare:@"5.0"] == NSOrderedAscending) {
-		Class class = [UIImage class];
+			if (!class_addMethod(
+				class,
+				@selector(initWithCoder:), class_getMethodImplementation(class, @selector(_irInitWithCoder:)),
+				protocol_getMethodDescription(@protocol(NSCoding), @selector(initWithCoder:), YES, YES).types
+			)) {
+				NSLog(@"Error swizzling -[UIImage initWithCoder:] off.  Expect mayhem.");
+			}
 
-		if (!class_addMethod(
-			class,
-			@selector(initWithCoder:), class_getMethodImplementation(class, @selector(_irInitWithCoder:)),
-			protocol_getMethodDescription(@protocol(NSCoding), @selector(initWithCoder:), YES, YES).types
-		)) {
-			NSLog(@"Error swizzling -[UIImage initWithCoder:] off.  Expect mayhem.");
+			if (!class_addMethod(
+				class, 
+				@selector(encodeWithCoder:),
+				class_getMethodImplementation(class, @selector(_irEncodeWithCoder:)), 
+				protocol_getMethodDescription(@protocol(NSCoding), @selector(encodeWithCoder:), YES, YES).types)
+			) {
+				NSLog(@"Error swizzling -[UIImage encodeWithCoder:] off.  Expect mayhem.");
+			}
+
 		}
-
-		if (!class_addMethod(
-			class, 
-			@selector(encodeWithCoder:),
-			class_getMethodImplementation(class, @selector(_irEncodeWithCoder:)), 
-			protocol_getMethodDescription(@protocol(NSCoding), @selector(encodeWithCoder:), YES, YES).types)
-		) {
-			NSLog(@"Error swizzling -[UIImage encodeWithCoder:] off.  Expect mayhem.");
-		}
-
-	}
 	
-	[pool drain];
+	}
 	
 }
 
@@ -64,7 +64,6 @@ static void __attribute__((constructor)) initialize() {
 + (UIImage *) irImageNamed:(NSString *)name inBundle:(NSBundle *)bundle {
 
 	NSString *baseName = [name stringByDeletingPathExtension];
-	
 	NSString *type = [[name pathExtension] length] ? [name pathExtension] : @"png";
 	NSString *scaleSuffix = [NSString stringWithFormat:@"@%0.0fx", [UIScreen mainScreen].scale];
 	NSString *deviceSuffix = ((NSString * []){
@@ -86,7 +85,7 @@ static void __attribute__((constructor)) initialize() {
 		NSString *prospectivePath = [bundle pathForResource:fileName ofType:type];
 		if (prospectivePath) {
 		
-			foundPath = [prospectivePath retain];
+			foundPath = prospectivePath;
 			*stop = YES;
 		
 		}
@@ -96,16 +95,19 @@ static void __attribute__((constructor)) initialize() {
 	if (!foundPath)
 		return nil;
 	
-	NSData *imageData = [NSData dataWithContentsOfMappedFile:[foundPath autorelease]];
+	NSData *imageData = [NSData dataWithContentsOfMappedFile:foundPath];
+	foundPath = nil;
 	
-	if (![[[foundPath lastPathComponent] stringByDeletingPathExtension] hasSuffix:scaleSuffix])
-		return [UIImage imageWithData:imageData];
+	CGDataProviderRef providerRef = CGDataProviderCreateWithCFData((__bridge CFDataRef)imageData);
+	CGImageRef imageRef = CGImageCreateWithPNGDataProvider(providerRef, NULL, NO, kCGRenderingIntentDefault);
 	
-	CGDataProviderRef providerRef = (CGDataProviderRef)[NSMakeCollectable(CGDataProviderCreateWithCFData((CFDataRef)imageData)) autorelease];
+	CGFloat scale = [UIScreen mainScreen].scale;
+	UIImage *image = [UIImage imageWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
+		
+	CGDataProviderRelease(providerRef);
+	CGImageRelease(imageRef);
 	
-	CGImageRef imageRef = (CGImageRef)[NSMakeCollectable(CGImageCreateWithPNGDataProvider(providerRef, NULL, NO, kCGRenderingIntentDefault)) autorelease];
-	
-	return [UIImage imageWithCGImage:imageRef scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
+	return image;
 
 }
 
@@ -213,7 +215,7 @@ static void __attribute__((constructor)) initialize() {
 
 - (UIImage *) irDecodedImage {
 
-	CGImageRef cgImage = [self CGImage]; 
+	CGImageRef cgImage = self.CGImage;
 	size_t width = CGImageGetWidth(cgImage);
 	size_t height = CGImageGetHeight(cgImage);
 	
@@ -221,26 +223,28 @@ static void __attribute__((constructor)) initialize() {
 		return self;
 		
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	
 	if (colorSpace) {
 		
-		CGContextRef context = CGBitmapContextCreate(
-			NULL, 
-			width, 
-			height, 8, 
-			width * 4, 
-			colorSpace,
-			kCGImageAlphaNoneSkipFirst
-		);
-			
+		CGBitmapInfo const bitmapInfo = kCGImageAlphaPremultipliedFirst|kCGBitmapByteOrder32Little;
+		CGContextRef context = CGBitmapContextCreate(NULL, width, height, 8, width * 4, colorSpace, bitmapInfo);
+		
+		CGColorSpaceRelease(colorSpace);
+		
 		if (context) {
 			
 			CGContextDrawImage(context, CGRectMake(0, 0, width, height), cgImage);
+			CGImageRef outputImage = CGBitmapContextCreateImage(context);
+			
 			CGContextRelease(context);
+			
+			if (outputImage) {
+				
+				return [UIImage imageWithCGImage:outputImage];	//	TBD: Scale, orientation, etc.
+				
+			}
 		
 		}
 
-		CGColorSpaceRelease(colorSpace);
 	
 	}
 
@@ -344,40 +348,46 @@ static void __attribute__((constructor)) initialize() {
 	if (self.irRepresentedObject == newObject)
 		return;
 	
-	[self willChangeValueForKey:@"irRepresentedObject"];
-
 	objc_setAssociatedObject(self, &kUIImage_IRAdditions_representedObject, newObject, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-
-	[self didChangeValueForKey:@"irRepresentedObject"];
 
 }
 
-- (void) irWriteToSavedPhotosAlbumWithCompletion:(void(^)(BOOL didWrite, NSError *error))aBlock {
++ (NSMutableSet *) contextInfoToImageWritingCallbacks {
 
-	__block NSDictionary *contextInfo = [[NSDictionary dictionaryWithObjectsAndKeys:
+	static NSMutableSet *set;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+    set = [NSMutableSet set];
+	});
 	
-		[[ ^ (NSError *error) {
-		
-			if (aBlock)
-				aBlock((BOOL)!error, error);
-					
-		} copy] autorelease], kUIImage_IRAdditions_didWriteToSavedPhotosCallback,
-	
-	nil] retain];
+	return set;
 
-	UIImageWriteToSavedPhotosAlbum(self, self, @selector(handleDidWriteImageToSavedPhotosAlbum:withError:contextInfo:), contextInfo);
+}
+
+- (void) irWriteToSavedPhotosAlbumWithCompletion:(IRImageWritingCallback)aBlock {
+
+	CFUUIDRef uuidRef = CFUUIDCreate(NULL);
+	
+	NSDictionary *contextInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+	
+		[aBlock copy], kUIImage_IRAdditions_didWriteToSavedPhotosCallback,
+	
+	nil];
+	
+	[[[self class] contextInfoToImageWritingCallbacks] addObject:contextInfo];
+	
+	UIImageWriteToSavedPhotosAlbum(self, self, @selector(handleDidWriteImageToSavedPhotosAlbum:withError:contextInfo:), (__bridge void *)contextInfo);
 
 }
 
 - (void) handleDidWriteImageToSavedPhotosAlbum:(UIImage *)image withError:(NSError *)error contextInfo:(NSDictionary *)contextInfo {
 
-	void (^callback)(NSError *) = [contextInfo objectForKey:kUIImage_IRAdditions_didWriteToSavedPhotosCallback];
+	IRImageWritingCallback callback = [contextInfo objectForKey:kUIImage_IRAdditions_didWriteToSavedPhotosCallback];
 	
 	if (callback)
-		callback(error);
+		callback(!error, error);
 	
-	if ([contextInfo isKindOfClass:[NSDictionary class]])	
-		[contextInfo autorelease];
+	[[[self class] contextInfoToImageWritingCallbacks] removeObject:contextInfo];
 
 }
 

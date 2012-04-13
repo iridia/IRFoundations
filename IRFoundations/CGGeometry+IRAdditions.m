@@ -1,6 +1,6 @@
 //
 //  CGGeometry+IRAdditions.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 2/13/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.

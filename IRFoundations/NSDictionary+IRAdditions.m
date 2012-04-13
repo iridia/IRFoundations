@@ -38,10 +38,9 @@
 
 - (NSDictionary *) irDictionaryByMergingWithDictionary:(NSDictionary *)aDictionary {
 
-	NSMutableDictionary *copy = [[self mutableCopy] autorelease];
-	[aDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-		[copy setObject:obj forKey:key];
-	}];
+	NSMutableDictionary *copy = [self mutableCopy];
+	[copy addEntriesFromDictionary:aDictionary];
+	
 	return copy;
 
 }

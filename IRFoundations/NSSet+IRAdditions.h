@@ -8,7 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+
+typedef id (^IRSetMapCallback) (id obj, BOOL *stop);
+
+
 @interface NSSet (IRAdditions)
+
+- (NSSet *) irMap:(IRSetMapCallback)block;
 
 - (NSSet *) irSetByRemovingObjectsInSet:(NSSet *)subtractedSet;
 

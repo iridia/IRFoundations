@@ -7,16 +7,7 @@
 //
 
 #import "IRAsyncOperation.h"
-
-@interface IRAsyncOperation ()
-
-@property (nonatomic, readwrite, assign) dispatch_queue_t actualDispatchQueue;
-@property (nonatomic, readwrite, retain) id results;
-
-- (void) onMainQueue:(void(^)(void))aBlock;
-- (void) concludeWithResults:(id)incomingResults;
-
-@end
+#import "IRAsyncOperation+ForSubclassEyesOnly.h"
 
 
 @implementation IRAsyncOperation
@@ -25,9 +16,9 @@
 @synthesize workerBlock, workCompletionBlock;
 @synthesize actualDispatchQueue, results;
 
-+ (IRAsyncOperation *) operationWithWorkerBlock:(void (^)(IRAsyncOperationCallback callback))aWorkerBlock completionBlock:(IRAsyncOperationCallback)aCompletionBlock {
++ (id) operationWithWorkerBlock:(void (^)(IRAsyncOperationCallback callback))aWorkerBlock completionBlock:(IRAsyncOperationCallback)aCompletionBlock {
 
-	IRAsyncOperation *returnedOperation = [[[self alloc] init] autorelease];
+	IRAsyncOperation *returnedOperation = [[self alloc] init];
 	returnedOperation.workerBlock = aWorkerBlock;
 	returnedOperation.workCompletionBlock = aCompletionBlock;
 	return returnedOperation;
@@ -37,21 +28,11 @@
 - (id) copyWithZone:(NSZone *)zone {
 
 	IRAsyncOperation *returnedOperation = [[[self class] alloc] init];
-	returnedOperation.workerBlock = [[workerBlock copy] autorelease];
-	returnedOperation.workCompletionBlock = [[workCompletionBlock copy] autorelease];
-	returnedOperation.results = [[results copy] autorelease];
+	returnedOperation.workerBlock = workerBlock;
+	returnedOperation.workCompletionBlock = workCompletionBlock;
+	returnedOperation.results = results;
 	
 	return returnedOperation;
-
-}
-
-- (void) dealloc {
-
-	[workerBlock release];
-	[workCompletionBlock release];
-	[results release];
-	
-	[super dealloc];
 
 }
 
@@ -156,9 +137,9 @@
 		if (!self.workerBlock)
 			return;
 			
-		self.workerBlock([[ ^ (id incomingResults) {
+		self.workerBlock([ ^ (id incomingResults) {
 			[self concludeWithResults:incomingResults];
-		} copy] autorelease]);
+		} copy]);
 		
 	}];
 

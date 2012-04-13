@@ -1,6 +1,6 @@
 //
 //  IRXPathQuery.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 2/10/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -94,12 +94,10 @@
 
 + (NSObject *) representationForNode:(xmlNodePtr)currentNode parent:(NSObject *)aParentRepresentationOrNil {
 
-	IRXMLNode *returnedRepresentation = [[[IRXMLNode alloc] init] autorelease];
+	IRXMLNode *returnedRepresentation = [[IRXMLNode alloc] init];
 	
 	NSString * (^fromCString)() = ^ (const char *aCString) {
-	
 		return [NSString stringWithCString:aCString encoding:NSUTF8StringEncoding];
-	
 	};
 	
 	
@@ -187,17 +185,17 @@
 + (IRXMLNode *) nodeWithName:(NSString *)aName {
 
 	IRXMLNode *returnedNode = [[self alloc] init];
-	
 	returnedNode.name = aName;
 	
-	return [returnedNode autorelease];
+	return returnedNode;
 
 }
 
 - (id) init {
 
 	self = [super init];
-	if (!self) return nil;
+	if (!self)
+		return nil;
 	
 	self.name = nil;
 	self.content = nil;
@@ -205,22 +203,6 @@
 	self.children = [NSMutableArray array];
 	
 	return self;
-
-}
-
-- (void) dealloc {
-
-	[name release];
-	[content release];
-	[attributes release];
-	[children release];
-	
-	name = nil;
-	content = nil;
-	attributes = nil;
-	children = nil;
-	
-	[super dealloc];
 
 }
 

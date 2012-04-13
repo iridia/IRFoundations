@@ -12,6 +12,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
+typedef void(^IRImageWritingCallback)(BOOL didWrite, NSError *error);
+
 @class IRShadow;
 @interface UIImage (IRAdditions)
 
@@ -25,7 +27,7 @@
 
 @property (nonatomic, readwrite, retain, getter=irRepresentedObject, setter=irSetRepresentedObject:) id irRepresentedObject;
 
-- (void) irWriteToSavedPhotosAlbumWithCompletion:(void(^)(BOOL didWrite, NSError *error))aBlock;
+- (void) irWriteToSavedPhotosAlbumWithCompletion:(IRImageWritingCallback)aBlock;
 
 + (BOOL) validateContentsOfFileAtPath:(NSString *)path error:(NSError **)error;
 

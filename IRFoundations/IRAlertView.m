@@ -11,6 +11,8 @@
 
 @interface IRAlertView () <UIAlertViewDelegate>
 
++ (NSMutableSet *) presentedAlertViews;
+
 @end
 
 @implementation IRAlertView
@@ -18,7 +20,7 @@
 
 + (IRAlertView *) alertViewWithTitle:(NSString *)aTitle message:(NSString *)aMessage cancelAction:(IRAction *)cancellationAction otherActions:(NSArray *)otherActionsOrNil {
 
-	IRAlertView *returnedView = [[[self alloc] initWithTitle:aTitle message:aMessage delegate:nil cancelButtonTitle:cancellationAction.title otherButtonTitles:nil] autorelease];
+	IRAlertView *returnedView = [[self alloc] initWithTitle:aTitle message:aMessage delegate:nil cancelButtonTitle:cancellationAction.title otherButtonTitles:nil];
 	
 	for (IRAction *anAction in otherActionsOrNil)
 	[returnedView addButtonWithTitle:anAction.title];
@@ -31,14 +33,6 @@
 	returnedView.otherActions = otherActionsOrNil;
 	
 	return returnedView;
-
-}
-
-- (void) dealloc {
-
-	[cancelAction release];
-	[otherActions release];
-	[super dealloc];
 
 }
 
@@ -56,15 +50,29 @@
 
 }
 
++ (NSMutableSet *) presentedAlertViews {
+
+	static NSMutableSet *set = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+	
+		set = [NSMutableSet set];
+							
+	});
+	
+	return set;
+
+}
+
 - (void) willPresentAlertView:(UIAlertView *)alertView {
 
-	[alertView retain];
+	[[[self class] presentedAlertViews] addObject:alertView];
 
 }
 
 - (void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
 
-	[alertView autorelease];
+	[[[self class] presentedAlertViews] removeObject:alertView];
 
 }
 

@@ -28,9 +28,9 @@
 
 	[super setUp];
 	
-	self.managedObjectModel = [[[NSManagedObjectModel alloc] initWithContentsOfURL:[[NSBundle bundleForClass:[self class]] URLForResource:@"IRCoreDataTestModel" withExtension:@"momd"]] autorelease];
+	self.managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:[[NSBundle bundleForClass:[self class]] URLForResource:@"IRCoreDataTestModel" withExtension:@"momd"]];
 
-	self.dataStore = [[[IRDataStore alloc] initWithManagedObjectModel:self.managedObjectModel] autorelease];
+	self.dataStore = [[IRDataStore alloc] initWithManagedObjectModel:self.managedObjectModel];
 	
 	NSURL *storeURL = [self.dataStore defaultPersistentStoreURL];
 	NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -75,10 +75,10 @@
 
 - (void) testAutoMerging {
 
-	__block IRDataStore *nrDataStore = self.dataStore;	
+	IRDataStore *nrDataStore = self.dataStore;	
 	STAssertFalse([self hasPersistentStoreBackingFile], @"Backing file should NOT exist at this time");
 	
-	__block NSManagedObjectContext *nrAutoUpdatedMOC = [nrDataStore defaultAutoUpdatedMOC];
+	NSManagedObjectContext *nrAutoUpdatedMOC = [nrDataStore defaultAutoUpdatedMOC];
 	STAssertNotNil(nrAutoUpdatedMOC, @"Auto-updated MOC should exist");
 	STAssertTrue([self hasPersistentStoreBackingFile], @"Backing file should exist as long as something started using the MOC");
 	
@@ -92,7 +92,7 @@
 		NSError *error = nil;
 		BOOL didSave = [context save:&error];
 		
-		savedObjectURL = [[[savedObject objectID] URIRepresentation] retain];
+		savedObjectURL = [[savedObject objectID] URIRepresentation];
 		
 		STAssertTrue(didSave, @"Just save it");
 		STAssertNil(error, @"Saving error: %@", error);
@@ -100,19 +100,19 @@
 	});
 	
 	STAssertNotNil(savedObjectURL, @"Saved object should exist");
-	IRCoreDataTestObject *savedObject = (IRCoreDataTestObject *)[nrAutoUpdatedMOC irManagedObjectForURI:savedObjectURL];
 	
+	IRCoreDataTestObject *savedObject = (IRCoreDataTestObject *)[nrAutoUpdatedMOC irManagedObjectForURI:savedObjectURL];
 	STAssertNotNil(savedObject, @"Saved object should be merged into the auto-updated MOC");
 	
-	[savedObjectURL autorelease];
+	savedObjectURL = nil;
 
 }
 
 - (void) testPersistentStoreNameChange {
 
-	NSPersistentStoreCoordinator *oldCoordinator = [[dataStore.persistentStoreCoordinator retain] autorelease];
-	NSURL *oldBackingFile = [[dataStore.defaultPersistentStoreURL retain] autorelease];
-	NSManagedObjectContext *oldAutoUpdatedMOC = [[[dataStore defaultAutoUpdatedMOC] retain] autorelease];
+	NSPersistentStoreCoordinator *oldCoordinator = dataStore.persistentStoreCoordinator;
+	NSURL *oldBackingFile = dataStore.defaultPersistentStoreURL;
+	NSManagedObjectContext *oldAutoUpdatedMOC = [dataStore defaultAutoUpdatedMOC];
 	
 	dataStore.persistentStoreName = [dataStore.persistentStoreName stringByAppendingString:IRDataStoreNonce()];
 	

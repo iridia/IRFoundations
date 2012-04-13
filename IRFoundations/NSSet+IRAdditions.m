@@ -10,12 +10,37 @@
 
 @implementation NSSet (IRAdditions)
 
+- (NSSet *) irMap:(IRSetMapCallback)mapBlock {
+
+	NSMutableSet *returnedSet = [NSMutableSet setWithCapacity:[self count]];
+
+	NSUInteger index = 0;
+	BOOL stop = NO;
+
+	for (id object in self) {
+	
+		id returnedObject = mapBlock(object, &stop);
+		
+		if (returnedObject)
+			[returnedSet addObject:returnedObject];
+		
+		index++;
+		
+		if (stop)
+		break;
+			
+	}
+	
+	return returnedSet;
+
+}
+
 - (NSSet *) irSetByRemovingObjectsInSet:(NSSet *)subtractedSet {
 
-	NSMutableSet *returnedSet = [[self mutableCopy] autorelease];
+	NSMutableSet *returnedSet = [self mutableCopy];
 	[returnedSet minusSet:subtractedSet];
 	
-	return [[returnedSet copy] autorelease];
+	return returnedSet;
 
 }
 

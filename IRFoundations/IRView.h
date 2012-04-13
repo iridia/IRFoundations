@@ -11,7 +11,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-
 @interface IRView : UIView
 
 @property (nonatomic, readwrite, copy) UIView * (^onHitTestWithEvent)(CGPoint aPoint, UIEvent *anEvent, UIView *superAnswer);

@@ -108,7 +108,7 @@
 }
 
 - (NSArray *) irShuffle {
-	NSMutableArray *returnedArray = [[self mutableCopy] autorelease];
+	NSMutableArray *returnedArray = [self mutableCopy];
 	[returnedArray irShuffle];
 	return returnedArray;
 }
@@ -123,7 +123,7 @@
 
 - (void) irEnqueueBlock:(void(^)(void))aBlock {
 
-	[self addObject:[[aBlock copy] autorelease]];
+	[self addObject:[aBlock copy]];
 
 }
 
@@ -145,9 +145,9 @@
 @end
 
 
-IRMapCallback irMapMakeWithKeyPath (NSString * inKeyPath) {
+IRArrayMapCallback IRArrayMapCallbackMakeWithKeyPath (NSString * inKeyPath) {
 	
-	return (IRMapCallback)[[ ^ (id object, NSUInteger index, BOOL *stop) {
+	return [ ^ (id object, NSUInteger index, BOOL *stop) {
 	
 		if (![object respondsToSelector:@selector(valueForKeyPath:)])
 			return (id)[NSNull null];
@@ -168,16 +168,28 @@ IRMapCallback irMapMakeWithKeyPath (NSString * inKeyPath) {
 		
 		return (id)[NSNull null];
 	
-	} copy] autorelease];
+	} copy];
  
 };
 
-IRMapCallback irMapNullFilterMake () {
+IRArrayMapCallback IRArrayMapCallbackMakeNullFilter () {
 
-	return (IRMapCallback)[[ ^ (id object, NSUInteger index, BOOL *stop) {
+	return [ ^ (id object, NSUInteger index, BOOL *stop) {
 
 		return (!object || [object isEqual:[NSNull null]]) ? nil : object;
 	
-	} copy] autorelease];
+	} copy];
+
+}
+
+IRArrayMapCallback irMapMakeWithKeyPath (NSString *keyPath) {
+
+	return IRArrayMapCallbackMakeWithKeyPath(keyPath);
+
+}
+
+IRArrayMapCallback irMapNullFilterMake () {
+
+	return IRArrayMapCallbackMakeNullFilter();
 
 }

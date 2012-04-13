@@ -10,11 +10,11 @@
 
 @interface IRViewController : UIViewController
 
-@property (nonatomic, readwrite, copy) BOOL (^onShouldAutorotateToInterfaceOrientation)(IRViewController *self, UIInterfaceOrientation toOrientation);
-@property (nonatomic, readwrite, copy) void (^onLoadview)(IRViewController *self);
-@property (nonatomic, readwrite, copy) void (^onViewWillAppear)(IRViewController *self);
-@property (nonatomic, readwrite, copy) void (^onViewDidAppear)(IRViewController *self);
-@property (nonatomic, readwrite, copy) void (^onViewWillDisappear)(IRViewController *self);
-@property (nonatomic, readwrite, copy) void (^onViewDidDisappear)(IRViewController *self);
+@property (nonatomic, readwrite, copy) BOOL (^onShouldAutorotateToInterfaceOrientation)(UIInterfaceOrientation toOrientation);
+@property (nonatomic, readwrite, copy) void (^onLoadView)(void);
+@property (nonatomic, readwrite, copy) void (^onViewWillAppear)(void);
+@property (nonatomic, readwrite, copy) void (^onViewDidAppear)(void);
+@property (nonatomic, readwrite, copy) void (^onViewWillDisappear)(void);
+@property (nonatomic, readwrite, copy) void (^onViewDidDisappear)(void);
 
 @end

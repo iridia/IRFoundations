@@ -1,6 +1,6 @@
 //
 //  IRTableViewController.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 1/12/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -60,15 +60,6 @@
 
 }
 
-- (void) dealloc {
-
-	self.tableView = nil;
-	self.onLoadView = nil;
-
-	[super dealloc];
-
-}
-
 - (void) irConfigure {
 
 	self.tableViewStyle = UITableViewStylePlain;
@@ -90,14 +81,12 @@
 		
 	} else {
 	
-		self.tableView = [[[IRTableView alloc] initWithFrame:self.view.frame style:self.tableViewStyle] autorelease];
+		self.tableView = [[IRTableView alloc] initWithFrame:self.view.frame style:self.tableViewStyle];
 	
 	}
 	
-//	self.view = self.tableView;
-
 	if (self.onLoadView)
-	self.onLoadView();
+		self.onLoadView();
 
 }
 

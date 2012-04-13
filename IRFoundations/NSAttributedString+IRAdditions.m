@@ -16,10 +16,10 @@
 	if (!aFont || !aColor)
 		return nil;
 
-	CTFontRef fontRef = CTFontCreateWithName((CFStringRef)(aFont.fontName), aFont.pointSize, NULL);
+	CTFontRef fontRef = CTFontCreateWithName((__bridge CFStringRef)(aFont.fontName), aFont.pointSize, NULL);
 	
 	NSMutableDictionary *returnedDictionary = [NSMutableDictionary dictionary];
-	[returnedDictionary setObject:(id)fontRef forKey:(NSString *)kCTFontAttributeName];
+	[returnedDictionary setObject:(__bridge id)fontRef forKey:(NSString *)kCTFontAttributeName];
 	if (aColor)
 		[returnedDictionary setObject:(id)aColor.CGColor forKey:(NSString *)kCTForegroundColorAttributeName];
 
@@ -30,7 +30,7 @@
 
 + (NSAttributedString *) irAttributedStringWithString:(NSString *)baseString attributes:(NSDictionary *)attributesOrNil {
 
-	return [[[NSAttributedString alloc] initWithString:baseString attributes:attributesOrNil] autorelease];
+	return [[NSAttributedString alloc] initWithString:baseString attributes:attributesOrNil];
 
 }
 
@@ -44,9 +44,9 @@
 
 	__block int rangeOffset = 0;
 	
-	NSMutableAttributedString *returnedString = [[self mutableCopy] autorelease];
+	NSMutableAttributedString *returnedString = [self mutableCopy];
 	
-	[anExpression enumerateMatchesInString:[[[self string] copy] autorelease] options:options range:NSMakeRange(0, [[returnedString string] length]) usingBlock: ^ (NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+	[anExpression enumerateMatchesInString:[[self string] copy] options:options range:NSMakeRange(0, [[returnedString string] length]) usingBlock: ^ (NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
 	
 		NSAttributedString *replacementString = aBlock(result, flags, stop);
 		
@@ -86,7 +86,7 @@
 
 	__block int rangeOffset = 0;
 	
-	NSMutableAttributedString *returnedString = [[self mutableCopy] autorelease];
+	NSMutableAttributedString *returnedString = [self mutableCopy];
 	
 	[self enumerateAttributesInRange:aRange options:options usingBlock: ^ (NSDictionary *attrs, NSRange range, BOOL *stop) {
 	
@@ -145,7 +145,8 @@
 	};
 
 	CTParagraphStyleRef paragraphStyleRef = CTParagraphStyleCreate(paragraphStyles, sizeof(paragraphStyles) / sizeof(CTParagraphStyleSetting));
-	return (CTParagraphStyleRef)[NSMakeCollectable(paragraphStyleRef) autorelease];
+	
+	return paragraphStyleRef;
 
 }
 

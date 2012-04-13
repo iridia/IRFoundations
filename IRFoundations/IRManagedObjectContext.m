@@ -10,7 +10,6 @@
 
 #import "IRLifetimeHelper.h"
 #import "IRManagedObjectContext.h"
-#import "NSFetchRequest+IRAdditions.h"
 
 
 @implementation NSManagedObjectContext (IRAdditions)
@@ -37,6 +36,9 @@
 			return nil;
 		
 		}
+		
+		NSParameterAssert(![objectID isTemporaryID]);
+		
 		returnedObject = [self objectWithID:objectID];
 	
 	} @catch (NSException *exception) {
@@ -66,26 +68,10 @@
 @implementation IRManagedObjectContext
 @synthesize irAutoMergeStackCount, irAutoMergeListener;
 
-- (NSArray *) executeFetchRequest:(NSFetchRequest *)request error:(NSError **)error {
-
-	for (NSString *aPrefetchedRelationshipKeyPath in [[request.irRelationshipKeyPathsForObjectsPrefetching copy] autorelease]) {
-	
-		NSLog(@"Prefetch %@", aPrefetchedRelationshipKeyPath);
-	
-	}
-
-	return [super executeFetchRequest:request error:error];
-
-}
-
 - (void) dealloc {
 
-	if (irAutoMergeListener) {
+	if (irAutoMergeListener)
 		[[NSNotificationCenter defaultCenter] removeObserver:irAutoMergeListener];
-		[irAutoMergeListener release];
-	}
-	
-	[super dealloc];
 
 }
 
@@ -137,24 +123,24 @@
 		return [NSThread isMainThread] ? dispatch_get_main_queue() : dispatch_get_current_queue();
 	};
 
-	__block __typeof__(self) nrSelf = self;
+	__weak IRManagedObjectContext *wSelf = self;
 	__block dispatch_queue_t ownQueue = currentQueue();
 	dispatch_retain(ownQueue);
 	
-	__block id listenerObject = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
+	id listenerObject = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
 		
 		NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
 		
-		if (savedContext == nrSelf)
+		if (savedContext == wSelf)
 			return;
 		
-		if (savedContext.persistentStoreCoordinator != nrSelf.persistentStoreCoordinator)
+		if (savedContext.persistentStoreCoordinator != wSelf.persistentStoreCoordinator)
 			return;
 			
 		void (^merge)(void) = ^ {
 			
 			@try {
-				[nrSelf mergeChangesFromContextDidSaveNotification:note];
+				[wSelf mergeChangesFromContextDidSaveNotification:note];
 			} @catch (NSException *e) {
 				NSLog(@"%@", e);
 			}
@@ -171,6 +157,7 @@
 	[listenerObject irPerformOnDeallocation:^{
 	
 		dispatch_release(ownQueue);
+		ownQueue = nil;
 		
 	}];
 
@@ -182,16 +169,9 @@
 	
 	NSParameterAssert(self.irAutoMergeListener);
 	[[NSNotificationCenter defaultCenter] removeObserver:self.irAutoMergeListener];
+	
+	self.irAutoMergeListener = nil;
 
-}
-
-- (void) irHandleManagedObjectContextDidSaveNotification:(NSNotification *)note {
-	
-	NSParameterAssert([self irIsMergingFromSavesAutomatically]);
-	
-	__block __typeof__(self) nrSelf = self;
-	
-	
 }
 
 @end

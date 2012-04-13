@@ -1,6 +1,6 @@
 //
 //  IRObservings.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 2/8/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -52,14 +52,10 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 
 - (NSMutableDictionary *) irObservingsHelpers {
 
-	NSMutableDictionary *associatedHelpers = objc_getAssociatedObject(self, kAssociatedIRObservingsHelpers);
-	
+	NSMutableDictionary *associatedHelpers = objc_getAssociatedObject(self, &kAssociatedIRObservingsHelpers);
 	if (!associatedHelpers) {
-	
 		associatedHelpers = [NSMutableDictionary dictionary];
-		
-		objc_setAssociatedObject(self, kAssociatedIRObservingsHelpers, associatedHelpers, OBJC_ASSOCIATION_RETAIN);
-			
+		objc_setAssociatedObject(self, &kAssociatedIRObservingsHelpers, associatedHelpers, OBJC_ASSOCIATION_RETAIN);
 	}
 	
 	return associatedHelpers;
@@ -83,7 +79,7 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 
 - (id) irAddObserverBlock:(IRObservingsCallbackBlock)aBlock forKeyPath:(NSString *)aKeyPath options:(NSKeyValueObservingOptions)options context:(void *)context {
 
-	id returnedHelper = [[[IRObservingsHelper alloc] initWithObserverBlock:aBlock withOwner:self keyPath:aKeyPath options:options context:context] autorelease];
+	id returnedHelper = [[IRObservingsHelper alloc] initWithObserverBlock:aBlock withOwner:self keyPath:aKeyPath options:options context:context];
 	[[self irObservingsHelperBlocksForKeyPath:aKeyPath] addObject:returnedHelper];
 	
 	return returnedHelper;
@@ -95,7 +91,6 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 	IRObservingsHelper *castHelper = (IRObservingsHelper *)aHelper;
 	NSParameterAssert([castHelper isKindOfClass:[IRObservingsHelper class]]);
 	
-	[[castHelper retain] autorelease];
 	[[self irObservingsHelperBlocksForKeyPath:castHelper.observedKeyPath] removeObject:castHelper];
 	[castHelper kill];
 
@@ -156,7 +151,7 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 	id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
 	id newValue = [change objectForKey:NSKeyValueChangeNewKey];
 	
-	if ((self.lastOldValue != oldValue) && (self.lastNewValue != newValue)) {
+	if ((self.lastOldValue != (__bridge void *)(oldValue)) && (self.lastNewValue != (__bridge void *)(newValue))) {
 	
 		NSKeyValueChange changeKind = NSKeyValueChangeSetting;
 		[[change objectForKey:NSKeyValueChangeKindKey] getValue:&changeKind];
@@ -164,8 +159,8 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 		if (self.callback)
 			self.callback(oldValue, newValue, changeKind);
 		
-		self.lastOldValue = oldValue;
-		self.lastNewValue = newValue;
+		self.lastOldValue = (__bridge void *)(oldValue);
+		self.lastNewValue = (__bridge void *)(newValue);
 	
 	}
 
@@ -185,8 +180,6 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 - (void) dealloc {
 
 	[self kill];
-	
-	[super dealloc];
 
 } 
 

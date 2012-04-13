@@ -56,8 +56,8 @@
 	
 	nil];
 	
-	self.whitespace = [[[NSAttributedString alloc] initWithString:@" " attributes:nil] autorelease];
-	self.linebreak = [[[NSAttributedString alloc] initWithString:@"\n" attributes:nil] autorelease];
+	self.whitespace = [[NSAttributedString alloc] initWithString:@" " attributes:nil];
+	self.linebreak = [[NSAttributedString alloc] initWithString:@"\n" attributes:nil];
 	
 	self.stringConversionEncoding = NSUTF8StringEncoding;
 	
@@ -67,38 +67,18 @@
 
 }
 
-- (void) dealloc {
-
-	self.skippedTagNames = nil;
-	self.linebreakingTagNames = nil;
-	self.whitespace = nil;
-	self.linebreak = nil;
-	self.attributeParsers = nil;
-	
-	[super dealloc];
-
-}
-
-
-
-
-
 - (NSAttributedString *) attributedStringForHTMLString:(NSString *)string {
 	
 	return [self attributedStringForHTMLData:[string dataUsingEncoding:self.stringConversionEncoding allowLossyConversion:YES]];
 
 }
 
-
-
-
-
 - (NSAttributedString *) attributedStringForHTMLData:(NSData *)data {
 
 #if 1
 #ifdef DEBUG
 
-	NSLog(@"attributedStringForHTMLData %@ \n %@", data, [[[NSString alloc] initWithData:data encoding:self.stringConversionEncoding] autorelease]);
+	NSLog(@"attributedStringForHTMLData %@ \n %@", data, [[NSString alloc] initWithData:data encoding:self.stringConversionEncoding]);
 
 #endif	
 #endif
@@ -116,7 +96,7 @@
 		
 	}
 	
-	NSMutableAttributedString *returnedString = [[[NSMutableAttributedString alloc] initWithString:@"" attributes:nil] autorelease];
+	NSMutableAttributedString *returnedString = [[NSMutableAttributedString alloc] initWithString:@"" attributes:nil];
 
 	for (IRXMLNode *aNode in queriedResponse)
 	[returnedString appendAttributedString:[self attributedStringForHTMLNode:aNode]];
@@ -131,7 +111,7 @@
 
 - (NSAttributedString *) attributedStringForHTMLNode:(IRXMLNode *)aNode {
 	
-	NSMutableAttributedString *workingString = [[[NSMutableAttributedString alloc] initWithString:@""] autorelease];
+	NSMutableAttributedString *workingString = [[NSMutableAttributedString alloc] initWithString:@""];
 	
 	if ([self skipsTagNamed:aNode.name])
 	return workingString;
@@ -165,7 +145,7 @@
 			
 		}
 		
-		[workingString appendAttributedString:[[[NSAttributedString alloc] initWithString:appendedContent] autorelease]];
+		[workingString appendAttributedString:[[NSAttributedString alloc] initWithString:appendedContent]];
 		
 	}
 	
@@ -196,7 +176,7 @@
 	}];
 	
 	
-	NSMutableAttributedString *returnedString = [[[NSMutableAttributedString alloc] initWithString:[workingString string]] autorelease];
+	NSMutableAttributedString *returnedString = [[NSMutableAttributedString alloc] initWithString:[workingString string]];
 	
 	if ([[attributes allKeys] count] > 0)
 	[returnedString addAttributes:attributes range:NSMakeRange(0, [[returnedString string] length])];
@@ -228,7 +208,7 @@
 
 - (BOOL) skipsTagNamed:(NSString *)aTagName {
 
-	return ([[[[self.skippedTagNames copy] autorelease] objectsWithOptions:NSEnumerationConcurrent passingTest: ^ (NSString *aComparedTagName, BOOL *stop) {
+	return ([[[self.skippedTagNames copy] objectsWithOptions:NSEnumerationConcurrent passingTest: ^ (NSString *aComparedTagName, BOOL *stop) {
 	
 		return (BOOL)[aComparedTagName isEqual:aTagName];
 	
@@ -238,7 +218,7 @@
 
 - (BOOL) insertsLinebreakBeforeTagNamed:(NSString *)aTagName {
 
-	return ([[[[self.linebreakingTagNames copy] autorelease] objectsWithOptions:NSEnumerationConcurrent passingTest: ^ (NSString *aComparedTagName, BOOL *stop) {
+	return ([[[self.linebreakingTagNames copy] objectsWithOptions:NSEnumerationConcurrent passingTest: ^ (NSString *aComparedTagName, BOOL *stop) {
 	
 		return (BOOL)[aComparedTagName isEqual:aTagName];
 	
@@ -306,7 +286,7 @@
 	
 	}
 	
-	[tagSpecificDictionary setObject:[[aParser copy] autorelease] forKey:anAttributeNameOrNil];
+	[tagSpecificDictionary setObject:[aParser copy] forKey:anAttributeNameOrNil];
 
 }
 
