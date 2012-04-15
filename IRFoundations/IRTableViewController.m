@@ -81,7 +81,11 @@
 		
 	} else {
 	
-		self.tableView = [[IRTableView alloc] initWithFrame:self.view.frame style:self.tableViewStyle];
+		if (!self.tableView) {
+			
+			self.tableView = [[IRTableView alloc] initWithFrame:self.view.frame style:self.tableViewStyle];
+			
+		}
 	
 	}
 	
