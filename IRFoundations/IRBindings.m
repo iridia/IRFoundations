@@ -21,7 +21,7 @@ NSString * const kAssociatedIRBindingsHelper = @"kAssociatedIRBindingsHelper";
 
 @interface IRBindingsHelper : NSObject
 
-@property (nonatomic, readwrite, assign) id owner;
+@property (nonatomic, readwrite, weak) id owner;
 
 - (void) irBind:(NSString *)aKeyPath toObject:(id)anObservedObject keyPath:(NSString *)remoteKeyPath options:(NSDictionary *)options;
 - (void) irUnbind:(NSString *)aKeyPath;
