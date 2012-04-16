@@ -11,7 +11,7 @@
 @class MKMapView;
 @interface IRUserTrackingBarButtonItem : UIBarButtonItem
 
-@property (nonatomic, readwrite, assign) IBOutlet MKMapView *mapView;
+@property (nonatomic, readwrite, weak) IBOutlet MKMapView *mapView;
 @property (nonatomic, readwrite, assign) UIBarStyle barStyle;
 @property (nonatomic, readwrite, assign) BOOL translucent;
 
