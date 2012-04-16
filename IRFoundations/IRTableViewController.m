@@ -81,9 +81,11 @@
 		
 	} else {
 	
-		if (!self.tableView) {
+		if (![self.tableView isKindOfClass:[IRTableView class]]) {
 			
 			self.tableView = [[IRTableView alloc] initWithFrame:self.view.frame style:self.tableViewStyle];
+			self.tableView.delegate = self;
+			self.tableView.dataSource = self;
 			
 		}
 	
