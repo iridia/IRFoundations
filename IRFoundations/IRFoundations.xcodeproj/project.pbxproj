@@ -147,6 +147,8 @@
 		FF3BE08B15375709004C5244 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB6795F141E384A006F84E3 /* CoreData.framework */; };
 		FF3BE08D1537570F004C5244 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF3BE08C1537570F004C5244 /* AudioToolbox.framework */; };
 		FF3BE0901537581D004C5244 /* IRActionSheetTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3BE08F1537581D004C5244 /* IRActionSheetTest.m */; };
+		FF3FC677153B6E6D00691E49 /* IRStoryboard.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3FC675153B6E6D00691E49 /* IRStoryboard.h */; };
+		FF3FC678153B6E6D00691E49 /* IRStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3FC676153B6E6D00691E49 /* IRStoryboard.m */; };
 		FF460D36149CFA2E00DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */ = {isa = PBXBuildFile; fileRef = FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */; };
 		FF460D42149CFB7400DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */; };
 		FF543EED14C2E63C005D3F7D /* IRCoreDataTestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF543EEC14C2E63C005D3F7D /* IRCoreDataTestObject.m */; };
@@ -449,6 +451,8 @@
 		FF3BE08C1537570F004C5244 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		FF3BE08E1537581D004C5244 /* IRActionSheetTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRActionSheetTest.h; sourceTree = "<group>"; };
 		FF3BE08F1537581D004C5244 /* IRActionSheetTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRActionSheetTest.m; sourceTree = "<group>"; };
+		FF3FC675153B6E6D00691E49 /* IRStoryboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRStoryboard.h; sourceTree = "<group>"; };
+		FF3FC676153B6E6D00691E49 /* IRStoryboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRStoryboard.m; sourceTree = "<group>"; };
 		FF50B4E014E557C3005B3B6A /* UIScrollView+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+IRAdditions.h"; sourceTree = "<group>"; };
 		FF50B4E114E557C3005B3B6A /* UIScrollView+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+IRAdditions.m"; sourceTree = "<group>"; };
 		FF543EEB14C2E63C005D3F7D /* IRCoreDataTestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCoreDataTestObject.h; sourceTree = "<group>"; };
@@ -804,6 +808,8 @@
 				FF0A8D0E1337B36A00DDA47C /* IRSemiTransparentBarButton.m */,
 				FF197A821535FC1100ADC4E6 /* IRStackView.h */,
 				FF197A831535FC1100ADC4E6 /* IRStackView.m */,
+				FF3FC675153B6E6D00691E49 /* IRStoryboard.h */,
+				FF3FC676153B6E6D00691E49 /* IRStoryboard.m */,
 				FF0A8D191337B36A00DDA47C /* IRSubtitledTableViewCell.h */,
 				FF0A8D1A1337B36A00DDA47C /* IRSubtitledTableViewCell.m */,
 				FF0A8D131337B36A00DDA47C /* IRTableView.h */,
@@ -1087,6 +1093,7 @@
 				FFD3484F15359C22007B7D2E /* IRTableViewCell.h in Headers */,
 				FF197A841535FC1100ADC4E6 /* IRStackView.h in Headers */,
 				FF197A891535FC8E00ADC4E6 /* IRScrollView.h in Headers */,
+				FF3FC677153B6E6D00691E49 /* IRStoryboard.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1389,6 +1396,7 @@
 				FFD3485015359C22007B7D2E /* IRTableViewCell.m in Sources */,
 				FF197A851535FC1100ADC4E6 /* IRStackView.m in Sources */,
 				FF197A8A1535FC8E00ADC4E6 /* IRScrollView.m in Sources */,
+				FF3FC678153B6E6D00691E49 /* IRStoryboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1896,6 +1904,7 @@
 				FF3BE07A15375564004C5244 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FF6380EC153754440023C7AB /* Build configuration list for PBXNativeTarget "IRFoundationsTouchTest" */ = {
 			isa = XCConfigurationList;
