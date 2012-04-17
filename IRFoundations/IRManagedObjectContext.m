@@ -139,11 +139,15 @@
 			
 		void (^merge)(void) = ^ {
 			
+			NSCParameterAssert([NSThread isMainThread]);
+			
 			@try {
 				[wSelf mergeChangesFromContextDidSaveNotification:note];
 			} @catch (NSException *e) {
 				NSLog(@"%@", e);
 			}
+			
+			[wSelf processPendingChanges];
 		
 		};
 			

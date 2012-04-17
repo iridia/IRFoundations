@@ -208,7 +208,7 @@ UIBezierPath * irCTFrameGetRunOutline (CTFrameRef aFrame, NSArray *runs, UIEdgeI
 		//	lineOrigin = (CGPoint){ lineOrigin.x, lineOrigin.y * -1 + OUITextLayoutUnlimitedSize + lineAscent + lineDescent };
 
 		__block CGFloat usedWidth = 0;
-		__block UIBezierPath *pathsInLine = [UIBezierPath bezierPath];
+		UIBezierPath *pathsInLine = [UIBezierPath bezierPath];
 		
 		irCTLineEnumerateRuns(aLine, ^(CTRunRef aRun, double runWidth, BOOL *stopRunEnum) {
 			
