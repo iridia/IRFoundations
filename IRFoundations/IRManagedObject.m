@@ -58,6 +58,8 @@
 
 + (NSArray *) insertOrUpdateObjectsIntoContext:(NSManagedObjectContext *)context withExistingProperty:(NSString *)managedObjectKeyPath matchingKeyPath:(NSString *)dictionaryKeyPath ofRemoteDictionaries:(NSArray *)dictionaries {
 
+	NSParameterAssert([NSThread isMainThread]);
+
 //	The value that local or remote key paths point to will be called markers
 
 	if (!dictionaries || [dictionaries isEqual:[NSNull null]] || ([dictionaries count] == 0))
@@ -285,10 +287,9 @@
 }
 
 
-
-
-
 + (NSArray *) insertOrUpdateObjectsUsingContext:(NSManagedObjectContext *)context withRemoteResponse:(NSArray *)inRemoteDictionaries usingMapping:(NSDictionary *)remoteKeyPathsToClassNames options:(IRManagedObjectOptions)options {
+
+	NSParameterAssert([NSThread isMainThread]);
 
 	if (![inRemoteDictionaries count])
 		return [NSArray array];
