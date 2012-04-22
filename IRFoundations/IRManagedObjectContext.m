@@ -141,11 +141,22 @@
 			
 			NSCParameterAssert([NSThread isMainThread]);
 			
+			//	Fire faults in wSelf for every single changed object.
+			//	This works around an issue where if a NSFetchedResultsController has a predicate, it won’t watch objects changed to fit the predicate
+			//	Also fixes production cases where Debug and Release behavior differs
+			
+			//	Hat tip: http://stackoverflow.com/questions/3923826/nsfetchedresultscontroller-with-predicate-ignores-changes-merged-from-different
+			
+			for (NSManagedObject *object in [[note userInfo] objectForKey:NSUpdatedObjectsKey])
+				[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
+			
 			@try {
 				[wSelf mergeChangesFromContextDidSaveNotification:note];
 			} @catch (NSException *e) {
 				NSLog(@"%@", e);
 			}
+			
+			//	Sanitation
 			
 			[wSelf processPendingChanges];
 		
