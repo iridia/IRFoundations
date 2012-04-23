@@ -15,6 +15,7 @@
 #import "NSThread+IRAdditions.h"
 #import "NSBundle+IRAdditions.h"
 #import "NSError+IRAdditions.h"
+#import "NSNotificationCenter+IRAdditions.h"
 
 #import "IRNoOp.h"
 #import "IRBindings.h"
