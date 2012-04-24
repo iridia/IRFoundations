@@ -10,8 +10,8 @@
 
 @interface NSNotificationCenter (IRAdditions)
 
-- (id) irWaitForName:(NSString *)name object:(id)obj withTimeout:(NSTimeInterval)timeoutDuration callback:(void (^)(BOOL didCatch, NSNotification *note))callback;
+- (id) irWaitForName:(NSString *)name object:(id)obj withTimeout:(NSTimeInterval)timeoutDuration callback:(void (^)(NSNotification *note))callback;
 
-//	Observe notification with matching criteria, fire callback on main queue, or remove observation and fire callback on main queue after hitting timeout
+//	Observe notification with matching criteria, fire callback with incoming notification as parameter.  Also fire checking block on timeout, and if callback was not fired by then, fire callback with nil notification as parameter
 
 @end
