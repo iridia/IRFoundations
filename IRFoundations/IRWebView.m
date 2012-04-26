@@ -47,6 +47,12 @@
 
 - (void) configure {
 
+#if TARGET_IPHONE_SIMULATOR
+
+	[NSClassFromString(@"WebView") performSelector:@selector(_enableRemoteInspector)];
+
+#endif
+
 	self.overlayView = [[UIView alloc] initWithFrame:self.bounds];
 	self.overlayView.userInteractionEnabled = NO;
 	self.overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
