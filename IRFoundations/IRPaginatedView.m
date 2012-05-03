@@ -239,7 +239,9 @@
 	CGRect pageRectInScrollView = CGRectInset([self pageRectForIndex:anIndex], -1 * self.horizontalSpacing, 0);
 	
 	[self.scrollView setContentOffset:pageRectInScrollView.origin animated:animate];
-	[self scrollViewDidScroll:self.scrollView];
+	
+	if (!animate)
+		[self removeOffscreenViews];
 
 }
 
@@ -252,6 +254,13 @@
 	if (oldCurrentPage != currentPage)
 		[self setNeedsLayout];
 	
+}
+
+- (void) scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+
+	[self setNeedsLayout];
+	[self removeOffscreenViews];
+
 }
 
 - (void) scrollViewDidEndDragging:(UIScrollView *)aSV willDecelerate:(BOOL)decelerate {
