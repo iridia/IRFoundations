@@ -147,19 +147,19 @@
 			
 			//	Hat tip: http://stackoverflow.com/questions/3923826/nsfetchedresultscontroller-with-predicate-ignores-changes-merged-from-different
 			
+			[wSelf mergeChangesFromContextDidSaveNotification:note];
+			
+			for (NSManagedObject *object in [[note userInfo] objectForKey:NSInsertedObjectsKey])
+				[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
+
 			for (NSManagedObject *object in [[note userInfo] objectForKey:NSUpdatedObjectsKey])
 				[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
-			
-			@try {
-				[wSelf mergeChangesFromContextDidSaveNotification:note];
-			} @catch (NSException *e) {
-				NSLog(@"%@", e);
-			}
-			
-			//	Sanitation
+
+			for (NSManagedObject *object in [[note userInfo] objectForKey:NSDeletedObjectsKey])
+				[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
 			
 			[wSelf processPendingChanges];
-		
+					
 		};
 			
 		if (ownQueue == currentQueue())
