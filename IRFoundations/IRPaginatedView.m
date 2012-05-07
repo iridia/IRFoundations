@@ -211,6 +211,12 @@
 
 - (NSUInteger) indexOfPageAtCurrentContentOffset {
 
+	return [self indexOfPageAtContentOffset:self.scrollView.contentOffset];
+	
+}
+
+- (NSUInteger) indexOfPageAtContentOffset:(CGPoint)contentOffset {
+
 	CGFloat pageWidth = [self pageRectForIndex:0].size.width;
 	if (pageWidth == 0) {
 		NSLog(@"Warning: page width is 0, %s returns 0", __PRETTY_FUNCTION__);
@@ -219,7 +225,7 @@
 	
 	pageWidth += 2.0f * self.horizontalSpacing;
 	 
-	CGFloat offsetX = self.scrollView.contentOffset.x;
+	CGFloat offsetX = contentOffset.x;
 	
 	NSInteger firstIndex = (NSInteger)floorf(offsetX / pageWidth);
 	NSInteger secondIndex = firstIndex + 1;
@@ -260,6 +266,63 @@
 
 	[self setNeedsLayout];
 	[self removeOffscreenViews];
+
+}
+
+- (void) scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+
+	if (self.scrollView.pagingEnabled)
+		return;
+	
+	if (velocity.x == 0)
+		return;
+
+	NSUInteger targetIndex = [self indexOfPageAtContentOffset:*targetContentOffset];
+	BOOL currentContentOffsetAtPageBoundary = CGPointEqualToPoint(self.scrollView.contentOffset, [self pageRectForIndex:targetIndex].origin);
+	
+	NSUInteger currentIndex = self.currentPage;
+	
+	if (velocity.x < 0) {
+		
+		if (targetIndex == currentIndex) {
+		
+			if (currentContentOffsetAtPageBoundary) {
+
+				if (targetIndex < (self.numberOfPages - 1))
+					targetIndex += 1;
+			
+			} else {
+				
+				if (targetIndex > 0)
+					targetIndex -= 1;
+			
+			}
+		
+		}
+	
+	} else if (velocity.x > 0) {
+		
+		if (targetIndex == currentIndex) {
+		
+			if (currentContentOffsetAtPageBoundary) {
+			
+				if (targetIndex > 0)
+					targetIndex -= 1;
+			
+			} else {
+				
+				if (targetIndex < (self.numberOfPages - 1))
+					targetIndex += 1;
+					
+			}
+		
+		}
+	
+	}
+	
+	CGPoint newContentOffset = [self pageRectForIndex:targetIndex].origin;
+
+	*targetContentOffset = newContentOffset;
 
 }
 
