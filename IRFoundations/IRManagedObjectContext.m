@@ -118,28 +118,23 @@
 - (void) irAutoMergeSetUp {
 
 	NSParameterAssert(!self.irAutoMergeListener);
-
-	dispatch_queue_t (^currentQueue)() = ^ {
-		return [NSThread isMainThread] ? dispatch_get_main_queue() : dispatch_get_current_queue();
-	};
+	NSParameterAssert([NSThread isMainThread]);
 
 	__weak IRManagedObjectContext *wSelf = self;
-	__block dispatch_queue_t ownQueue = currentQueue();
-	dispatch_retain(ownQueue);
 	
-	id listenerObject = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
+	self.irAutoMergeListener = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
 		
-		NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
-		
-		if (savedContext == wSelf)
-			return;
-		
-		if (savedContext.persistentStoreCoordinator != wSelf.persistentStoreCoordinator)
-			return;
+		CFRunLoopPerformBlock(CFRunLoopGetMain(), kCFRunLoopDefaultMode, ^{
 			
-		void (^merge)(void) = ^ {
+			NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
+			if (!wSelf)
+				return;
 			
-			NSCParameterAssert([NSThread isMainThread]);
+			if (savedContext == wSelf)
+				return;
+			
+			if (savedContext.persistentStoreCoordinator != wSelf.persistentStoreCoordinator)
+				return;
 			
 			//	Fire faults in wSelf for every single changed object.
 			//	This works around an issue where if a NSFetchedResultsController has a predicate, it won’t watch objects changed to fit the predicate
@@ -160,24 +155,10 @@
 			
 			[wSelf processPendingChanges];
 					
-		};
-			
-		if (ownQueue == currentQueue())
-			merge();
-		else 
-			dispatch_async(ownQueue, merge);
+		});
 		
 	}];
 	
-	[listenerObject irPerformOnDeallocation:^{
-	
-		dispatch_release(ownQueue);
-		ownQueue = nil;
-		
-	}];
-
-	self.irAutoMergeListener = listenerObject;
-
 }
 
 - (void) irAutoMergeTearDown {
