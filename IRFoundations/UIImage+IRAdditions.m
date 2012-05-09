@@ -215,7 +215,7 @@ static void __attribute__((constructor)) initialize() {
 
 - (UIImage *) irDecodedImage {
 
-	CGImageRef cgImage = self.CGImage;
+	CGImageRef cgImage = [self irStandardImage].CGImage;
 	size_t width = CGImageGetWidth(cgImage);
 	size_t height = CGImageGetHeight(cgImage);
 	
