@@ -36,8 +36,10 @@
 
 - (NSString *) displayVersionString {
 
-	NSDictionary *bundleInfo = [self infoDictionary];
-	NSString *versionString = [NSString stringWithFormat:@"%@ %@ (%@) # %@", [bundleInfo objectForKey:@"CFBundleDisplayName"], [bundleInfo objectForKey:@"CFBundleShortVersionString"], [bundleInfo objectForKey:(id)kCFBundleVersionKey], [bundleInfo objectForKey:@"IRCommitSHA"]];
+	NSMutableDictionary *bundleInfo = [[self infoDictionary] mutableCopy];
+	[bundleInfo addEntriesFromDictionary:[self localizedInfoDictionary]];
+	
+	NSString *versionString = [NSString stringWithFormat:@"%@ %@ (%@)", [bundleInfo objectForKey:@"CFBundleDisplayName"], [bundleInfo objectForKey:@"CFBundleShortVersionString"], [bundleInfo objectForKey:(id)kCFBundleVersionKey]];
 	
 	return versionString;
 
