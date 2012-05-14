@@ -123,9 +123,9 @@
 	__weak IRManagedObjectContext *wSelf = self;
 	
 	self.irAutoMergeListener = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
+	
+		dispatch_async(dispatch_get_main_queue(), ^ {
 		
-		CFRunLoopPerformBlock(CFRunLoopGetMain(), kCFRunLoopDefaultMode, ^{
-			
 			NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
 			if (!wSelf)
 				return;
