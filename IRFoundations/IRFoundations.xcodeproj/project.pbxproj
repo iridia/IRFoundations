@@ -106,6 +106,8 @@
 		FF27A6AC133E2C16008C8DDA /* IRBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */; };
 		FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6E1133E3526008C8DDA /* IRBusyView.h */; };
 		FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6E2133E3526008C8DDA /* IRBusyView.m */; };
+		FF2851F91562442D00D7F5A4 /* IRDataStore+FileOperations.h in Headers */ = {isa = PBXBuildFile; fileRef = FF2851F71562442C00D7F5A4 /* IRDataStore+FileOperations.h */; };
+		FF2851FA1562442D00D7F5A4 /* IRDataStore+FileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2851F81562442D00D7F5A4 /* IRDataStore+FileOperations.m */; };
 		FF3588FD14EE74F5005B452C /* NSObject+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3588FB14EE74F5005B452C /* NSObject+IRAdditions.h */; };
 		FF3588FE14EE74F5005B452C /* NSObject+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3588FB14EE74F5005B452C /* NSObject+IRAdditions.h */; };
 		FF3588FF14EE74F5005B452C /* NSObject+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3588FC14EE74F5005B452C /* NSObject+IRAdditions.m */; };
@@ -426,6 +428,8 @@
 		FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBarButtonItem.m; sourceTree = "<group>"; };
 		FF27A6E1133E3526008C8DDA /* IRBusyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBusyView.h; sourceTree = "<group>"; };
 		FF27A6E2133E3526008C8DDA /* IRBusyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBusyView.m; sourceTree = "<group>"; };
+		FF2851F71562442C00D7F5A4 /* IRDataStore+FileOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRDataStore+FileOperations.h"; sourceTree = "<group>"; };
+		FF2851F81562442D00D7F5A4 /* IRDataStore+FileOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IRDataStore+FileOperations.m"; sourceTree = "<group>"; };
 		FF3588FB14EE74F5005B452C /* NSObject+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+IRAdditions.h"; sourceTree = "<group>"; };
 		FF3588FC14EE74F5005B452C /* NSObject+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+IRAdditions.m"; sourceTree = "<group>"; };
 		FF35890214EE7567005B452C /* NSArray+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+IRAdditions.h"; sourceTree = "<group>"; };
@@ -864,6 +868,8 @@
 			children = (
 				FF97382613D82496003D1722 /* IRDataStore.h */,
 				FF97382713D82496003D1722 /* IRDataStore.m */,
+				FF2851F71562442C00D7F5A4 /* IRDataStore+FileOperations.h */,
+				FF2851F81562442D00D7F5A4 /* IRDataStore+FileOperations.m */,
 				FF539BA415409B9C003BFD66 /* NSFetchRequest+IRAdditions.h */,
 				FF539BA515409B9C003BFD66 /* NSFetchRequest+IRAdditions.m */,
 				FF0A8D241337B36A00DDA47C /* IRManagedObject.h */,
@@ -1101,6 +1107,7 @@
 				FF197A891535FC8E00ADC4E6 /* IRScrollView.h in Headers */,
 				FF3FC677153B6E6D00691E49 /* IRStoryboard.h in Headers */,
 				FF539BA615409B9C003BFD66 /* NSFetchRequest+IRAdditions.h in Headers */,
+				FF2851F91562442D00D7F5A4 /* IRDataStore+FileOperations.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1405,6 +1412,7 @@
 				FF197A8A1535FC8E00ADC4E6 /* IRScrollView.m in Sources */,
 				FF3FC678153B6E6D00691E49 /* IRStoryboard.m in Sources */,
 				FF539BA715409B9C003BFD66 /* NSFetchRequest+IRAdditions.m in Sources */,
+				FF2851FA1562442D00D7F5A4 /* IRDataStore+FileOperations.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
