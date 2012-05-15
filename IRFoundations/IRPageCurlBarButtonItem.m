@@ -72,8 +72,7 @@
 	BOOL isDefault = (self.barStyle == UIBarStyleDefault);
 	BOOL isBlack = (self.barStyle == UIBarStyleBlackOpaque) || ((self.barStyle == UIBarStyleBlack) && !self.translucent);
 	BOOL isBlackTranslucent = (self.barStyle == UIBarStyleBlackTranslucent) || ((self.barStyle == UIBarStyleBlack) && self.translucent);
-	BOOL isLandscapePhone = UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) && ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone);
-	
+		
 	void (^setImage)(NSString *name, UIControlState, UIBarMetrics) = ^ (NSString *name, UIControlState state, UIBarMetrics metrics) {
 		[self setBackgroundImage:(name ? IRUIKitImage(name) : nil) forState:state barMetrics:metrics];
 	};

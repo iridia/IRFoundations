@@ -343,7 +343,6 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 	if (object == self) {
 	
 		NSDictionary *relationships = [[self class] orderedRelationships];
-		NSKeyValueChange changeType = [[change objectForKey:NSKeyValueChangeKindKey] unsignedIntegerValue];
 		
 		if ([[relationships allKeys] containsObject:keyPath]) {
 		
