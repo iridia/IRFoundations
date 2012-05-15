@@ -58,10 +58,6 @@
 
 + (NSArray *) insertOrUpdateObjectsIntoContext:(NSManagedObjectContext *)context withExistingProperty:(NSString *)managedObjectKeyPath matchingKeyPath:(NSString *)dictionaryKeyPath ofRemoteDictionaries:(NSArray *)dictionaries {
 
-	NSParameterAssert([NSThread isMainThread]);
-
-//	The value that local or remote key paths point to will be called markers
-
 	if (!dictionaries || [dictionaries isEqual:[NSNull null]] || ([dictionaries count] == 0))
 		return nil;
 	
@@ -289,8 +285,6 @@
 
 + (NSArray *) insertOrUpdateObjectsUsingContext:(NSManagedObjectContext *)context withRemoteResponse:(NSArray *)inRemoteDictionaries usingMapping:(NSDictionary *)remoteKeyPathsToClassNames options:(IRManagedObjectOptions)options {
 
-	NSParameterAssert([NSThread isMainThread]);
-
 	if (![inRemoteDictionaries count])
 		return [NSArray array];
 	
@@ -330,11 +324,10 @@
 				
 			}
 			
-			NSString * const nodeLocalKeyPath = [nodeEntityClass keyPathHoldingUniqueValue];
-			//	NSString * const nodeRemoteKeyPath = nodeLocalKeyPath ? [[[nodeEntityClass remoteDictionaryConfigurationMapping] allKeysForObject:nodeLocalKeyPath] objectAtIndex:0] : nil;
-			
-			BOOL const relationIsToMany = [[baseEntityRelationships objectForKey:rootLocalKeyPath] isToMany];
-			BOOL const usesIndividualAdd = (options & IRManagedObjectOptionIndividualOperations);
+			NSRelationshipDescription *relationship = [baseEntityRelationships objectForKey:rootLocalKeyPath];
+			BOOL const relationIsToMany = [relationship isToMany];
+			BOOL const relationIsOrdered = [relationship isOrdered];
+			BOOL const usesIndividualAdd = relationIsToMany && !relationIsOrdered && (options & IRManagedObjectOptionIndividualOperations);
 			
 			NSArray *nodeRepresentations = [usedRemoteDictionaries irMap:IRArrayMapCallbackMakeWithKeyPath(rootRemoteKeyPath)];
 			NSArray *entityRepresentations = [nodeRepresentations irFlatten];
@@ -363,14 +356,31 @@
 				
 				if (relationIsToMany) {
 				
-					if (usesIndividualAdd) {
-				
-						for (id anObject in relatedEntities)
-							[[baseObject mutableSetValueForKeyPath:rootLocalKeyPath] addObject:anObject];
+					if (relationIsOrdered) {
+					
+						NSMutableOrderedSet *mos = [baseObject mutableOrderedSetValueForKeyPath:rootLocalKeyPath];
 						
+						[mos removeAllObjects];
+						[mos addObjectsFromArray:relatedEntities];
+					
 					} else {
 					
-						[[baseObject mutableSetValueForKeyPath:rootLocalKeyPath] addObjectsFromArray:relatedEntities];
+						NSMutableSet *ms = [baseObject mutableSetValueForKeyPath:rootLocalKeyPath];
+				
+						if (usesIndividualAdd) {
+					
+							[ms removeAllObjects];
+					
+							for (id anObject in relatedEntities)
+								[[baseObject mutableSetValueForKeyPath:rootLocalKeyPath] addObject:anObject];
+							
+						} else {
+						
+							//	Bad form: Losing implicit ordering this way
+						
+							[ms setSet:[NSSet setWithArray:relatedEntities]];
+						
+						}
 					
 					}
 					
