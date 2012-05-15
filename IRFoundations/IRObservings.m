@@ -77,12 +77,31 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 
 }
 
-- (id) irAddObserverBlock:(IRObservingsCallbackBlock)aBlock forKeyPath:(NSString *)aKeyPath options:(NSKeyValueObservingOptions)options context:(void *)context {
+- (id) irObserve:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context withBlock:(IRObservingsCallbackBlock)block {
 
-	id returnedHelper = [[IRObservingsHelper alloc] initWithObserverBlock:aBlock withOwner:self keyPath:aKeyPath options:options context:context];
-	[[self irObservingsHelperBlocksForKeyPath:aKeyPath] addObject:returnedHelper];
+	NSParameterAssert(keyPath);
+	NSParameterAssert(options);
+	NSParameterAssert(block);
+	
+	id returnedHelper = [[IRObservingsHelper alloc] initWithObserverBlock:block withOwner:self keyPath:keyPath options:options context:context];
+	[[self irObservingsHelperBlocksForKeyPath:keyPath] addObject:returnedHelper];
 	
 	return returnedHelper;
+	
+
+}
+
+- (id) irAddObserverBlock:(IRObservingsLegacyCallbackBlock)aBlock forKeyPath:(NSString *)aKeyPath options:(NSKeyValueObservingOptions)options context:(void *)context {
+
+	NSParameterAssert(aBlock);
+	NSParameterAssert(aKeyPath);
+	NSParameterAssert(options);
+	
+	return [self irObserve:aKeyPath options:options context:context withBlock:^(NSKeyValueChange kind, id fromValue, id toValue, NSIndexSet *indices, BOOL isPrior) {
+	
+		aBlock(fromValue, toValue, kind);
+		
+	}];
 
 }
 
@@ -154,10 +173,13 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 	if ((self.lastOldValue != (__bridge void *)(oldValue)) && (self.lastNewValue != (__bridge void *)(newValue))) {
 	
 		NSKeyValueChange changeKind = NSKeyValueChangeSetting;
+		NSIndexSet *indices = [change objectForKey:NSKeyValueChangeIndexesKey];
+		BOOL isPrior = [[change objectForKey:NSKeyValueChangeNotificationIsPriorKey] isEqual:(id)kCFBooleanTrue];
+		
 		[[change objectForKey:NSKeyValueChangeKindKey] getValue:&changeKind];
 		
 		if (self.callback)
-			self.callback(oldValue, newValue, changeKind);
+			self.callback(changeKind, oldValue, newValue, indices, isPrior);
 		
 		self.lastOldValue = (__bridge void *)(oldValue);
 		self.lastNewValue = (__bridge void *)(newValue);
