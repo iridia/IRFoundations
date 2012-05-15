@@ -321,6 +321,7 @@
 	}
 	
 	CGPoint newContentOffset = [self pageRectForIndex:targetIndex].origin;
+	newContentOffset.x -= self.horizontalSpacing;
 
 	*targetContentOffset = newContentOffset;
 
