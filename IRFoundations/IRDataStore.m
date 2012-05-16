@@ -188,13 +188,23 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 		
 }
 
+- (IRManagedObjectContext *) contextWithConcurrencyType:(NSManagedObjectContextConcurrencyType)type {
+
+	IRManagedObjectContext *returnedContext = [[IRManagedObjectContext alloc] initWithConcurrencyType:type];
+	[returnedContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
+	[returnedContext setUndoManager:nil];
+	
+	return returnedContext;
+
+}
+
 - (IRManagedObjectContext *) defaultAutoUpdatedMOC {
 
 	__block IRManagedObjectContext *returnedContext = objc_getAssociatedObject(self, &kIRDataStore_DefaultAutoUpdatedMOC);
 	
 	if (!returnedContext) {
 	
-		returnedContext = (IRManagedObjectContext *)[self disposableMOC];
+		returnedContext = (IRManagedObjectContext *)[self contextWithConcurrencyType:NSMainQueueConcurrencyType];
 		[returnedContext irBeginMergingFromSavesAutomatically];
 		[returnedContext irPerformOnDeallocation: ^ {
 			[returnedContext irStopMergingFromSavesAutomatically];
@@ -210,11 +220,7 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 
 - (IRManagedObjectContext *) disposableMOC {
 
-	IRManagedObjectContext *returnedContext = [[IRManagedObjectContext alloc] init];
-	[returnedContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
-	[returnedContext setUndoManager:nil];
-	
-	return returnedContext;
+	return [self contextWithConcurrencyType:NSPrivateQueueConcurrencyType];
 
 }
 

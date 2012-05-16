@@ -31,6 +31,8 @@
 
 - (NSURL *) defaultPersistentStoreURL;	//	Root implementation looks at persistentStoreName
 
+- (NSManagedObjectContext *) newContextWithConcurrencyType:(NSManagedObjectContextConcurrencyType)type;
+
 - (NSManagedObjectContext *) defaultAutoUpdatedMOC;
 - (NSManagedObjectContext *) disposableMOC;
 
