@@ -7,9 +7,7 @@
 //
 
 #import "IRObservings.h"
-
-
-
+#import "IRLifetimeHelper.h"
 
 
 NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpers";
@@ -104,6 +102,25 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 	}];
 
 }
+
+- (void) irObserveObject:(id)target keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context withBlock:(IRObservingsCallbackBlock)block {
+
+	id helper = [target irObserve:keyPath options:options context:context withBlock:block];
+	
+	__weak NSObject *wSelf = self;
+	__weak id wHelper = helper;
+	__weak id wTarget = target;
+	
+	[wSelf irPerformOnDeallocation:^{
+	
+		if (wHelper) {
+			[wTarget irRemoveObservingsHelper:wHelper];
+		}
+		
+	}];
+
+}
+
 
 - (void) irRemoveObservingsHelper:(id)aHelper {
 
