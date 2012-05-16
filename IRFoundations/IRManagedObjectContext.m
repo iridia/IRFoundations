@@ -124,7 +124,7 @@
 	
 	self.irAutoMergeListener = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
 	
-		dispatch_async(dispatch_get_main_queue(), ^ {
+		void (^merge)(void) = ^ {
 		
 			NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
 			if (!wSelf)
@@ -155,7 +155,35 @@
 			
 			[wSelf processPendingChanges];
 					
-		});
+		};
+		
+		switch (wSelf.concurrencyType) {
+		
+			case NSConfinementConcurrencyType: {
+			
+				//	TBD: maybe use an instance method to allow customization of the queue on which things happen
+			
+				if ([NSThread isMainThread])
+					merge();
+				else
+					dispatch_async(dispatch_get_main_queue(), merge);
+			
+				break;
+			
+			}
+			
+			case NSPrivateQueueConcurrencyType:
+			case NSMainQueueConcurrencyType: {
+			
+				//	TBD: test
+				
+				[self performBlockAndWait:merge];
+			
+				break;
+			
+			}
+
+		}
 		
 	}];
 	
