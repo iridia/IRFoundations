@@ -16,4 +16,6 @@
 - (NSString *) displayVersionString;
 - (NSString *) debugVersionString;
 
+- (NSDictionary *) irInfoDictionary;
+
 @end
