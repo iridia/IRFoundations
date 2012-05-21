@@ -8,17 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "TargetConditionals.h"
-#import <UIKit/UIKit.h>
+
+#import <CoreGraphics/CoreGraphics.h>
 
 #if TARGET_OS_IPHONE
-#import <CoreGraphics/CGBase.h>
+	#import <UIKit/UIKit.h>
 #else
-#import <ApplicationServices/ApplicationServices.h>
-
-#define NSStringFromCGRect(aRect) NSStringFromRect(NSRectFromCGRect(aRect))
-#define NSStringFromCGSize(aSize) NSStringFromSize(NSSizeFromCGSize(aSize))
-#define NSStringFromCGPoint(aPoint) NSStringFromPoint(NSPointFromCGPoint(aPoint))
-
+	#import <ApplicationServices/ApplicationServices.h>
+	#define NSStringFromCGRect(aRect) NSStringFromRect(NSRectFromCGRect(aRect))
+	#define NSStringFromCGSize(aSize) NSStringFromSize(NSSizeFromCGSize(aSize))
+	#define NSStringFromCGPoint(aPoint) NSStringFromPoint(NSPointFromCGPoint(aPoint))
 #endif
 
 #import <QuartzCore/QuartzCore.h>
