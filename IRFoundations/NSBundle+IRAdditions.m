@@ -36,11 +36,18 @@
 
 - (NSString *) displayVersionString {
 
-	NSMutableDictionary *bundleInfo = [self irInfoDictionary];
+	static NSString *string = nil;
+	static dispatch_once_t onceToken;
 	
-	NSString *versionString = [NSString stringWithFormat:@"%@ %@ (%@)", [bundleInfo objectForKey:@"CFBundleDisplayName"], [bundleInfo objectForKey:@"CFBundleShortVersionString"], [bundleInfo objectForKey:(id)kCFBundleVersionKey]];
-	
-	return versionString;
+	dispatch_once(&onceToken, ^{
+		
+		NSDictionary *bundleInfo = [self irInfoDictionary];
+		
+		string = [NSString stringWithFormat:@"%@ %@ (%@)", [bundleInfo objectForKey:@"CFBundleDisplayName"], [bundleInfo objectForKey:@"CFBundleShortVersionString"], [bundleInfo objectForKey:(id)kCFBundleVersionKey]];
+		
+	});
+
+	return string;
 
 }
 
