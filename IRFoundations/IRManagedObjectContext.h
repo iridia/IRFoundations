@@ -20,8 +20,12 @@
 
 //	Note that these methods are NOT thread safe; you’ll have to call them on the thread that initializes the context
 
+- (void) irPerform:(void(^)(void))block waitUntilDone:(BOOL)sync;
+
 - (void) irBeginMergingFromSavesAutomatically;
 - (void) irStopMergingFromSavesAutomatically;
 - (BOOL) irIsMergingFromSavesAutomatically;
+
+- (void) irMakeAutoMerging;
 
 @end

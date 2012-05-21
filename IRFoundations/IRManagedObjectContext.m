@@ -17,37 +17,15 @@
 - (NSManagedObject *) irManagedObjectForURI:(NSURL *)anURI {
 
 	NSManagedObject *returnedObject = nil;
-	NSManagedObjectID *objectID = nil;
+	NSManagedObjectID *objectID = [[self persistentStoreCoordinator] managedObjectIDForURIRepresentation:anURI];
+		
+	if (!objectID)
+		return nil;
 
-	@try {
+	//	This is not necessary
+	//	NSParameterAssert(![objectID isTemporaryID]);
 	
-		objectID = [[self persistentStoreCoordinator] managedObjectIDForURIRepresentation:anURI];
-		
-		if (!objectID) {
-		
-			NSLog(@"%s: Object ID not recognized by persistent store coordinator.", __PRETTY_FUNCTION__);
-			
-			NSLog(@"%s: URI Representation: %@", __PRETTY_FUNCTION__, anURI);
-			NSLog(@"%s: Object Store ID: %@", __PRETTY_FUNCTION__, [anURI host]);
-			NSLog(@"%s: All Store IDs: %@", __PRETTY_FUNCTION__, [self.persistentStoreCoordinator.persistentStores irMap: ^ (NSPersistentStore *aStore, NSUInteger index, BOOL *stop) {
-				return [aStore identifier];
-			}]);
-		
-			return nil;
-		
-		}
-		
-		NSParameterAssert(![objectID isTemporaryID]);
-		
-		returnedObject = [self objectWithID:objectID];
-	
-	} @catch (NSException *exception) {
-	
-		NSLog(@"%s: Exception: %@", __PRETTY_FUNCTION__, exception);
-		
-	}
-	
-	return returnedObject;
+	return [self objectWithID:objectID];
 
 }
 
@@ -57,7 +35,10 @@
 @interface IRManagedObjectContext ()
 
 @property (nonatomic, readwrite, assign, setter=irSetAutoMergeStackCount:, getter=irAutoMergeStackCount) NSUInteger irAutoMergeStackCount;
-@property (nonatomic, readwrite, retain) id irAutoMergeListener;
+@property (nonatomic, readwrite, strong) id irAutoMergeListener;
+
+@property (nonatomic, readwrite, weak) NSThread *initializingThread;
+@property (nonatomic, readwrite, assign) BOOL initializingThreadWasMainThread;
 
 - (void) irAutoMergeSetUp;
 - (void) irAutoMergeTearDown;
@@ -67,6 +48,75 @@
 
 @implementation IRManagedObjectContext
 @synthesize irAutoMergeStackCount, irAutoMergeListener;
+@synthesize initializingThread, initializingThreadWasMainThread;
+
+- (id) initWithConcurrencyType:(NSManagedObjectContextConcurrencyType)ct {
+
+	self = [super initWithConcurrencyType:ct];
+	self.initializingThread = [NSThread currentThread];
+	
+	return self;
+
+}
+
+- (void) irPerform:(void(^)(void))block waitUntilDone:(BOOL)sync {
+
+	NSCParameterAssert(block);
+	
+	switch (self.concurrencyType) {
+	
+		case NSConfinementConcurrencyType: {
+		
+			if ([[NSThread currentThread] isEqual:self.initializingThread] && sync) {
+				
+				block();
+				
+			} else {
+			
+				if (!self.initializingThread)
+					@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Initialing thread no longer exists" userInfo:nil];
+					
+				[self performSelector:@selector(irPerformBlock:) onThread:self.initializingThread withObject:[block copy] waitUntilDone:sync modes:[NSArray arrayWithObjects:
+				
+					NSRunLoopCommonModes,
+				
+				nil]];
+			
+			}
+		
+			break;
+		
+		}
+		
+		case NSPrivateQueueConcurrencyType:
+		case NSMainQueueConcurrencyType: {
+		
+			//	TBD: test
+			
+			if (sync) {
+			
+				[self performBlockAndWait:block];
+			
+			} else {
+			
+				[self performBlock:block];
+			
+			}
+		
+			break;
+		
+		}
+
+	}
+
+}
+
+- (void) irPerformBlock:(void(^)(void))block {
+
+	NSCParameterAssert(block);
+	block();
+
+}
 
 - (void) dealloc {
 
@@ -123,68 +173,9 @@
 	__weak IRManagedObjectContext *wSelf = self;
 	
 	self.irAutoMergeListener = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
-	
-		void (^merge)(void) = ^ {
-		
-			NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
-			if (!wSelf)
-				return;
 			
-			if (savedContext == wSelf)
-				return;
+		[wSelf irAutoMergeHandleManagedObjectContextDidSave:note];
 			
-			if (savedContext.persistentStoreCoordinator != wSelf.persistentStoreCoordinator)
-				return;
-			
-			//	Fire faults in wSelf for every single changed object.
-			//	This works around an issue where if a NSFetchedResultsController has a predicate, it won’t watch objects changed to fit the predicate
-			//	Also fixes production cases where Debug and Release behavior differs
-			
-			//	Hat tip: http://stackoverflow.com/questions/3923826/nsfetchedresultscontroller-with-predicate-ignores-changes-merged-from-different
-			
-			[wSelf mergeChangesFromContextDidSaveNotification:note];
-			
-			for (NSManagedObject *object in [[note userInfo] objectForKey:NSInsertedObjectsKey])
-				[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
-
-			for (NSManagedObject *object in [[note userInfo] objectForKey:NSUpdatedObjectsKey])
-				[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
-
-			for (NSManagedObject *object in [[note userInfo] objectForKey:NSDeletedObjectsKey])
-				[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
-			
-			[wSelf processPendingChanges];
-					
-		};
-		
-		switch (wSelf.concurrencyType) {
-		
-			case NSConfinementConcurrencyType: {
-			
-				//	TBD: maybe use an instance method to allow customization of the queue on which things happen
-			
-				if ([NSThread isMainThread])
-					merge();
-				else
-					dispatch_async(dispatch_get_main_queue(), merge);
-			
-				break;
-			
-			}
-			
-			case NSPrivateQueueConcurrencyType:
-			case NSMainQueueConcurrencyType: {
-			
-				//	TBD: test
-				
-				[self performBlockAndWait:merge];
-			
-				break;
-			
-			}
-
-		}
-		
 	}];
 	
 }
@@ -195,6 +186,90 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self.irAutoMergeListener];
 	
 	self.irAutoMergeListener = nil;
+
+}
+
+- (void) irAutoMergeHandleManagedObjectContextDidSave:(NSNotification *)note {
+
+	__weak IRManagedObjectContext *wSelf = self;
+	
+	void (^merge)(void) = ^ {
+	
+		NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
+		if (!wSelf)
+			return;
+		
+		if (savedContext == wSelf)
+			return;
+		
+		if (savedContext.persistentStoreCoordinator != wSelf.persistentStoreCoordinator)
+			return;
+		
+		//	Fire faults in wSelf for every single changed object.
+		//	This works around an issue where if a NSFetchedResultsController has a predicate, it won’t watch objects changed to fit the predicate
+		//	Also fixes production cases where Debug and Release behavior differs
+		
+		//	Hat tip: http://stackoverflow.com/questions/3923826/nsfetchedresultscontroller-with-predicate-ignores-changes-merged-from-different
+		
+		[wSelf mergeChangesFromContextDidSaveNotification:note];
+		
+		for (NSManagedObject *object in [[note userInfo] objectForKey:NSInsertedObjectsKey])
+			[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
+
+		for (NSManagedObject *object in [[note userInfo] objectForKey:NSUpdatedObjectsKey])
+			[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
+
+		for (NSManagedObject *object in [[note userInfo] objectForKey:NSDeletedObjectsKey])
+			[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
+		
+		[wSelf processPendingChanges];
+				
+	};
+	
+	switch (wSelf.concurrencyType) {
+	
+		case NSConfinementConcurrencyType: {
+		
+			//	TBD: maybe use an instance method to allow customization of the queue on which things happen
+		
+			if ([NSThread isMainThread])
+				merge();
+			else
+				dispatch_async(dispatch_get_main_queue(), merge);
+		
+			break;
+		
+		}
+		
+		case NSPrivateQueueConcurrencyType:
+		case NSMainQueueConcurrencyType: {
+		
+			//	TBD: test
+			
+			[wSelf performBlockAndWait:merge];
+		
+			break;
+		
+		}
+
+	}
+
+}
+
+- (void) irMakeAutoMerging {
+
+	if (![self irIsMergingFromSavesAutomatically]) {
+	
+		__weak IRManagedObjectContext *wSelf = self;
+		
+		[self irBeginMergingFromSavesAutomatically];
+		[self irPerformOnDeallocation: ^ {
+			
+			[wSelf irStopMergingFromSavesAutomatically];
+			
+		}];
+	
+	}
 
 }
 

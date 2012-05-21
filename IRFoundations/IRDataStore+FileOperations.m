@@ -6,6 +6,15 @@
 //  Copyright (c) 2012 Iridia Productions. All rights reserved.
 //
 
+#import <TargetConditionals.h>
+
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+	#import <UIKit/UIKit.h>
+	#import <MobileCoreServices/MobileCoreServices.h>
+#else
+	#import <CoreServices/CoreServices.h>
+#endif
+
 #import "IRDataStore+FileOperations.h"
 #import "IRManagedObjectContext.h"
 

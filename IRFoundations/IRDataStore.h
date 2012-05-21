@@ -6,21 +6,10 @@
 //  Copyright 2011 Iridia Productions. All rights reserved.
 //
 
-#import <TargetConditionals.h>
-
-#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-	#import <UIKit/UIKit.h>
-	#import <MobileCoreServices/MobileCoreServices.h>
-#else
-	#import <CoreServices/CoreServices.h>
-#endif
-
+#import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-
-//	This class is the initial implementation for the application’s data store.
-//	To gain persistence and access the store, invoke the class method +defaultStore.
-
+@class IRManagedObjectContext;
 @interface IRDataStore : NSObject
 
 + (IRDataStore *) defaultStore;
@@ -32,15 +21,14 @@
 - (NSURL *) defaultPersistentStoreURL;	//	Root implementation looks at persistentStoreName
 
 - (NSManagedObjectContext *) newContextWithConcurrencyType:(NSManagedObjectContextConcurrencyType)type;
-
 - (NSManagedObjectContext *) defaultAutoUpdatedMOC;
 - (NSManagedObjectContext *) disposableMOC;
 
 - (void) performBlock:(void(^)(void))block waitUntilDone:(BOOL)waitsUntilDone;
 
-@property (nonatomic, readonly, retain) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, readonly, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (nonatomic, readwrite, retain) NSString *persistentStoreName; //	Defaults to the name of the application if nil
+@property (nonatomic, readonly, strong) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, readonly, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, readwrite, copy) NSString *persistentStoreName; //	Defaults to the name of the application if nil
 
 @end
 
