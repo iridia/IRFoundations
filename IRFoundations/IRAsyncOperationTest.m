@@ -29,7 +29,7 @@
 		
 			STAssertTrue([NSThread isMainThread], @"Operation %@ must be running its worker block on the main thread", self);
 			NSUInteger ownIndex = [operations indexOfObject:operation];
-			STAssertFalse(ownIndex == NSNotFound, @"Operation %@ must be tracked by the test case");
+			STAssertFalse(ownIndex == NSNotFound, @"Operation %@ must be tracked by the test case", operation);
 			
 			[operations enumerateObjectsUsingBlock:^(NSOperation *otherOp, NSUInteger idx, BOOL *stop) {
 				
@@ -61,7 +61,7 @@
 			
 			STAssertTrue([NSThread isMainThread], @"Operation %@ must be running its completion block on the main thread", self);
 			NSUInteger ownIndex = [operations indexOfObject:operation];
-			STAssertFalse(ownIndex == NSNotFound, @"Operation %@ must be tracked by the test case");
+			STAssertFalse(ownIndex == NSNotFound, @"Operation %@ must be tracked by the test case", operation);
 			
 			[operations enumerateObjectsUsingBlock:^(NSOperation *otherOp, NSUInteger idx, BOOL *stop) {
 				
@@ -114,7 +114,7 @@
 		__block IRAsyncBarrierOperation *operation = [IRAsyncBarrierOperation operationWithWorkerBlock:^(IRAsyncOperationCallback callback) {
 		
 			NSUInteger ownIndex = [operations indexOfObject:operation];
-			STAssertFalse(ownIndex == NSNotFound, @"Operation %@ must be tracked by the test case");
+			STAssertFalse(ownIndex == NSNotFound, @"Operation %@ must be tracked by the test case", operation);
 			
 			if (assertWorkerNotReached)
 				STFail(@"Worker block should not be reached in operation %@ (index %lu)", operation, (long)ownIndex);

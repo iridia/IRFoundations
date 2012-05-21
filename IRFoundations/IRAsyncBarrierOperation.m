@@ -40,16 +40,16 @@
 
 	if ([self hasFailedDependency]) {
 	
-		[self onMainQueue: ^ {
-		
+		self.workerTrampoline(^ {
+			
 			[self concludeWithResults:[NSError errorWithDomain:@"com.iridia.asyncOperation" code:0 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
 			
 				@"Operation is not going to run its worker block because a dependent operation has failed", NSLocalizedDescriptionKey,
 			
 			nil]]];
 			
-		}];
-		
+		});
+				
 		return;
 	
 	}

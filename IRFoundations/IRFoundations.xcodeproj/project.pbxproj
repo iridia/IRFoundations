@@ -153,6 +153,7 @@
 		FF3FC678153B6E6D00691E49 /* IRStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3FC676153B6E6D00691E49 /* IRStoryboard.m */; };
 		FF460D36149CFA2E00DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */ = {isa = PBXBuildFile; fileRef = FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */; };
 		FF460D42149CFB7400DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */; };
+		FF50D67D156AD88B0021011D /* IRAsyncOperationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FF70E53F152EDE64008BFB00 /* IRAsyncOperationTest.m */; };
 		FF539BA615409B9C003BFD66 /* NSFetchRequest+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF539BA415409B9C003BFD66 /* NSFetchRequest+IRAdditions.h */; };
 		FF539BA715409B9C003BFD66 /* NSFetchRequest+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF539BA515409B9C003BFD66 /* NSFetchRequest+IRAdditions.m */; };
 		FF543EED14C2E63C005D3F7D /* IRCoreDataTestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF543EEC14C2E63C005D3F7D /* IRCoreDataTestObject.m */; };
@@ -1466,6 +1467,7 @@
 			files = (
 				FF6380E8153754440023C7AB /* IRAlertViewTest.m in Sources */,
 				FF3BE0901537581D004C5244 /* IRActionSheetTest.m in Sources */,
+				FF50D67D156AD88B0021011D /* IRAsyncOperationTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
