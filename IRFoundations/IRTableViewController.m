@@ -28,7 +28,7 @@
 @synthesize persistsContentOffset;
 @synthesize persistsContentInset;
 @synthesize persistsStateWhenViewWillDisappear;
-@synthesize restoresStateWhenViewDidAppear;
+@synthesize restoresStateWhenViewWillAppear;
 
 - (id) initWithCoder:(NSCoder *)aDecoder {
 
@@ -67,7 +67,7 @@
 	self.persistsContentInset = YES;
 	
 	self.persistsStateWhenViewWillDisappear = YES;
-	self.restoresStateWhenViewDidAppear = YES;
+	self.restoresStateWhenViewWillAppear = YES;
 
 }
 
@@ -81,9 +81,11 @@
 		
 	} else {
 	
-		if (!self.tableView) {
+		if (![self.tableView isKindOfClass:[IRTableView class]]) {
 			
 			self.tableView = [[IRTableView alloc] initWithFrame:self.view.frame style:self.tableViewStyle];
+			self.tableView.delegate = self;
+			self.tableView.dataSource = self;
 			
 		}
 	
@@ -103,19 +105,19 @@
 
 }
 
-- (void) viewDidAppear:(BOOL)animated {
+- (void) viewWillAppear:(BOOL)animated {
 
-	[super viewDidAppear:animated];
+	[super viewWillAppear:animated];
 	
-	if (self.restoresStateWhenViewDidAppear)
-	[self restoreState];
+	if (self.restoresStateWhenViewWillAppear)
+		[self restoreState];
 	
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
 
 	if (self.persistsStateWhenViewWillDisappear)
-	[self persistState];
+		[self persistState];
 	
 	[[NSUserDefaults standardUserDefaults] synchronize];
 	
@@ -190,7 +192,8 @@
 		if (self.persistsContentInset)
 			usedY = MAX(-1 * persistedContentInset.top, usedY);
 	
-		persistedContentOffset.y = MIN(usedY, MAX(0, self.tableView.contentSize.height - CGRectGetHeight(self.tableView.bounds)));
+		if (self.tableView.contentSize.height)
+			persistedContentOffset.y = MIN(usedY, MAX(0, self.tableView.contentSize.height - CGRectGetHeight(self.tableView.bounds)));
 		
 		if (self.persistsContentInset)
 			persistedContentOffset.y = MAX(0, persistedContentOffset.y);

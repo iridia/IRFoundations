@@ -168,14 +168,14 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 		
 		if (!self.hasConfiguredObserving) {
 		
-			[self.managedObjectContext lock];
+//			[self.managedObjectContext lock];
 		
 			[self addObserver:self forKeyPath:setKey options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:(__bridge void *)(self)];
 			[self addObserver:self forKeyPath:arrayKey options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:(__bridge void *)(self)];
 			
 			self.hasConfiguredObserving = YES;
 		
-			[self.managedObjectContext unlock];
+//			[self.managedObjectContext unlock];
 			
 		}
 
@@ -343,7 +343,6 @@ NSString * const kObservingSetUp = @"IRManagedObject_SimulatedOrderedRelationshi
 	if (object == self) {
 	
 		NSDictionary *relationships = [[self class] orderedRelationships];
-		NSKeyValueChange changeType = [[change objectForKey:NSKeyValueChangeKindKey] unsignedIntegerValue];
 		
 		if ([[relationships allKeys] containsObject:keyPath]) {
 		

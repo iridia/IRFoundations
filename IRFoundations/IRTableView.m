@@ -12,7 +12,7 @@
 @interface IRTableView ()
 
 @property (nonatomic, readwrite, assign) UIEdgeInsets originalEdgeInsets;
-@property (nonatomic, readwrite, assign) id intendedDelegate;
+@property (nonatomic, readwrite, weak) id intendedDelegate;
 
 - (void) configure;
 

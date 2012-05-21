@@ -39,6 +39,8 @@
 		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:1]];
 	
 	STAssertNil(actionSheetController, @"Action Sheet Controller must have been deallocated");
+	
+	actionSheetController = nil;
 
 }
 
