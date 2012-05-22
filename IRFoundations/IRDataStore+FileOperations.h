@@ -40,4 +40,9 @@
 
 - (BOOL) updateObject:(NSManagedObject *)anObject inContext:(NSManagedObjectContext *)aContext takingBlobFromTemporaryFile:(NSString *)aPath usingResourceType:(NSString *)utiType forKeyPath:(NSString *)fileKeyPath matchingURL:(NSURL *)anURL forKeyPath:(NSString *)urlKeyPath error:(NSError **)outError;
 
+
+//	Hook for MagicKit integration thru custom application subclass
+
+- (NSString *) pathExtensionForFileAtPath:(NSString *)aPath;
+
 @end

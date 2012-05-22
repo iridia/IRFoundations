@@ -208,30 +208,43 @@
 	if (utiType)
 		preferredExtension = (__bridge_transfer NSString *)(UTTypeCopyPreferredTagWithClass((__bridge CFStringRef)utiType, kUTTagClassFilenameExtension));
 	
+	if (!preferredExtension)
+		preferredExtension = [self pathExtensionForFileAtPath:[fileURL path]];
+	
 	if (preferredExtension) {
 		
 		NSURL *newFileURL = [NSURL fileURLWithPath:[[[fileURL path] stringByDeletingPathExtension] stringByAppendingPathExtension:preferredExtension]];
 		
-		NSError *movingError = nil;
-		BOOL didMove = [[NSFileManager defaultManager] moveItemAtURL:fileURL toURL:newFileURL error:&movingError];
-		if (!didMove) {
-			
-			if (outError)
-				*outError = [NSError errorWithDomain:@"com.iridia.dataStore" code:0 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-					@"Could not rename the underlying persistent file", NSLocalizedDescriptionKey,
-				nil]];
-			
-			return NO;
-			
+		if (![fileURL isEqual:newFileURL]) {
+		
+			NSError *movingError = nil;
+			BOOL didMove = [[NSFileManager defaultManager] moveItemAtURL:fileURL toURL:newFileURL error:&movingError];
+			if (!didMove) {
+				
+				if (outError)
+					*outError = [NSError errorWithDomain:@"com.iridia.dataStore" code:0 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+						@"Could not rename the underlying persistent file", NSLocalizedDescriptionKey,
+					nil]];
+				
+				return NO;
+				
+			}
+		
+			fileURL = newFileURL;
+		
 		}
-			
-		fileURL = newFileURL;
 		
 	}
 	
 	[anObject setValue:[fileURL path] forKey:fileKeyPath];
 	
 	return YES;
+
+}
+
+- (NSString *) pathExtensionForFileAtPath:(NSString *)aPath {
+
+	return [aPath pathExtension];
 
 }
 
