@@ -11,11 +11,13 @@
 
 @class IRAsyncOperation;
 
+typedef void (^IRAsyncOperationInvoker)(void);
+
 typedef void (^IRAsyncOperationCallback)(id results);
 typedef void (^IRAsyncOperationWorker)(IRAsyncOperationCallback callback);
 
-typedef void (^IRAsyncOperationCallbackTrampoline)(void(^block)(void));
-typedef void (^IRAsyncOperationWorkerTrampoline)(void(^block)(void));
+typedef void (^IRAsyncOperationCallbackTrampoline)(IRAsyncOperationInvoker block);
+typedef void (^IRAsyncOperationWorkerTrampoline)(IRAsyncOperationInvoker block);
 
 
 @interface IRAsyncOperation : NSOperation <NSCopying>
