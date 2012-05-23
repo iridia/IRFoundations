@@ -63,6 +63,12 @@
 	
 	}];
 	
+	[self.target irPerformOnDeallocation:^{
+	
+		[wSelf dieIfAppropriate];
+		
+	}];
+	
 	return self;
 
 }
