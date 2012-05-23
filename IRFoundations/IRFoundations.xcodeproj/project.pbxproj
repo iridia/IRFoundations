@@ -245,6 +245,10 @@
 		FF9FBC1E150B8C62004A23FB /* IRPageCurlBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */; };
 		FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */; };
 		FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */; };
+		FFA5D471156CD65B00DEDA3A /* IRBindingsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA5D46F156CD65B00DEDA3A /* IRBindingsHelper.h */; };
+		FFA5D472156CD65B00DEDA3A /* IRBindingsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA5D470156CD65B00DEDA3A /* IRBindingsHelper.m */; };
+		FFA5D475156CD70900DEDA3A /* IRBindingsHelperContext.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA5D473156CD70900DEDA3A /* IRBindingsHelperContext.h */; };
+		FFA5D476156CD70900DEDA3A /* IRBindingsHelperContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA5D474156CD70900DEDA3A /* IRBindingsHelperContext.m */; };
 		FFA65DD8150AFC8700E8668C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB6795F141E384A006F84E3 /* CoreData.framework */; };
 		FFA65DDF150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA65DDD150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h */; };
 		FFA65DE0150AFE9A00E8668C /* IRUserTrackingBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA65DDE150AFE9A00E8668C /* IRUserTrackingBarButtonItem.m */; };
@@ -524,6 +528,10 @@
 		FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPageCurlBarButtonItem.m; sourceTree = "<group>"; };
 		FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRPaginatedView.h; sourceTree = "<group>"; };
 		FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPaginatedView.m; sourceTree = "<group>"; };
+		FFA5D46F156CD65B00DEDA3A /* IRBindingsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBindingsHelper.h; sourceTree = "<group>"; };
+		FFA5D470156CD65B00DEDA3A /* IRBindingsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBindingsHelper.m; sourceTree = "<group>"; };
+		FFA5D473156CD70900DEDA3A /* IRBindingsHelperContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBindingsHelperContext.h; sourceTree = "<group>"; };
+		FFA5D474156CD70900DEDA3A /* IRBindingsHelperContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBindingsHelperContext.m; sourceTree = "<group>"; };
 		FFA65DDD150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRUserTrackingBarButtonItem.h; sourceTree = "<group>"; };
 		FFA65DDE150AFE9A00E8668C /* IRUserTrackingBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRUserTrackingBarButtonItem.m; sourceTree = "<group>"; };
 		FFA65DE1150AFEA800E8668C /* MapKit+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MapKit+IRAdditions.h"; sourceTree = "<group>"; };
@@ -707,13 +715,8 @@
 			isa = PBXGroup;
 			children = (
 				FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */,
-				FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */,
-				FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */,
-				FF70E546152EE51C008BFB00 /* IRAsyncOperation+ForSubclassEyesOnly.h */,
-				FF70E541152EE410008BFB00 /* IRAsyncBarrierOperation.h */,
-				FF70E542152EE411008BFB00 /* IRAsyncBarrierOperation.m */,
-				FF0A8C971337B29F00DDA47C /* IRBindings.h */,
-				FF0A8C981337B29F00DDA47C /* IRBindings.m */,
+				FFA5D46E156CD59800DEDA3A /* Async Operation */,
+				FFA5D46C156CD59200DEDA3A /* Bindings */,
 				FF0A8C9D1337B29F00DDA47C /* IRHTMLStringFormatter.h */,
 				FF0A8C9E1337B29F00DDA47C /* IRHTMLStringFormatter.m */,
 				FF12AA8C143F2F11002346BD /* IRLifetimeHelper.h */,
@@ -972,6 +975,31 @@
 			name = "AssetsLibrary+IRAdditions";
 			sourceTree = "<group>";
 		};
+		FFA5D46C156CD59200DEDA3A /* Bindings */ = {
+			isa = PBXGroup;
+			children = (
+				FF0A8C971337B29F00DDA47C /* IRBindings.h */,
+				FF0A8C981337B29F00DDA47C /* IRBindings.m */,
+				FFA5D46F156CD65B00DEDA3A /* IRBindingsHelper.h */,
+				FFA5D470156CD65B00DEDA3A /* IRBindingsHelper.m */,
+				FFA5D473156CD70900DEDA3A /* IRBindingsHelperContext.h */,
+				FFA5D474156CD70900DEDA3A /* IRBindingsHelperContext.m */,
+			);
+			name = Bindings;
+			sourceTree = "<group>";
+		};
+		FFA5D46E156CD59800DEDA3A /* Async Operation */ = {
+			isa = PBXGroup;
+			children = (
+				FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */,
+				FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */,
+				FF70E546152EE51C008BFB00 /* IRAsyncOperation+ForSubclassEyesOnly.h */,
+				FF70E541152EE410008BFB00 /* IRAsyncBarrierOperation.h */,
+				FF70E542152EE411008BFB00 /* IRAsyncBarrierOperation.m */,
+			);
+			name = "Async Operation";
+			sourceTree = "<group>";
+		};
 		FFA65DDA150AFD6A00E8668C /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1109,6 +1137,8 @@
 				FF3FC677153B6E6D00691E49 /* IRStoryboard.h in Headers */,
 				FF539BA615409B9C003BFD66 /* NSFetchRequest+IRAdditions.h in Headers */,
 				FF2851F91562442D00D7F5A4 /* IRDataStore+FileOperations.h in Headers */,
+				FFA5D471156CD65B00DEDA3A /* IRBindingsHelper.h in Headers */,
+				FFA5D475156CD70900DEDA3A /* IRBindingsHelperContext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1414,6 +1444,8 @@
 				FF3FC678153B6E6D00691E49 /* IRStoryboard.m in Sources */,
 				FF539BA715409B9C003BFD66 /* NSFetchRequest+IRAdditions.m in Sources */,
 				FF2851FA1562442D00D7F5A4 /* IRDataStore+FileOperations.m in Sources */,
+				FFA5D472156CD65B00DEDA3A /* IRBindingsHelper.m in Sources */,
+				FFA5D476156CD70900DEDA3A /* IRBindingsHelperContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
