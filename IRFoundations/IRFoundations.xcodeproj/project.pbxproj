@@ -151,8 +151,6 @@
 		FF3BE0901537581D004C5244 /* IRActionSheetTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3BE08F1537581D004C5244 /* IRActionSheetTest.m */; };
 		FF3FC677153B6E6D00691E49 /* IRStoryboard.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3FC675153B6E6D00691E49 /* IRStoryboard.h */; };
 		FF3FC678153B6E6D00691E49 /* IRStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3FC676153B6E6D00691E49 /* IRStoryboard.m */; };
-		FF460D36149CFA2E00DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */ = {isa = PBXBuildFile; fileRef = FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */; };
-		FF460D42149CFB7400DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */; };
 		FF50D67D156AD88B0021011D /* IRAsyncOperationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FF70E53F152EDE64008BFB00 /* IRAsyncOperationTest.m */; };
 		FF539BA615409B9C003BFD66 /* NSFetchRequest+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF539BA415409B9C003BFD66 /* NSFetchRequest+IRAdditions.h */; };
 		FF539BA715409B9C003BFD66 /* NSFetchRequest+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF539BA515409B9C003BFD66 /* NSFetchRequest+IRAdditions.m */; };
@@ -194,7 +192,6 @@
 		FF70E521152EDCE3008BFB00 /* IRDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FF97382713D82496003D1722 /* IRDataStore.m */; };
 		FF70E522152EDCE3008BFB00 /* IRManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D251337B36A00DDA47C /* IRManagedObject.m */; };
 		FF70E523152EDCE3008BFB00 /* IRManagedObject+WebAPIImporting.m in Sources */ = {isa = PBXBuildFile; fileRef = FF54C51815209FE100301887 /* IRManagedObject+WebAPIImporting.m */; };
-		FF70E524152EDCE3008BFB00 /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */; };
 		FF70E525152EDCE3008BFB00 /* IRFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D271337B36A00DDA47C /* IRFetchedResultsController.m */; };
 		FF70E526152EDCE3008BFB00 /* IRManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */; };
 		FF70E529152EDD04008BFB00 /* Foundation+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */; };
@@ -226,8 +223,6 @@
 		FF789D301442FDE00080F210 /* IRAsyncOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */; };
 		FF789D311442FDE00080F210 /* IRAsyncOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */; };
 		FF789D321442FDE00080F210 /* IRAsyncOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */; };
-		FF7997A414909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */ = {isa = PBXBuildFile; fileRef = FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */; };
-		FF7997A514909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */; };
 		FF83175A15359F1A005FF958 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD295C213A40E9200EA8213 /* libxml2.2.dylib */; };
 		FF890D1D14163AC700CD7D1F /* CALayer+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */; };
 		FF890D1E14163AC700CD7D1F /* CALayer+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */; };
@@ -510,8 +505,6 @@
 		FF72C1FA14278ABF00B5D838 /* IRFoundationsX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRFoundationsX.h; path = IRFoundationsX/IRFoundationsX.h; sourceTree = "<group>"; };
 		FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAsyncOperation.h; sourceTree = "<group>"; };
 		FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAsyncOperation.m; sourceTree = "<group>"; };
-		FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRManagedObject+SimulatedOrderedRelationship.h"; sourceTree = "<group>"; };
-		FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IRManagedObject+SimulatedOrderedRelationship.m"; sourceTree = "<group>"; };
 		FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+IRAdditions.h"; sourceTree = "<group>"; };
 		FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+IRAdditions.m"; sourceTree = "<group>"; };
 		FF915A2414540703005F63FC /* AssetsLibrary+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AssetsLibrary+IRAdditions.h"; sourceTree = "<group>"; };
@@ -880,8 +873,6 @@
 				FF0A8D251337B36A00DDA47C /* IRManagedObject.m */,
 				FF54C51715209FE100301887 /* IRManagedObject+WebAPIImporting.h */,
 				FF54C51815209FE100301887 /* IRManagedObject+WebAPIImporting.m */,
-				FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */,
-				FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */,
 				FF0A8D261337B36A00DDA47C /* IRFetchedResultsController.h */,
 				FF0A8D271337B36A00DDA47C /* IRFetchedResultsController.m */,
 				FF0A8D281337B36A00DDA47C /* IRManagedObjectContext.h */,
@@ -1111,7 +1102,6 @@
 				FF915A2A1454080E005F63FC /* ALAssetRepresentation+IRAdditions.h in Headers */,
 				FF0D46BB1475885900340287 /* UIViewController+IRAdditions.h in Headers */,
 				FF0D46C014759E4A00340287 /* UIApplication+IRAdditions.h in Headers */,
-				FF7997A414909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */,
 				FF627C2314EBBA1C00DCC8C2 /* IRParagraphStyle.h in Headers */,
 				FF3588FD14EE74F5005B452C /* NSObject+IRAdditions.h in Headers */,
 				FF35890414EE7567005B452C /* NSArray+IRAdditions.h in Headers */,
@@ -1147,7 +1137,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF789D301442FDE00080F210 /* IRAsyncOperation.h in Headers */,
-				FF460D36149CFA2E00DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */,
 				FF06363A14B346EA00E7AF78 /* QuartzCore+IRAdditions.h in Headers */,
 				FF3588FE14EE74F5005B452C /* NSObject+IRAdditions.h in Headers */,
 				FF35890514EE7567005B452C /* NSArray+IRAdditions.h in Headers */,
@@ -1418,7 +1407,6 @@
 				FF915A2B1454080E005F63FC /* ALAssetRepresentation+IRAdditions.m in Sources */,
 				FF0D46BC1475885900340287 /* UIViewController+IRAdditions.m in Sources */,
 				FF0D46C114759E4A00340287 /* UIApplication+IRAdditions.m in Sources */,
-				FF7997A514909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */,
 				FF627C2414EBBA1C00DCC8C2 /* IRParagraphStyle.m in Sources */,
 				FF3588FF14EE74F5005B452C /* NSObject+IRAdditions.m in Sources */,
 				FF35890614EE7567005B452C /* NSArray+IRAdditions.m in Sources */,
@@ -1459,7 +1447,6 @@
 				FF70E521152EDCE3008BFB00 /* IRDataStore.m in Sources */,
 				FF70E522152EDCE3008BFB00 /* IRManagedObject.m in Sources */,
 				FF70E523152EDCE3008BFB00 /* IRManagedObject+WebAPIImporting.m in Sources */,
-				FF70E524152EDCE3008BFB00 /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */,
 				FF70E525152EDCE3008BFB00 /* IRFetchedResultsController.m in Sources */,
 				FF70E526152EDCE3008BFB00 /* IRManagedObjectContext.m in Sources */,
 				FF70E529152EDD04008BFB00 /* Foundation+IRAdditions.m in Sources */,
@@ -1520,7 +1507,6 @@
 				FF59A3D91441CDD300BB1FDC /* IRManagedObject.m in Sources */,
 				FF59A3DB1441CDD300BB1FDC /* IRManagedObjectContext.m in Sources */,
 				FF789D321442FDE00080F210 /* IRAsyncOperation.m in Sources */,
-				FF460D42149CFB7400DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */,
 				FF06363B14B346EA00E7AF78 /* QuartzCore+IRAdditions.m in Sources */,
 				FF35890014EE74F5005B452C /* NSObject+IRAdditions.m in Sources */,
 				FF35890714EE7567005B452C /* NSArray+IRAdditions.m in Sources */,
