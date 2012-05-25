@@ -100,6 +100,18 @@
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 
+	if (!self.source) {
+	
+		//	Concurrent Core Data entity accesses — writing from background thread / queue on alternate context,
+		//	then merging on main queue can trigger stray notification
+		
+		//	Also, with zombies enabled, associated objects aren’t really cleaned up
+	
+		[self dieIfAppropriate];
+		return;
+	
+	}
+
 	id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
 	id newValue = [change objectForKey:NSKeyValueChangeNewKey];
 	NSString *changeKind = [change objectForKey:NSKeyValueChangeKindKey];
@@ -124,6 +136,12 @@
 		dispatch_async(dispatch_get_main_queue(), operation);
 	else
 		operation();
+
+}
+
+- (NSString *) description {
+
+	return [NSString stringWithFormat:@"<%@: 0x%x { %@ %@ -> %@ %@ }>", NSStringFromClass([self class]), (unsigned int)self, self.source, self.sourceKeyPath, self.target, self.targetKeyPath];
 
 }
 
