@@ -195,8 +195,11 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 		
 		[[change objectForKey:NSKeyValueChangeKindKey] getValue:&changeKind];
 		
+		id sentOldValue = [oldValue isEqual:[NSNull null]] ? nil : oldValue;
+		id sentNewValue = [newValue isEqual:[NSNull null]] ? nil : newValue;
+		
 		if (self.callback)
-			self.callback(changeKind, oldValue, newValue, indices, isPrior);
+			self.callback(changeKind, sentOldValue, sentNewValue, indices, isPrior);
 		
 		self.lastOldValue = (__bridge void *)(oldValue);
 		self.lastNewValue = (__bridge void *)(newValue);
