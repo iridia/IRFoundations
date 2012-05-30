@@ -240,6 +240,8 @@
 		FF9FBC1E150B8C62004A23FB /* IRPageCurlBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */; };
 		FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */; };
 		FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */; };
+		FFA528391575F635000BE9CB /* IRDataStore+Metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA528371575F635000BE9CB /* IRDataStore+Metadata.h */; };
+		FFA5283A1575F635000BE9CB /* IRDataStore+Metadata.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA528381575F635000BE9CB /* IRDataStore+Metadata.m */; };
 		FFA5D471156CD65B00DEDA3A /* IRBindingsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA5D46F156CD65B00DEDA3A /* IRBindingsHelper.h */; };
 		FFA5D472156CD65B00DEDA3A /* IRBindingsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA5D470156CD65B00DEDA3A /* IRBindingsHelper.m */; };
 		FFA5D475156CD70900DEDA3A /* IRBindingsHelperContext.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA5D473156CD70900DEDA3A /* IRBindingsHelperContext.h */; };
@@ -521,6 +523,8 @@
 		FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPageCurlBarButtonItem.m; sourceTree = "<group>"; };
 		FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRPaginatedView.h; sourceTree = "<group>"; };
 		FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPaginatedView.m; sourceTree = "<group>"; };
+		FFA528371575F635000BE9CB /* IRDataStore+Metadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRDataStore+Metadata.h"; sourceTree = "<group>"; };
+		FFA528381575F635000BE9CB /* IRDataStore+Metadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IRDataStore+Metadata.m"; sourceTree = "<group>"; };
 		FFA5D46F156CD65B00DEDA3A /* IRBindingsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBindingsHelper.h; sourceTree = "<group>"; };
 		FFA5D470156CD65B00DEDA3A /* IRBindingsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBindingsHelper.m; sourceTree = "<group>"; };
 		FFA5D473156CD70900DEDA3A /* IRBindingsHelperContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBindingsHelperContext.h; sourceTree = "<group>"; };
@@ -865,6 +869,8 @@
 			children = (
 				FF97382613D82496003D1722 /* IRDataStore.h */,
 				FF97382713D82496003D1722 /* IRDataStore.m */,
+				FFA528371575F635000BE9CB /* IRDataStore+Metadata.h */,
+				FFA528381575F635000BE9CB /* IRDataStore+Metadata.m */,
 				FF2851F71562442C00D7F5A4 /* IRDataStore+FileOperations.h */,
 				FF2851F81562442D00D7F5A4 /* IRDataStore+FileOperations.m */,
 				FF539BA415409B9C003BFD66 /* NSFetchRequest+IRAdditions.h */,
@@ -1129,6 +1135,7 @@
 				FF2851F91562442D00D7F5A4 /* IRDataStore+FileOperations.h in Headers */,
 				FFA5D471156CD65B00DEDA3A /* IRBindingsHelper.h in Headers */,
 				FFA5D475156CD70900DEDA3A /* IRBindingsHelperContext.h in Headers */,
+				FFA528391575F635000BE9CB /* IRDataStore+Metadata.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1434,6 +1441,7 @@
 				FF2851FA1562442D00D7F5A4 /* IRDataStore+FileOperations.m in Sources */,
 				FFA5D472156CD65B00DEDA3A /* IRBindingsHelper.m in Sources */,
 				FFA5D476156CD70900DEDA3A /* IRBindingsHelperContext.m in Sources */,
+				FFA5283A1575F635000BE9CB /* IRDataStore+Metadata.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
