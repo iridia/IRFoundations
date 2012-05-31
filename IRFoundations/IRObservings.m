@@ -187,7 +187,7 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 	id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
 	id newValue = [change objectForKey:NSKeyValueChangeNewKey];
 	
-	if ((self.lastOldValue != (__bridge void *)(oldValue)) && (self.lastNewValue != (__bridge void *)(newValue))) {
+	if ((self.lastOldValue != (__bridge void *)(oldValue)) || (self.lastNewValue != (__bridge void *)(newValue))) {
 	
 		NSKeyValueChange changeKind = NSKeyValueChangeSetting;
 		NSIndexSet *indices = [change objectForKey:NSKeyValueChangeIndexesKey];
