@@ -37,3 +37,4 @@ extern NSString * IRDataStoreTimestamp (void);
 extern NSString * IRDataStoreNonce (void);
 
 #import "IRDataStore+FileOperations.h"
+#import "IRDataStore+Metadata.h"
