@@ -151,6 +151,10 @@
 		FF3BE0901537581D004C5244 /* IRActionSheetTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3BE08F1537581D004C5244 /* IRActionSheetTest.m */; };
 		FF3FC677153B6E6D00691E49 /* IRStoryboard.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3FC675153B6E6D00691E49 /* IRStoryboard.h */; };
 		FF3FC678153B6E6D00691E49 /* IRStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3FC676153B6E6D00691E49 /* IRStoryboard.m */; };
+		FF4F836A1577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4F83681577737F00E03D5E /* UIViewController+IRDelayedUpdateAdditions.h */; };
+		FF4F836B1577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4F83691577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.m */; };
+		FF4F836F1577746B00E03D5E /* IROperationQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4F836D1577746B00E03D5E /* IROperationQueue.h */; };
+		FF4F83701577746B00E03D5E /* IROperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4F836E1577746B00E03D5E /* IROperationQueue.m */; };
 		FF50D67D156AD88B0021011D /* IRAsyncOperationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FF70E53F152EDE64008BFB00 /* IRAsyncOperationTest.m */; };
 		FF539BA615409B9C003BFD66 /* NSFetchRequest+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF539BA415409B9C003BFD66 /* NSFetchRequest+IRAdditions.h */; };
 		FF539BA715409B9C003BFD66 /* NSFetchRequest+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF539BA515409B9C003BFD66 /* NSFetchRequest+IRAdditions.m */; };
@@ -461,6 +465,10 @@
 		FF3BE08F1537581D004C5244 /* IRActionSheetTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRActionSheetTest.m; sourceTree = "<group>"; };
 		FF3FC675153B6E6D00691E49 /* IRStoryboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRStoryboard.h; sourceTree = "<group>"; };
 		FF3FC676153B6E6D00691E49 /* IRStoryboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRStoryboard.m; sourceTree = "<group>"; };
+		FF4F83681577737F00E03D5E /* UIViewController+IRDelayedUpdateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+IRDelayedUpdateAdditions.h"; sourceTree = "<group>"; };
+		FF4F83691577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+IRDelayedUpdateAdditions.m"; sourceTree = "<group>"; };
+		FF4F836D1577746B00E03D5E /* IROperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IROperationQueue.h; sourceTree = "<group>"; };
+		FF4F836E1577746B00E03D5E /* IROperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IROperationQueue.m; sourceTree = "<group>"; };
 		FF50B4E014E557C3005B3B6A /* UIScrollView+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+IRAdditions.h"; sourceTree = "<group>"; };
 		FF50B4E114E557C3005B3B6A /* UIScrollView+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+IRAdditions.m"; sourceTree = "<group>"; };
 		FF539BA415409B9C003BFD66 /* NSFetchRequest+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchRequest+IRAdditions.h"; sourceTree = "<group>"; };
@@ -858,6 +866,8 @@
 				FF59C39E1418A06400F4BF2D /* UIView+IRAdditions.m */,
 				FF0D46B91475885900340287 /* UIViewController+IRAdditions.h */,
 				FF0D46BA1475885900340287 /* UIViewController+IRAdditions.m */,
+				FF4F83681577737F00E03D5E /* UIViewController+IRDelayedUpdateAdditions.h */,
+				FF4F83691577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.m */,
 				FF59C39F1418A06400F4BF2D /* UIWindow+IRAdditions.h */,
 				FF59C3A01418A06400F4BF2D /* UIWindow+IRAdditions.m */,
 			);
@@ -993,6 +1003,8 @@
 				FF70E546152EE51C008BFB00 /* IRAsyncOperation+ForSubclassEyesOnly.h */,
 				FF70E541152EE410008BFB00 /* IRAsyncBarrierOperation.h */,
 				FF70E542152EE411008BFB00 /* IRAsyncBarrierOperation.m */,
+				FF4F836D1577746B00E03D5E /* IROperationQueue.h */,
+				FF4F836E1577746B00E03D5E /* IROperationQueue.m */,
 			);
 			name = "Async Operation";
 			sourceTree = "<group>";
@@ -1136,6 +1148,8 @@
 				FFA5D471156CD65B00DEDA3A /* IRBindingsHelper.h in Headers */,
 				FFA5D475156CD70900DEDA3A /* IRBindingsHelperContext.h in Headers */,
 				FFA528391575F635000BE9CB /* IRDataStore+Metadata.h in Headers */,
+				FF4F836A1577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.h in Headers */,
+				FF4F836F1577746B00E03D5E /* IROperationQueue.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1442,6 +1456,8 @@
 				FFA5D472156CD65B00DEDA3A /* IRBindingsHelper.m in Sources */,
 				FFA5D476156CD70900DEDA3A /* IRBindingsHelperContext.m in Sources */,
 				FFA5283A1575F635000BE9CB /* IRDataStore+Metadata.m in Sources */,
+				FF4F836B1577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.m in Sources */,
+				FF4F83701577746B00E03D5E /* IROperationQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
