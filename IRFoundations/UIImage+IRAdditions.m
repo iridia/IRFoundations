@@ -230,7 +230,7 @@ static void __attribute__((constructor)) initialize() {
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 	if (colorSpace) {
 		
-		CGBitmapInfo const bitmapInfo = kCGImageAlphaPremultipliedFirst|kCGBitmapByteOrder32Little;
+		CGBitmapInfo const bitmapInfo = kCGImageAlphaNone|kCGBitmapByteOrder32Little;
 		CGContextRef context = CGBitmapContextCreate(NULL, width, height, 8, width * 4, colorSpace, bitmapInfo);
 		
 		CGColorSpaceRelease(colorSpace);
