@@ -157,15 +157,15 @@
 
 - (void) removeOffscreenViews {
 
-	[[self.allViews copy] enumerateObjectsUsingBlock: ^ (id viewOrNull, NSUInteger idx, BOOL *stop) {
+	for (NSUInteger idx = 0; idx < numberOfPages; idx++) {
 		
-		if ([self existingViewForPageAtIndex:idx])
-		if (![self requiresVisiblePageAtIndex:idx]) {
-			[self removePageView:(UIView *)viewOrNull fromIndex:idx];
-		}
-	
-	}];
-
+		UIView *pageView = [self existingViewForPageAtIndex:idx];
+		
+		if (pageView && ![self requiresVisiblePageAtIndex:idx])
+			[self removePageView:pageView	fromIndex:idx];
+		
+	}
+		
 }
 
 - (void) insertPageView:(UIView *)aView atIndex:(NSUInteger)anIndex {
@@ -385,6 +385,8 @@
 				existingView.frame = pageRect;
 			
 		}
+		
+		[self removeOffscreenViews];
 		
 		self.scrollView.delegate = self;
 		
