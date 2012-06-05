@@ -187,7 +187,7 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 	id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
 	id newValue = [change objectForKey:NSKeyValueChangeNewKey];
 	
-	if ((self.lastOldValue != (__bridge void *)(oldValue)) && (self.lastNewValue != (__bridge void *)(newValue))) {
+	if ((self.lastOldValue != (__bridge void *)(oldValue)) || (self.lastNewValue != (__bridge void *)(newValue))) {
 	
 		NSKeyValueChange changeKind = NSKeyValueChangeSetting;
 		NSIndexSet *indices = [change objectForKey:NSKeyValueChangeIndexesKey];
@@ -195,8 +195,11 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 		
 		[[change objectForKey:NSKeyValueChangeKindKey] getValue:&changeKind];
 		
+		id sentOldValue = [oldValue isEqual:[NSNull null]] ? nil : oldValue;
+		id sentNewValue = [newValue isEqual:[NSNull null]] ? nil : newValue;
+		
 		if (self.callback)
-			self.callback(changeKind, oldValue, newValue, indices, isPrior);
+			self.callback(changeKind, sentOldValue, sentNewValue, indices, isPrior);
 		
 		self.lastOldValue = (__bridge void *)(oldValue);
 		self.lastNewValue = (__bridge void *)(newValue);

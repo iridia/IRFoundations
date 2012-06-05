@@ -11,9 +11,11 @@
 
 #import "UIImage+IRAdditions.h"
 #import "IRShadow.h"
+#import "IRLifetimeHelper.h"
 
 static NSString * const kUIImage_IRAdditions_representedObject = @"kUIImageIRAdditionsRepresentedObject";
 static NSString * const kUIImage_IRAdditions_didWriteToSavedPhotosCallback = @"UIImage_IRAdditions_didWriteToSavedPhotosCallback";
+static NSString * const kIsDecodedImage = @"-[UIImage(IRAdditions) irIsDecodedImage]";
 
 static void __attribute__((constructor)) initialize() {
 
@@ -215,6 +217,9 @@ static void __attribute__((constructor)) initialize() {
 
 - (UIImage *) irDecodedImage {
 
+	if ([self irIsDecodedImage])
+		return self;
+
 	CGImageRef cgImage = [self irStandardImage].CGImage;
 	size_t width = CGImageGetWidth(cgImage);
 	size_t height = CGImageGetHeight(cgImage);
@@ -240,8 +245,9 @@ static void __attribute__((constructor)) initialize() {
 			if (outputImage) {
 				
 				UIImage *image = [UIImage imageWithCGImage:outputImage];	//	TBD: Scale, orientation, etc.
-				CGImageRelease(outputImage);
+				objc_setAssociatedObject(image, &kIsDecodedImage, (id)kCFBooleanTrue, OBJC_ASSOCIATION_ASSIGN);
 				
+				CGImageRelease(outputImage);
 				return image;
 				
 			}
@@ -252,6 +258,12 @@ static void __attribute__((constructor)) initialize() {
 	}
 
 	return self;
+
+}
+
+- (BOOL) irIsDecodedImage {
+
+	return !!objc_getAssociatedObject(self, &kIsDecodedImage);
 
 }
 

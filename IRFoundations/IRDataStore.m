@@ -182,7 +182,7 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 
 - (void) setPersistentStoreName:(NSString *)newPersistentStoreName {
 
-	if (persistentStoreName == newPersistentStoreName)
+	if ([persistentStoreName isEqual:newPersistentStoreName])
 		return;
 	
 	persistentStoreName = [newPersistentStoreName copy];

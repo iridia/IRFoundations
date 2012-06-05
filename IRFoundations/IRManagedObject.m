@@ -11,18 +11,6 @@
 
 @implementation IRManagedObject
 
-- (id) initWithEntity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {
-
-	self = [super initWithEntity:entity insertIntoManagedObjectContext:context];
-	if (!self)
-		return nil;
-	
-	[self simulatedOrderedRelationshipInit];
-	
-	return self;
-
-}
-
 - (void) awakeFromFetch {
 
 	[super awakeFromFetch];
@@ -39,20 +27,7 @@
 
 - (void) irAwake {
 
-	[self simulatedOrderedRelationshipAwake];
-
-}
-
-- (void) dealloc {
-
-	[self simulatedOrderedRelationshipDealloc];
-
-}
-
-- (void) willTurnIntoFault {
-
-	[self simulatedOrderedRelationshipWillTurnIntoFault];
-	[super willTurnIntoFault];
+	//	?
 
 }
 
@@ -342,7 +317,7 @@
 			
 				NSUInteger relatedNodesCount = irCount([nodeRepresentations objectAtIndex:index], 0);
 				
-				if ((relatedNodesCount == 0) || (relatedNodesCount == NSNotFound))
+				if (relatedNodesCount == NSNotFound)
 					return;
 				
 				if ([rootLocalKeyPath isEqual:[NSNull null]] || !rootLocalKeyPath)

@@ -20,7 +20,9 @@ typedef void(^IRImageWritingCallback)(BOOL didWrite, NSError *error);
 + (UIImage *) irImageNamed:(NSString *)name inBundle:(NSBundle *)bundle;
 
 - (UIImage *) irStandardImage;
+
 - (UIImage *) irDecodedImage;
+- (BOOL) irIsDecodedImage;
 
 - (UIImage *) irScaledImageWithSize:(CGSize)aSize;
 - (UIImage *) irSolidImageWithFillColor:(UIColor *)fillColor shadow:(IRShadow *)shadowOrNil;
