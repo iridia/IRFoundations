@@ -317,7 +317,7 @@
 			
 				NSUInteger relatedNodesCount = irCount([nodeRepresentations objectAtIndex:index], 0);
 				
-				if ((relatedNodesCount == 0) || (relatedNodesCount == NSNotFound))
+				if (relatedNodesCount == NSNotFound)
 					return;
 				
 				if ([rootLocalKeyPath isEqual:[NSNull null]] || !rootLocalKeyPath)
