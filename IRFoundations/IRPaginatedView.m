@@ -138,7 +138,10 @@
 
 - (BOOL) requiresVisiblePageAtIndex:(NSUInteger)anIndex {
 
-	return abs(((NSInteger)anIndex - (NSInteger)self.currentPage)) <= 1;
+	if ((currentPage == anIndex) || ((currentPage + 1) == anIndex) || (currentPage == (anIndex + 1)))
+		return YES;
+	
+	return NO;
 
 }
 
@@ -193,19 +196,17 @@
 	
 	[viewController viewWillDisappear:NO];
 	[aView removeFromSuperview];
-	[self.scrollView setNeedsLayout];
 	[viewController viewDidDisappear:NO];
 
 }
 
 - (UIView *) existingViewForPageAtIndex:(NSUInteger)anIndex {
 
-	id objectAtIndex = [self.allViews objectAtIndex:anIndex];
+	id obj = [self.allViews objectAtIndex:anIndex];
+	if ([obj isKindOfClass:[UIView class]])
+		return obj;
 
-	if ([objectAtIndex isKindOfClass:[NSNull class]] || ![objectAtIndex isKindOfClass:[UIView class]])
 	return nil;
-
-	return (UIView *)objectAtIndex;
 
 }
 
@@ -352,47 +353,37 @@
 
 	[super layoutSubviews];
 	
-	@autoreleasepool {
+	UIScrollView *sv = self.scrollView;
 	
-		self.scrollView.delegate = nil;
+	CGRect svFrame = CGRectInset(self.bounds, -1 * horizontalSpacing, 0);
+	CGSize svSize = (CGSize){ CGRectGetWidth(svFrame) * numberOfPages, CGRectGetHeight(svFrame) };
 		
-		CGRect newFrame = CGRectInset(self.bounds, -1 * self.horizontalSpacing, 0);
-		if (!CGRectEqualToRect(self.scrollView.frame, newFrame)) {
-			self.scrollView.frame = newFrame;
-		}
-		
-		CGSize newSize = (CGSize){
-			CGRectGetWidth(self.scrollView.frame) * self.numberOfPages,
-			CGRectGetHeight(self.scrollView.frame)
-		};
-		if (!CGSizeEqualToSize(self.scrollView.contentSize, newSize)) {
-			self.scrollView.contentSize = newSize;
-		}
-		
-		NSUInteger index = 0; for (index = 0; index < self.numberOfPages; index++) {
-		
-			if ([self requiresVisiblePageAtIndex:index])
-				[self ensureViewAtIndexVisible:index];
-		
-			UIView *existingView = [self existingViewForPageAtIndex:index];
-			
-			if (!existingView)
-				continue;
-			
-			CGRect pageRect = [self pageRectForIndex:index];
-			
-			if (!CGRectEqualToRect(existingView.frame, pageRect))
-				existingView.frame = pageRect;
-			
-		}
-		
-		[self removeOffscreenViews];
-		
-		self.scrollView.delegate = self;
-		
-		[self.delegate paginatedView:self didShowView:[self existingPageAtIndex:self.currentPage] atIndex:self.currentPage];
+	if (!CGRectEqualToRect(sv.frame, svFrame))
+		sv.frame = svFrame;
 	
+	if (!CGSizeEqualToSize(sv.contentSize, svSize))
+		sv.contentSize = svSize;
+		
+	NSUInteger index = 0; for (index = 0; index < numberOfPages; index++) {
+		
+		if ([self requiresVisiblePageAtIndex:index])
+			[self ensureViewAtIndexVisible:index];
+	
+		UIView *existingView = [self existingViewForPageAtIndex:index];
+		
+		if (!existingView)
+			continue;
+		
+		CGRect pageRect = [self pageRectForIndex:index];
+		
+		if (!CGRectEqualToRect(existingView.frame, pageRect))
+			existingView.frame = pageRect;
+		
 	}
+		
+	[self removeOffscreenViews];
+		
+	[self.delegate paginatedView:self didShowView:[self existingPageAtIndex:self.currentPage] atIndex:self.currentPage];
 	
 }
 
