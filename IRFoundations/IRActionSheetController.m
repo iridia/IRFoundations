@@ -75,6 +75,11 @@
 
 - (void) dealloc {
 
+	if ([managedActionSheet isVisible]) {
+		NSUInteger cancelButtonIndex = [managedActionSheet cancelButtonIndex];
+		[managedActionSheet dismissWithClickedButtonIndex:cancelButtonIndex animated:NO];
+	}
+
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	[managedActionSheet setDelegate:nil];
