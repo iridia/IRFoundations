@@ -32,8 +32,12 @@
 - (BOOL) contentOffsetAllowsVisiblePullToRefreshHeader;
 - (BOOL) contentOffsetAllowsFullPullToRefreshHeader;
 
-
+#if OS_OBJECT_USE_OBJC
+@property (nonatomic, readwrite, strong) dispatch_queue_t delayedPerformQueue;
+#else
 @property (nonatomic, readwrite, assign) dispatch_queue_t delayedPerformQueue;
+#endif
+
 @property (nonatomic, readwrite, assign) BOOL delayedPerformQueueSuspended;
 @property (nonatomic, readwrite, assign) BOOL delayedPerformQueueFinalizing;
 
@@ -128,7 +132,7 @@
 	self.pullDownToRefreshRequestProcessing = NO;
 	self.pullDownToRefreshState = IRTableViewPullDownRefreshStateInactive;
 
-	self.delayedPerformQueue = dispatch_queue_create("iridia.tableViewController.performAfterInteractionEvents", NULL);
+	self.delayedPerformQueue = (dispatch_queue_t)dispatch_queue_create("iridia.tableViewController.performAfterInteractionEvents", NULL);
 	self.delayedPerformQueueSuspended = NO;
 
 }
@@ -161,6 +165,10 @@
 	self.delayedPerformQueueFinalizing = YES;
 	[self resumeDelayedPerformQueue];
 
+#if OS_OBJECT_USE_OBJC
+
+#else
+
 	if (self.delayedPerformQueue) {
 
 		dispatch_debug(self.delayedPerformQueue, "self.delayedPerformQueue");
@@ -168,6 +176,8 @@
 		self.delayedPerformQueue = nil;
 	
 	}
+
+#endif
 	
 	[self clearDelayedPerformQueue];
 	
@@ -627,8 +637,9 @@ NSString * const IRTableViewWillResumePerformingBlocksNotification = @"IRTableVi
 - (void) suspendDelayedPerformQueue {
 
 	if (self.delayedPerformQueueSuspended)
-	return;
+		return;
 	
+//	dispatch_debug(self.delayedPerformQueue, "");
 	dispatch_suspend(self.delayedPerformQueue);
 	self.delayedPerformQueueSuspended = YES;
 	
