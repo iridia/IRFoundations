@@ -11,9 +11,11 @@
 
 #import "UIImage+IRAdditions.h"
 #import "IRShadow.h"
+#import "IRLifetimeHelper.h"
 
 static NSString * const kUIImage_IRAdditions_representedObject = @"kUIImageIRAdditionsRepresentedObject";
 static NSString * const kUIImage_IRAdditions_didWriteToSavedPhotosCallback = @"UIImage_IRAdditions_didWriteToSavedPhotosCallback";
+static NSString * const kIsDecodedImage = @"-[UIImage(IRAdditions) irIsDecodedImage]";
 
 static void __attribute__((constructor)) initialize() {
 
@@ -215,7 +217,10 @@ static void __attribute__((constructor)) initialize() {
 
 - (UIImage *) irDecodedImage {
 
-	CGImageRef cgImage = self.CGImage;
+	if ([self irIsDecodedImage])
+		return self;
+
+	CGImageRef cgImage = [self irStandardImage].CGImage;
 	size_t width = CGImageGetWidth(cgImage);
 	size_t height = CGImageGetHeight(cgImage);
 	
@@ -239,7 +244,11 @@ static void __attribute__((constructor)) initialize() {
 			
 			if (outputImage) {
 				
-				return [UIImage imageWithCGImage:outputImage];	//	TBD: Scale, orientation, etc.
+				UIImage *image = [UIImage imageWithCGImage:outputImage];	//	TBD: Scale, orientation, etc.
+				objc_setAssociatedObject(image, &kIsDecodedImage, (id)kCFBooleanTrue, OBJC_ASSOCIATION_ASSIGN);
+				
+				CGImageRelease(outputImage);
+				return image;
 				
 			}
 		
@@ -252,13 +261,17 @@ static void __attribute__((constructor)) initialize() {
 
 }
 
+- (BOOL) irIsDecodedImage {
+
+	return !!objc_getAssociatedObject(self, &kIsDecodedImage);
+
+}
+
 - (UIImage *) irScaledImageWithSize:(CGSize)aSize {
 
 	if (CGSizeEqualToSize(aSize, CGSizeZero))
 		return self;
 	
-	CGImageRef const ownImage = self.CGImage;
-	UIImageOrientation const ownOrientation = self.imageOrientation;
 	CGSize const drawnPixelSize = (CGSize){ aSize.width * self.scale, aSize.height * self.scale };
 	
 	CGAffineTransform const drawnTransform = [self irTransformForSize:drawnPixelSize];
@@ -366,8 +379,6 @@ static void __attribute__((constructor)) initialize() {
 
 - (void) irWriteToSavedPhotosAlbumWithCompletion:(IRImageWritingCallback)aBlock {
 
-	CFUUIDRef uuidRef = CFUUIDCreate(NULL);
-	
 	NSDictionary *contextInfo = [NSDictionary dictionaryWithObjectsAndKeys:
 	
 		[aBlock copy], kUIImage_IRAdditions_didWriteToSavedPhotosCallback,

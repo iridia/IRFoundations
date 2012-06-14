@@ -97,4 +97,3 @@ enum IRManagedObjectOptions {
 
 
 #import "IRManagedObject+WebAPIImporting.h"
-#import "IRManagedObject+SimulatedOrderedRelationship.h"

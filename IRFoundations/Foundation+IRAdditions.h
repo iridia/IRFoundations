@@ -25,5 +25,6 @@
 #import "IRRelativeDateFormatter.h"
 #import "IRLifetimeHelper.h"
 
+#import "IROperationQueue.h"
 #import "IRAsyncOperation.h"
 #import "IRAsyncBarrierOperation.h"

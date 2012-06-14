@@ -7,9 +7,7 @@
 //
 
 #import "IRObservings.h"
-
-
-
+#import "IRLifetimeHelper.h"
 
 
 NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpers";
@@ -77,14 +75,52 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 
 }
 
-- (id) irAddObserverBlock:(IRObservingsCallbackBlock)aBlock forKeyPath:(NSString *)aKeyPath options:(NSKeyValueObservingOptions)options context:(void *)context {
+- (id) irObserve:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context withBlock:(IRObservingsCallbackBlock)block {
 
-	id returnedHelper = [[IRObservingsHelper alloc] initWithObserverBlock:aBlock withOwner:self keyPath:aKeyPath options:options context:context];
-	[[self irObservingsHelperBlocksForKeyPath:aKeyPath] addObject:returnedHelper];
+	NSParameterAssert(keyPath);
+	NSParameterAssert(options);
+	NSParameterAssert(block);
+	
+	id returnedHelper = [[IRObservingsHelper alloc] initWithObserverBlock:block withOwner:self keyPath:keyPath options:options context:context];
+	[[self irObservingsHelperBlocksForKeyPath:keyPath] addObject:returnedHelper];
 	
 	return returnedHelper;
+	
 
 }
+
+- (id) irAddObserverBlock:(IRObservingsLegacyCallbackBlock)aBlock forKeyPath:(NSString *)aKeyPath options:(NSKeyValueObservingOptions)options context:(void *)context {
+
+	NSParameterAssert(aBlock);
+	NSParameterAssert(aKeyPath);
+	NSParameterAssert(options);
+	
+	return [self irObserve:aKeyPath options:options context:context withBlock:^(NSKeyValueChange kind, id fromValue, id toValue, NSIndexSet *indices, BOOL isPrior) {
+	
+		aBlock(fromValue, toValue, kind);
+		
+	}];
+
+}
+
+- (void) irObserveObject:(id)target keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context withBlock:(IRObservingsCallbackBlock)block {
+
+	id helper = [target irObserve:keyPath options:options context:context withBlock:block];
+	
+	__weak NSObject *wSelf = self;
+	__weak id wHelper = helper;
+	__weak id wTarget = target;
+	
+	[wSelf irPerformOnDeallocation:^{
+	
+		if (wHelper) {
+			[wTarget irRemoveObservingsHelper:wHelper];
+		}
+		
+	}];
+
+}
+
 
 - (void) irRemoveObservingsHelper:(id)aHelper {
 
@@ -151,13 +187,19 @@ NSString * const kAssociatedIRObservingsHelpers = @"kAssociatedIRObservingsHelpe
 	id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
 	id newValue = [change objectForKey:NSKeyValueChangeNewKey];
 	
-	if ((self.lastOldValue != (__bridge void *)(oldValue)) && (self.lastNewValue != (__bridge void *)(newValue))) {
+	if ((self.lastOldValue != (__bridge void *)(oldValue)) || (self.lastNewValue != (__bridge void *)(newValue))) {
 	
 		NSKeyValueChange changeKind = NSKeyValueChangeSetting;
+		NSIndexSet *indices = [change objectForKey:NSKeyValueChangeIndexesKey];
+		BOOL isPrior = [[change objectForKey:NSKeyValueChangeNotificationIsPriorKey] isEqual:(id)kCFBooleanTrue];
+		
 		[[change objectForKey:NSKeyValueChangeKindKey] getValue:&changeKind];
 		
+		id sentOldValue = [oldValue isEqual:[NSNull null]] ? nil : oldValue;
+		id sentNewValue = [newValue isEqual:[NSNull null]] ? nil : newValue;
+		
 		if (self.callback)
-			self.callback(oldValue, newValue, changeKind);
+			self.callback(changeKind, sentOldValue, sentNewValue, indices, isPrior);
 		
 		self.lastOldValue = (__bridge void *)(oldValue);
 		self.lastNewValue = (__bridge void *)(newValue);

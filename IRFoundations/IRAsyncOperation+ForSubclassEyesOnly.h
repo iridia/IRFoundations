@@ -8,12 +8,19 @@
 
 #import "IRAsyncOperation.h"
 
-@interface IRAsyncOperation ()
+@interface IRAsyncOperation (SubclassEyesOnly)
 
-@property (nonatomic, readwrite, assign) dispatch_queue_t actualDispatchQueue;
-@property (nonatomic, readwrite, retain) id results;
+@property (nonatomic, readonly, copy) IRAsyncOperationWorker worker;
+@property (nonatomic, readonly, copy) IRAsyncOperationWorkerTrampoline workerTrampoline;
 
-- (void) onMainQueue:(void(^)(void))aBlock;
+@property (nonatomic, readonly, copy) IRAsyncOperationCallback callback;
+@property (nonatomic, readonly, copy) IRAsyncOperationCallbackTrampoline callbackTrampoline;
+
+@property (nonatomic, readonly, assign, getter=isExecuting) BOOL executing;
+@property (nonatomic, readonly, assign, getter=isFinished) BOOL finished;
+
+@property (nonatomic, readonly, retain) id results;
+
 - (void) concludeWithResults:(id)incomingResults;
 
 @end

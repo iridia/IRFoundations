@@ -15,6 +15,8 @@
 
 #import "IRDataStore.h"
 
+#import "NSFetchRequest+IRAdditions.h"
+
 #if TARGET_OS_IPHONE
 #import "IRFetchedResultsController.h"
 #endif

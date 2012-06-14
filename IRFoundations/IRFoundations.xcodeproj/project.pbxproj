@@ -106,6 +106,8 @@
 		FF27A6AC133E2C16008C8DDA /* IRBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */; };
 		FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */ = {isa = PBXBuildFile; fileRef = FF27A6E1133E3526008C8DDA /* IRBusyView.h */; };
 		FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF27A6E2133E3526008C8DDA /* IRBusyView.m */; };
+		FF2851F91562442D00D7F5A4 /* IRDataStore+FileOperations.h in Headers */ = {isa = PBXBuildFile; fileRef = FF2851F71562442C00D7F5A4 /* IRDataStore+FileOperations.h */; };
+		FF2851FA1562442D00D7F5A4 /* IRDataStore+FileOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2851F81562442D00D7F5A4 /* IRDataStore+FileOperations.m */; };
 		FF3588FD14EE74F5005B452C /* NSObject+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3588FB14EE74F5005B452C /* NSObject+IRAdditions.h */; };
 		FF3588FE14EE74F5005B452C /* NSObject+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3588FB14EE74F5005B452C /* NSObject+IRAdditions.h */; };
 		FF3588FF14EE74F5005B452C /* NSObject+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3588FC14EE74F5005B452C /* NSObject+IRAdditions.m */; };
@@ -149,12 +151,17 @@
 		FF3BE0901537581D004C5244 /* IRActionSheetTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3BE08F1537581D004C5244 /* IRActionSheetTest.m */; };
 		FF3FC677153B6E6D00691E49 /* IRStoryboard.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3FC675153B6E6D00691E49 /* IRStoryboard.h */; };
 		FF3FC678153B6E6D00691E49 /* IRStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3FC676153B6E6D00691E49 /* IRStoryboard.m */; };
-		FF460D36149CFA2E00DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */ = {isa = PBXBuildFile; fileRef = FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */; };
-		FF460D42149CFB7400DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */; };
 		FF489700153DBD630044B902 /* MKMapView+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4896FE153DBD630044B902 /* MKMapView+IRAdditions.h */; };
 		FF489704153DBDE70044B902 /* MKMapView+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF489703153DBDE70044B902 /* MKMapView+IRAdditions.m */; };
 		FF489707153DC53D0044B902 /* NSNotificationCenter+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF489705153DC53D0044B902 /* NSNotificationCenter+IRAdditions.h */; };
 		FF489708153DC53D0044B902 /* NSNotificationCenter+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF489706153DC53D0044B902 /* NSNotificationCenter+IRAdditions.m */; };
+		FF4F836A1577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4F83681577737F00E03D5E /* UIViewController+IRDelayedUpdateAdditions.h */; };
+		FF4F836B1577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4F83691577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.m */; };
+		FF4F836F1577746B00E03D5E /* IROperationQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4F836D1577746B00E03D5E /* IROperationQueue.h */; };
+		FF4F83701577746B00E03D5E /* IROperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4F836E1577746B00E03D5E /* IROperationQueue.m */; };
+		FF50D67D156AD88B0021011D /* IRAsyncOperationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FF70E53F152EDE64008BFB00 /* IRAsyncOperationTest.m */; };
+		FF539BA615409B9C003BFD66 /* NSFetchRequest+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF539BA415409B9C003BFD66 /* NSFetchRequest+IRAdditions.h */; };
+		FF539BA715409B9C003BFD66 /* NSFetchRequest+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF539BA515409B9C003BFD66 /* NSFetchRequest+IRAdditions.m */; };
 		FF543EED14C2E63C005D3F7D /* IRCoreDataTestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF543EEC14C2E63C005D3F7D /* IRCoreDataTestObject.m */; };
 		FF54C51915209FE200301887 /* IRManagedObject+WebAPIImporting.h in Headers */ = {isa = PBXBuildFile; fileRef = FF54C51715209FE100301887 /* IRManagedObject+WebAPIImporting.h */; };
 		FF54C51A15209FE200301887 /* IRManagedObject+WebAPIImporting.m in Sources */ = {isa = PBXBuildFile; fileRef = FF54C51815209FE100301887 /* IRManagedObject+WebAPIImporting.m */; };
@@ -193,7 +200,6 @@
 		FF70E521152EDCE3008BFB00 /* IRDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FF97382713D82496003D1722 /* IRDataStore.m */; };
 		FF70E522152EDCE3008BFB00 /* IRManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D251337B36A00DDA47C /* IRManagedObject.m */; };
 		FF70E523152EDCE3008BFB00 /* IRManagedObject+WebAPIImporting.m in Sources */ = {isa = PBXBuildFile; fileRef = FF54C51815209FE100301887 /* IRManagedObject+WebAPIImporting.m */; };
-		FF70E524152EDCE3008BFB00 /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */; };
 		FF70E525152EDCE3008BFB00 /* IRFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D271337B36A00DDA47C /* IRFetchedResultsController.m */; };
 		FF70E526152EDCE3008BFB00 /* IRManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */; };
 		FF70E529152EDD04008BFB00 /* Foundation+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */; };
@@ -225,8 +231,6 @@
 		FF789D301442FDE00080F210 /* IRAsyncOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */; };
 		FF789D311442FDE00080F210 /* IRAsyncOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */; };
 		FF789D321442FDE00080F210 /* IRAsyncOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */; };
-		FF7997A414909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */ = {isa = PBXBuildFile; fileRef = FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */; };
-		FF7997A514909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */; };
 		FF83175A15359F1A005FF958 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD295C213A40E9200EA8213 /* libxml2.2.dylib */; };
 		FF890D1D14163AC700CD7D1F /* CALayer+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */; };
 		FF890D1E14163AC700CD7D1F /* CALayer+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */; };
@@ -244,6 +248,12 @@
 		FF9FBC1E150B8C62004A23FB /* IRPageCurlBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */; };
 		FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */; };
 		FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */; };
+		FFA528391575F635000BE9CB /* IRDataStore+Metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA528371575F635000BE9CB /* IRDataStore+Metadata.h */; };
+		FFA5283A1575F635000BE9CB /* IRDataStore+Metadata.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA528381575F635000BE9CB /* IRDataStore+Metadata.m */; };
+		FFA5D471156CD65B00DEDA3A /* IRBindingsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA5D46F156CD65B00DEDA3A /* IRBindingsHelper.h */; };
+		FFA5D472156CD65B00DEDA3A /* IRBindingsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA5D470156CD65B00DEDA3A /* IRBindingsHelper.m */; };
+		FFA5D475156CD70900DEDA3A /* IRBindingsHelperContext.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA5D473156CD70900DEDA3A /* IRBindingsHelperContext.h */; };
+		FFA5D476156CD70900DEDA3A /* IRBindingsHelperContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA5D474156CD70900DEDA3A /* IRBindingsHelperContext.m */; };
 		FFA65DD8150AFC8700E8668C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB6795F141E384A006F84E3 /* CoreData.framework */; };
 		FFA65DDF150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA65DDD150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h */; };
 		FFA65DE0150AFE9A00E8668C /* IRUserTrackingBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA65DDE150AFE9A00E8668C /* IRUserTrackingBarButtonItem.m */; };
@@ -428,6 +438,8 @@
 		FF27A6AA133E2C16008C8DDA /* IRBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBarButtonItem.m; sourceTree = "<group>"; };
 		FF27A6E1133E3526008C8DDA /* IRBusyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBusyView.h; sourceTree = "<group>"; };
 		FF27A6E2133E3526008C8DDA /* IRBusyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBusyView.m; sourceTree = "<group>"; };
+		FF2851F71562442C00D7F5A4 /* IRDataStore+FileOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRDataStore+FileOperations.h"; sourceTree = "<group>"; };
+		FF2851F81562442D00D7F5A4 /* IRDataStore+FileOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IRDataStore+FileOperations.m"; sourceTree = "<group>"; };
 		FF3588FB14EE74F5005B452C /* NSObject+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+IRAdditions.h"; sourceTree = "<group>"; };
 		FF3588FC14EE74F5005B452C /* NSObject+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+IRAdditions.m"; sourceTree = "<group>"; };
 		FF35890214EE7567005B452C /* NSArray+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+IRAdditions.h"; sourceTree = "<group>"; };
@@ -461,8 +473,14 @@
 		FF489703153DBDE70044B902 /* MKMapView+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+IRAdditions.m"; sourceTree = "<group>"; };
 		FF489705153DC53D0044B902 /* NSNotificationCenter+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+IRAdditions.h"; sourceTree = "<group>"; };
 		FF489706153DC53D0044B902 /* NSNotificationCenter+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+IRAdditions.m"; sourceTree = "<group>"; };
+		FF4F83681577737F00E03D5E /* UIViewController+IRDelayedUpdateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+IRDelayedUpdateAdditions.h"; sourceTree = "<group>"; };
+		FF4F83691577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+IRDelayedUpdateAdditions.m"; sourceTree = "<group>"; };
+		FF4F836D1577746B00E03D5E /* IROperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IROperationQueue.h; sourceTree = "<group>"; };
+		FF4F836E1577746B00E03D5E /* IROperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IROperationQueue.m; sourceTree = "<group>"; };
 		FF50B4E014E557C3005B3B6A /* UIScrollView+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+IRAdditions.h"; sourceTree = "<group>"; };
 		FF50B4E114E557C3005B3B6A /* UIScrollView+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+IRAdditions.m"; sourceTree = "<group>"; };
+		FF539BA415409B9C003BFD66 /* NSFetchRequest+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchRequest+IRAdditions.h"; sourceTree = "<group>"; };
+		FF539BA515409B9C003BFD66 /* NSFetchRequest+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchRequest+IRAdditions.m"; sourceTree = "<group>"; };
 		FF543EEB14C2E63C005D3F7D /* IRCoreDataTestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCoreDataTestObject.h; sourceTree = "<group>"; };
 		FF543EEC14C2E63C005D3F7D /* IRCoreDataTestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCoreDataTestObject.m; sourceTree = "<group>"; };
 		FF54C51715209FE100301887 /* IRManagedObject+WebAPIImporting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRManagedObject+WebAPIImporting.h"; sourceTree = "<group>"; };
@@ -505,8 +523,6 @@
 		FF72C1FA14278ABF00B5D838 /* IRFoundationsX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IRFoundationsX.h; path = IRFoundationsX/IRFoundationsX.h; sourceTree = "<group>"; };
 		FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRAsyncOperation.h; sourceTree = "<group>"; };
 		FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRAsyncOperation.m; sourceTree = "<group>"; };
-		FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRManagedObject+SimulatedOrderedRelationship.h"; sourceTree = "<group>"; };
-		FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IRManagedObject+SimulatedOrderedRelationship.m"; sourceTree = "<group>"; };
 		FF890D1B14163AC700CD7D1F /* CALayer+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+IRAdditions.h"; sourceTree = "<group>"; };
 		FF890D1C14163AC700CD7D1F /* CALayer+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+IRAdditions.m"; sourceTree = "<group>"; };
 		FF915A2414540703005F63FC /* AssetsLibrary+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AssetsLibrary+IRAdditions.h"; sourceTree = "<group>"; };
@@ -523,6 +539,12 @@
 		FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPageCurlBarButtonItem.m; sourceTree = "<group>"; };
 		FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRPaginatedView.h; sourceTree = "<group>"; };
 		FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPaginatedView.m; sourceTree = "<group>"; };
+		FFA528371575F635000BE9CB /* IRDataStore+Metadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRDataStore+Metadata.h"; sourceTree = "<group>"; };
+		FFA528381575F635000BE9CB /* IRDataStore+Metadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IRDataStore+Metadata.m"; sourceTree = "<group>"; };
+		FFA5D46F156CD65B00DEDA3A /* IRBindingsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBindingsHelper.h; sourceTree = "<group>"; };
+		FFA5D470156CD65B00DEDA3A /* IRBindingsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBindingsHelper.m; sourceTree = "<group>"; };
+		FFA5D473156CD70900DEDA3A /* IRBindingsHelperContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBindingsHelperContext.h; sourceTree = "<group>"; };
+		FFA5D474156CD70900DEDA3A /* IRBindingsHelperContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRBindingsHelperContext.m; sourceTree = "<group>"; };
 		FFA65DDD150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRUserTrackingBarButtonItem.h; sourceTree = "<group>"; };
 		FFA65DDE150AFE9A00E8668C /* IRUserTrackingBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRUserTrackingBarButtonItem.m; sourceTree = "<group>"; };
 		FFA65DE1150AFEA800E8668C /* MapKit+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MapKit+IRAdditions.h"; sourceTree = "<group>"; };
@@ -715,6 +737,8 @@
 				FF70E542152EE411008BFB00 /* IRAsyncBarrierOperation.m */,
 				FF0A8C971337B29F00DDA47C /* IRBindings.h */,
 				FF0A8C981337B29F00DDA47C /* IRBindings.m */,
+				FFA5D46E156CD59800DEDA3A /* Async Operation */,
+				FFA5D46C156CD59200DEDA3A /* Bindings */,
 				FF0A8C9D1337B29F00DDA47C /* IRHTMLStringFormatter.h */,
 				FF0A8C9E1337B29F00DDA47C /* IRHTMLStringFormatter.m */,
 				FF12AA8C143F2F11002346BD /* IRLifetimeHelper.h */,
@@ -859,6 +883,8 @@
 				FF59C39E1418A06400F4BF2D /* UIView+IRAdditions.m */,
 				FF0D46B91475885900340287 /* UIViewController+IRAdditions.h */,
 				FF0D46BA1475885900340287 /* UIViewController+IRAdditions.m */,
+				FF4F83681577737F00E03D5E /* UIViewController+IRDelayedUpdateAdditions.h */,
+				FF4F83691577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.m */,
 				FF59C39F1418A06400F4BF2D /* UIWindow+IRAdditions.h */,
 				FF59C3A01418A06400F4BF2D /* UIWindow+IRAdditions.m */,
 			);
@@ -870,12 +896,16 @@
 			children = (
 				FF97382613D82496003D1722 /* IRDataStore.h */,
 				FF97382713D82496003D1722 /* IRDataStore.m */,
+				FFA528371575F635000BE9CB /* IRDataStore+Metadata.h */,
+				FFA528381575F635000BE9CB /* IRDataStore+Metadata.m */,
+				FF2851F71562442C00D7F5A4 /* IRDataStore+FileOperations.h */,
+				FF2851F81562442D00D7F5A4 /* IRDataStore+FileOperations.m */,
+				FF539BA415409B9C003BFD66 /* NSFetchRequest+IRAdditions.h */,
+				FF539BA515409B9C003BFD66 /* NSFetchRequest+IRAdditions.m */,
 				FF0A8D241337B36A00DDA47C /* IRManagedObject.h */,
 				FF0A8D251337B36A00DDA47C /* IRManagedObject.m */,
 				FF54C51715209FE100301887 /* IRManagedObject+WebAPIImporting.h */,
 				FF54C51815209FE100301887 /* IRManagedObject+WebAPIImporting.m */,
-				FF7997A214909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h */,
-				FF7997A314909C80000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m */,
 				FF0A8D261337B36A00DDA47C /* IRFetchedResultsController.h */,
 				FF0A8D271337B36A00DDA47C /* IRFetchedResultsController.m */,
 				FF0A8D281337B36A00DDA47C /* IRManagedObjectContext.h */,
@@ -967,6 +997,33 @@
 				FF915A2514540703005F63FC /* AssetsLibrary+IRAdditions.m */,
 			);
 			name = "AssetsLibrary+IRAdditions";
+			sourceTree = "<group>";
+		};
+		FFA5D46C156CD59200DEDA3A /* Bindings */ = {
+			isa = PBXGroup;
+			children = (
+				FF0A8C971337B29F00DDA47C /* IRBindings.h */,
+				FF0A8C981337B29F00DDA47C /* IRBindings.m */,
+				FFA5D46F156CD65B00DEDA3A /* IRBindingsHelper.h */,
+				FFA5D470156CD65B00DEDA3A /* IRBindingsHelper.m */,
+				FFA5D473156CD70900DEDA3A /* IRBindingsHelperContext.h */,
+				FFA5D474156CD70900DEDA3A /* IRBindingsHelperContext.m */,
+			);
+			name = Bindings;
+			sourceTree = "<group>";
+		};
+		FFA5D46E156CD59800DEDA3A /* Async Operation */ = {
+			isa = PBXGroup;
+			children = (
+				FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */,
+				FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */,
+				FF70E546152EE51C008BFB00 /* IRAsyncOperation+ForSubclassEyesOnly.h */,
+				FF70E541152EE410008BFB00 /* IRAsyncBarrierOperation.h */,
+				FF70E542152EE411008BFB00 /* IRAsyncBarrierOperation.m */,
+				FF4F836D1577746B00E03D5E /* IROperationQueue.h */,
+				FF4F836E1577746B00E03D5E /* IROperationQueue.m */,
+			);
+			name = "Async Operation";
 			sourceTree = "<group>";
 		};
 		FFA65DDA150AFD6A00E8668C /* Tests */ = {
@@ -1082,7 +1139,6 @@
 				FF915A2A1454080E005F63FC /* ALAssetRepresentation+IRAdditions.h in Headers */,
 				FF0D46BB1475885900340287 /* UIViewController+IRAdditions.h in Headers */,
 				FF0D46C014759E4A00340287 /* UIApplication+IRAdditions.h in Headers */,
-				FF7997A414909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */,
 				FF627C2314EBBA1C00DCC8C2 /* IRParagraphStyle.h in Headers */,
 				FF3588FD14EE74F5005B452C /* NSObject+IRAdditions.h in Headers */,
 				FF35890414EE7567005B452C /* NSArray+IRAdditions.h in Headers */,
@@ -1108,6 +1164,13 @@
 				FF3FC677153B6E6D00691E49 /* IRStoryboard.h in Headers */,
 				FF489700153DBD630044B902 /* MKMapView+IRAdditions.h in Headers */,
 				FF489707153DC53D0044B902 /* NSNotificationCenter+IRAdditions.h in Headers */,
+				FF539BA615409B9C003BFD66 /* NSFetchRequest+IRAdditions.h in Headers */,
+				FF2851F91562442D00D7F5A4 /* IRDataStore+FileOperations.h in Headers */,
+				FFA5D471156CD65B00DEDA3A /* IRBindingsHelper.h in Headers */,
+				FFA5D475156CD70900DEDA3A /* IRBindingsHelperContext.h in Headers */,
+				FFA528391575F635000BE9CB /* IRDataStore+Metadata.h in Headers */,
+				FF4F836A1577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.h in Headers */,
+				FF4F836F1577746B00E03D5E /* IROperationQueue.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1116,7 +1179,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF789D301442FDE00080F210 /* IRAsyncOperation.h in Headers */,
-				FF460D36149CFA2E00DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.h in Headers */,
 				FF06363A14B346EA00E7AF78 /* QuartzCore+IRAdditions.h in Headers */,
 				FF3588FE14EE74F5005B452C /* NSObject+IRAdditions.h in Headers */,
 				FF35890514EE7567005B452C /* NSArray+IRAdditions.h in Headers */,
@@ -1387,7 +1449,6 @@
 				FF915A2B1454080E005F63FC /* ALAssetRepresentation+IRAdditions.m in Sources */,
 				FF0D46BC1475885900340287 /* UIViewController+IRAdditions.m in Sources */,
 				FF0D46C114759E4A00340287 /* UIApplication+IRAdditions.m in Sources */,
-				FF7997A514909C81000CE08D /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */,
 				FF627C2414EBBA1C00DCC8C2 /* IRParagraphStyle.m in Sources */,
 				FF3588FF14EE74F5005B452C /* NSObject+IRAdditions.m in Sources */,
 				FF35890614EE7567005B452C /* NSArray+IRAdditions.m in Sources */,
@@ -1413,6 +1474,13 @@
 				FF3FC678153B6E6D00691E49 /* IRStoryboard.m in Sources */,
 				FF489704153DBDE70044B902 /* MKMapView+IRAdditions.m in Sources */,
 				FF489708153DC53D0044B902 /* NSNotificationCenter+IRAdditions.m in Sources */,
+				FF539BA715409B9C003BFD66 /* NSFetchRequest+IRAdditions.m in Sources */,
+				FF2851FA1562442D00D7F5A4 /* IRDataStore+FileOperations.m in Sources */,
+				FFA5D472156CD65B00DEDA3A /* IRBindingsHelper.m in Sources */,
+				FFA5D476156CD70900DEDA3A /* IRBindingsHelperContext.m in Sources */,
+				FFA5283A1575F635000BE9CB /* IRDataStore+Metadata.m in Sources */,
+				FF4F836B1577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.m in Sources */,
+				FF4F83701577746B00E03D5E /* IROperationQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1426,7 +1494,6 @@
 				FF70E521152EDCE3008BFB00 /* IRDataStore.m in Sources */,
 				FF70E522152EDCE3008BFB00 /* IRManagedObject.m in Sources */,
 				FF70E523152EDCE3008BFB00 /* IRManagedObject+WebAPIImporting.m in Sources */,
-				FF70E524152EDCE3008BFB00 /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */,
 				FF70E525152EDCE3008BFB00 /* IRFetchedResultsController.m in Sources */,
 				FF70E526152EDCE3008BFB00 /* IRManagedObjectContext.m in Sources */,
 				FF70E529152EDD04008BFB00 /* Foundation+IRAdditions.m in Sources */,
@@ -1466,6 +1533,7 @@
 			files = (
 				FF6380E8153754440023C7AB /* IRAlertViewTest.m in Sources */,
 				FF3BE0901537581D004C5244 /* IRActionSheetTest.m in Sources */,
+				FF50D67D156AD88B0021011D /* IRAsyncOperationTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1486,7 +1554,6 @@
 				FF59A3D91441CDD300BB1FDC /* IRManagedObject.m in Sources */,
 				FF59A3DB1441CDD300BB1FDC /* IRManagedObjectContext.m in Sources */,
 				FF789D321442FDE00080F210 /* IRAsyncOperation.m in Sources */,
-				FF460D42149CFB7400DB7F0B /* IRManagedObject+SimulatedOrderedRelationship.m in Sources */,
 				FF06363B14B346EA00E7AF78 /* QuartzCore+IRAdditions.m in Sources */,
 				FF35890014EE74F5005B452C /* NSObject+IRAdditions.m in Sources */,
 				FF35890714EE7567005B452C /* NSArray+IRAdditions.m in Sources */,

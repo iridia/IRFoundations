@@ -8,23 +8,31 @@
 
 #import <Foundation/Foundation.h>
 
-#ifndef __IRAsyncOperation__
-#define __IRAsyncOperation__
 
-typedef void(^IRAsyncOperationCallback)(id results);
+@class IRAsyncOperation;
 
-#endif
+typedef void (^IRAsyncOperationInvoker)(void);
+
+typedef void (^IRAsyncOperationCallback)(id results);
+typedef void (^IRAsyncOperationWorker)(IRAsyncOperationCallback callback);
+
+typedef void (^IRAsyncOperationCallbackTrampoline)(IRAsyncOperationInvoker block);
+typedef void (^IRAsyncOperationWorkerTrampoline)(IRAsyncOperationInvoker block);
 
 
 @interface IRAsyncOperation : NSOperation <NSCopying>
 
-@property (nonatomic, readonly, assign, getter=isExecuting) BOOL executing;
-@property (nonatomic, readonly, assign, getter=isFinished) BOOL finished;
++ (id) operationWithWorker:(IRAsyncOperationWorker)worker callback:(IRAsyncOperationCallback)callback;
 
-@property (nonatomic, readwrite, copy) void (^workerBlock)(void(^callbackBlock)(id results));
-@property (nonatomic, readwrite, copy) void (^workCompletionBlock)(id results);
++ (id) operationWithWorker:(IRAsyncOperationWorker)worker trampoline:(IRAsyncOperationWorkerTrampoline)workerTrampoline callback:(IRAsyncOperationCallback)callback callbackTrampoline:(IRAsyncOperationCallbackTrampoline)callbackTrampoline;
 
-@property (nonatomic, readonly, retain) id results;
+- (IRAsyncOperationWorkerTrampoline) copyDefaultWorkerTrampoline;
+- (IRAsyncOperationCallbackTrampoline) copyDefaultCallbackTrampoline;
+
+@end
+
+
+@interface IRAsyncOperation (Deprecated)
 
 + (id) operationWithWorkerBlock:(void(^)(IRAsyncOperationCallback callback))aWorkerBlock completionBlock:(IRAsyncOperationCallback)aCompletionBlock;
 

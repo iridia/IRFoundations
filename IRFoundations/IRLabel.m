@@ -235,10 +235,8 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	};
 	
 	CTFramesetterRef currentFramesetter = self.ctFramesetter;
-	
 	CFRange actualRange = (CFRange){ 0, 0 };
-	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(currentFramesetter, (CFRange){ 0, 0 }, nil, frameRect.size, &actualRange);
-
+	
 	ctFrame = CTFramesetterCreateFrame(currentFramesetter, actualRange, [UIBezierPath bezierPathWithRect:frameRect].CGPath, nil);
 	return ctFrame;
 
