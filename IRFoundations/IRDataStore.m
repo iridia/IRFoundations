@@ -22,7 +22,11 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 
 @property (nonatomic, readwrite, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, readwrite, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+#if OS_OBJECT_USE_OBJC
+@property (nonatomic, readwrite, strong) dispatch_queue_t dispatchQueue;
+#else
 @property (nonatomic, readwrite, assign) dispatch_queue_t dispatchQueue;
+#endif
 
 @end
 
@@ -108,12 +112,19 @@ NSString * const kIRDataStore_DefaultAutoUpdatedMOC = @"IRDataStore_DefaultAutoU
 
 }
 
+
+#if OS_OBJECT_USE_OBJC
+
+#else
+
 - (void) dealloc {
 
 	if (dispatchQueue)
 		dispatch_release(dispatchQueue);
 
 }
+
+#endif
 
 - (NSManagedObjectModel *) managedObjectModel {
 
