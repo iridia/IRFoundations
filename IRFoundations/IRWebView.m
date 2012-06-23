@@ -1,6 +1,6 @@
 //
 //  IRWebView.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 2/16/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -47,12 +47,18 @@
 
 - (void) configure {
 
-	self.overlayView = [[[UIView alloc] initWithFrame:self.bounds] autorelease];
+#if TARGET_IPHONE_SIMULATOR
+
+	[NSClassFromString(@"WebView") performSelector:@selector(_enableRemoteInspector)];
+
+#endif
+
+	self.overlayView = [[UIView alloc] initWithFrame:self.bounds];
 	self.overlayView.userInteractionEnabled = NO;
 	self.overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	[self addSubview:self.overlayView];
 	
-	self.backgroundView = [[[UIView alloc] initWithFrame:self.bounds] autorelease];
+	self.backgroundView = [[UIView alloc] initWithFrame:self.bounds];
 	self.backgroundView.userInteractionEnabled = NO;
 	self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	[self addSubview:self.backgroundView];
@@ -70,15 +76,6 @@
 	
 	if (self.onScrollViewDidScroll)
 		self.onScrollViewDidScroll(scrollView);
-
-}
-
-- (void) dealloc {
-
-	[overlayView release];
-	[backgroundView release];
-	[onScrollViewDidScroll release];
-	[super dealloc];
 
 }
 

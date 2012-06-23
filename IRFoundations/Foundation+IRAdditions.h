@@ -1,6 +1,6 @@
 //
 //  Foundation+IRAdditions.h
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 1/14/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -24,7 +24,6 @@
 #import "IRRelativeDateFormatter.h"
 #import "IRLifetimeHelper.h"
 
+#import "IROperationQueue.h"
 #import "IRAsyncOperation.h"
-
-
-
+#import "IRAsyncBarrierOperation.h"

@@ -1,6 +1,6 @@
 //
 //  IRShadow.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 1/29/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -30,18 +30,11 @@
 
 }
 
-- (void) dealloc {
-
-	self.color = nil;
-	
-	[super dealloc];
-
-}
-
 - (id) initWithCoder:(NSKeyedUnarchiver *)aDecoder {
 
 	self = [self init];
-	if (!self) return nil;
+	if (!self)
+		return nil;
 	
 	self.color = [aDecoder decodeObjectForKey:@"color"];
 	self.offset = [aDecoder decodeCGSizeForKey:@"offset"];
@@ -73,16 +66,16 @@
 
 + (IRShadow *) shadowWithColor:(UIColor *)color offset:(CGSize)offset spread:(CGFloat)spread edgeInsets:(UIEdgeInsets)edgeInsets {
 
-	IRShadow *returnedShadow = [[self alloc] init];
-	if (!returnedShadow)
-	return nil;
+	IRShadow *shadow = [[self alloc] init];
+	if (!shadow)
+		return nil;
 	
-	returnedShadow.color = color;
-	returnedShadow.offset = offset;
-	returnedShadow.spread = spread;
-	returnedShadow.edgeInsets = edgeInsets;
+	shadow.color = color;
+	shadow.offset = offset;
+	shadow.spread = spread;
+	shadow.edgeInsets = edgeInsets;
 	
-	return [returnedShadow autorelease];
+	return shadow;
 
 }
 

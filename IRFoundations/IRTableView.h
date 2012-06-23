@@ -1,6 +1,6 @@
 //
 //  MLTableView.h
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 1/4/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -153,8 +153,6 @@ extern NSString * const IRTableViewWillResumePerformingBlocksNotification;
 - (void) performBlockOnInteractionEventsEnd:(void(^)(void))block;
 
 //	This helps a lot when you have a data source that ought to be updated, but can’t be updated without stopping the dragging or tracking.  Toss a block here, and it will be performed when appropriate.
-
-@property (nonatomic, readonly, assign) dispatch_queue_t delayedPerformQueue;
 
 - (void) suspendDelayedPerformQueue;
 - (void) resumeDelayedPerformQueue;

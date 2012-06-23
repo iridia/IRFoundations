@@ -1,6 +1,6 @@
 //
 //  IRView.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 1/6/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -60,18 +60,6 @@
 
 	if (self.onDrawRect)
 		self.onDrawRect(rect, UIGraphicsGetCurrentContext());
-
-}
-
-- (void) dealloc {
-
-	[onDrawRect release];
-	[onHitTestWithEvent release];
-	[onPointInsideWithEvent release];
-	[onLayoutSubviews release];
-	[onSizeThatFits release];
-	
-	[super dealloc];
 
 }
 

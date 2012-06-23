@@ -1,6 +1,6 @@
 //
 //  IROptionallyDynamicShapeView.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 2/15/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -26,7 +26,7 @@
 	self = [super initWithFrame:frame];
 	if (!self) return nil;
 
-	self.drawingView = [[[IRStaticShapeViewDrawingView alloc] initWithFrame:self.bounds] autorelease];
+	self.drawingView = [[IRStaticShapeViewDrawingView alloc] initWithFrame:self.bounds];
 	self.drawingView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 	self.drawingView.dataSource = self;
 	[self addSubview:self.drawingView];
@@ -45,13 +45,6 @@
 	for (NSString *aKeyPath in [NSArray arrayWithObjects:@"frame", @"backgroundColor", @"path", @"shadowColor", @"shadowOffset", @"shadowSpread", @"fillColor", nil])
 	[self removeObserver:self forKeyPath:aKeyPath];
 
-	self.path = nil;
-	self.shadowColor = nil;
-	self.fillColor = nil;
-	self.drawingView = nil;
-
-	[super dealloc];
-
 }
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -63,7 +56,6 @@
 	[self.drawingView setNeedsDisplayInRect:self.drawingView.bounds];
 
 }
-
 
 @end
 

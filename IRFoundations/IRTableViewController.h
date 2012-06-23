@@ -1,6 +1,6 @@
 //
 //  IRTableViewController.h
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 1/12/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -52,7 +52,7 @@
 - (void) restoreState;
 
 @property (nonatomic, readwrite, assign) BOOL persistsStateWhenViewWillDisappear;
-@property (nonatomic, readwrite, assign) BOOL restoresStateWhenViewDidAppear;
+@property (nonatomic, readwrite, assign) BOOL restoresStateWhenViewWillAppear;
 
 //	Called on -viewWillDisappear:, -viewWillAppear:.  If you do custom reloading, like a forced -reloadData, remember to call them.
 //	These methods are helpers that use information from -persistenceRepresentation, -restoreFromPersistenceRepresentation:.

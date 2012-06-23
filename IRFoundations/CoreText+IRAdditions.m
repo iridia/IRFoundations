@@ -24,8 +24,8 @@ void irCTFrameEnumerateLines(CTFrameRef aFrame, void (^aBlock)(CTLineRef aLine, 
 	CGPoint *lineOrigins = malloc(sizeof(CGPoint) * lineCount);
 	CTFrameGetLineOrigins(aFrame, (CFRange) { 0, lineCount }, lineOrigins);
 	
-	[((NSArray *)lines) enumerateObjectsUsingBlock: ^ (id aLine, NSUInteger idx, BOOL *stop) {
-		aBlock((CTLineRef)aLine, lineOrigins[idx], stop);
+	[((__bridge NSArray *)lines) enumerateObjectsUsingBlock: ^ (id aLine, NSUInteger idx, BOOL *stop) {
+		aBlock((__bridge CTLineRef)aLine, lineOrigins[idx], stop);
 	}];
 	
 	free(lineOrigins);
@@ -42,8 +42,8 @@ void irCTLineEnumerateRuns(CTLineRef aLine, void(^aBlock)(CTRunRef aRun, double 
 	if (!runs)
 		return;
 	
-	[(NSArray *)runs enumerateObjectsUsingBlock: ^ (id aRun, NSUInteger idx, BOOL *stop) {
-		aBlock((CTRunRef)aRun, CTRunGetTypographicBounds((CTRunRef)aRun, (CFRange){ 0, 0 }, NULL, NULL, NULL), stop);
+	[(__bridge NSArray *)runs enumerateObjectsUsingBlock: ^ (id aRun, NSUInteger idx, BOOL *stop) {
+		aBlock((__bridge CTRunRef)aRun, CTRunGetTypographicBounds((__bridge CTRunRef)aRun, (CFRange){ 0, 0 }, NULL, NULL, NULL), stop);
 	}];
 
 }
@@ -107,7 +107,7 @@ CTRunRef irCTFrameFindRunAtPoint (CTFrameRef aFrame, CGPoint aPoint, CGFloat sea
 			
 			usedWidth += runWidth;
 			
-			if (![(NSDictionary *)CTRunGetAttributes(aRun) irPassesTestSuite:testSuite])
+			if (![(__bridge NSDictionary *)CTRunGetAttributes(aRun) irPassesTestSuite:testSuite])
 				return;
 			
 			CGFloat runAscent, runDescent, runLeading;
@@ -151,7 +151,7 @@ CTRunRef irCTFrameFindRunAtPoint (CTFrameRef aFrame, CGPoint aPoint, CGFloat sea
 
 NSArray * irCTFrameFindNeighborRuns (CTFrameRef aFrame, CTRunRef referencedRun, NSDictionary *testSuite) {
 
-	if (![(NSDictionary *)CTRunGetAttributes(referencedRun) irPassesTestSuite:testSuite])
+	if (![(__bridge NSDictionary *)CTRunGetAttributes(referencedRun) irPassesTestSuite:testSuite])
 		return [NSArray array];
 
 	NSMutableArray *returnedArray = [NSMutableArray array];
@@ -162,8 +162,8 @@ NSArray * irCTFrameFindNeighborRuns (CTFrameRef aFrame, CTRunRef referencedRun, 
 		irCTLineEnumerateRuns(aLine, ^ (CTRunRef aRun, double runWidth, BOOL *stopRunEnum) {
 		
 			//	If the run is valid just queue it
-			if ([(NSDictionary *)CTRunGetAttributes(aRun) irPassesTestSuite:testSuite]) {
-				[returnedArray addObject:(id)aRun];
+			if ([(__bridge NSDictionary *)CTRunGetAttributes(aRun) irPassesTestSuite:testSuite]) {
+				[returnedArray addObject:(__bridge id)aRun];
 				hasSeenReferencedRun = hasSeenReferencedRun ? hasSeenReferencedRun : (aRun == referencedRun);
 				return;
 			}
@@ -208,11 +208,11 @@ UIBezierPath * irCTFrameGetRunOutline (CTFrameRef aFrame, NSArray *runs, UIEdgeI
 		//	lineOrigin = (CGPoint){ lineOrigin.x, lineOrigin.y * -1 + OUITextLayoutUnlimitedSize + lineAscent + lineDescent };
 
 		__block CGFloat usedWidth = 0;
-		__block UIBezierPath *pathsInLine = [UIBezierPath bezierPath];
+		UIBezierPath *pathsInLine = [UIBezierPath bezierPath];
 		
 		irCTLineEnumerateRuns(aLine, ^(CTRunRef aRun, double runWidth, BOOL *stopRunEnum) {
 			
-			if ([queriedRuns containsObject:(id)aRun]) {
+			if ([queriedRuns containsObject:(__bridge id)aRun]) {
 			
 				CGFloat runAscent, runDescent, runLeading;
 				CTRunGetTypographicBounds(aRun, (CFRange){0, 0}, &runAscent, &runDescent, &runLeading);

@@ -1,6 +1,6 @@
 //
 //  MLTableView.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 1/4/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -12,7 +12,7 @@
 @interface IRTableView ()
 
 @property (nonatomic, readwrite, assign) UIEdgeInsets originalEdgeInsets;
-@property (nonatomic, readwrite, assign) id intendedDelegate;
+@property (nonatomic, readwrite, weak) id intendedDelegate;
 
 - (void) configure;
 
@@ -32,8 +32,12 @@
 - (BOOL) contentOffsetAllowsVisiblePullToRefreshHeader;
 - (BOOL) contentOffsetAllowsFullPullToRefreshHeader;
 
-
+#if OS_OBJECT_USE_OBJC
+@property (nonatomic, readwrite, strong) dispatch_queue_t delayedPerformQueue;
+#else
 @property (nonatomic, readwrite, assign) dispatch_queue_t delayedPerformQueue;
+#endif
+
 @property (nonatomic, readwrite, assign) BOOL delayedPerformQueueSuspended;
 @property (nonatomic, readwrite, assign) BOOL delayedPerformQueueFinalizing;
 
@@ -77,17 +81,13 @@
 + (id) tableViewWithEncodedDataOfObject:(UITableView *)inTableView ofClass:(Class)inClass {
 
 	NSMutableData *tableViewData = [NSMutableData data];
-	NSKeyedArchiver *tableViewArchiver = [[[NSKeyedArchiver alloc] initForWritingWithMutableData:tableViewData] autorelease]; 
+	NSKeyedArchiver *tableViewArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:tableViewData];
 
 	[tableViewArchiver encodeObject:inTableView];
 	[tableViewArchiver finishEncoding];
 	
-	NSKeyedUnarchiver *tableViewUnarchiver = [[[NSKeyedUnarchiver alloc] initForReadingWithData:tableViewData] autorelease];
-
-	IRTableView *returnedTableView = [[[inClass alloc] initWithCoder:tableViewUnarchiver] autorelease];
-	if (!returnedTableView) return nil;
-
-	return returnedTableView;
+	NSKeyedUnarchiver *tableViewUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:tableViewData];
+	return [[inClass alloc] initWithCoder:tableViewUnarchiver];
 
 }
 
@@ -132,7 +132,7 @@
 	self.pullDownToRefreshRequestProcessing = NO;
 	self.pullDownToRefreshState = IRTableViewPullDownRefreshStateInactive;
 
-	self.delayedPerformQueue = dispatch_queue_create("iridia.tableViewController.performAfterInteractionEvents", NULL);
+	self.delayedPerformQueue = (dispatch_queue_t)dispatch_queue_create("iridia.tableViewController.performAfterInteractionEvents", NULL);
 	self.delayedPerformQueueSuspended = NO;
 
 }
@@ -165,6 +165,10 @@
 	self.delayedPerformQueueFinalizing = YES;
 	[self resumeDelayedPerformQueue];
 
+#if OS_OBJECT_USE_OBJC
+
+#else
+
 	if (self.delayedPerformQueue) {
 
 		dispatch_debug(self.delayedPerformQueue, "self.delayedPerformQueue");
@@ -172,33 +176,11 @@
 		self.delayedPerformQueue = nil;
 	
 	}
+
+#endif
 	
 	[self clearDelayedPerformQueue];
 	
-	self.dataSource = nil;
-	self.delegate = nil;
-
-	self.onTouchesShouldBeginWithEventInContentView = nil;
-	self.onTouchesShouldCancelInContentView = nil;
-	
-	self.pullDownHeaderView = nil;
-	self.onPullDownBegin = nil;
-	self.onPullDownMove = nil;
-	self.onPullDownEnd = nil;
-	self.onPullDownReset = nil;
-	
-	self.onScroll = nil;
-	self.onZoom = nil;
-	self.onDragBegin = nil;
-	self.onDragEnd = nil;
-	self.onDecelerationBegin = nil;
-	self.onDecelerationEnd = nil;
-	self.onScrollAnimationEnd = nil;
-	
-	self.onLayoutSubviews = nil;
-	
-	[super dealloc];
-
 }
 
 
@@ -349,31 +331,25 @@
 	
 	self.pullDownToRefreshState = IRTableViewPullDownRefreshStateInactive;
 	
-	[self retain];
-	
-	__block IRTableView *nonretainedSelf = self;
+	__weak IRTableView *wSelf = self;
 
 	void (^animationBlock)() = ^ {
 	
 		[UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations: ^ {
 		
-			self.pullDownToRefreshState = IRTableViewPullDownRefreshStateInactive;
-			[self setContentInset:self.originalEdgeInsets];
-			[self layoutSubviews];
+			wSelf.pullDownToRefreshState = IRTableViewPullDownRefreshStateInactive;
+			[wSelf setContentInset:wSelf.originalEdgeInsets];
+			[wSelf layoutSubviews];
 
 		} completion: ^ (BOOL finished) {
 					
-			if (!nonretainedSelf.window)
-			return;
+			if (!wSelf.window)
+				return;
 		
-		//	self.pullDownHeaderView.hidden = YES;
+			if (wSelf.onPullDownReset)
+				wSelf.onPullDownReset();
 			
-			if (nonretainedSelf.onPullDownReset)
-			nonretainedSelf.onPullDownReset();
-			
-			[nonretainedSelf refreshPullDownToRefreshState];			
-			
-			[nonretainedSelf autorelease];
+			[wSelf refreshPullDownToRefreshState];
 		
 		}];
 	
@@ -396,9 +372,7 @@
 	if (inView == pullDownHeaderView) return;
 	
 	[pullDownHeaderView removeFromSuperview];
-	
-	[pullDownHeaderView release];
-	pullDownHeaderView = [inView retain];
+	pullDownHeaderView = inView;
 	
 	[self addSubview:inView];
 	[self layoutPullDownHeaderView];
@@ -415,7 +389,6 @@
 	if (inBlock == onPullDownBegin)
 	return;
 	
-	[onPullDownBegin release];
 	onPullDownBegin = [inBlock copy];
 	
 	[self refreshPullDownToRefreshEligibility];
@@ -425,9 +398,8 @@
 - (void) setOnPullDownMove:(void (^)(CGFloat progressRatio))inBlock {
 
 	if (inBlock == onPullDownMove)
-	return;
+		return;
 	
-	[onPullDownMove release];
 	onPullDownMove = [inBlock copy];
 	
 	[self refreshPullDownToRefreshEligibility];
@@ -437,9 +409,8 @@
 - (void) setOnPullDownEnd:(void (^)(BOOL requestDidFinish))inBlock {
 
 	if (inBlock == onPullDownEnd)
-	return;
+		return;
 	
-	[onPullDownEnd release];
 	onPullDownEnd = [inBlock copy];
 	
 	[self refreshPullDownToRefreshEligibility];
@@ -533,40 +504,46 @@
 
 - (void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
 
-	if (!decelerate)
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC), dispatch_get_current_queue(), ^ {
+	__weak IRTableView *wSelf = self;
 
-		[self resumeDelayedPerformQueue];
+	if (decelerate) {
 	
-	});
+		if (self.pullDownToRefreshState != IRTableViewPullDownRefreshStateActive)
+		if ([self isShowingContentsAboveTheFold])
+		if ([self contentOffsetAllowsFullPullToRefreshHeader]) {
+		
+			self.pullDownToRefreshState = IRTableViewPullDownRefreshStateActive;
+			
+			[UIView animateWithDuration:0.25 animations: ^ {
+			
+				[wSelf setContentInset:wSelf.originalEdgeInsets];
+				[wSelf layoutSubviews];
+			
+			}];
 
-	if (decelerate)
-	if (self.pullDownToRefreshState != IRTableViewPullDownRefreshStateActive)
-	if ([self isShowingContentsAboveTheFold])
-	if ([self contentOffsetAllowsFullPullToRefreshHeader]) {
+			dispatch_async(dispatch_get_main_queue(), ^ {
+
+				if (wSelf.onPullDownEnd)
+					wSelf.onPullDownEnd(YES);
+
+			});				
+		
+		}
 	
-		self.pullDownToRefreshState = IRTableViewPullDownRefreshStateActive;
-		
-		[UIView animateWithDuration:0.25 animations: ^ {
-		
-			[self setContentInset:self.originalEdgeInsets];
-			[self layoutSubviews];			
-		
-		}];
+	} else {
 
-		dispatch_async(dispatch_get_main_queue(), ^ {
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC), dispatch_get_current_queue(), ^ {
 
-			if (self.onPullDownEnd)
-			self.onPullDownEnd(YES);
-
-		});				
+			[wSelf resumeDelayedPerformQueue];
+		
+		});
 	
 	}
 	
 	dispatch_async(dispatch_get_main_queue(), ^ {
 
 		if ([self.intendedDelegate respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)])
-		[self.intendedDelegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];	
+			[self.intendedDelegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];	
 		
 	});
 
@@ -660,8 +637,9 @@ NSString * const IRTableViewWillResumePerformingBlocksNotification = @"IRTableVi
 - (void) suspendDelayedPerformQueue {
 
 	if (self.delayedPerformQueueSuspended)
-	return;
+		return;
 	
+//	dispatch_debug(self.delayedPerformQueue, "");
 	dispatch_suspend(self.delayedPerformQueue);
 	self.delayedPerformQueueSuspended = YES;
 	
@@ -685,28 +663,21 @@ NSString * const IRTableViewWillResumePerformingBlocksNotification = @"IRTableVi
 
 - (void) performBlockOnInteractionEventsEnd:(void(^)(void))block {
 
-	__block IRTableView *nonretainedSelf = self;
-
-	dispatch_retain(self.delayedPerformQueue);
-	[nonretainedSelf retain];
+	__weak IRTableView *wSelf = self;
 
 	dispatch_async(self.delayedPerformQueue, ^ {
 	
-		if (nonretainedSelf.delayedPerformQueueFinalizing)
-		return;
+		if (wSelf.delayedPerformQueueFinalizing)
+			return;
 		
 		dispatch_async(dispatch_get_main_queue(), ^ {
 		
 			if (block)
-			block();
+				block();
 			
-			[nonretainedSelf autorelease];
-		
 		});
 	
 	});
-	
-	dispatch_release(self.delayedPerformQueue);
 
 }
 

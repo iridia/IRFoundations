@@ -10,7 +10,6 @@
 
 #import "IRLifetimeHelper.h"
 #import "IRManagedObjectContext.h"
-#import "NSFetchRequest+IRAdditions.h"
 
 
 @implementation NSManagedObjectContext (IRAdditions)
@@ -18,34 +17,15 @@
 - (NSManagedObject *) irManagedObjectForURI:(NSURL *)anURI {
 
 	NSManagedObject *returnedObject = nil;
-	NSManagedObjectID *objectID = nil;
+	NSManagedObjectID *objectID = [[self persistentStoreCoordinator] managedObjectIDForURIRepresentation:anURI];
+		
+	if (!objectID)
+		return nil;
 
-	@try {
+	//	This is not necessary
+	//	NSParameterAssert(![objectID isTemporaryID]);
 	
-		objectID = [[self persistentStoreCoordinator] managedObjectIDForURIRepresentation:anURI];
-		
-		if (!objectID) {
-		
-			NSLog(@"%s: Object ID not recognized by persistent store coordinator.", __PRETTY_FUNCTION__);
-			
-			NSLog(@"%s: URI Representation: %@", __PRETTY_FUNCTION__, anURI);
-			NSLog(@"%s: Object Store ID: %@", __PRETTY_FUNCTION__, [anURI host]);
-			NSLog(@"%s: All Store IDs: %@", __PRETTY_FUNCTION__, [self.persistentStoreCoordinator.persistentStores irMap: ^ (NSPersistentStore *aStore, NSUInteger index, BOOL *stop) {
-				return [aStore identifier];
-			}]);
-		
-			return nil;
-		
-		}
-		returnedObject = [self objectWithID:objectID];
-	
-	} @catch (NSException *exception) {
-	
-		NSLog(@"%s: Exception: %@", __PRETTY_FUNCTION__, exception);
-		
-	}
-	
-	return returnedObject;
+	return [self objectWithID:objectID];
 
 }
 
@@ -55,7 +35,10 @@
 @interface IRManagedObjectContext ()
 
 @property (nonatomic, readwrite, assign, setter=irSetAutoMergeStackCount:, getter=irAutoMergeStackCount) NSUInteger irAutoMergeStackCount;
-@property (nonatomic, readwrite, retain) id irAutoMergeListener;
+@property (nonatomic, readwrite, strong) id irAutoMergeListener;
+
+@property (nonatomic, readwrite, weak) NSThread *initializingThread;
+@property (nonatomic, readwrite, assign) BOOL initializingThreadWasMainThread;
 
 - (void) irAutoMergeSetUp;
 - (void) irAutoMergeTearDown;
@@ -65,27 +48,80 @@
 
 @implementation IRManagedObjectContext
 @synthesize irAutoMergeStackCount, irAutoMergeListener;
+@synthesize initializingThread, initializingThreadWasMainThread;
 
-- (NSArray *) executeFetchRequest:(NSFetchRequest *)request error:(NSError **)error {
+- (id) initWithConcurrencyType:(NSManagedObjectContextConcurrencyType)ct {
 
-	for (NSString *aPrefetchedRelationshipKeyPath in [[request.irRelationshipKeyPathsForObjectsPrefetching copy] autorelease]) {
+	self = [super initWithConcurrencyType:ct];
+	self.initializingThread = [NSThread currentThread];
 	
-		NSLog(@"Prefetch %@", aPrefetchedRelationshipKeyPath);
+	return self;
+
+}
+
+- (void) irPerform:(void(^)(void))block waitUntilDone:(BOOL)sync {
+
+	NSCParameterAssert(block);
 	
+	switch (self.concurrencyType) {
+	
+		case NSConfinementConcurrencyType: {
+		
+			if ([[NSThread currentThread] isEqual:self.initializingThread] && sync) {
+				
+				block();
+				
+			} else {
+			
+				if (!self.initializingThread)
+					@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Initialing thread no longer exists" userInfo:nil];
+					
+				[self performSelector:@selector(irPerformBlock:) onThread:self.initializingThread withObject:[block copy] waitUntilDone:sync modes:[NSArray arrayWithObjects:
+				
+					NSRunLoopCommonModes,
+				
+				nil]];
+			
+			}
+		
+			break;
+		
+		}
+		
+		case NSPrivateQueueConcurrencyType:
+		case NSMainQueueConcurrencyType: {
+		
+			//	TBD: test
+			
+			if (sync) {
+			
+				[self performBlockAndWait:block];
+			
+			} else {
+			
+				[self performBlock:block];
+			
+			}
+		
+			break;
+		
+		}
+
 	}
 
-	return [super executeFetchRequest:request error:error];
+}
+
+- (void) irPerformBlock:(void(^)(void))block {
+
+	NSCParameterAssert(block);
+	block();
 
 }
 
 - (void) dealloc {
 
-	if (irAutoMergeListener) {
+	if (irAutoMergeListener)
 		[[NSNotificationCenter defaultCenter] removeObserver:irAutoMergeListener];
-		[irAutoMergeListener release];
-	}
-	
-	[super dealloc];
 
 }
 
@@ -132,66 +168,109 @@
 - (void) irAutoMergeSetUp {
 
 	NSParameterAssert(!self.irAutoMergeListener);
+	NSParameterAssert([NSThread isMainThread]);
 
-	dispatch_queue_t (^currentQueue)() = ^ {
-		return [NSThread isMainThread] ? dispatch_get_main_queue() : dispatch_get_current_queue();
-	};
-
-	__block __typeof__(self) nrSelf = self;
-	__block dispatch_queue_t ownQueue = currentQueue();
-	dispatch_retain(ownQueue);
+	__weak IRManagedObjectContext *wSelf = self;
 	
-	__block id listenerObject = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
-		
-		NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
-		
-		if (savedContext == nrSelf)
-			return;
-		
-		if (savedContext.persistentStoreCoordinator != nrSelf.persistentStoreCoordinator)
-			return;
+	self.irAutoMergeListener = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification object:nil queue:nil usingBlock: ^ (NSNotification *note) {
 			
-		void (^merge)(void) = ^ {
+		[wSelf irAutoMergeHandleManagedObjectContextDidSave:note];
 			
-			@try {
-				[nrSelf mergeChangesFromContextDidSaveNotification:note];
-			} @catch (NSException *e) {
-				NSLog(@"%@", e);
-			}
-		
-		};
-			
-		if (ownQueue == currentQueue())
-			merge();
-		else 
-			dispatch_async(ownQueue, merge);
-		
 	}];
 	
-	[listenerObject irPerformOnDeallocation:^{
-	
-		dispatch_release(ownQueue);
-		
-	}];
-
-	self.irAutoMergeListener = listenerObject;
-
 }
 
 - (void) irAutoMergeTearDown {
 	
 	NSParameterAssert(self.irAutoMergeListener);
 	[[NSNotificationCenter defaultCenter] removeObserver:self.irAutoMergeListener];
+	
+	self.irAutoMergeListener = nil;
 
 }
 
-- (void) irHandleManagedObjectContextDidSaveNotification:(NSNotification *)note {
+- (void) irAutoMergeHandleManagedObjectContextDidSave:(NSNotification *)note {
+
+	__weak IRManagedObjectContext *wSelf = self;
 	
-	NSParameterAssert([self irIsMergingFromSavesAutomatically]);
+	void (^merge)(void) = ^ {
 	
-	__block __typeof__(self) nrSelf = self;
+		NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
+		if (!wSelf)
+			return;
+		
+		if (savedContext == wSelf)
+			return;
+		
+		if (savedContext.persistentStoreCoordinator != wSelf.persistentStoreCoordinator)
+			return;
+		
+		//	Fire faults in wSelf for every single changed object.
+		//	This works around an issue where if a NSFetchedResultsController has a predicate, it won’t watch objects changed to fit the predicate
+		//	Also fixes production cases where Debug and Release behavior differs
+		
+		//	Hat tip: http://stackoverflow.com/questions/3923826/nsfetchedresultscontroller-with-predicate-ignores-changes-merged-from-different
+		
+		[wSelf mergeChangesFromContextDidSaveNotification:note];
+		
+		for (NSManagedObject *object in [[note userInfo] objectForKey:NSInsertedObjectsKey])
+			[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
+
+		for (NSManagedObject *object in [[note userInfo] objectForKey:NSUpdatedObjectsKey])
+			[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
+
+		for (NSManagedObject *object in [[note userInfo] objectForKey:NSDeletedObjectsKey])
+			[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
+		
+		[wSelf processPendingChanges];
+				
+	};
 	
+	switch (wSelf.concurrencyType) {
 	
+		case NSConfinementConcurrencyType: {
+		
+			//	TBD: maybe use an instance method to allow customization of the queue on which things happen
+		
+			if ([NSThread isMainThread])
+				merge();
+			else
+				dispatch_async(dispatch_get_main_queue(), merge);
+		
+			break;
+		
+		}
+		
+		case NSPrivateQueueConcurrencyType:
+		case NSMainQueueConcurrencyType: {
+		
+			//	TBD: test
+			
+			[wSelf performBlockAndWait:merge];
+		
+			break;
+		
+		}
+
+	}
+
+}
+
+- (void) irMakeAutoMerging {
+
+	if (![self irIsMergingFromSavesAutomatically]) {
+	
+		__weak IRManagedObjectContext *wSelf = self;
+		
+		[self irBeginMergingFromSavesAutomatically];
+		[self irPerformOnDeallocation: ^ {
+			
+			[wSelf irStopMergingFromSavesAutomatically];
+			
+		}];
+	
+	}
+
 }
 
 @end

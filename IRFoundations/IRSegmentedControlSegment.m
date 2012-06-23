@@ -39,19 +39,19 @@
 	[self.trackingButton addTarget:self action:@selector(handleTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];	
 	
 	self.image = inImage;
-	self.imageView = [[[UIImageView alloc] initWithImage:self.image] autorelease];
+	self.imageView = [[UIImageView alloc] initWithImage:self.image];
 	self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	self.imageView.contentMode = UIViewContentModeCenter;
 	self.imageView.frame = self.bounds;
 	
 	self.highlightedImage = inHighlightedImage;
-	self.highlightedImageView = [[[UIImageView alloc] initWithImage:self.highlightedImage] autorelease];
+	self.highlightedImageView = [[UIImageView alloc] initWithImage:self.highlightedImage];
 	self.highlightedImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	self.highlightedImageView.contentMode = UIViewContentModeCenter;
 	self.highlightedImageView.frame = self.bounds;
 
 	self.activeBackdropImage = inActiveBackdrop;
-	self.backdropImageView = [[[UIImageView alloc] initWithImage:self.activeBackdropImage] autorelease];
+	self.backdropImageView = [[UIImageView alloc] initWithImage:self.activeBackdropImage];
 	self.backdropImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	self.backdropImageView.contentMode = UIViewContentModeLeft;
 	self.backdropImageView.frame = self.bounds;

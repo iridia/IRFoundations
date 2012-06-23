@@ -13,6 +13,9 @@
 + (NSBundle *) irFrameworkBundleWithName:(NSString *)name;
 + (NSBundle *) irFrameworkBundleWithIdentifier:(NSString *)identifier;
 
+- (NSString *) displayVersionString;
 - (NSString *) debugVersionString;
+
+- (NSDictionary *) irInfoDictionary;
 
 @end

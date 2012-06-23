@@ -12,20 +12,24 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
+typedef void(^IRImageWritingCallback)(BOOL didWrite, NSError *error);
+
 @class IRShadow;
 @interface UIImage (IRAdditions)
 
 + (UIImage *) irImageNamed:(NSString *)name inBundle:(NSBundle *)bundle;
 
 - (UIImage *) irStandardImage;
+
 - (UIImage *) irDecodedImage;
+- (BOOL) irIsDecodedImage;
 
 - (UIImage *) irScaledImageWithSize:(CGSize)aSize;
 - (UIImage *) irSolidImageWithFillColor:(UIColor *)fillColor shadow:(IRShadow *)shadowOrNil;
 
 @property (nonatomic, readwrite, retain, getter=irRepresentedObject, setter=irSetRepresentedObject:) id irRepresentedObject;
 
-- (void) irWriteToSavedPhotosAlbumWithCompletion:(void(^)(BOOL didWrite, NSError *error))aBlock;
+- (void) irWriteToSavedPhotosAlbumWithCompletion:(IRImageWritingCallback)aBlock;
 
 + (BOOL) validateContentsOfFileAtPath:(NSString *)path error:(NSError **)error;
 

@@ -18,7 +18,7 @@
 - (BOOL) irHasDifferentSuperClassMethodForSelector:(SEL)aSelector;
 - (BOOL) irHasDifferentSuperInstanceMethodForSelector:(SEL)aSelector;
 
-- (void) irAssociateObject:(id)anObject usingKey:(const void *)aKey policy:(objc_AssociationPolicy)policy changingObservedKey:(NSString *)propertyKeyOrNil;	//	if propertyKeyOrNil is nil, no KVO notification sent
+- (void) irAssociateObject:(id)anObject usingKey:(const void *)aKey policy:(objc_AssociationPolicy)policy changingObservedKey:(NSString *)propertyKeyOrNil;	//	if propertyKeyOrNil is nil, no KVO notification sent.  If you’re calling this in your own setter, there is no need to send a duplicate change notification because KVO mechanics would do that for you.
 
 - (id) irAssociatedObjectWithKey:(const void *)aKey;
 

@@ -18,7 +18,7 @@
 
 + (IRMailComposeViewController *) controllerWithMessageToRecipients:(NSArray *)toRecipients withSubject:(NSString *)aSubject messageBody:(NSString *)messageBody inHTML:(BOOL)messageIsHTML completion:(void(^)(MFMailComposeViewController *controller, MFMailComposeResult result, NSError *error))aBlock {
 
-	IRMailComposeViewController *returnedController = [[[self alloc] init] autorelease];
+	IRMailComposeViewController *returnedController = [[self alloc] init];
 	
 	[returnedController setSubject:aSubject];
 	[returnedController setToRecipients:toRecipients];
@@ -35,13 +35,6 @@
 
 	if (self.callback)
 	self.callback(self, result, error);
-
-}
-
-- (void) dealloc {
-
-	[callback release];
-	[super dealloc];
 
 }
 

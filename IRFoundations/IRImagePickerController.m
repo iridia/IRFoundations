@@ -68,15 +68,12 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 
 + (IRImagePickerController *) pickerWithSourceType:(UIImagePickerControllerSourceType)aSourceType mediaTypes:(NSArray *)inMediaTypes completionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
 	
-	IRImagePickerController *returned = [[[self alloc] init] autorelease];
-	if (!returned) return nil;
-	
-	if (![[self class] isSourceTypeAvailable:aSourceType]) {
-        
-		NSLog(@"Source type not available.  Doing nothing.");
+	if (![[self class] isSourceTypeAvailable:aSourceType])
 		return nil;
-        
-	}
+	
+	IRImagePickerController *returned = [[self alloc] init];
+	if (!returned)
+		return nil;
 	
 	returned.takesPictureOnVolumeUpKeypress = YES;
 	returned.sourceType = aSourceType;
@@ -96,17 +93,6 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 
 }
 
-- (void) dealloc {
-	
-	[callbackBlock release];
-	[super dealloc];
-	
-}
-
-
-
-
-
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
 	NSURL *assetURL = [info valueForKey:UIImagePickerControllerReferenceURL];
@@ -118,9 +104,14 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 	
 	if (self.sourceType == UIImagePickerControllerSourceTypeCamera)
 	if (self.savesCameraImageCapturesToSavedPhotos) {
+		
 		[assetImage irWriteToSavedPhotosAlbumWithCompletion:^(BOOL didWrite, NSError *error) {
-			//	NSLog(@"Written.");
+		
+			if (!didWrite)
+				NSLog(@"%s: %@", __PRETTY_FUNCTION__, error);
+		
 		}];
+		
 	}
 	
 	NSURL *tempMediaURL = [info valueForKey:UIImagePickerControllerMediaURL];
@@ -128,15 +119,13 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 	
 	void (^bounceImage)(UIImage *) = ^ (UIImage *anImage) {
 	
-		__typeof__(self.callbackBlock) const ownCallbackBlock = [self.callbackBlock copy];
+		__typeof__(self.callbackBlock) ownCallbackBlock = self.callbackBlock;
 		BOOL const async = self.asynchronous;
 
-		void (^sendImage)(NSURL *) =	[[ ^ (NSURL *fileURL) {
+		void (^sendImage)(NSURL *) =	[ ^ (NSURL *fileURL) {
 
 			if (ownCallbackBlock)
 				ownCallbackBlock(fileURL, nil);
-			
-			[ownCallbackBlock release];
 			
 			dispatch_async(dispatch_get_global_queue(0, 0), ^ {
 			
@@ -144,14 +133,14 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 			
 			});
 
-		} copy] autorelease];
+		} copy];
 		
-		__block void (^copyImage)(void) = ^ {
+		void (^copyImage)(void) = ^ {
 			
 			CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
 			CFStringRef uuidString = CFUUIDCreateString(kCFAllocatorDefault, uuidRef);
 			
-			NSString *fileName = [NSString stringWithFormat:@"%lu-%@", time(NULL), (NSString *)uuidString];
+			NSString *fileName = [NSString stringWithFormat:@"%lu-%@", time(NULL), (__bridge NSString *)uuidString];
 			
 			CFRelease(uuidRef);
 			CFRelease(uuidString);
@@ -218,8 +207,8 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 			}
 		
 		}
-        
-		ALAssetsLibrary *library = [[[ALAssetsLibrary alloc] init] autorelease];
+		
+		ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
 		[library assetForURL:assetURL resultBlock: ^ (ALAsset *asset) {
 							
 			objc_setAssociatedObject(asset, &kIRImagePickerControllerAssetLibrary, library, OBJC_ASSOCIATION_RETAIN_NONATOMIC);

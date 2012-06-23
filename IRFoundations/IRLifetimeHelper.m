@@ -80,9 +80,6 @@ static NSString *kIRLifetimeHelpers = @"IRLifetimeHelpers";
 @implementation NSObject (IRLifetimeHelperAdditions)
 
 - (void) irPerformOnDeallocation:(void(^)(void))aBlock {
-
-	if (([self retainCount] == UINT_MAX) || ([self retainCount] == INT_MAX))
-		NSLog(@"%s: object <%@ %x> is unlikely to be deallocated at all.", __PRETTY_FUNCTION__, NSStringFromClass([self class]), (unsigned int)self);
 	
 	IRLifetimeHelper *helper = [IRLifetimeHelper helperWithDeallocationCallback:aBlock];
 	helper.owner = self;
@@ -110,29 +107,12 @@ static NSString *kIRLifetimeHelpers = @"IRLifetimeHelpers";
 @implementation IRLifetimeHelper
 @synthesize deallocationCallback, owner;
 
-#if 0
-- (id) retain {
-	NSLog(@"%s %@", __PRETTY_FUNCTION__, [NSThread callStackSymbols]);
-	return [super retain];
-}
-
-- (oneway void) release {
-	NSLog(@"%s %@", __PRETTY_FUNCTION__, [NSThread callStackSymbols]);
-	return [super release];
-}
-
-- (id) autorelease {
-	NSLog(@"%s %@", __PRETTY_FUNCTION__, [NSThread callStackSymbols]);
-	return [super autorelease];
-}
-#endif
-
 + (id) helperWithDeallocationCallback:(void(^)(void))aBlock {
 
 	IRLifetimeHelper *returnedHelper = [[self alloc] init];
 	returnedHelper.deallocationCallback = aBlock;
 	
-	return [returnedHelper autorelease];
+	return returnedHelper;
 
 }
 
@@ -141,9 +121,6 @@ static NSString *kIRLifetimeHelpers = @"IRLifetimeHelpers";
 	if (deallocationCallback)
 		deallocationCallback();
 	
-	[deallocationCallback release];
-	[super dealloc];
-
 }
 
 @end

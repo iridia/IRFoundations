@@ -10,7 +10,8 @@
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 
-//	This guy will take your color and pimp your toolbar!
+
+NS_DEPRECATED_IOS(4_0, 5_0)
 
 @interface IRTintedBarButtonItem : UIBarButtonItem
 

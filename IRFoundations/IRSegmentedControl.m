@@ -1,6 +1,6 @@
 //
 //  MLFlushGlowingSegmentedControl.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 12/1/10.
 //  Copyright 2010 Iridia Productions. All rights reserved.
@@ -39,12 +39,9 @@
 
 	self = [super initWithFrame:inFrame]; if (!self) return nil;
 	
-	self.toolbar = [[[IRTransparentToolbar alloc] initWithFrame:inFrame] autorelease];
+	self.toolbar = [[IRTransparentToolbar alloc] initWithFrame:inFrame];
 	self.toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-//	This once helped us find a topNavigationItem.leftBarButtonItem width issue
-//	self.toolbar.clipsToBounds = YES;
-	
 	[self addSubview:self.toolbar];
 	
 	return self;
@@ -105,8 +102,8 @@
 
 	if (selectedSegmentIndex == inIndex)
 	if ([self segmentAtIndex:inIndex] != nil)
-	if ((IRSegmentedControlSegment *)([self segmentAtIndex:inIndex]).active)
-	return;
+	if (((IRSegmentedControlSegment *)[self segmentAtIndex:inIndex]).active)
+		return;
 
 	selectedSegmentIndex = inIndex;
 

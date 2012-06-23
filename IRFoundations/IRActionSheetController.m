@@ -1,6 +1,6 @@
 //
 //  IRActionSheetController.m
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 2/15/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -17,6 +17,8 @@
 @property (nonatomic, readwrite, assign) BOOL behavingProgrammatically;
 
 - (IRAction *) actionAtIndex:(NSUInteger)index usingActionSheet:(UIActionSheet *)anActionSheet;
+
++ (NSMutableSet *) presentedActionSheetControllers;
 
 @end
 
@@ -51,14 +53,15 @@
 	controller.destructionAction = destructionAction;
 	controller.otherActions = otherActionsOrNil;
 	
-	return [controller autorelease];
+	return controller;
 
 }
 
 - (id) init {
 	
 	self = [super init];
-	if (!self) return nil;
+	if (!self)
+		return nil;
 	
 	self.behavingProgrammatically = NO;
 	
@@ -72,24 +75,15 @@
 
 - (void) dealloc {
 
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	if ([managedActionSheet isVisible]) {
+		NSUInteger cancelButtonIndex = [managedActionSheet cancelButtonIndex];
+		[managedActionSheet dismissWithClickedButtonIndex:cancelButtonIndex animated:NO];
+	}
 
-	[title release];
-	[cancellationAction release];
-	[destructionAction release];
-	[otherActions release];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	[managedActionSheet setDelegate:nil];
-	[managedActionSheet release];
 	
-	[onActionSheetCancel release];
-	[onActionSheetWillPresent release];
-	[onActionSheetDidPresent release];
-	[onActionSheetWillDismiss release];
-	[onActionSheetDidDismiss release];
-	
-	[super dealloc];
-
 }
 
 - (IRActionSheet *) singleUseActionSheet {
@@ -107,7 +101,7 @@
     returnedActionSheet.cancelButtonIndex = [returnedActionSheet addButtonWithTitle:self.cancellationAction.title];
   }
   
-	return [returnedActionSheet autorelease];
+	return returnedActionSheet;
 
 }
 
@@ -115,7 +109,7 @@
 
 	if (!managedActionSheet) {
 	
-		managedActionSheet = [[self singleUseActionSheet] retain];
+		managedActionSheet = [self singleUseActionSheet];
 	
 	}
 	
@@ -132,8 +126,7 @@
 	
 	self.managedActionSheet = nil;
 	
-	[cancellationAction release];
-	cancellationAction = [newCancellationAction retain];
+	cancellationAction = newCancellationAction;
 
 }
 
@@ -146,8 +139,7 @@
 	
 	self.managedActionSheet = nil;
 	
-	[destructionAction release];
-	destructionAction = [newDestructionAction retain];
+	destructionAction = newDestructionAction;
 
 }
 
@@ -160,8 +152,7 @@
 	
 	self.managedActionSheet = nil;
 	
-	[otherActions release];
-	otherActions = [newOtherActions retain];
+	otherActions = newOtherActions;
 
 }
 
@@ -216,54 +207,58 @@
 
 }
 
++ (NSMutableSet *) presentedActionSheetControllers {
+
+	static NSMutableSet *set = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+	
+		set = [NSMutableSet set];
+							
+	});
+	
+	return set;
+
+}
+
 - (void) willPresentActionSheet:(UIActionSheet *)actionSheet {
 
-//	Retain self.  This is to combat a situation where the controller is used on its own as an autoreleased object
-//	In that sense it might be autoreleased before the action sheet is dismissed
-	[self retain];
+	[[[self class] presentedActionSheetControllers] addObject:self];
 
 	if (self.onActionSheetWillPresent)
-	self.onActionSheetWillPresent();
+		self.onActionSheetWillPresent();
 
 }
 
 - (void) didPresentActionSheet:(UIActionSheet *)actionSheet {
 
 	if (self.onActionSheetDidPresent)
-	self.onActionSheetDidPresent();
+		self.onActionSheetDidPresent();
 
 }
 
 - (void) actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex {
 
 	if (self.onActionSheetWillDismiss)
-	self.onActionSheetWillDismiss([self actionAtIndex:buttonIndex usingActionSheet:actionSheet]);	
+		self.onActionSheetWillDismiss([self actionAtIndex:buttonIndex usingActionSheet:actionSheet]);	
 
 }
 
 - (void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
 
 	if (actionSheet == managedActionSheet)
-	self.managedActionSheet = nil;
+		self.managedActionSheet = nil;
 	
 	if (self.onActionSheetDidDismiss)
-	self.onActionSheetDidDismiss([self actionAtIndex:buttonIndex usingActionSheet:actionSheet]);
-
-//	Release self.  This is to combat a situation where the controller is used on its own as an autoreleased object
-//	In that sense it might be autoreleased before the action sheet is dismissed
-	[self autorelease];
+		self.onActionSheetDidDismiss([self actionAtIndex:buttonIndex usingActionSheet:actionSheet]);
+	
+	[[[self class] presentedActionSheetControllers] removeObject:self];
 
 }
 
-
-
-
-
 - (void) handleApplicationWillChangeStatusBarOrientationNotification:(NSNotification *)notification {
 
-	[self retain];
-	
-	[self.managedActionSheet prepareForReshowingIfAppropriate];
+	[managedActionSheet prepareForReshowingIfAppropriate];
 	
 }
 
@@ -271,10 +266,19 @@
 
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.125 * NSEC_PER_SEC), dispatch_get_main_queue(), ^ {
 	 
-		if (!self.managedActionSheet.dismissesOnOrientationChange)
-			[self.managedActionSheet reshowIfAppropriate];
+		if (managedActionSheet.dismissesOnOrientationChange) {
 		
-		[self autorelease];
+			[managedActionSheet dismissWithClickedButtonIndex:[self.managedActionSheet cancelButtonIndex] animated:NO];
+			managedActionSheet.delegate = nil;
+			managedActionSheet = nil;
+			
+			[[[self class] presentedActionSheetControllers] removeObject:self];
+			
+		} else {
+			
+			[managedActionSheet reshowIfAppropriate];
+			
+		}
 
 	});
 	

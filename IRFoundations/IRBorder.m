@@ -24,7 +24,7 @@
 	returnedBorder.width = aWidth;
 	returnedBorder.color = aColor;
 	
-	return [returnedBorder autorelease];
+	return returnedBorder;
 
 }
 
@@ -50,13 +50,5 @@
 	[aCoder encodeObject:color forKey:@"color"];
 
 }
-
-- (void) dealloc {
-
-	[color release];
-	[super dealloc];
-
-}
-
 
 @end

@@ -1,30 +1,27 @@
 //
 //  NSFetchRequest+IRAdditions.m
-//  Milk
+//  IRFoundations
 //
-//  Created by Evadne Wu on 2/10/11.
-//  Copyright 2011 Iridia Productions. All rights reserved.
+//  Created by Evadne Wu on 4/20/12.
+//  Copyright (c) 2012 Iridia Productions. All rights reserved.
 //
 
 #import "NSFetchRequest+IRAdditions.h"
+#import <objc/runtime.h>
 
-
-
-
-
-NSString * const kIRPrefetchedEntityRelationshipKeyPaths = @"kIRPrefetchedEntityRelationshipKeyPaths";
+static NSString * const kDisplayTitle = @"-[NSFetchRequest(IRAdditions) displayTitle]";
 
 @implementation NSFetchRequest (IRAdditions)
 
-- (NSArray *) irRelationshipKeyPathsForObjectsPrefetching {
+- (NSString *) displayTitle {
 
-	return objc_getAssociatedObject(self, kIRPrefetchedEntityRelationshipKeyPaths);
-	
+	return objc_getAssociatedObject(self, &kDisplayTitle);
+
 }
 
-- (void) setIrRelationshipKeyPathsForObjectsPrefetching:(NSArray *)value {
+- (void) setDisplayTitle:(NSString *)displayTitle {
 
-	objc_setAssociatedObject(self, kIRPrefetchedEntityRelationshipKeyPaths, value, OBJC_ASSOCIATION_RETAIN);
+	objc_setAssociatedObject(self, &kDisplayTitle, displayTitle, OBJC_ASSOCIATION_COPY_NONATOMIC);
 
 }
 

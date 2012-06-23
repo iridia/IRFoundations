@@ -18,7 +18,7 @@
 
 + (IRBusyView *) wrappedBusyViewForView:(UIView *)wrappedView withStyle:(IRBusyViewStyle)aStyle {
 
-	IRBusyView *returnedView = [[[self alloc] initWithFrame:CGRectZero] autorelease];
+	IRBusyView *returnedView = [[self alloc] initWithFrame:CGRectZero];
 	if (!returnedView) return nil;
 	
 	returnedView.contentView = wrappedView;
@@ -38,18 +38,18 @@
 	
 		case IRBusyViewStyleDefaultSpinner: {
 		
-			IRActivityIndicatorView *activityIndicator = [[[IRActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
+			IRActivityIndicatorView *activityIndicator = [[IRActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 			activityIndicator.hidesWhenStopped = YES;	
 			activityIndicator.animating = NO;
 			activityIndicator.userInteractionEnabled = NO;
 			
 			[activityIndicator irBind:@"hidden" toObject:self keyPath:@"busy" options:[NSDictionary dictionaryWithObjectsAndKeys:
 			
-				[[ ^ (id inOldValue, id inNewValue, NSString *changeKind) {
+				[ ^ (id inOldValue, id inNewValue, NSString *changeKind) {
 				
 					return [NSNumber numberWithBool:![inNewValue boolValue]];
 				
-				} copy] autorelease], kIRBindingsValueTransformerBlock,
+				} copy], kIRBindingsValueTransformerBlock,
 				
 				[NSNumber numberWithBool:YES], kIRBindingsAssignOnMainThreadOption,
 			
@@ -84,23 +84,13 @@
 
 }
 
-- (void) dealloc {
-
-	[contentView release];
-	[busyOverlayView release];
-	
-	[super dealloc];
-
-}
-
 - (void) setContentView:(UIView *)aView {
 
 	if (contentView == aView)
 	return;
 
 	[contentView removeFromSuperview];
-	[contentView release];
-	contentView = [aView retain];
+	contentView = aView;
 	[self addSubview:contentView];
 	
 	[self setNeedsLayout];
@@ -113,8 +103,7 @@
 	return;
 
 	[busyOverlayView removeFromSuperview];
-	[busyOverlayView release];
-	busyOverlayView = [aView retain];
+	busyOverlayView = aView;
 	[self addSubview:busyOverlayView];
 	[self bringSubviewToFront:busyOverlayView];
 	

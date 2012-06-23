@@ -21,14 +21,14 @@
 	static NSSet *potentialClassNames = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		potentialClassNames = [[NSSet setWithObjects:
+		potentialClassNames = [NSSet setWithObjects:
 			@"_NSConcreteStackBlock", 
 			@"_NSConcreteGlobalBlock",
 			@"NSStackBlock",
 			@"NSGlobalBlock",
 			@"NSMallocBlock",
 			@"NSBlock",
-		nil] retain];
+		nil];
 	});
 
 	NSString *ownClass = NSStringFromClass([self class]);
@@ -93,7 +93,7 @@
 
 NSComparator irComparatorMakeWithNodeKeyPath (NSString *aKeyPath) {
 
-	return (NSComparator)[[ ^ (id lhs, id rhs) {
+	return (NSComparator)[ ^ (id lhs, id rhs) {
 	
 		BOOL (^empty)() = ^ (id aValue) {
 		
@@ -128,7 +128,7 @@ NSComparator irComparatorMakeWithNodeKeyPath (NSString *aKeyPath) {
 		
 		return [lhsValue compare:rhsValue];
 
-	} copy] autorelease];
+	} copy];
 
 }
 

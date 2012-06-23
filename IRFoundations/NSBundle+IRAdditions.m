@@ -18,7 +18,7 @@
 		if ([[[[bundle bundlePath] lastPathComponent] stringByDeletingPathExtension] isEqual:identifier])
 			return bundle;
 
-		return nil;
+		return (NSBundle *)nil;
 	
 	}] lastObject];
 
@@ -34,12 +34,38 @@
 
 }
 
+- (NSString *) displayVersionString {
+
+	static NSString *string = nil;
+	static dispatch_once_t onceToken;
+	
+	dispatch_once(&onceToken, ^{
+		
+		NSDictionary *bundleInfo = [self irInfoDictionary];
+		
+		string = [NSString stringWithFormat:@"%@ %@ (%@)", [bundleInfo objectForKey:@"CFBundleDisplayName"], [bundleInfo objectForKey:@"CFBundleShortVersionString"], [bundleInfo objectForKey:(id)kCFBundleVersionKey]];
+		
+	});
+
+	return string;
+
+}
+
 - (NSString *) debugVersionString {
 
 	NSDictionary *bundleInfo = [self infoDictionary];
 	NSString *versionString = [NSString stringWithFormat:@"%@ %@ (%@) # %@", [bundleInfo objectForKey:(id)kCFBundleNameKey], [bundleInfo objectForKey:@"CFBundleShortVersionString"], [bundleInfo objectForKey:(id)kCFBundleVersionKey], [bundleInfo objectForKey:@"IRCommitSHA"]];
 	
 	return versionString;
+
+}
+
+- (NSDictionary *) irInfoDictionary {
+
+	NSMutableDictionary *bundleInfo = [[self infoDictionary] mutableCopy];
+	[bundleInfo addEntriesFromDictionary:[self localizedInfoDictionary]];
+	
+	return bundleInfo;
 
 }
 

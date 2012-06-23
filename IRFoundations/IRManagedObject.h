@@ -1,6 +1,6 @@
 //
 //  IRManagedObject.h
-//  Milk
+//  IRFoundations
 //
 //  Created by Evadne Wu on 1/11/11.
 //  Copyright 2011 Iridia Productions. All rights reserved.
@@ -9,18 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "Foundation+IRAdditions.h"
 #import "CoreData+IRAdditions.h"
-#import "IRNoOp.h"
-
-
-#if 0
-
-	#define IRMOLog( s, ... ) NSLog( @"<%s : (%d)> %@",__FUNCTION__, __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
-
-#else
-
-	#define IRMOLog( s, ... ) 
-
-#endif
 
 
 enum IRManagedObjectOptions {
@@ -33,6 +21,9 @@ enum IRManagedObjectOptions {
 @interface IRManagedObject : NSManagedObject
 
 - (void) irAwake;	//	Called in -awakeFromInsert, and -awakeFromFetch
+
++ (NSEntityDescription *) entityDescriptionForContext:(NSManagedObjectContext *)aContext;
+
 
 + (NSArray *) insertOrUpdateObjectsIntoContext:(NSManagedObjectContext *)inContext withExistingProperty:(NSString *)inLocalMarkerKeyPath matchingKeyPath:(NSString *)inRemoteMarkerKeyPath ofRemoteDictionaries:(NSArray *)inRemoteDictionaries;
 
@@ -97,88 +88,12 @@ enum IRManagedObjectOptions {
 //	Makes a new object, inserting into the context, then call its -configureWithRemoteDictionary:.
 
 
-+ (NSEntityDescription *) entityDescriptionForContext:(NSManagedObjectContext *)aContext;
-
 
 + (NSDictionary *) transformedRepresentationForRemoteRepresentation:(NSDictionary *)incomingRepresentation;
 //	Convert identifier fields to object prototypes containing an identifier field, for example.
 //	Default implementation returns incoming representation.
 
-
 @end
 
 
-
-
-
-@interface IRManagedObject (WebAPIImporting)
-
-- (void) configureWithRemoteDictionary:(NSDictionary *)inDictionary;
-
-//	Takes values from a remote dictionary.  Does not whatsoever change the contents.
-//	If +remoteDictionaryConfigurationMapping is implemented, does not return nil, uses the mapping.
-//	Otherwise, default implementation does nothing.
-
-
-+ (NSDictionary *) remoteDictionaryConfigurationMapping;
-
-//	To avoid rolling your own -valueForKeyPath wrappers that avoids [NSNull null] et al, implement +remoteDictionaryConfigurationMapping, whose keys are remote dictionary key path strings, and their values the key path string to the desired value of the local object, that the remote value goes into.
-
-//	If the returned local key path is actually [NSNull null], the value gets ignored.
-
-//	Consider making this method return a static object if necessary.
-
-
-+ (id) transformedValue:(id)aValue fromRemoteKeyPath:(NSString *)aRemoteKeyPath toLocalKeyPath:(NSString *)aLocalKeyPath;
-
-//	Returns a transformed, if any, or nil, for value at a particular key path.
-//	This allows the subclass to do custom value transformation.
-//	Placeholders are also transformed.
-
-//	Defaults to the incoming value.  Return [IRNoOp noOp] to do nothing.
-
-//	This is not a replacement for overriding -set<Property>: and implementing custom transformations before calling -setPrimitive<Property>:.  This is for use when the implementations of IRManagedObject+WebAPIImporting is provided in file for another class.
-
-
-+ (id<NSObject>) placeholderForNonexistantKey;
-
-//	Placeholder value to use if a remote value that is specified within the mapping is not found.
-//	e.g., if a key “bogus” is specified in the mapping, but the incoming dictionary does not have it.
-
-//	Defaults to nil.
-//	Try [IRNoOp noOp] if you want to skip the key instead of niling or setting the value to [NSNull null].  It is useful to have a no-op, if you will touch the object more than once, and some incoming data is incomplete.
-
-
-+ (id<NSObject>) placeholderForNullValue;
-
-//	Placeholder value to use if a remote value is [NSNull null].
-//	Defaults to nil.
-//	Try [IRNoOp noOp] if you want to skip the key instead of niling or setting the value to [NSNull null].
-
-
-+ (BOOL) skipsNonexistantRemoteKey;
-+ (BOOL) skipsNullValue;
-
-//	Introspective.
-
-
-@end
-
-
-
-
-
-@interface IRManagedObject (DelayedPerforming)
-
-- (void) performSafely:(void(^)(void))aBlock;
-- (void) performSafely:(void(^)(void))aBlock withExceptionHandler:(BOOL(^)(NSException *e))exceptionHandlerOrNil;
-
-//	Unsolicited Core Data operations, like delayed performing, can fail if the object is made inaccessible, etc.  In that case, use of these helper methods will simply cancel the operation.  The exception handler block returns a BOOL.  If YES, the exception does not propagate; if NO, the exception is re-thrown.
-
-@end
-
-
-
-
-
-#import "IRManagedObject+SimulatedOrderedRelationship.h"
+#import "IRManagedObject+WebAPIImporting.h"

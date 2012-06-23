@@ -7,14 +7,21 @@
 //
 
 #import "IRAsyncOperation.h"
+#import "IRAsyncOperation+ForSubclassEyesOnly.h"
+
 
 @interface IRAsyncOperation ()
 
-@property (nonatomic, readwrite, assign) dispatch_queue_t actualDispatchQueue;
-@property (nonatomic, readwrite, retain) id results;
+@property (nonatomic, readwrite, copy) IRAsyncOperationWorker worker;
+@property (nonatomic, readwrite, copy) IRAsyncOperationWorkerTrampoline workerTrampoline;
 
-- (void) onMainQueue:(void(^)(void))aBlock;
-- (void) concludeWithResults:(id)incomingResults;
+@property (nonatomic, readwrite, copy) IRAsyncOperationCallback callback;
+@property (nonatomic, readwrite, copy) IRAsyncOperationCallbackTrampoline callbackTrampoline;
+
+@property (nonatomic, readonly, assign, getter=isExecuting) BOOL executing;
+@property (nonatomic, readonly, assign, getter=isFinished) BOOL finished;
+
+@property (nonatomic, readwrite, retain) id results;
 
 @end
 
@@ -22,36 +29,48 @@
 @implementation IRAsyncOperation
 
 @synthesize executing, finished;
-@synthesize workerBlock, workCompletionBlock;
-@synthesize actualDispatchQueue, results;
+@synthesize worker, workerTrampoline, callback, callbackTrampoline;
+@synthesize results;
 
-+ (IRAsyncOperation *) operationWithWorkerBlock:(void (^)(IRAsyncOperationCallback callback))aWorkerBlock completionBlock:(IRAsyncOperationCallback)aCompletionBlock {
++ (id) operationWithWorker:(IRAsyncOperationWorker)inWorker trampoline:(IRAsyncOperationWorkerTrampoline)inWorkerTrampoline callback:(IRAsyncOperationCallback)inCallback callbackTrampoline:(IRAsyncOperationCallbackTrampoline)inCallbackTrampoline {
 
-	IRAsyncOperation *returnedOperation = [[[self alloc] init] autorelease];
-	returnedOperation.workerBlock = aWorkerBlock;
-	returnedOperation.workCompletionBlock = aCompletionBlock;
-	return returnedOperation;
+	IRAsyncOperation *op = [[self alloc] init];
+	
+	op.worker = inWorker;
+	op.workerTrampoline = inWorkerTrampoline ? inWorkerTrampoline : [op copyDefaultWorkerTrampoline];
+	
+	op.callback = inCallback;
+	op.callbackTrampoline = inCallbackTrampoline ? inCallbackTrampoline : [op copyDefaultCallbackTrampoline];
+	
+	return op;
+
+}
+
++ (id) operationWithWorker:(IRAsyncOperationWorker)inWorker callback:(IRAsyncOperationCallback)inCallback {
+
+	return [self operationWithWorker:inWorker trampoline:nil callback:inCallback callbackTrampoline:nil];
+
+}
+
++ (id) operationWithWorkerBlock:(void (^)(IRAsyncOperationCallback callback))inWorker completionBlock:(IRAsyncOperationCallback)inCallback {
+
+	return [self operationWithWorker:inWorker trampoline:nil callback:inCallback callbackTrampoline:nil];
 
 }
 
 - (id) copyWithZone:(NSZone *)zone {
 
-	IRAsyncOperation *returnedOperation = [[[self class] alloc] init];
-	returnedOperation.workerBlock = [[workerBlock copy] autorelease];
-	returnedOperation.workCompletionBlock = [[workCompletionBlock copy] autorelease];
-	returnedOperation.results = [[results copy] autorelease];
+	IRAsyncOperation *op = [[[self class] alloc] init];
 	
-	return returnedOperation;
-
-}
-
-- (void) dealloc {
-
-	[workerBlock release];
-	[workCompletionBlock release];
-	[results release];
+	op.worker = worker;
+	op.workerTrampoline = workerTrampoline;
 	
-	[super dealloc];
+	op.callback = callback;
+	op.callbackTrampoline = callbackTrampoline;
+	
+	op.results = results;
+	
+	return op;
 
 }
 
@@ -87,26 +106,20 @@
 
 }
 
-- (void) onMainQueue:(void(^)(void))aBlock {
-	
-	self.actualDispatchQueue = dispatch_get_current_queue();
-	dispatch_async(dispatch_get_main_queue(), aBlock);
-	
-}
-
 - (void) concludeWithResults:(id)incomingResults {
 
 	if ([self isCancelled])
 		return;
-
-	dispatch_async(self.actualDispatchQueue, ^ {
+	
+	self.callbackTrampoline(^ {
 		
-		self.executing = NO;
-		self.finished = YES;		
 		self.results = incomingResults;
 		
-		if (self.workCompletionBlock)
-			self.workCompletionBlock(self.results);
+		if (self.callback)
+			self.callback(self.results);
+		
+		self.executing = NO;
+		self.finished = YES;
 		
 	});
 	
@@ -114,53 +127,64 @@
 
 - (void) start {
 
-	if (![NSThread isMainThread]) {
-		[self performSelectorOnMainThread:@selector(start) withObject:nil waitUntilDone:NO];
-		return;
-	}
-
 	if ([self isCancelled]) {
 		self.finished = YES;
 		return;
 	}
 	
 	self.executing = YES;
-	[self main];
-
-}
-
-- (void) cancel {
-
-	dispatch_queue_t queue = self.actualDispatchQueue;
-	if (!queue)
-		queue = dispatch_get_global_queue(0, 0);
-
-	dispatch_async(queue, ^ {
 	
-		if (self.executing)
-			self.finished = YES;
-		
-		self.executing = NO;
-		
-		if (self.workCompletionBlock)
-			self.workCompletionBlock(nil);
-		
-	});
+	[self main];
 
 }
 
 - (void) main {
 
-	[self onMainQueue: ^ {
-	
-		if (!self.workerBlock)
-			return;
-			
-		self.workerBlock([[ ^ (id incomingResults) {
-			[self concludeWithResults:incomingResults];
-		} copy] autorelease]);
+	self.workerTrampoline(^ {
 		
-	}];
+		if (self.worker) {
+			
+			self.worker([ ^ (id incomingResults) {
+				[self concludeWithResults:incomingResults];
+			} copy]);
+		
+		}
+		
+	});
+
+}
+
+- (void) cancel {
+
+	[super cancel];
+
+	if (self.executing)
+		self.finished = YES;
+	
+	self.executing = NO;
+	
+	if (self.callback)
+		self.callback(nil);
+	
+}
+
+- (IRAsyncOperationWorkerTrampoline) copyDefaultWorkerTrampoline {
+
+	return [^(void(^workerInvoker)(void)) {
+	
+		dispatch_async(dispatch_get_main_queue(), workerInvoker);
+	
+	} copy];
+
+}
+
+- (IRAsyncOperationCallbackTrampoline) copyDefaultCallbackTrampoline {
+
+	return [^(void(^callbackInvoker)(void)) {
+	
+		dispatch_async(dispatch_get_main_queue(), callbackInvoker);
+	
+	} copy];
 
 }
 
