@@ -21,7 +21,7 @@
 	
 		@try {
 		
-			NSNib *ownNib = [[[NSNib alloc] initWithNibNamed:NSStringFromClass(aClass) bundle:[NSBundle bundleForClass:aClass]] autorelease];
+			NSNib *ownNib = [[NSNib alloc] initWithNibNamed:NSStringFromClass(aClass) bundle:[NSBundle bundleForClass:aClass]];
 			NSArray *nibObjects = nil;
 			
 			if ([ownNib instantiateNibWithOwner:nil topLevelObjects:&nibObjects]) {

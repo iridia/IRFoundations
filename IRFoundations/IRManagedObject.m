@@ -56,7 +56,7 @@
 		if ([inObject isKindOfClass:[NSDictionary class]])
 			return inObject;
 		
-		NSLog(@"Warning: Object %@ at index %i is not a dictionary, skipping.", inObject, index);
+		NSLog(@"Warning: Object %@ at index %ld is not a dictionary, skipping.", inObject, (long)index);
 		return nil;
 		
 	}];

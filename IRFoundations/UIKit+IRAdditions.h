@@ -41,9 +41,9 @@
 #import "IRTexturedSegmentedControl.h"
 #import "IRTableViewCell.h"
 #import "IRStackView.h"
-#import "IRStoryboard.h"
 
 #if TARGET_OS_IPHONE
+#import "IRStoryboard.h"
 #import "IRImagePickerController.h"
 #import "IRMailComposeViewController.h"
 #endif
