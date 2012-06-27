@@ -282,6 +282,13 @@
 		FFD5E6E9150BA88E00A472E6 /* IRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFD5E6E7150BA88E00A472E6 /* IRViewController.m */; };
 		FFD90732150D12D600712D62 /* IRTexturedSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = FFD90730150D12D600712D62 /* IRTexturedSegmentedControl.h */; };
 		FFD90733150D12D600712D62 /* IRTexturedSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = FFD90731150D12D600712D62 /* IRTexturedSegmentedControl.m */; };
+		FFDE51F0159AF0020086F9B0 /* IRBindingsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA5D470156CD65B00DEDA3A /* IRBindingsHelper.m */; };
+		FFDE51F2159AF00A0086F9B0 /* IRBindingsHelperContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA5D474156CD70900DEDA3A /* IRBindingsHelperContext.m */; };
+		FFDE51FC159AF86C0086F9B0 /* IRAsyncBarrierOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF70E542152EE411008BFB00 /* IRAsyncBarrierOperation.m */; };
+		FFDE5201159AF95E0086F9B0 /* IRImageUnarchiveFromDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9737E213D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m */; };
+		FFDE526B159AFB3F0086F9B0 /* IRDataStore+Metadata.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA528381575F635000BE9CB /* IRDataStore+Metadata.m */; };
+		FFDE526D159AFCD40086F9B0 /* IRManagedObject+WebAPIImporting.h in Headers */ = {isa = PBXBuildFile; fileRef = FF54C51715209FE100301887 /* IRManagedObject+WebAPIImporting.h */; };
+		FFDE526E159AFCF40086F9B0 /* IRManagedObject+WebAPIImporting.m in Sources */ = {isa = PBXBuildFile; fileRef = FF54C51815209FE100301887 /* IRManagedObject+WebAPIImporting.m */; };
 		FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE2BBCE137D7D94000DF5CA /* IRAlertView.h */; };
 		FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE2BBCF137D7D94000DF5CA /* IRAlertView.m */; };
 		FFF8576A152B8381001B3E92 /* AppKit+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF85769152B8381001B3E92 /* AppKit+IRAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1173,6 +1180,7 @@
 				FFF85775152B851E001B3E92 /* IRFoundationsX.h in Headers */,
 				FFF85776152B8528001B3E92 /* CoreData+IRAdditions.h in Headers */,
 				FFF85777152B852E001B3E92 /* CoreText+IRAdditions.h in Headers */,
+				FFDE526D159AFCD40086F9B0 /* IRManagedObject+WebAPIImporting.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1539,6 +1547,12 @@
 				FF35891914EE763B005B452C /* NSDictionary+IRAdditions.m in Sources */,
 				FF35891F14EE7679005B452C /* NSString+IRAdditions.m in Sources */,
 				FFF8576E152B83B4001B3E92 /* NSObject+IRNibAdditions.m in Sources */,
+				FFDE51F0159AF0020086F9B0 /* IRBindingsHelper.m in Sources */,
+				FFDE51F2159AF00A0086F9B0 /* IRBindingsHelperContext.m in Sources */,
+				FFDE51FC159AF86C0086F9B0 /* IRAsyncBarrierOperation.m in Sources */,
+				FFDE5201159AF95E0086F9B0 /* IRImageUnarchiveFromDataTransformer.m in Sources */,
+				FFDE526B159AFB3F0086F9B0 /* IRDataStore+Metadata.m in Sources */,
+				FFDE526E159AFCF40086F9B0 /* IRManagedObject+WebAPIImporting.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

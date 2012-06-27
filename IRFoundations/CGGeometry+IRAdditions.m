@@ -318,7 +318,7 @@ CGFloat irDistanceFromRectToPoint (CGRect aRect, CGPoint aPoint, IRAnchor anchor
 
 
 
-CGRect IRUnitRectWithRectAndEdgeInsets (CGRect aRect, UIEdgeInsets edgeInsets) {
+CGRect IRUnitRectWithRectAndEdgeInsets (CGRect aRect, IREdgeInsets edgeInsets) {
 
 	CGRect referencedRect = irCGRectApplyOrigin(CGRectStandardize(aRect), CGPointZero); 
 	

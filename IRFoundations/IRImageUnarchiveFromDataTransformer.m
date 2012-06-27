@@ -8,6 +8,14 @@
 
 #import "IRImageUnarchiveFromDataTransformer.h"
 
+#if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+#define IRImage UIImage
+#else
+#import <AppKit/AppKit.h>
+#define IRImage NSImage
+#endif
+
 @implementation IRImageUnarchiveFromDataTransformer
 
 + (void) initialize {
@@ -18,7 +26,7 @@
 
 + (Class) transformedValueClass {
 
-	return [UIImage class];
+	return [IRImage class];
 
 }
 
@@ -36,16 +44,20 @@
 	if(![value isKindOfClass:[NSData class]])
 		[NSException raise:NSInternalInconsistencyException format:@"Value (%@) is not an NSData instance", [value class]];
 		
-	return [UIImage imageWithData:value];
+	return [[IRImage alloc] initWithData:value];
 	
 }
 
 - (id) transformedValue:(id)value {
 
-	if (![value isKindOfClass:[UIImage class]])
+	if (![value isKindOfClass:[IRImage class]])
 		return nil;
 	
+#if TARGET_OS_IPHONE
 	return UIImagePNGRepresentation(value);
+#else
+	return [value TIFFRepresentation];
+#endif
 
 }
 

@@ -16,14 +16,10 @@
 
 - (NSManagedObject *) irManagedObjectForURI:(NSURL *)anURI {
 
-	NSManagedObject *returnedObject = nil;
 	NSManagedObjectID *objectID = [[self persistentStoreCoordinator] managedObjectIDForURIRepresentation:anURI];
 		
 	if (!objectID)
 		return nil;
-
-	//	This is not necessary
-	//	NSParameterAssert(![objectID isTemporaryID]);
 	
 	return [self objectWithID:objectID];
 
@@ -195,34 +191,42 @@
 	
 	void (^merge)(void) = ^ {
 	
-		NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
-		if (!wSelf)
-			return;
-		
-		if (savedContext == wSelf)
-			return;
-		
-		if (savedContext.persistentStoreCoordinator != wSelf.persistentStoreCoordinator)
-			return;
-		
-		//	Fire faults in wSelf for every single changed object.
-		//	This works around an issue where if a NSFetchedResultsController has a predicate, it won’t watch objects changed to fit the predicate
-		//	Also fixes production cases where Debug and Release behavior differs
-		
-		//	Hat tip: http://stackoverflow.com/questions/3923826/nsfetchedresultscontroller-with-predicate-ignores-changes-merged-from-different
-		
-		[wSelf mergeChangesFromContextDidSaveNotification:note];
-		
-		for (NSManagedObject *object in [[note userInfo] objectForKey:NSInsertedObjectsKey])
-			[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
+		@try {
+ 
+			NSManagedObjectContext *savedContext = (NSManagedObjectContext *)note.object;
+			if (!wSelf)
+				return;
+			
+			if (savedContext == wSelf)
+				return;
+			
+			if (savedContext.persistentStoreCoordinator != wSelf.persistentStoreCoordinator)
+				return;
+			
+			//	Fire faults in wSelf for every single changed object.
+			//	This works around an issue where if a NSFetchedResultsController has a predicate, it won’t watch objects changed to fit the predicate
+			//	Also fixes production cases where Debug and Release behavior differs
+			
+			//	Hat tip: http://stackoverflow.com/questions/3923826/nsfetchedresultscontroller-with-predicate-ignores-changes-merged-from-different
+			
+			[wSelf mergeChangesFromContextDidSaveNotification:note];
+			
+			for (NSManagedObject *object in [[note userInfo] objectForKey:NSInsertedObjectsKey])
+				[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
 
-		for (NSManagedObject *object in [[note userInfo] objectForKey:NSUpdatedObjectsKey])
-			[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
+			for (NSManagedObject *object in [[note userInfo] objectForKey:NSUpdatedObjectsKey])
+				[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
 
-		for (NSManagedObject *object in [[note userInfo] objectForKey:NSDeletedObjectsKey])
-			[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
+			for (NSManagedObject *object in [[note userInfo] objectForKey:NSDeletedObjectsKey])
+				[[wSelf objectWithID:[object objectID]] willAccessValueForKey:nil];
+			
+			[wSelf processPendingChanges];
+	
+		} @catch (NSException *exception) {
 		
-		[wSelf processPendingChanges];
+			NSLog(@"%@", exception);
+				
+		}
 				
 	};
 	

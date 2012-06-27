@@ -13,11 +13,13 @@
 
 #if TARGET_OS_IPHONE
 	#import <UIKit/UIKit.h>
+	#define IREdgeInsets UIEdgeInsets
 #else
 	#import <ApplicationServices/ApplicationServices.h>
 	#define NSStringFromCGRect(aRect) NSStringFromRect(NSRectFromCGRect(aRect))
 	#define NSStringFromCGSize(aSize) NSStringFromSize(NSSizeFromCGSize(aSize))
 	#define NSStringFromCGPoint(aPoint) NSStringFromPoint(NSPointFromCGPoint(aPoint))
+	#define IREdgeInsets NSEdgeInsets
 #endif
 
 #import <QuartzCore/QuartzCore.h>
@@ -116,7 +118,7 @@ extern CGRect irAnchoredRectFromEdge (CGRect aRect, IREdge anEdge, CGFloat width
 
 extern CGFloat irDistanceFromRectToPoint (CGRect aRect, CGPoint aPoint, IRAnchor anchor);
 
-extern CGRect IRUnitRectWithRectAndEdgeInsets (CGRect aRect, UIEdgeInsets edgeInsets);
+extern CGRect IRUnitRectWithRectAndEdgeInsets (CGRect aRect, IREdgeInsets edgeInsets);
 
 extern CGPoint irCGPointAddPoint(CGPoint aPoint, CGPoint anotherPoint);
 
