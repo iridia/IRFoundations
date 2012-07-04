@@ -36,37 +36,37 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 @synthesize onViewWillAppear, onViewDidAppear, onViewWillDisappear, onViewDidDisappear;
 @synthesize asynchronous;
 
-+ (IRImagePickerController *) savedImagePickerWithCompletionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
++ (IRImagePickerController *) savedImagePickerWithCompletionBlock:(IRImagePickerCallback)aCallbackBlockOrNil {
     
 	return [self pickerWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum mediaTypes:[NSArray arrayWithObject:(id)kUTTypeImage] completionBlock:aCallbackBlockOrNil];
     
 }
 
-+ (IRImagePickerController *) photoLibraryPickerWithCompletionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
++ (IRImagePickerController *) photoLibraryPickerWithCompletionBlock:(IRImagePickerCallback)aCallbackBlockOrNil {
 	
 	return [self pickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary mediaTypes:[NSArray arrayWithObject:(id)kUTTypeImage] completionBlock:aCallbackBlockOrNil];
     
 }
 
-+ (IRImagePickerController *) cameraCapturePickerWithCompletionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
++ (IRImagePickerController *) cameraCapturePickerWithCompletionBlock:(IRImagePickerCallback)aCallbackBlockOrNil {
     
 	return [self pickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:[NSArray arrayWithObjects:(id)kUTTypeImage, (id)kUTTypeMovie, nil] completionBlock:aCallbackBlockOrNil];
     
 }
 
-+ (IRImagePickerController *) cameraImageCapturePickerWithCompletionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
++ (IRImagePickerController *) cameraImageCapturePickerWithCompletionBlock:(IRImagePickerCallback)aCallbackBlockOrNil {
     
 	return [self pickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:[NSArray arrayWithObject:(id)kUTTypeImage] completionBlock:aCallbackBlockOrNil];
     
 }
 
-+ (IRImagePickerController *) cameraVideoCapturePickerWithCompletionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
++ (IRImagePickerController *) cameraVideoCapturePickerWithCompletionBlock:(IRImagePickerCallback)aCallbackBlockOrNil {
     
 	return [self pickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:[NSArray arrayWithObject:(id)kUTTypeMovie] completionBlock:aCallbackBlockOrNil];
     
 }
 
-+ (IRImagePickerController *) pickerWithSourceType:(UIImagePickerControllerSourceType)aSourceType mediaTypes:(NSArray *)inMediaTypes completionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
++ (IRImagePickerController *) pickerWithSourceType:(UIImagePickerControllerSourceType)aSourceType mediaTypes:(NSArray *)inMediaTypes completionBlock:(IRImagePickerCallback)aCallbackBlockOrNil {
 	
 	if (![[self class] isSourceTypeAvailable:aSourceType])
 		return nil;
@@ -125,7 +125,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 		void (^sendImage)(NSURL *) =	[ ^ (NSURL *fileURL) {
 
 			if (ownCallbackBlock)
-				ownCallbackBlock(fileURL, nil);
+				ownCallbackBlock(nil, fileURL, nil);
 			
 			dispatch_async(dispatch_get_global_queue(0, 0), ^ {
 			
@@ -193,7 +193,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 		} else {
 
 			if (self.callbackBlock)
-				self.callbackBlock(tempMediaURL, nil);
+				self.callbackBlock(nil, tempMediaURL, nil);
 		
 		}
 	        
@@ -214,7 +214,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 			objc_setAssociatedObject(asset, &kIRImagePickerControllerAssetLibrary, library, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 			
 			if (self.callbackBlock)
-				self.callbackBlock(tempMediaURL, asset);
+				self.callbackBlock(nil, tempMediaURL, asset);
 							
 		} failureBlock: ^ (NSError *error) {
 		
@@ -224,7 +224,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 			}
 							
 			if (self.callbackBlock)
-				self.callbackBlock(tempMediaURL, nil);
+				self.callbackBlock(nil, tempMediaURL, nil);
 							
 		}];
         
@@ -235,7 +235,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 - (void) imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
 	if (self.callbackBlock)
-		self.callbackBlock(nil, nil);
+		self.callbackBlock(nil, nil, nil);
     
 }
 
