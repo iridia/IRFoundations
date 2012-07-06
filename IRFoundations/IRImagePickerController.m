@@ -36,37 +36,37 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 @synthesize onViewWillAppear, onViewDidAppear, onViewWillDisappear, onViewDidDisappear;
 @synthesize asynchronous;
 
-+ (IRImagePickerController *) savedImagePickerWithCompletionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
++ (IRImagePickerController *) savedImagePickerWithCompletionBlock:(IRImagePickerCallback)aCallbackBlockOrNil {
     
 	return [self pickerWithSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum mediaTypes:[NSArray arrayWithObject:(id)kUTTypeImage] completionBlock:aCallbackBlockOrNil];
     
 }
 
-+ (IRImagePickerController *) photoLibraryPickerWithCompletionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
++ (IRImagePickerController *) photoLibraryPickerWithCompletionBlock:(IRImagePickerCallback)aCallbackBlockOrNil {
 	
 	return [self pickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary mediaTypes:[NSArray arrayWithObject:(id)kUTTypeImage] completionBlock:aCallbackBlockOrNil];
     
 }
 
-+ (IRImagePickerController *) cameraCapturePickerWithCompletionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
++ (IRImagePickerController *) cameraCapturePickerWithCompletionBlock:(IRImagePickerCallback)aCallbackBlockOrNil {
     
 	return [self pickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:[NSArray arrayWithObjects:(id)kUTTypeImage, (id)kUTTypeMovie, nil] completionBlock:aCallbackBlockOrNil];
     
 }
 
-+ (IRImagePickerController *) cameraImageCapturePickerWithCompletionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
++ (IRImagePickerController *) cameraImageCapturePickerWithCompletionBlock:(IRImagePickerCallback)aCallbackBlockOrNil {
     
 	return [self pickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:[NSArray arrayWithObject:(id)kUTTypeImage] completionBlock:aCallbackBlockOrNil];
     
 }
 
-+ (IRImagePickerController *) cameraVideoCapturePickerWithCompletionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
++ (IRImagePickerController *) cameraVideoCapturePickerWithCompletionBlock:(IRImagePickerCallback)aCallbackBlockOrNil {
     
 	return [self pickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:[NSArray arrayWithObject:(id)kUTTypeMovie] completionBlock:aCallbackBlockOrNil];
     
 }
 
-+ (IRImagePickerController *) pickerWithSourceType:(UIImagePickerControllerSourceType)aSourceType mediaTypes:(NSArray *)inMediaTypes completionBlock:(void(^)(NSURL *selectedAssetURI, ALAsset *representedAsset))aCallbackBlockOrNil {
++ (IRImagePickerController *) pickerWithSourceType:(UIImagePickerControllerSourceType)aSourceType mediaTypes:(NSArray *)inMediaTypes completionBlock:(IRImagePickerCallback)aCallbackBlockOrNil {
 	
 	if (![[self class] isSourceTypeAvailable:aSourceType])
 		return nil;
@@ -119,68 +119,71 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 	
 	void (^bounceImage)(UIImage *) = ^ (UIImage *anImage) {
 	
-		__typeof__(self.callbackBlock) ownCallbackBlock = self.callbackBlock;
-		BOOL const async = self.asynchronous;
-
-		void (^sendImage)(NSURL *) =	[ ^ (NSURL *fileURL) {
-
-			if (ownCallbackBlock)
-				ownCallbackBlock(fileURL, nil);
-			
-			dispatch_async(dispatch_get_global_queue(0, 0), ^ {
-			
-				[[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
-			
-			});
-
-		} copy];
+		self.callbackBlock(anImage, nil, nil);
+		return;
 		
-		void (^copyImage)(void) = ^ {
-			
-			CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
-			CFStringRef uuidString = CFUUIDCreateString(kCFAllocatorDefault, uuidRef);
-			
-			NSString *fileName = [NSString stringWithFormat:@"%lu-%@", time(NULL), (__bridge NSString *)uuidString];
-			
-			CFRelease(uuidRef);
-			CFRelease(uuidString);
-		
-			NSString *filePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:fileName] stringByAppendingPathExtension:@"jpeg"];
-			NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-			NSError *fileWritingError = nil;
-			
-			if (![UIImageJPEGRepresentation(anImage, 1.0f) writeToURL:fileURL options:NSDataWritingAtomic error:&fileWritingError]) {
-			
-				NSLog(@"Error writing file to temporary path %@: %@", fileURL, fileWritingError);
-				fileURL = nil;
-			
-			};
-			
-			if (async) {
-				
-				dispatch_async(dispatch_get_main_queue(), ^ {
-				
-					sendImage(fileURL);
-					
-				});
-				
-			} else {
-				
-				sendImage(fileURL);
-				
-			}
-			
-		};
-		
-		if (async) {
-
-			dispatch_async(dispatch_get_global_queue(0, 0), copyImage);
-		
-		} else {
-		
-			copyImage();
-		
-		}
+//		__typeof__(self.callbackBlock) ownCallbackBlock = self.callbackBlock;
+//		BOOL const async = self.asynchronous;
+//
+//		void (^sendImage)(NSURL *) =	[ ^ (NSURL *fileURL) {
+//
+//			if (ownCallbackBlock)
+//				ownCallbackBlock(nil, fileURL, nil);
+//			
+//			dispatch_async(dispatch_get_global_queue(0, 0), ^ {
+//			
+//				[[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
+//			
+//			});
+//
+//		} copy];
+//		
+//		void (^copyImage)(void) = ^ {
+//			
+//			CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
+//			CFStringRef uuidString = CFUUIDCreateString(kCFAllocatorDefault, uuidRef);
+//			
+//			NSString *fileName = [NSString stringWithFormat:@"%lu-%@", time(NULL), (__bridge NSString *)uuidString];
+//			
+//			CFRelease(uuidRef);
+//			CFRelease(uuidString);
+//		
+//			NSString *filePath = [[NSTemporaryDirectory() stringByAppendingPathComponent:fileName] stringByAppendingPathExtension:@"jpeg"];
+//			NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+//			NSError *fileWritingError = nil;
+//			
+//			if (![UIImageJPEGRepresentation(anImage, 1.0f) writeToURL:fileURL options:NSDataWritingAtomic error:&fileWritingError]) {
+//			
+//				NSLog(@"Error writing file to temporary path %@: %@", fileURL, fileWritingError);
+//				fileURL = nil;
+//			
+//			};
+//			
+//			if (async) {
+//				
+//				dispatch_async(dispatch_get_main_queue(), ^ {
+//				
+//					sendImage(fileURL);
+//					
+//				});
+//				
+//			} else {
+//				
+//				sendImage(fileURL);
+//				
+//			}
+//			
+//		};
+//		
+//		if (async) {
+//
+//			dispatch_async(dispatch_get_global_queue(0, 0), copyImage);
+//		
+//		} else {
+//		
+//			copyImage();
+//		
+//		}
 	
 	};
 	
@@ -193,7 +196,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 		} else {
 
 			if (self.callbackBlock)
-				self.callbackBlock(tempMediaURL, nil);
+				self.callbackBlock(nil, tempMediaURL, nil);
 		
 		}
 	        
@@ -214,7 +217,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 			objc_setAssociatedObject(asset, &kIRImagePickerControllerAssetLibrary, library, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 			
 			if (self.callbackBlock)
-				self.callbackBlock(tempMediaURL, asset);
+				self.callbackBlock(nil, tempMediaURL, asset);
 							
 		} failureBlock: ^ (NSError *error) {
 		
@@ -224,7 +227,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 			}
 							
 			if (self.callbackBlock)
-				self.callbackBlock(tempMediaURL, nil);
+				self.callbackBlock(nil, tempMediaURL, nil);
 							
 		}];
         
@@ -235,7 +238,7 @@ static NSString * const kIRImagePickerControllerAssetLibrary = @"IRImagePickerCo
 - (void) imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
 	if (self.callbackBlock)
-		self.callbackBlock(nil, nil);
+		self.callbackBlock(nil, nil, nil);
     
 }
 
