@@ -90,6 +90,9 @@
 
 - (NSURL *) persistentFileURLForData:(NSData *)data extension:(NSString *)fileExtension {
 
+	if (!data)
+			return nil;
+
 	NSURL *fileURL = [self oneUsePersistentFileURL];
 	
 	if (fileExtension)

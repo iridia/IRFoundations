@@ -13,10 +13,10 @@
 @interface IRAsyncOperation ()
 
 @property (nonatomic, readwrite, copy) IRAsyncOperationWorker worker;
-@property (nonatomic, readwrite, copy) IRAsyncOperationWorkerTrampoline workerTrampoline;
+@property (nonatomic, readwrite, copy) IRAsyncOperationTrampoline workerTrampoline;
 
 @property (nonatomic, readwrite, copy) IRAsyncOperationCallback callback;
-@property (nonatomic, readwrite, copy) IRAsyncOperationCallbackTrampoline callbackTrampoline;
+@property (nonatomic, readwrite, copy) IRAsyncOperationTrampoline callbackTrampoline;
 
 @property (nonatomic, readonly, assign, getter=isExecuting) BOOL executing;
 @property (nonatomic, readonly, assign, getter=isFinished) BOOL finished;
@@ -32,7 +32,7 @@
 @synthesize worker, workerTrampoline, callback, callbackTrampoline;
 @synthesize results;
 
-+ (id) operationWithWorker:(IRAsyncOperationWorker)inWorker trampoline:(IRAsyncOperationWorkerTrampoline)inWorkerTrampoline callback:(IRAsyncOperationCallback)inCallback callbackTrampoline:(IRAsyncOperationCallbackTrampoline)inCallbackTrampoline {
++ (id) operationWithWorker:(IRAsyncOperationWorker)inWorker trampoline:(IRAsyncOperationTrampoline)inWorkerTrampoline callback:(IRAsyncOperationCallback)inCallback callbackTrampoline:(IRAsyncOperationTrampoline)inCallbackTrampoline {
 
 	IRAsyncOperation *op = [[self alloc] init];
 	
@@ -168,7 +168,7 @@
 	
 }
 
-- (IRAsyncOperationWorkerTrampoline) copyDefaultWorkerTrampoline {
+- (IRAsyncOperationTrampoline) copyDefaultWorkerTrampoline {
 
 	return [^(void(^workerInvoker)(void)) {
 	
@@ -178,7 +178,7 @@
 
 }
 
-- (IRAsyncOperationCallbackTrampoline) copyDefaultCallbackTrampoline {
+- (IRAsyncOperationTrampoline) copyDefaultCallbackTrampoline {
 
 	return [^(void(^callbackInvoker)(void)) {
 	

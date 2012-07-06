@@ -15,22 +15,19 @@ typedef void (^IRAsyncOperationInvoker)(void);
 
 typedef void (^IRAsyncOperationCallback)(id results);
 typedef void (^IRAsyncOperationWorker)(IRAsyncOperationCallback callback);
-
-typedef void (^IRAsyncOperationCallbackTrampoline)(IRAsyncOperationInvoker block);
-typedef void (^IRAsyncOperationWorkerTrampoline)(IRAsyncOperationInvoker block);
+typedef void (^IRAsyncOperationTrampoline)(IRAsyncOperationInvoker callback);
 
 
 @interface IRAsyncOperation : NSOperation <NSCopying>
 
 + (id) operationWithWorker:(IRAsyncOperationWorker)worker callback:(IRAsyncOperationCallback)callback;
 
-+ (id) operationWithWorker:(IRAsyncOperationWorker)worker trampoline:(IRAsyncOperationWorkerTrampoline)workerTrampoline callback:(IRAsyncOperationCallback)callback callbackTrampoline:(IRAsyncOperationCallbackTrampoline)callbackTrampoline;
++ (id) operationWithWorker:(IRAsyncOperationWorker)worker trampoline:(IRAsyncOperationTrampoline)workerTrampoline callback:(IRAsyncOperationCallback)callback callbackTrampoline:(IRAsyncOperationTrampoline)callbackTrampoline;
 
-- (IRAsyncOperationWorkerTrampoline) copyDefaultWorkerTrampoline;
-- (IRAsyncOperationCallbackTrampoline) copyDefaultCallbackTrampoline;
+- (IRAsyncOperationTrampoline) copyDefaultWorkerTrampoline;
+- (IRAsyncOperationTrampoline) copyDefaultCallbackTrampoline;
 
 @end
-
 
 @interface IRAsyncOperation (Deprecated)
 
