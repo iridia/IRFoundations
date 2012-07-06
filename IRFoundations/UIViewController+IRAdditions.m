@@ -19,13 +19,4 @@
 
 }
 
-- (UIViewController *) irTopModalViewController {
-
-	if (self.modalViewController)
-		return [self.modalViewController irTopModalViewController];
-	
-	return self.parentViewController ? self : nil;
-
-}
-
 @end

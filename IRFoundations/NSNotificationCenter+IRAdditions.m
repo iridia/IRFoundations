@@ -14,12 +14,8 @@
 
 	CFAbsoluteTime nonce = CFAbsoluteTimeGetCurrent();
 	
-	NSLog(@"%s, %lu", __PRETTY_FUNCTION__, nonce);
-	
 	__weak NSNotificationCenter *wSelf = self;
 	__block id object = [self addObserverForName:name object:obj queue:nil usingBlock:^(NSNotification *note) {
-		
-		NSLog(@"%s, %lu", __PRETTY_FUNCTION__, nonce);
 		
 		if (callback)
 			callback(note);
@@ -31,8 +27,6 @@
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, timeoutDuration * NSEC_PER_SEC), dispatch_get_main_queue(), ^ {
 			
-		NSLog(@"%s, %lu", __PRETTY_FUNCTION__, nonce);
-		
 		if (object)
 			if (callback)
 				callback(nil);

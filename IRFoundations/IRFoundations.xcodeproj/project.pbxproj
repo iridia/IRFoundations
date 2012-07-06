@@ -246,8 +246,6 @@
 		FF97382913D82496003D1722 /* IRDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FF97382713D82496003D1722 /* IRDataStore.m */; };
 		FF9FBC1D150B8C62004A23FB /* IRPageCurlBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FF9FBC1B150B8C62004A23FB /* IRPageCurlBarButtonItem.h */; };
 		FF9FBC1E150B8C62004A23FB /* IRPageCurlBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */; };
-		FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */; };
-		FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */; };
 		FFA528391575F635000BE9CB /* IRDataStore+Metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA528371575F635000BE9CB /* IRDataStore+Metadata.h */; };
 		FFA5283A1575F635000BE9CB /* IRDataStore+Metadata.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA528381575F635000BE9CB /* IRDataStore+Metadata.m */; };
 		FFA5D471156CD65B00DEDA3A /* IRBindingsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA5D46F156CD65B00DEDA3A /* IRBindingsHelper.h */; };
@@ -544,8 +542,6 @@
 		FF97382713D82496003D1722 /* IRDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRDataStore.m; sourceTree = "<group>"; };
 		FF9FBC1B150B8C62004A23FB /* IRPageCurlBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRPageCurlBarButtonItem.h; sourceTree = "<group>"; };
 		FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPageCurlBarButtonItem.m; sourceTree = "<group>"; };
-		FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRPaginatedView.h; sourceTree = "<group>"; };
-		FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPaginatedView.m; sourceTree = "<group>"; };
 		FFA528371575F635000BE9CB /* IRDataStore+Metadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRDataStore+Metadata.h"; sourceTree = "<group>"; };
 		FFA528381575F635000BE9CB /* IRDataStore+Metadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IRDataStore+Metadata.m"; sourceTree = "<group>"; };
 		FFA5D46F156CD65B00DEDA3A /* IRBindingsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBindingsHelper.h; sourceTree = "<group>"; };
@@ -837,8 +833,6 @@
 				FF61635814161868004738D3 /* IRMailComposeViewController.m */,
 				FF9FBC1B150B8C62004A23FB /* IRPageCurlBarButtonItem.h */,
 				FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */,
-				FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */,
-				FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */,
 				FF197A871535FC8E00ADC4E6 /* IRScrollView.h */,
 				FF197A881535FC8E00ADC4E6 /* IRScrollView.m */,
 				FF0A8D091337B36A00DDA47C /* IRSegmentedControl.h */,
@@ -1128,7 +1122,6 @@
 				FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */,
 				FF94EF6F135117D100FE79D4 /* IRBorder.h in Headers */,
 				FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */,
-				FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */,
 				FFA8EB4F13B9ABB80082D789 /* IRRelativeDateFormatter.h in Headers */,
 				FF9737E313D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h in Headers */,
 				FF97382813D82496003D1722 /* IRDataStore.h in Headers */,
@@ -1439,7 +1432,6 @@
 				FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */,
 				FF94EF70135117D100FE79D4 /* IRBorder.m in Sources */,
 				FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */,
-				FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */,
 				FFA8EB5013B9ABB80082D789 /* IRRelativeDateFormatter.m in Sources */,
 				FF9737E413D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m in Sources */,
 				FF97382913D82496003D1722 /* IRDataStore.m in Sources */,

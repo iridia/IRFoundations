@@ -37,7 +37,6 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	IRLabel *returnedLabel = [[self alloc] init];
 	returnedLabel.font = aFont;
 	returnedLabel.textColor = aColor;
-	returnedLabel.minimumFontSize = aFont.pointSize;
 	returnedLabel.adjustsFontSizeToFitWidth = NO;
 	
 	return returnedLabel;
