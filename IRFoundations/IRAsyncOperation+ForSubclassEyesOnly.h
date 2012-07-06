@@ -11,10 +11,10 @@
 @interface IRAsyncOperation (SubclassEyesOnly)
 
 @property (nonatomic, readonly, copy) IRAsyncOperationWorker worker;
-@property (nonatomic, readonly, copy) IRAsyncOperationWorkerTrampoline workerTrampoline;
+@property (nonatomic, readonly, copy) IRAsyncOperationTrampoline workerTrampoline;
 
 @property (nonatomic, readonly, copy) IRAsyncOperationCallback callback;
-@property (nonatomic, readonly, copy) IRAsyncOperationCallbackTrampoline callbackTrampoline;
+@property (nonatomic, readonly, copy) IRAsyncOperationTrampoline callbackTrampoline;
 
 @property (nonatomic, readonly, assign, getter=isExecuting) BOOL executing;
 @property (nonatomic, readonly, assign, getter=isFinished) BOOL finished;
