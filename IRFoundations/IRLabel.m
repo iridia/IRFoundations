@@ -226,7 +226,10 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 	
 	CGRect frameRect = (CGRect){
 		CGPointZero,
-		self.bounds.size
+		(CGSize){
+			self.bounds.size.width,
+			self.bounds.size.height + 0.5f * self.font.leading
+		}
 		//	(CGSize){
 		//		self.bounds.size.width,
 		//		MAXFLOAT
@@ -263,7 +266,6 @@ NSString * const kIRTextActiveBackgroundColorAttribute = @"kIRTextActiveBackgrou
 #if 1
 	
 	__block CGFloat usableHeight = CGRectGetHeight(self.bounds);
-	__block CFArrayRef usedLines = CTFrameGetLines(usedFrame);
 	NSUInteger stringLength = [attributedText length];
 	BOOL needsTailTruncation = NO;
 	
