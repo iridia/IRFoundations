@@ -12,8 +12,6 @@
 
 - (id) irWaitForName:(NSString *)name object:(id)obj withTimeout:(NSTimeInterval)timeoutDuration callback:(void (^)(NSNotification *note))callback {
 
-	CFAbsoluteTime nonce = CFAbsoluteTimeGetCurrent();
-	
 	__weak NSNotificationCenter *wSelf = self;
 	__block id object = [self addObserverForName:name object:obj queue:nil usingBlock:^(NSNotification *note) {
 		
