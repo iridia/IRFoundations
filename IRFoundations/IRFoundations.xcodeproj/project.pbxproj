@@ -151,6 +151,10 @@
 		FF3BE0901537581D004C5244 /* IRActionSheetTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3BE08F1537581D004C5244 /* IRActionSheetTest.m */; };
 		FF3FC677153B6E6D00691E49 /* IRStoryboard.h in Headers */ = {isa = PBXBuildFile; fileRef = FF3FC675153B6E6D00691E49 /* IRStoryboard.h */; };
 		FF3FC678153B6E6D00691E49 /* IRStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3FC676153B6E6D00691E49 /* IRStoryboard.m */; };
+		FF489700153DBD630044B902 /* MKMapView+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4896FE153DBD630044B902 /* MKMapView+IRAdditions.h */; };
+		FF489704153DBDE70044B902 /* MKMapView+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF489703153DBDE70044B902 /* MKMapView+IRAdditions.m */; };
+		FF489707153DC53D0044B902 /* NSNotificationCenter+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF489705153DC53D0044B902 /* NSNotificationCenter+IRAdditions.h */; };
+		FF489708153DC53D0044B902 /* NSNotificationCenter+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF489706153DC53D0044B902 /* NSNotificationCenter+IRAdditions.m */; };
 		FF4F836A1577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4F83681577737F00E03D5E /* UIViewController+IRDelayedUpdateAdditions.h */; };
 		FF4F836B1577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4F83691577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.m */; };
 		FF4F836F1577746B00E03D5E /* IROperationQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4F836D1577746B00E03D5E /* IROperationQueue.h */; };
@@ -242,8 +246,6 @@
 		FF97382913D82496003D1722 /* IRDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = FF97382713D82496003D1722 /* IRDataStore.m */; };
 		FF9FBC1D150B8C62004A23FB /* IRPageCurlBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = FF9FBC1B150B8C62004A23FB /* IRPageCurlBarButtonItem.h */; };
 		FF9FBC1E150B8C62004A23FB /* IRPageCurlBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */; };
-		FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */; };
-		FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */; };
 		FFA528391575F635000BE9CB /* IRDataStore+Metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA528371575F635000BE9CB /* IRDataStore+Metadata.h */; };
 		FFA5283A1575F635000BE9CB /* IRDataStore+Metadata.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA528381575F635000BE9CB /* IRDataStore+Metadata.m */; };
 		FFA5D471156CD65B00DEDA3A /* IRBindingsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = FFA5D46F156CD65B00DEDA3A /* IRBindingsHelper.h */; };
@@ -472,6 +474,10 @@
 		FF3BE08F1537581D004C5244 /* IRActionSheetTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRActionSheetTest.m; sourceTree = "<group>"; };
 		FF3FC675153B6E6D00691E49 /* IRStoryboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRStoryboard.h; sourceTree = "<group>"; };
 		FF3FC676153B6E6D00691E49 /* IRStoryboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRStoryboard.m; sourceTree = "<group>"; };
+		FF4896FE153DBD630044B902 /* MKMapView+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+IRAdditions.h"; sourceTree = "<group>"; };
+		FF489703153DBDE70044B902 /* MKMapView+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+IRAdditions.m"; sourceTree = "<group>"; };
+		FF489705153DC53D0044B902 /* NSNotificationCenter+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+IRAdditions.h"; sourceTree = "<group>"; };
+		FF489706153DC53D0044B902 /* NSNotificationCenter+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+IRAdditions.m"; sourceTree = "<group>"; };
 		FF4F83681577737F00E03D5E /* UIViewController+IRDelayedUpdateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+IRDelayedUpdateAdditions.h"; sourceTree = "<group>"; };
 		FF4F83691577738000E03D5E /* UIViewController+IRDelayedUpdateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+IRDelayedUpdateAdditions.m"; sourceTree = "<group>"; };
 		FF4F836D1577746B00E03D5E /* IROperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IROperationQueue.h; sourceTree = "<group>"; };
@@ -536,8 +542,6 @@
 		FF97382713D82496003D1722 /* IRDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRDataStore.m; sourceTree = "<group>"; };
 		FF9FBC1B150B8C62004A23FB /* IRPageCurlBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRPageCurlBarButtonItem.h; sourceTree = "<group>"; };
 		FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPageCurlBarButtonItem.m; sourceTree = "<group>"; };
-		FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRPaginatedView.h; sourceTree = "<group>"; };
-		FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRPaginatedView.m; sourceTree = "<group>"; };
 		FFA528371575F635000BE9CB /* IRDataStore+Metadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IRDataStore+Metadata.h"; sourceTree = "<group>"; };
 		FFA528381575F635000BE9CB /* IRDataStore+Metadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IRDataStore+Metadata.m"; sourceTree = "<group>"; };
 		FFA5D46F156CD65B00DEDA3A /* IRBindingsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRBindingsHelper.h; sourceTree = "<group>"; };
@@ -727,6 +731,15 @@
 			isa = PBXGroup;
 			children = (
 				FF0A8C941337B29F00DDA47C /* Foundation+IRAdditions.m */,
+				FF489705153DC53D0044B902 /* NSNotificationCenter+IRAdditions.h */,
+				FF489706153DC53D0044B902 /* NSNotificationCenter+IRAdditions.m */,
+				FF789D2D1442FDE00080F210 /* IRAsyncOperation.h */,
+				FF789D2E1442FDE00080F210 /* IRAsyncOperation.m */,
+				FF70E546152EE51C008BFB00 /* IRAsyncOperation+ForSubclassEyesOnly.h */,
+				FF70E541152EE410008BFB00 /* IRAsyncBarrierOperation.h */,
+				FF70E542152EE411008BFB00 /* IRAsyncBarrierOperation.m */,
+				FF0A8C971337B29F00DDA47C /* IRBindings.h */,
+				FF0A8C981337B29F00DDA47C /* IRBindings.m */,
 				FFA5D46E156CD59800DEDA3A /* Async Operation */,
 				FFA5D46C156CD59200DEDA3A /* Bindings */,
 				FF0A8C9D1337B29F00DDA47C /* IRHTMLStringFormatter.h */,
@@ -820,8 +833,6 @@
 				FF61635814161868004738D3 /* IRMailComposeViewController.m */,
 				FF9FBC1B150B8C62004A23FB /* IRPageCurlBarButtonItem.h */,
 				FF9FBC1C150B8C62004A23FB /* IRPageCurlBarButtonItem.m */,
-				FFA11DE113BB6C3C00CDA0E4 /* IRPaginatedView.h */,
-				FFA11DE213BB6C3C00CDA0E4 /* IRPaginatedView.m */,
 				FF197A871535FC8E00ADC4E6 /* IRScrollView.h */,
 				FF197A881535FC8E00ADC4E6 /* IRScrollView.m */,
 				FF0A8D091337B36A00DDA47C /* IRSegmentedControl.h */,
@@ -1032,6 +1043,8 @@
 		FFA65DDC150AFE7A00E8668C /* MapKit+IRAdditions */ = {
 			isa = PBXGroup;
 			children = (
+				FF4896FE153DBD630044B902 /* MKMapView+IRAdditions.h */,
+				FF489703153DBDE70044B902 /* MKMapView+IRAdditions.m */,
 				FFA65DE1150AFEA800E8668C /* MapKit+IRAdditions.h */,
 				FF6322C1150B55FD00170342 /* MapKit+IRAdditions.m */,
 				FFA65DDD150AFE9A00E8668C /* IRUserTrackingBarButtonItem.h */,
@@ -1109,7 +1122,6 @@
 				FF27A6E3133E3526008C8DDA /* IRBusyView.h in Headers */,
 				FF94EF6F135117D100FE79D4 /* IRBorder.h in Headers */,
 				FFE2BBD0137D7D94000DF5CA /* IRAlertView.h in Headers */,
-				FFA11DE313BB6C3C00CDA0E4 /* IRPaginatedView.h in Headers */,
 				FFA8EB4F13B9ABB80082D789 /* IRRelativeDateFormatter.h in Headers */,
 				FF9737E313D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.h in Headers */,
 				FF97382813D82496003D1722 /* IRDataStore.h in Headers */,
@@ -1150,6 +1162,8 @@
 				FF197A841535FC1100ADC4E6 /* IRStackView.h in Headers */,
 				FF197A891535FC8E00ADC4E6 /* IRScrollView.h in Headers */,
 				FF3FC677153B6E6D00691E49 /* IRStoryboard.h in Headers */,
+				FF489700153DBD630044B902 /* MKMapView+IRAdditions.h in Headers */,
+				FF489707153DC53D0044B902 /* NSNotificationCenter+IRAdditions.h in Headers */,
 				FF539BA615409B9C003BFD66 /* NSFetchRequest+IRAdditions.h in Headers */,
 				FF2851F91562442D00D7F5A4 /* IRDataStore+FileOperations.h in Headers */,
 				FFA5D471156CD65B00DEDA3A /* IRBindingsHelper.h in Headers */,
@@ -1418,7 +1432,6 @@
 				FF27A6E4133E3526008C8DDA /* IRBusyView.m in Sources */,
 				FF94EF70135117D100FE79D4 /* IRBorder.m in Sources */,
 				FFE2BBD1137D7D94000DF5CA /* IRAlertView.m in Sources */,
-				FFA11DE413BB6C3C00CDA0E4 /* IRPaginatedView.m in Sources */,
 				FFA8EB5013B9ABB80082D789 /* IRRelativeDateFormatter.m in Sources */,
 				FF9737E413D81F0D003D1722 /* IRImageUnarchiveFromDataTransformer.m in Sources */,
 				FF97382913D82496003D1722 /* IRDataStore.m in Sources */,
@@ -1459,6 +1472,8 @@
 				FF197A851535FC1100ADC4E6 /* IRStackView.m in Sources */,
 				FF197A8A1535FC8E00ADC4E6 /* IRScrollView.m in Sources */,
 				FF3FC678153B6E6D00691E49 /* IRStoryboard.m in Sources */,
+				FF489704153DBDE70044B902 /* MKMapView+IRAdditions.m in Sources */,
+				FF489708153DC53D0044B902 /* NSNotificationCenter+IRAdditions.m in Sources */,
 				FF539BA715409B9C003BFD66 /* NSFetchRequest+IRAdditions.m in Sources */,
 				FF2851FA1562442D00D7F5A4 /* IRDataStore+FileOperations.m in Sources */,
 				FFA5D472156CD65B00DEDA3A /* IRBindingsHelper.m in Sources */,
@@ -1856,6 +1871,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1904,6 +1920,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;

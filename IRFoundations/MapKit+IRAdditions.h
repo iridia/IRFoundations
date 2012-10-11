@@ -7,7 +7,9 @@
 //
 
 #import <MapKit/MapKit.h>
+
 #import "IRUserTrackingBarButtonItem.h"
+#import "MKMapView+IRAdditions.h"
 
 extern NSBundle * IRMapKitBundle (void);
 extern UIImage * IRMapKitImage (NSString *name);

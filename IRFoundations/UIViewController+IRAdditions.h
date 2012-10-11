@@ -11,6 +11,5 @@
 @interface UIViewController (IRAdditions)
 
 - (UIViewController *) irModalHostingViewController;
-- (UIViewController *) irTopModalViewController;
 
 @end

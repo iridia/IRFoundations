@@ -17,7 +17,6 @@
 #import "IRBusyView.h"
 #import "IRImageUnarchiveFromDataTransformer.h"
 #import "IRLabel.h"
-#import "IRPaginatedView.h"
 #import "IRSegmentedControl.h"
 #import "IRSegmentedControlSegment.h"
 #import "IRSemiTransparentBarButton.h"

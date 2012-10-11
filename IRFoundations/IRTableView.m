@@ -241,7 +241,7 @@
 - (BOOL) respondsToSelector:(SEL)aSelector {
 
 	if ([self.intendedDelegate respondsToSelector:aSelector])
-	return YES;
+		return YES;
 
 	return [[super class] instancesRespondToSelector:aSelector];
 
@@ -250,7 +250,7 @@
 - (id) forwardingTargetForSelector:(SEL)aSelector {
 
 	if ([[super class] instancesRespondToSelector:aSelector])
-	return self;
+		return self;
 	
 	if (self.intendedDelegate)
 	if ([self.intendedDelegate respondsToSelector:aSelector])
