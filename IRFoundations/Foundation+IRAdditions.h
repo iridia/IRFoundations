@@ -18,13 +18,6 @@
 #import "NSNotificationCenter+IRAdditions.h"
 
 #import "IRNoOp.h"
-#import "IRBindings.h"
-#import "IRObservings.h"
 #import "IRXPathQuery.h"
 #import "IRHTMLStringFormatter.h"
 #import "IRRelativeDateFormatter.h"
-#import "IRLifetimeHelper.h"
-
-#import "IROperationQueue.h"
-#import "IRAsyncOperation.h"
-#import "IRAsyncBarrierOperation.h"

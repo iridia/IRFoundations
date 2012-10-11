@@ -10,10 +10,9 @@
 
 #import "Foundation+IRAdditions.h"
 
-#import "IRManagedObject.h"
-#import "IRManagedObjectContext.h"
-
-#import "IRDataStore.h"
+//	#import "IRManagedObject.h"
+//	#import "IRManagedObjectContext.h"
+//	#import "IRDataStore.h"
 
 #import "NSFetchRequest+IRAdditions.h"
 
