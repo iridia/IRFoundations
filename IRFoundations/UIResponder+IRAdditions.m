@@ -12,6 +12,8 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 
+static NSString * const kPreviousResponder = @"-[UIResponder ir_previousResponder]";
+static NSString * const kNextResponder = @"-[UIResponder ir_nextResponder]";
 
 @implementation UIResponder (IRAdditions)
 
@@ -54,6 +56,30 @@
 		
 	return objectForClass([self class]);
 	
+}
+
+- (void) setIr_previousResponder:(UIResponder *)ir_previousResponder {
+
+	objc_setAssociatedObject(self, &kPreviousResponder, ir_previousResponder, OBJC_ASSOCIATION_ASSIGN);
+
+}
+
+- (UIResponder *) ir_previousResponder {
+
+	return objc_getAssociatedObject(self, &kPreviousResponder);
+
+}
+
+- (void) setIr_nextResponder:(UIResponder *)ir_nextResponder {
+
+	objc_setAssociatedObject(self, &kNextResponder, ir_nextResponder, OBJC_ASSOCIATION_ASSIGN);
+
+}
+
+- (UIResponder *) ir_nextResponder {
+
+	return objc_getAssociatedObject(self, &kNextResponder);
+
 }
 
 @end

@@ -12,4 +12,7 @@
 
 + (id) instanceFromNib;
 
+@property (nonatomic, readwrite, weak) IBOutlet UIResponder *ir_previousResponder;
+@property (nonatomic, readwrite, weak) IBOutlet UIResponder *ir_nextResponder;
+
 @end
