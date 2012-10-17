@@ -122,7 +122,11 @@ NSString * const kIRWindowInterfaceBounds = @"kIRWindowInterfaceBounds";
 				
 				if ([aWindow isMemberOfClass:[UIWindow class]]) {
 					
+					[aWindow willChangeValueForKey:@"irInterfaceBounds"];
+					
 					[aWindow irAdjustInterfaceBoundsWithKeyboardRect:keyboardEndFrame];
+					
+					[aWindow didChangeValueForKey:@"irInterfaceBounds"];
 					
 					[[NSNotificationCenter defaultCenter] postNotificationName:IRWindowInterfaceBoundsDidChangeNotification object:aWindow userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
 					
