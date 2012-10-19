@@ -9,7 +9,8 @@
 #import "NSFetchRequest+IRAdditions.h"
 #import <objc/runtime.h>
 
-static NSString * const kDisplayTitle = @"-[NSFetchRequest(IRAdditions) displayTitle]";
+static void *kDisplayTitle = &kDisplayTitle;
+static void *kUserInfo = &kUserInfo;
 
 @implementation NSFetchRequest (IRAdditions)
 
@@ -22,6 +23,18 @@ static NSString * const kDisplayTitle = @"-[NSFetchRequest(IRAdditions) displayT
 - (void) setDisplayTitle:(NSString *)displayTitle {
 
 	objc_setAssociatedObject(self, &kDisplayTitle, displayTitle, OBJC_ASSOCIATION_COPY_NONATOMIC);
+
+}
+
+- (NSDictionary *) userInfo {
+
+	return objc_getAssociatedObject(self, &kUserInfo);
+
+}
+
+- (void) setUserInfo:(NSDictionary *)userInfo {
+
+	objc_setAssociatedObject(self, &kUserInfo, userInfo, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
 }
 

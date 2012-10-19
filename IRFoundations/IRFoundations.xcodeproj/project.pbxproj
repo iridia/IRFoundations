@@ -221,6 +221,8 @@
 		FFB6797F141E406B006F84E3 /* CoreText+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB6797D141E406B006F84E3 /* CoreText+IRAdditions.m */; };
 		FFB67984141E415C006F84E3 /* NSAttributedString+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FFB67982141E415C006F84E3 /* NSAttributedString+IRAdditions.h */; };
 		FFB67985141E415C006F84E3 /* NSAttributedString+IRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB67983141E415C006F84E3 /* NSAttributedString+IRAdditions.m */; };
+		FFC5DFEC1630B65300C2CA1D /* IRManagedObjectModel.h in Headers */ = {isa = PBXBuildFile; fileRef = FFC5DFEA1630B65300C2CA1D /* IRManagedObjectModel.h */; };
+		FFC5DFED1630B65300C2CA1D /* IRManagedObjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC5DFEB1630B65300C2CA1D /* IRManagedObjectModel.m */; };
 		FFC813BB13EB8E4B007B0683 /* IRImagePickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = FFC813B913EB8E4B007B0683 /* IRImagePickerController.h */; };
 		FFC813BC13EB8E4B007B0683 /* IRImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC813BA13EB8E4B007B0683 /* IRImagePickerController.m */; };
 		FFC813C013EB8F48007B0683 /* UIImage+IRAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = FFC813BE13EB8F48007B0683 /* UIImage+IRAdditions.h */; };
@@ -490,6 +492,8 @@
 		FFB67980141E40D2006F84E3 /* UITableView+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+IRAdditions.m"; sourceTree = "<group>"; };
 		FFB67982141E415C006F84E3 /* NSAttributedString+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+IRAdditions.h"; sourceTree = "<group>"; };
 		FFB67983141E415C006F84E3 /* NSAttributedString+IRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+IRAdditions.m"; sourceTree = "<group>"; };
+		FFC5DFEA1630B65300C2CA1D /* IRManagedObjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRManagedObjectModel.h; sourceTree = "<group>"; };
+		FFC5DFEB1630B65300C2CA1D /* IRManagedObjectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRManagedObjectModel.m; sourceTree = "<group>"; };
 		FFC813B913EB8E4B007B0683 /* IRImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRImagePickerController.h; sourceTree = "<group>"; };
 		FFC813BA13EB8E4B007B0683 /* IRImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRImagePickerController.m; sourceTree = "<group>"; };
 		FFC813BE13EB8F48007B0683 /* UIImage+IRAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+IRAdditions.h"; sourceTree = "<group>"; };
@@ -816,6 +820,8 @@
 				FF0A8D271337B36A00DDA47C /* IRFetchedResultsController.m */,
 				FF0A8D281337B36A00DDA47C /* IRManagedObjectContext.h */,
 				FF0A8D291337B36A00DDA47C /* IRManagedObjectContext.m */,
+				FFC5DFEA1630B65300C2CA1D /* IRManagedObjectModel.h */,
+				FFC5DFEB1630B65300C2CA1D /* IRManagedObjectModel.m */,
 				FFA65DDA150AFD6A00E8668C /* Tests */,
 			);
 			name = "CoreData+IRAdditions";
@@ -1034,6 +1040,7 @@
 				FF489707153DC53D0044B902 /* NSNotificationCenter+IRAdditions.h in Headers */,
 				FF539BA615409B9C003BFD66 /* NSFetchRequest+IRAdditions.h in Headers */,
 				FF6F1E0616275ACA002151DA /* IRNoOp.h in Headers */,
+				FFC5DFEC1630B65300C2CA1D /* IRManagedObjectModel.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1325,6 +1332,7 @@
 				FF489708153DC53D0044B902 /* NSNotificationCenter+IRAdditions.m in Sources */,
 				FF539BA715409B9C003BFD66 /* NSFetchRequest+IRAdditions.m in Sources */,
 				FF6F1E0816275AD0002151DA /* IRNoOp.m in Sources */,
+				FFC5DFED1630B65300C2CA1D /* IRManagedObjectModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

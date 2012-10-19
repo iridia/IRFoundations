@@ -11,5 +11,6 @@
 @interface NSFetchRequest (IRAdditions)
 
 @property (nonatomic, readwrite, copy) NSString *displayTitle;
+@property (nonatomic, readwrite, strong) NSDictionary *userInfo;
 
 @end
