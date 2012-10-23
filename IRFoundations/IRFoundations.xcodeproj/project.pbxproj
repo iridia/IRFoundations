@@ -1471,7 +1471,7 @@
 				);
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "x86_64 i386 armv6 armv7";
+				VALID_ARCHS = "x86_64 i386 armv6 armv7 $(inherited)";
 			};
 			name = Debug;
 		};
@@ -1493,7 +1493,7 @@
 				);
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "x86_64 i386 armv6 armv7";
+				VALID_ARCHS = "x86_64 i386 armv6 armv7 $(inherited)";
 			};
 			name = Release;
 		};
