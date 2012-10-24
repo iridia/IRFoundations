@@ -15,6 +15,9 @@
 	__weak NSNotificationCenter *wSelf = self;
 	__block id object = [self addObserverForName:name object:obj queue:nil usingBlock:^(NSNotification *note) {
 		
+		NSCParameterAssert(wSelf);
+		NSCParameterAssert(object);
+		
 		if (callback)
 			callback(note);
 		
@@ -29,6 +32,7 @@
 			if (callback)
 				callback(nil);
 		
+		[wSelf removeObserver:object];
 		object = nil;
 			
 	});
