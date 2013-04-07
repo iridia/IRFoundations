@@ -532,7 +532,7 @@
 	
 	} else {
 
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC), dispatch_get_current_queue(), ^ {
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^ {
 
 			[wSelf resumeDelayedPerformQueue];
 		
@@ -580,7 +580,7 @@
 
 - (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
 
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC), dispatch_get_current_queue(), ^ {
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^ {
 
 		[self resumeDelayedPerformQueue];
 	

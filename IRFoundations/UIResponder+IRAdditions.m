@@ -18,43 +18,37 @@ static NSString * const kNextResponder = @"-[UIResponder ir_nextResponder]";
 @implementation UIResponder (IRAdditions)
 
 + (id) instanceFromNib {
-
-	__block id (^objectForClass)(Class) = ^ (Class aClass) {
 	
-		NSBundle *bundle = [NSBundle bundleForClass:aClass];
-		NSString *nibName = NSStringFromClass(aClass);
+	id (^objectForClass)(Class, void *) = ^ (Class aClass, void *continuation) {
+	
+		NSBundle * const bundle = [NSBundle bundleForClass:aClass];
+		NSString * const nibName = NSStringFromClass(aClass);
 		
-		id (^bail)(void) = ^ {
-		
-			if (aClass == [UIResponder class])
-				return (id)nil;
-
-			return objectForClass([aClass superclass]);
-
+		id (^uproot)(void) = ^ {
+			return (aClass == [UIResponder class]) ?
+				nil :
+				((__bridge id(^)(Class, void*))continuation)([aClass superclass], continuation);
 		};
 		
-		if (![bundle pathForResource:nibName ofType:@"nib"] && ![bundle pathForResource:nibName ofType:@"xib"])
-			return bail();
-
+		if (![bundle pathForResource:nibName ofType:@"nib"])
+		if (![bundle pathForResource:nibName ofType:@"xib"])
+			return uproot();
+		
 		@try {
-		
-			UINib *ownNib = [UINib nibWithNibName:nibName bundle:bundle];
-			NSArray *nibObjects = [ownNib instantiateWithOwner:nil options:nil];
-			NSArray *siblingObjects = [nibObjects irMap: ^ (id inObject, NSUInteger index, BOOL *stop) {
-				return [inObject isKindOfClass:aClass] ? inObject : nil;
-			}];
-			
-			return [siblingObjects lastObject];
-		
-		} @catch (NSException *exception) { 
-
-			return bail();
-		
+			for (id nibObject in [[UINib nibWithNibName:nibName bundle:bundle] instantiateWithOwner:nil options:nil]) {
+				if ([nibObject isKindOfClass:aClass]) {
+					return nibObject;
+				}
+			}
+		} @catch (NSException *exception) {
+			return uproot();
 		}
+		
+		return uproot();
 
 	};
-		
-	return objectForClass([self class]);
+	
+	return objectForClass([self class], (__bridge void *)objectForClass);
 	
 }
 
