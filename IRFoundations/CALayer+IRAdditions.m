@@ -48,40 +48,4 @@
 	
 }
 
-- (UIImage *) irRenderedImage {
-
-	return [self irRenderedImageWithEdgeInsets:UIEdgeInsetsZero];
-
-}
-
-- (UIImage *) irRenderedImageWithEdgeInsets:(UIEdgeInsets)insets {
-
-	CGSize actualSize = UIEdgeInsetsInsetRect(self.bounds, insets).size;
-	
-	UIGraphicsBeginImageContextWithOptions(actualSize, NO, 0.0);
-	CGContextRef bitmapContext = UIGraphicsGetCurrentContext();
-	
-	[self renderInContext:bitmapContext];
-	
-	UIImage *returnedImage = UIGraphicsGetImageFromCurrentImageContext();
-	UIGraphicsEndImageContext();
-	
-	return returnedImage;
-
-}
-
-@end
-
-
-@implementation UIView (IRQuartzCoreAdditions)
-
-- (UIView *) irRenderedProxyView {
-
-	UIView *returnedView = [[[self class] alloc] initWithFrame:self.bounds];
-	returnedView.layer.contents = (id)[self.layer irRenderedImage].CGImage;
-	
-	return returnedView;
-
-}
-
 @end
